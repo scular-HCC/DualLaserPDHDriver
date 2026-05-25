@@ -1,0 +1,1522 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "d3e1ea69-7d4c-4bd0-9759-a9fb9f60a1d5")
+	(paper "A4")
+	(lib_symbols
+		(symbol "Connector:Conn_02x07_Odd_Even"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Butterfly_14pin"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_02x07_Odd_Even_0_1"
+				(rectangle
+					(start -1.27 -8.89)
+					(end 1.27 8.89)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Conn_02x07_Odd_Even_1_1"
+				(pin passive line
+					(at -3.81 7.62 0)
+					(length 2.54)
+					(name "P1_TEC+"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 5.08 0)
+					(length 2.54)
+					(name "P2_NTC_A"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 2.54 0)
+					(length 2.54)
+					(name "P3_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "P4_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 -2.54 0)
+					(length 2.54)
+					(name "P5_NTC_GND"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 -5.08 0)
+					(length 2.54)
+					(name "P6_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -3.81 -7.62 0)
+					(length 2.54)
+					(name "P7_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 7.62 180)
+					(length 2.54)
+					(name "P8_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 5.08 180)
+					(length 2.54)
+					(name "P9_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 2.54 180)
+					(length 2.54)
+					(name "P10_CHIP+"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "P11_CHIP-"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 -2.54 180)
+					(length 2.54)
+					(name "P12_NC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 -5.08 180)
+					(length 2.54)
+					(name "P13_GND"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 -7.62 180)
+					(length 2.54)
+					(name "P14_TEC-"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 1.524 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at -1.524 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "SECTION 6: ML20550KK14Z600L 14-pin Butterfly ZIF Connector"
+		(exclude_from_sim no)
+		(at 81.6 52.93 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left)
+		)
+		(uuid "0b512252-7f77-4903-879c-92a9794bc28a")
+	)
+	(text "ALL PINS: 47R series protection resistors between connector pads and board traces"
+		(exclude_from_sim no)
+		(at 81.6 61.93 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "8e00d1b8-efe3-46a2-bd72-13511d40a4eb")
+	)
+	(text "UNCONFIRMED (NC pad): P3 P4 P6 P7 P8 P9 P12 - verify MPD pins with YB Photonics before connecting"
+		(exclude_from_sim no)
+		(at 81.6 58.93 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "e7199031-7cf8-485f-9634-a00e0518480b")
+	)
+	(text "CONFIRMED: P1=TEC+ P2=NTC_A P5=NTC_GND P10=CHIP+ P11=CHIP- P13=GND P14=TEC-"
+		(exclude_from_sim no)
+		(at 81.6 55.93 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "fc77d3c1-130f-418d-bcb5-6649b869c392")
+	)
+	(no_connect
+		(at 126.6 72.93)
+		(uuid "2262cf21-d1c7-425d-8f6c-1e397bd66d2d")
+	)
+	(no_connect
+		(at 126.6 88.93)
+		(uuid "4f80a21d-bbfc-441d-aba7-6fc539d1f0ec")
+	)
+	(no_connect
+		(at 126.6 76.93)
+		(uuid "7b0e19b0-b422-4839-86ce-782b49ac8d22")
+	)
+	(no_connect
+		(at 126.6 78.93)
+		(uuid "c45039d8-98d1-45cc-a867-68a0aa4a3e5f")
+	)
+	(no_connect
+		(at 126.6 70.93)
+		(uuid "d8a402ac-777b-48df-a2e5-7da2edd7b2c7")
+	)
+	(no_connect
+		(at 126.6 80.93)
+		(uuid "dacc0f6f-1915-44db-b634-31d7d834a26c")
+	)
+	(no_connect
+		(at 126.6 82.93)
+		(uuid "e9ef6f86-1ad0-4464-a92b-a23b50af1d96")
+	)
+	(wire
+		(pts
+			(xy 135.6 77.93) (xy 149.6 77.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "061433c0-cf70-4f2c-857e-7a0d0cfaf558")
+	)
+	(wire
+		(pts
+			(xy 113.6 74.93) (xy 127.6 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c69d075-63b8-4745-8c0c-a1d69b969a89")
+	)
+	(wire
+		(pts
+			(xy 113.6 86.93) (xy 127.6 86.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "86ce6dc3-59fc-4bf7-99dd-c7d8db4a597e")
+	)
+	(wire
+		(pts
+			(xy 113.6 77.93) (xy 127.6 77.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0403af5-e4be-4367-9a87-70599a52cec9")
+	)
+	(wire
+		(pts
+			(xy 135.6 89.93) (xy 149.6 89.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "af760dbc-cc04-47c4-932d-90d1b201f36a")
+	)
+	(wire
+		(pts
+			(xy 135.6 74.93) (xy 149.6 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b141480a-b1ea-465c-89a5-5c97555dea21")
+	)
+	(wire
+		(pts
+			(xy 135.6 86.93) (xy 149.6 86.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b8f3af93-27aa-4450-8890-9bce9d37b1d5")
+	)
+	(global_label "TEC_BTF_P"
+		(shape input)
+		(at 135.6 72.93 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3d4ccf57-3c09-4200-b630-9fa3d53644e8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 148.5032 72.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "TEC_BTF_P"
+		(shape input)
+		(at 101.6 74.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "48c84a34-7784-4cfe-b5f0-020dff71f75b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 88.6968 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "LASER_K"
+		(shape input)
+		(at 123.6 77.93 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5a1bc13e-21fa-455f-85ac-fa1670c0cc85")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.568 77.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "NTC_GND_BTF"
+		(shape input)
+		(at 101.6 86.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a23d7dbe-4da6-4db6-9f21-5665eac1b9f6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 85.9148 86.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "TEC_BTF_N"
+		(shape input)
+		(at 145.6 89.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bba9e688-a3c3-448a-aef9-e1de44c69f21")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 132.6363 89.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "LASER_A"
+		(shape input)
+		(at 145.6 74.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c0f65fd5-5752-4789-841e-7019a603ea4e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.8134 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "PGND"
+		(shape input)
+		(at 145.6 86.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ccc28032-da3d-4a48-9331-eba0cf1fca4f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 137.4743 86.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "NTC_A"
+		(shape input)
+		(at 101.6 77.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dd56cc82-a29e-4334-81c4-d7bc5ff7249e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 92.9905 77.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "LASER_A"
+		(shape input)
+		(at 123.6 74.93 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "edc12818-75fe-458c-a9bb-62861feba997")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.3866 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "TEC_BTF_N"
+		(shape input)
+		(at 135.6 89.93 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fb1eb632-3d2a-46b5-8059-f2b071976e7b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 148.5637 89.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "LASER_K"
+		(shape input)
+		(at 145.6 77.93 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fcaf0e5e-3f03-4a1a-85e3-15eefcae1a4b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.632 77.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 153.6 89.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0224cff2-5e31-45fe-81cf-42a17f778ada")
+		(property "Reference" "R_P14"
+			(at 155.6 88.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P14 prot"
+			(at 155.6 90.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.6 89.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3aefdc8e-158f-4426-b476-24e0cec28b38")
+		)
+		(pin "2"
+			(uuid "ae1a3bf9-7ee9-4208-83f1-2c56d85a53b1")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 109.6 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4cea16be-32f2-44d2-8b2e-b9ddacb7efe5")
+		(property "Reference" "R_P1"
+			(at 111.6 73.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P1 prot"
+			(at 111.6 75.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.6 74.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f50b12ea-5a06-4b41-aad1-f127aeb23a47")
+		)
+		(pin "2"
+			(uuid "61c1d5cd-fcf8-4cc3-ad82-a85751e9bdcd")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 153.6 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "55b77743-4c5b-4610-bc91-ab7bade2703d")
+		(property "Reference" "R_P10"
+			(at 155.6 73.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P10 prot"
+			(at 155.6 75.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.6 74.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1372be11-025e-4b99-9824-155eca795e83")
+		)
+		(pin "2"
+			(uuid "6a07ce6d-05d2-4106-88f0-9921251a838f")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 109.6 86.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7f8c74d1-8dd0-4f03-bf77-cfef380f2314")
+		(property "Reference" "R_P5"
+			(at 111.6 85.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P5 prot"
+			(at 111.6 87.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.6 86.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d4f94b75-fcce-48fc-8f70-dbbd99e57353")
+		)
+		(pin "2"
+			(uuid "ce838062-b3da-4dd8-b3ca-61f758125034")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 109.6 77.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9ecf4107-0ff5-44bd-8119-1ec42e474ae3")
+		(property "Reference" "R_P2"
+			(at 111.6 76.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P2 prot"
+			(at 111.6 78.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.6 77.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "17fe366d-bbf5-4aa4-951d-cec5331c63af")
+		)
+		(pin "2"
+			(uuid "b000f43c-7ee3-45f3-b7fc-04dc84931148")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_02x07_Odd_Even")
+		(at 131.6 82.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a54a626c-8424-408b-9819-0c4dd01e6aa2")
+		(property "Reference" "J_BTF1"
+			(at 133.6 81.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "ML20550KK14Z600L"
+			(at 133.6 83.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 131.6 82.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1dc76823-5a0d-439e-a092-aa4e26c97dea")
+		)
+		(pin "2"
+			(uuid "0d6fd80f-0c4e-460c-b9ad-db7d3c60c202")
+		)
+		(pin "3"
+			(uuid "2073fa88-636b-4096-a1a1-4c264b8c6768")
+		)
+		(pin "4"
+			(uuid "b3285bf4-fdc9-4604-a14d-0764a697ef47")
+		)
+		(pin "5"
+			(uuid "3abe6550-162b-420a-9035-e68e1dca9911")
+		)
+		(pin "6"
+			(uuid "a9776278-9f2e-4551-bae0-7b20a761a472")
+		)
+		(pin "7"
+			(uuid "eaee715a-4a59-4e54-a7b6-57f45dabe1e0")
+		)
+		(pin "8"
+			(uuid "3969fd12-dd77-479e-ad54-34c017a7b9e8")
+		)
+		(pin "9"
+			(uuid "69918f71-802d-4158-8e71-5e20415cd997")
+		)
+		(pin "10"
+			(uuid "d7dce3e1-87e8-43b9-bff3-8662629a1b0b")
+		)
+		(pin "11"
+			(uuid "2f4c3fbf-18ad-4dae-9f1c-42e3d8e2ea61")
+		)
+		(pin "12"
+			(uuid "c41fc805-9f5a-4abf-8c19-8e413fed3d83")
+		)
+		(pin "13"
+			(uuid "18bed1c6-4564-40a8-ab63-bcb138dfa889")
+		)
+		(pin "14"
+			(uuid "a9960d6b-975f-42fa-b495-5f5e664078b9")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "J_BTF1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 153.6 86.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "bee00379-9127-459c-8a98-6e61feb9c338")
+		(property "Reference" "R_P13"
+			(at 155.6 85.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P13 prot"
+			(at 155.6 87.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.6 86.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5a8ad9fd-50c9-4805-9ec5-0ebe34961e93")
+		)
+		(pin "2"
+			(uuid "05c361be-b553-4601-802c-c1a4a501fa05")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 153.6 77.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "fb82261b-11ec-4472-9177-b7b0a44f417b")
+		(property "Reference" "R_P11"
+			(at 155.6 76.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "47R P11 prot"
+			(at 155.6 78.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.6 -255.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.6 77.93 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "96ac3f1f-d85d-4f8f-a2ae-04e9c7873c28")
+		)
+		(pin "2"
+			(uuid "3bbf6546-c37d-4b94-8a99-06ae079245f6")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4a8b7d8-d294-4c89-ba57-bde3505f7415"
+					(reference "R_P11")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
