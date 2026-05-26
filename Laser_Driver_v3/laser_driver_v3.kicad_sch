@@ -1,0 +1,561 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "b2c3d4e5-f6a7-8901-bcde-f12345678901")
+	(paper "USLetter")
+	(title_block
+		(title "Dual Channel CW Laser + TEC Driver — ML20550KK14Z600L")
+		(date "2025-05-22")
+		(rev "3.0")
+		(company "Lab R&D")
+		(comment 1 "1550nm 70mW DFB butterfly | Bipolar TEC H-bridge -1.5A/+2.5A | AD5064 16-bit DAC")
+		(comment 2 "Rail2: LM7807->LT3042->LTC6655-5 | Rail3: LM7805->RC->LT3045 | Rail4/5: ±LM780x->LT3045/94")
+		(comment 3 "Readback: INA826 laser+TEC current, NTC thermistor divider, OPA380 MPD TIA")
+	)
+	(lib_symbols)
+	(text "Need 300 mA +15 V\nNeed 150 mA -15 V\nNeed 5 V 600 mA for laser"
+		(exclude_from_sim no)
+		(at 33.782 20.828 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "4b0a0f47-200c-43ce-bd3a-46b9d54d0e3e")
+	)
+	(text "KEY DESIGN PARAMETERS (v3.0):\nLaser: ML20550KK14Z600L 1550nm 70mW DFB butterfly\n  Iop=500mA typ, 600mA max, Vf=2V, Vr_max=2V\n  Sense: R5=0.25R, INA826 G=12 (Rg=4.53k), Vout_max=3.0V @ 600mA\nTEC bipolar H-bridge: -1.5A to +2.5A, ±3.8V max\n  Virtual zero: TEC_VZERO=1.875V (R19=12.7k/R20=9.31k from 5V_DAC)\n  DAC code 24576 = 0A TEC | 0 = +2.5A cool | 65535 = -1.5A heat\n  Sense: R7=0.1R, INA826 G=20 (Rg=2.61k), Vout_max=3.0V @ 2.5A\n  H-bridge: Q3/Q5=IRF9540N P-ch, Q4/Q6=IRLB8721 N-ch, TO-220 offboard\n  Control supply: +6V/-6V from LT3045/LT3094 (0.8uV rms each)\n  H-bridge power: +8V/-8V directly from LM7808/LM7908\nNTC: 10k @ 25C, beta=3950K, divider 10k->3V3, spans 1.18-2.06V\nMPD TIA: OPA380, Rf=10k, Cf=2.2pF, Vout=Ipd*10k (3V @ 300uA)\nButterfly pinout confirmed: P1=TEC+ P2=NTC_A P5=NTC_GND\n  P10=CHIP+ P11=CHIP- P13=GND P14=TEC- | P3/4/6/7/8/9/12=NC pend YBP"
+		(exclude_from_sim no)
+		(at 201.676 145.034 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left)
+		)
+		(uuid "cbf3cc56-e3ed-49b6-96a3-c4622727d6bd")
+	)
+	(sheet
+		(at 21.59 30.48)
+		(size 26.67 21.59)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "06a154d7-731d-44d9-be1c-56d316ca362e")
+		(property "Sheetname" "Mains to +-18V"
+			(at 21.59 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Mains to +-18V.kicad_sch"
+			(at 21.59 52.6546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 66.04 102.87)
+		(size 25.4 21.59)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "06f22b47-dee6-4fbe-8e7e-6abe24fabe38")
+		(property "Sheetname" "TEC H-Bridges"
+			(at 66.04 102.1584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "TEC Control.kicad_sch"
+			(at 66.04 125.0446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 59.69 29.21)
+		(size 26.67 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d")
+		(property "Sheetname" "+-6V TEC"
+			(at 59.69 28.4984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "+-6V TEC.kicad_sch"
+			(at 59.69 50.1146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 66.04 66.04)
+		(size 24.13 26.67)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "4c904a9b-f13b-4762-ac7d-2743bb4f9a22")
+		(property "Sheetname" "5V Laser"
+			(at 66.04 65.3284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "5V Laser.kicad_sch"
+			(at 66.04 93.2946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 22.86 90.17)
+		(size 22.86 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "66b4928b-0f98-4282-b6fa-f46162bb9680")
+		(property "Sheetname" "5Vref"
+			(at 22.86 89.4584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "5Vref.kicad_sch"
+			(at 22.86 111.0746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 22.86 119.38)
+		(size 22.86 19.05)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "8f1d8420-6d65-4b14-9d89-baaedfa51091")
+		(property "Sheetname" "3p3V"
+			(at 22.86 118.6684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "3p3V.kicad_sch"
+			(at 22.86 139.0146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 138.43 64.77)
+		(size 22.86 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "8f7fc4f5-95f3-4ce0-b28f-b677e5e625e7")
+		(property "Sheetname" "TEC Controller"
+			(at 138.43 64.0584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "TEC Controller.kicad_sch"
+			(at 138.43 93.2946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 22.86 59.69)
+		(size 24.13 22.86)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "9e8b43e2-3f50-408f-92ae-40d797615721")
+		(property "Sheetname" "+-15V"
+			(at 22.86 58.9784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "+-15V.kicad_sch"
+			(at 22.86 83.1346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 107.95 104.14)
+		(size 25.4 22.86)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e2f6689f-2746-4fd7-aa4a-0128f1e05d63")
+		(property "Sheetname" "Readback"
+			(at 107.95 103.4284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Readback.kicad_sch"
+			(at 107.95 127.5846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 104.14 67.31)
+		(size 20.32 24.13)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e4a8b7d8-d294-4c89-ba57-bde3505f7415")
+		(property "Sheetname" "Laser Drivers"
+			(at 104.14 66.5984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "DFBLaser.kicad_sch"
+			(at 104.14 92.0246 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Field2" ""
+			(at 104.14 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 67.31 133.35)
+		(size 25.4 19.05)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e4d7b089-62e9-414f-b4cc-abd1480c07cf")
+		(property "Sheetname" "Laser Control"
+			(at 67.31 132.6384 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Laser Control.kicad_sch"
+			(at 67.31 152.9846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
