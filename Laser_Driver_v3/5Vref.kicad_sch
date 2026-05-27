@@ -675,6 +675,176 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "LT1028_2"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U3"
+				(at -5.588 5.588 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "OPA192"
+				(at -5.08 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-5-6_4.4x3.6mm_P1.27mm"
+				(at 4.826 17.526 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa192.pdf?ts=1779712195035&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FOPA192"
+				(at 2.032 -15.24 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "LT1028_2_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "LT1028_2_1_1"
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Regulator_Linear:LM7808_TO220"
 			(pin_names
 				(offset 0.254)
@@ -1232,6 +1402,12 @@
 		(uuid "064dc882-0878-48b9-b612-79cd10994f72")
 	)
 	(junction
+		(at 256.54 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "078972d8-830f-4959-a57b-bedf0e0ccf99")
+	)
+	(junction
 		(at 205.74 93.98)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1405,6 +1581,12 @@
 		(color 0 0 0 0)
 		(uuid "e3d23a18-c5a0-44c9-b0d1-4cd934560a93")
 	)
+	(junction
+		(at 233.68 82.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f51995cd-7442-4b4d-aeb0-2659f4155650")
+	)
 	(no_connect
 		(at 115.57 86.36)
 		(uuid "0ccfaef2-925c-4609-b7fc-7e85b5b6077f")
@@ -1428,6 +1610,26 @@
 			(type default)
 		)
 		(uuid "08cf632d-d3c4-4efa-9ab6-b26e9887a4e2")
+	)
+	(wire
+		(pts
+			(xy 256.54 113.03) (xy 259.08 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "11ed14d7-823d-4b1f-b0ae-bc9fd9a5aa24")
+	)
+	(wire
+		(pts
+			(xy 233.68 82.55) (xy 234.95 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13e750a2-aed4-4858-92bf-777c73f909ce")
 	)
 	(wire
 		(pts
@@ -1511,6 +1713,16 @@
 	)
 	(wire
 		(pts
+			(xy 241.3 114.3) (xy 243.84 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ef3ea9f-cc2b-4a34-babd-5beb7ee0a941")
+	)
+	(wire
+		(pts
 			(xy 172.72 82.55) (xy 172.72 78.74)
 		)
 		(stroke
@@ -1558,6 +1770,16 @@
 			(type default)
 		)
 		(uuid "3186ce54-0d3a-4e66-9000-964d708377c2")
+	)
+	(wire
+		(pts
+			(xy 241.3 125.73) (xy 241.3 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3396ce20-7da9-46b3-a9f7-bde308ca785b")
 	)
 	(wire
 		(pts
@@ -1641,7 +1863,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 82.55) (xy 234.95 82.55)
+			(xy 223.52 82.55) (xy 233.68 82.55)
 		)
 		(stroke
 			(width 0)
@@ -1698,6 +1920,16 @@
 			(type default)
 		)
 		(uuid "59ce8e19-bf31-45c8-8bec-71c8d0cec180")
+	)
+	(wire
+		(pts
+			(xy 243.84 111.76) (xy 233.68 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d85a912-79d2-4839-bac1-5c982f7de3cb")
 	)
 	(wire
 		(pts
@@ -1761,6 +1993,16 @@
 	)
 	(wire
 		(pts
+			(xy 256.54 113.03) (xy 256.54 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71a7381c-dd33-4d1d-9567-4939ec0477a4")
+	)
+	(wire
+		(pts
 			(xy 78.74 93.98) (xy 92.71 93.98)
 		)
 		(stroke
@@ -1788,6 +2030,16 @@
 			(type default)
 		)
 		(uuid "7906e72f-0eb4-4c05-99e6-4a3e6ca9ac07")
+	)
+	(wire
+		(pts
+			(xy 250.19 102.87) (xy 247.65 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83044d13-6ebc-47b5-9ba0-4c4d5a890c05")
 	)
 	(wire
 		(pts
@@ -1911,6 +2163,26 @@
 	)
 	(wire
 		(pts
+			(xy 256.54 125.73) (xy 241.3 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "acf581e5-54d4-4ec8-839d-e6d1752bd3bb")
+	)
+	(wire
+		(pts
+			(xy 233.68 111.76) (xy 233.68 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "af496f20-2986-42ec-9ba9-60fc7f246dc2")
+	)
+	(wire
+		(pts
 			(xy 76.2 67.31) (xy 76.2 78.74)
 		)
 		(stroke
@@ -1978,6 +2250,16 @@
 			(type default)
 		)
 		(uuid "bd82b97d-6bf6-48bd-b18a-7f45bab537cc")
+	)
+	(wire
+		(pts
+			(xy 250.19 119.38) (xy 250.19 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1587403-e4bc-40e7-95ab-3c8306f6eaa7")
 	)
 	(wire
 		(pts
@@ -2151,6 +2433,16 @@
 	)
 	(wire
 		(pts
+			(xy 250.19 106.68) (xy 250.19 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fd3f36bc-9895-4b25-87b9-c6f341f8a4cd")
+	)
+	(wire
+		(pts
 			(xy 200.66 80.01) (xy 201.93 80.01)
 		)
 		(stroke
@@ -2158,6 +2450,30 @@
 			(type default)
 		)
 		(uuid "fedca78f-a670-4648-8d47-d1af0f3ee3e8")
+	)
+	(global_label "-15V"
+		(shape input)
+		(at 250.19 121.92 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2f1665dd-2a0c-47e2-87ce-f4344c84061b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 242.1248 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
 	(global_label "+18V"
 		(shape input)
@@ -2184,7 +2500,7 @@
 		)
 	)
 	(global_label "5Vref"
-		(shape output)
+		(shape input)
 		(at 234.95 82.55 0)
 		(fields_autoplaced yes)
 		(effects
@@ -2196,6 +2512,54 @@
 		(uuid "8495b662-33ae-43d0-8472-1a3f3464c867")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 242.8338 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "+15V"
+		(shape input)
+		(at 247.65 102.87 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "91f855cc-b1d4-444d-9a4d-7d7afcbb2509")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 239.5848 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "5V_DAC"
+		(shape input)
+		(at 259.08 113.03 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "de26c8c3-e087-4052-a77a-58106e07df61")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 268.9595 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3521,6 +3885,96 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "LT1028_2")
+		(lib_id "Analog:LT1028")
+		(at 250.19 113.03 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e770b9c2-49d3-4e70-aae9-cf5dcd902cc4")
+		(property "Reference" "U26"
+			(at 241.554 106.426 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "OPA192"
+			(at 240.03 108.204 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-5-6_4.4x3.6mm_P1.27mm"
+			(at 255.016 95.504 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa192.pdf?ts=1779712195035&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FOPA192"
+			(at 252.222 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 250.19 113.03 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "86abb969-f9cb-4f88-90d8-4b30b610bda7")
+		)
+		(pin "2"
+			(uuid "7c559e3f-c71d-4510-8f40-b29920f5a7c9")
+		)
+		(pin "3"
+			(uuid "7d3f5523-e4d8-4719-8ab5-f15e6749f350")
+		)
+		(pin "4"
+			(uuid "84668c58-9d35-4e8c-927b-9704f6042d1b")
+		)
+		(pin "5"
+			(uuid "39f6c7f5-7944-4659-b7bf-d87496f5012c")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
+					(reference "U26")
 					(unit 1)
 				)
 			)
