@@ -174,6 +174,52 @@
 		)
 	)
 	(sheet
+		(at 107.95 134.62)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "4858802c-cb9b-4721-97ea-d5e718762850")
+		(property "Sheetname" "Clock"
+			(at 107.95 133.9084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Clock.kicad_sch"
+			(at 107.95 151.7146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 66.04 66.04)
 		(size 24.13 26.67)
 		(exclude_from_sim no)
@@ -307,52 +353,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
 					(page "4")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 138.43 64.77)
-		(size 22.86 27.94)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "8f7fc4f5-95f3-4ce0-b28f-b677e5e625e7")
-		(property "Sheetname" "TEC Controller"
-			(at 138.43 64.0584 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "TEC Controller.kicad_sch"
-			(at 138.43 93.2946 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
-					(page "9")
 				)
 			)
 		)
@@ -501,7 +501,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
-					(page "12")
+					(page "9")
 				)
 			)
 		)
