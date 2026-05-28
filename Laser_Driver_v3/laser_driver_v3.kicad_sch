@@ -174,6 +174,52 @@
 		)
 	)
 	(sheet
+		(at 102.87 29.21)
+		(size 22.86 21.59)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "20b1c7a7-d05f-4e99-ab1a-7c26c0a8ad66")
+		(property "Sheetname" "Teensy"
+			(at 102.87 28.4984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Teensy.kicad_sch"
+			(at 102.87 51.3846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "14")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 143.51 67.31)
 		(size 25.4 25.4)
 		(exclude_from_sim no)

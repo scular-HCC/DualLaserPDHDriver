@@ -1512,17 +1512,6 @@
 		)
 		(uuid "17a6dc88-350d-4791-a412-54702310f0eb")
 	)
-	(text "TEENSY CONNECTORS"
-		(exclude_from_sim no)
-		(at 202.92 26.7 0)
-		(effects
-			(font
-				(size 1.5 1.5)
-			)
-			(justify left)
-		)
-		(uuid "1ae28c9a-ae57-4a6d-951a-d0b2261b97f7")
-	)
 	(text "AD9833 DDS — Dither generation"
 		(exclude_from_sim no)
 		(at 36.04 102.97 0)
@@ -2261,16 +2250,6 @@
 	)
 	(wire
 		(pts
-			(xy 29.21 171.45) (xy 36.83 171.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9da06548-926d-44ef-a0d9-c33cf6f08d05")
-	)
-	(wire
-		(pts
 			(xy 50.8 69.85) (xy 43.18 69.85)
 		)
 		(stroke
@@ -2531,16 +2510,6 @@
 	)
 	(wire
 		(pts
-			(xy 36.83 171.45) (xy 36.83 172.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0ea6bd9-4176-4887-a9e7-a16ab66de85c")
-	)
-	(wire
-		(pts
 			(xy 142.24 135.89) (xy 146.05 135.89)
 		)
 		(stroke
@@ -2599,8 +2568,8 @@
 		)
 		(uuid "ffa00622-3bcf-4c1f-a0db-d67807f83ac5")
 	)
-	(global_label "SerialData_3V3"
-		(shape input)
+	(global_label "MOSI_3V3"
+		(shape output)
 		(at 31.75 67.31 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2611,7 +2580,7 @@
 		)
 		(uuid "0dfe90f7-8f0a-408b-a1b3-8067d695b888")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 14.4926 67.31 0)
+			(at 19.6934 67.31 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2660,30 +2629,6 @@
 		(uuid "13590522-e061-4877-b4b0-198e02e4e68a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 80.2905 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "DDS1_FSYNC"
-		(shape input)
-		(at 219.71 31.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "176b0f03-4add-4363-8e83-4ab4c03ec926")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 219.71 31.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2960,7 +2905,7 @@
 		)
 	)
 	(global_label "CS_3V3"
-		(shape input)
+		(shape output)
 		(at 30.48 83.82 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3032,7 +2977,7 @@
 		)
 	)
 	(global_label "SCK_3V3"
-		(shape input)
+		(shape output)
 		(at 30.48 59.69 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3201,54 +3146,6 @@
 	)
 	(global_label "DDS2_FSYNC"
 		(shape input)
-		(at 219.71 34.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a681da09-a065-4fe4-9fa5-c6cfe0b49d2b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 219.71 34.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "AGND"
-		(shape input)
-		(at 219.71 40.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "bcfd9a09-3ad0-42cb-8b58-e4ac0f4d009f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 219.71 40.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "DDS2_FSYNC"
-		(shape input)
 		(at 143.51 140.97 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3260,30 +3157,6 @@
 		(uuid "c1a48000-52e2-421a-bdc8-2d9d3ff51952")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 143.51 140.97 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "DGND"
-		(shape bidirectional)
-		(at 29.21 171.45 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "db5a8d1e-e8b1-4387-a10a-0160b9fb73fb")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 19.973 171.45 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3340,30 +3213,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-			)
-		)
-	)
-	(global_label "CS_DAC_3V3"
-		(shape input)
-		(at 219.71 37.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "edc8b11d-28b9-4ad8-918f-1bbe94acf447")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 219.71 37.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 			)
 		)
 	)
@@ -3955,83 +3804,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
 					(reference "C_d2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 36.83 172.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "87472024-591d-45ca-8a1d-c4067e1c019c")
-		(property "Reference" "#PWR032"
-			(at 36.83 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 38.862 173.228 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 36.83 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 36.83 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 36.83 172.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "56f6a292-8834-4e89-aa67-fc6b911ca15c")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "#PWR032")
 					(unit 1)
 				)
 			)

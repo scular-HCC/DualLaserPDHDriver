@@ -1,0 +1,26 @@
+Assumed and need to tune
+ADC midscale: code assumes PDH mixer error is centered at midscale (ADC_MID). If the front‑end offsets differ, change adc_to_error() accordingly.
+
+PID gains: initial kp/ki/kd are conservative placeholders. Tune on the real system (use serial p1/p2 commands).
+
+Lock thresholds: lock_threshold and acquire_threshold are starting values; adjust to your mixer amplitude and noise floor.
+
+DAC mapping: pid_to_dac() maps -1..1 to full DAC range. If the laser current driver expects a different voltage range or polarity, change mapping or invert sign.
+
+AD9833 dither: set frequency and amplitude on the PDH board; code sets 10 kHz reference example.
+
+CDCE913: code programs EEPROM only when version byte differs; you can force reprogram with serial r.
+
+//////////////////////////////////////////
+/  Runtime serial commands (simple console)
+//////////////////////////////////////////
+
+s — print channel states and relock attempts
+
+p1 kp ki kd — set PID gains for channel 1 (example: p1 0.1 0.5 0.0)
+
+p2 kp ki kd — set PID gains for channel 2
+
+r — force CDCE913 EEPROM reprogram
+
+d — dump ADC readings for quick diagnostics

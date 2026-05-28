@@ -1,0 +1,137 @@
+#include <Wire.h>
+#include <FreqCount.h>
+
+#define CDCE_ADDR 0x65   // CDCE913 I2C address
+
+// ============================================================
+// 32-BYTE CDCE913 CONFIGURATION (10 MHz → 25 MHz)
+// Last byte (0x1F) is VERSION BYTE = 0x42
+// ============================================================
+uint8_t cdce[32] = {
+    0x00,0x0A,0x01,0x00,0x04,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+    0x42   // VERSION BYTE
+};
+
+// ============================================================
+// READ ONE BYTE FROM CDCE913 EEPROM (0x40–0x5F)
+// ============================================================
+uint8_t cdce_read_eeprom_byte(uint8_t offset) {
+    Wire.beginTransmission(CDCE_ADDR);
+    Wire.write(0x40 + offset);   // EEPROM base + offset
+    Wire.endTransmission();
+
+    Wire.requestFrom(CDCE_ADDR, 1);
+    if (Wire.available()) return Wire.read();
+    return 0xFF; // error
+}
+
+// ============================================================
+// CHECK IF EEPROM VERSION MATCHES OUR VERSION BYTE
+// ============================================================
+bool cdce_needs_programming() {
+    uint8_t stored = cdce_read_eeprom_byte(0x1F);  // read version byte
+    return (stored != cdce[31]);                   // compare to our version
+}
+
+// ============================================================
+// PROGRAM CDCE913 ONLY IF VERSION MISMATCHES
+// ============================================================
+void cdce_program_if_needed() {
+    if (!cdce_needs_programming()) {
+        Serial.println("CDCE913: EEPROM version OK, skipping programming");
+        return;
+    }
+
+    Serial.println("CDCE913: Programming EEPROM...");
+
+    // Write 32 registers (0x00–0x1F)
+    Wire.beginTransmission(CDCE_ADDR);
+    Wire.write(0x00);
+    for (int i = 0; i < 32; i++) Wire.write(cdce[i]);
+    Wire.endTransmission();
+    delay(5);
+
+    // Commit to EEPROM (write 0x01 to 0x86)
+    Wire.beginTransmission(CDCE_ADDR);
+    Wire.write(0x86);
+    Wire.write(0x01);
+    Wire.endTransmission();
+    delay(20);
+
+    Serial.println("CDCE913: EEPROM updated");
+}
+
+// ============================================================
+// CHECK PLL LOCK STATUS (bit0 of register 0x82)
+// ============================================================
+bool cdce_pll_locked() {
+    Wire.beginTransmission(CDCE_ADDR);
+    Wire.write(0x82);
+    Wire.endTransmission();
+
+    Wire.requestFrom(CDCE_ADDR, 1);
+    if (Wire.available()) {
+        uint8_t s = Wire.read();
+        return (s & 0x01);   // bit0 = PLL_LOCK
+    }
+    return false;
+}
+
+// ============================================================
+// WAIT FOR PLL LOCK (200 ms timeout)
+// ============================================================
+void cdce_wait_for_lock() {
+    unsigned long t0 = millis();
+    while (!cdce_pll_locked()) {
+        if (millis() - t0 > 200) {
+            Serial.println("CDCE913: PLL NOT LOCKED");
+            return;
+        }
+        delay(5);
+    }
+    Serial.println("CDCE913: PLL LOCKED");
+}
+
+// ============================================================
+// SELF-TEST: MEASURE 25 MHz OUTPUT USING TEENSY PIN 9
+// ============================================================
+bool cdce_selftest_25mhz() {
+    FreqCount.begin(100);   // 100 ms gate
+    delay(150);             // wait for first reading
+
+    if (FreqCount.available()) {
+        uint32_t f = FreqCount.read();
+        Serial.print("Measured frequency: ");
+        Serial.println(f);
+
+        // Acceptable range: ±10 kHz
+        return (f > 24990000UL && f < 25010000UL);
+    }
+    return false;
+}
+
+// ============================================================
+// MAIN STARTUP SEQUENCE
+// ============================================================
+void setup() {
+    Serial.begin(115200);
+    Wire.begin();
+    delay(50);  // allow CDCE913 to power up
+
+    cdce_program_if_needed();   // only burns EEPROM if version changed
+    cdce_wait_for_lock();       // wait for PLL lock
+
+    Serial.println("Running 25 MHz self-test...");
+    if (cdce_selftest_25mhz()) {
+        Serial.println("CDCE913: 25 MHz output OK");
+    } else {
+        Serial.println("CDCE913: 25 MHz output FAILED");
+    }
+}
+
+void loop() {
+    // Nothing needed here unless you want runtime monitoring
+}

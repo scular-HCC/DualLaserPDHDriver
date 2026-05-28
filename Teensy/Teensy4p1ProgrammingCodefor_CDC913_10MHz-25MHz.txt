@@ -1,0 +1,33 @@
+#include <Wire.h>
+
+// 32-byte CDCE913 config array
+uint8_t cdce[32] = {
+    0x00,0x0A,0x01,0x00,0x04,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+};
+
+void program_cdce913() {
+    Wire.beginTransmission(0x65);
+    Wire.write(0x00);
+    for (int i = 0; i < 32; i++) Wire.write(cdce[i]);
+    Wire.endTransmission();
+    delay(5);
+
+    Wire.beginTransmission(0x65);
+    Wire.write(0x86);
+    Wire.write(0x01);
+    Wire.endTransmission();
+    delay(20);
+}
+
+void setup() {
+    Wire.begin();
+    delay(50);
+    program_cdce913();
+}
+
+void loop() {
+    // nothing needed here unless you want monitoring
+}
