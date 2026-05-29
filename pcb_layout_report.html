@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Driver v3.0 — PCB Layout Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0d1117;
+    --bg2:     #161b22;
+    --bg3:     #21262d;
+    --border:  #30363d;
+    --text:    #e6edf3;
+    --muted:   #8b949e;
+    --accent:  #58a6ff;
+    --green:   #3fb950;
+    --amber:   #d29922;
+    --red:     #f85149;
+    --purple:  #bc8cff;
+    --teal:    #39d353;
+
+    --za: #1a6b52;  --za-light: #2bb07a;
+    --zb: #7a4a10;  --zb-light: #e8921a;
+    --zc: #7a2e18;  --zc-light: #e05a2a;
+    --zd: #0d3a6b;  --zd-light: #2d7dd2;
+    --ze: #2d2469;  --ze-light: #7b6ad4;
+    --zf: #6b2318;  --zf-light: #c94020;
+    --zg: #1e4a0d;  --zg-light: #4c9e1f;
+    --zh: #5c1f45;  --zh-light: #c4407a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .header .sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .badge-row {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .badge-blue  { color: var(--accent);  border-color: var(--accent);  }
+  .badge-green { color: var(--green);   border-color: var(--green);   }
+  .badge-amber { color: var(--amber);   border-color: var(--amber);   }
+
+  /* ── Layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 48px 64px; }
+
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h2:first-of-type { margin-top: 0; }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* ── SVG board ── */
+  .board-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    overflow-x: auto;
+  }
+  .board-wrap svg { display: block; max-width: 100%; }
+
+  /* ── Zone cards ── */
+  .zones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 12px;
+  }
+  .zone-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    border-left: 3px solid;
+    transition: border-color 0.15s;
+  }
+  .zone-card .zone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .zone-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+  }
+  .zone-counts {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    display: flex; gap: 12px;
+  }
+  .zone-counts span { white-space: nowrap; }
+  .zone-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .zone-refs {
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr {
+    background: var(--bg3);
+  }
+  th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(48,54,61,0.6);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+  .num  { text-align: right; font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+  .big  { font-size: 18px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+  .label-smd  { color: var(--accent); }
+  .label-tht  { color: var(--amber); }
+  .label-total{ color: var(--text); }
+
+  /* ── Summary stat cards ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-align: center;
+  }
+  .stat .n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 32px;
+    font-weight: 600;
+    display: block;
+    line-height: 1.1;
+  }
+  .stat .l {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+  }
+  .stat-blue   .n { color: var(--accent); }
+  .stat-amber  .n { color: var(--amber); }
+  .stat-green  .n { color: var(--green); }
+  .stat-purple .n { color: var(--purple); }
+  .stat-red    .n { color: var(--red); }
+  .stat-teal   .n { color: var(--teal); }
+
+  /* ── footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Laser Driver v3.0 — PCB Layout Report</h1>
+    <div class="sub">Dual-channel 1550 nm DFB butterfly + bipolar TEC H-bridge &nbsp;|&nbsp; Rev 3.0 &nbsp;|&nbsp; 2025-05-22</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge badge-blue">300 × 200 mm</span>
+    <span class="badge badge-green">2-layer FR4</span>
+    <span class="badge badge-amber">298 components</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══ SUMMARY STATS ══ -->
+<h2>Board summary</h2>
+<div class="stat-row">
+  <div class="stat stat-blue">  <span class="n">298</span><div class="l">Total components</div></div>
+  <div class="stat stat-amber"> <span class="n">244</span><div class="l">SMD parts</div></div>
+  <div class="stat stat-teal">  <span class="n">54</span> <div class="l">Through-hole</div></div>
+  <div class="stat stat-purple"><span class="n">8</span>  <div class="l">Functional zones</div></div>
+  <div class="stat stat-red">   <span class="n">16</span> <div class="l">Power MOSFETs</div></div>
+  <div class="stat stat-green"> <span class="n">1.6 mm</span><div class="l">FR4 thickness</div></div>
+</div>
+
+<!-- ══ SVG BOARD MAP ══ -->
+<h2>Board layout — zone map</h2>
+<div class="board-wrap">
+<!-- 300×200 mm board → 900×600 px SVG (scale 3×) -->
+<svg width="952" height="650" viewBox="-26 -26 952 650" xmlns="http://www.w3.org/2000/svg" style="font-family:'IBM Plex Mono',monospace;">
+
+  <!-- ── Background ── -->
+  <rect x="0" y="0" width="900" height="600" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- ── Zone fills (300×200mm → 900×600px) ── -->
+  <!-- Zone A: Power strip top y=0..105 full width -->
+  <rect x="0" y="0"   width="900" height="105" rx="0" fill="#1a6b52" fill-opacity="0.22"/>
+  <!-- Zone B: Mains x=0..150, y=105..600 -->
+  <rect x="0" y="105" width="150" height="495" fill="#7a4a10" fill-opacity="0.22"/>
+  <!-- Zone C: 6V TEC x=150..330, y=105..600 -->
+  <rect x="150" y="105" width="180" height="495" fill="#7a2e18" fill-opacity="0.22"/>
+  <!-- Zone D: Laser/TEC ctrl x=330..630, y=105..360 -->
+  <rect x="330" y="105" width="300" height="255" fill="#0d3a6b" fill-opacity="0.22"/>
+  <!-- Zone E: Readback x=630..855, y=105..360 -->
+  <rect x="630" y="105" width="225" height="255" fill="#2d2469" fill-opacity="0.22"/>
+  <!-- Zone F: TEC FETs x=330..855, y=360..600 -->
+  <rect x="330" y="360" width="525" height="240" fill="#6b2318" fill-opacity="0.22"/>
+  <!-- Override G inside F: x=630..855, y=360..600 -->
+  <rect x="630" y="360" width="225" height="240" fill="#1e4a0d" fill-opacity="0.30"/>
+  <!-- Zone H: DFB connectors x=855..900, y=105..600 -->
+  <rect x="855" y="105" width="45"  height="495" fill="#5c1f45" fill-opacity="0.32"/>
+
+  <!-- ── Board outline ── -->
+  <rect x="0" y="0" width="900" height="600" rx="4" fill="none" stroke="#58a6ff" stroke-width="2"/>
+
+  <!-- ── Zone dividers ── -->
+  <line x1="0"   y1="105" x2="900" y2="105" stroke="#30363d" stroke-width="1" stroke-dasharray="6 4"/>
+  <line x1="150" y1="105" x2="150" y2="600" stroke="#30363d" stroke-width="1" stroke-dasharray="6 4"/>
+  <line x1="330" y1="105" x2="330" y2="600" stroke="#30363d" stroke-width="1" stroke-dasharray="6 4"/>
+  <line x1="630" y1="105" x2="630" y2="600" stroke="#30363d" stroke-width="1" stroke-dasharray="6 4"/>
+  <line x1="855" y1="105" x2="855" y2="600" stroke="#30363d" stroke-width="1" stroke-dasharray="6 4"/>
+  <line x1="330" y1="360" x2="855" y2="360" stroke="#30363d" stroke-width="0.8" stroke-dasharray="4 4"/>
+
+  <!-- ── Dimension annotations ── -->
+  <!-- Horizontal ruler -->
+  <line x1="0" y1="615" x2="900" y2="615" stroke="#30363d" stroke-width="1"/>
+  <line x1="0" y1="610" x2="0"   y2="620" stroke="#30363d" stroke-width="1"/>
+  <line x1="900" y1="610" x2="900" y2="620" stroke="#30363d" stroke-width="1"/>
+  <text x="450" y="628" text-anchor="middle" fill="#8b949e" font-size="10">300 mm</text>
+  <!-- Vertical ruler -->
+  <line x1="-14" y1="0" x2="-14" y2="600" stroke="#30363d" stroke-width="1"/>
+  <line x1="-19" y1="0"   x2="-9" y2="0"   stroke="#30363d" stroke-width="1"/>
+  <line x1="-19" y1="600" x2="-9" y2="600" stroke="#30363d" stroke-width="1"/>
+  <text x="-22" y="300" text-anchor="middle" fill="#8b949e" font-size="10" transform="rotate(-90,-22,300)">200 mm</text>
+
+  <!-- ══ ZONE A — Power supply strip ══ -->
+  <text x="450" y="20" text-anchor="middle" fill="#2bb07a" font-size="11" font-weight="600" letter-spacing="1">ZONE A — POWER SUPPLY STRIP</text>
+
+  <!-- ±15V block -->
+  <rect x="8"   y="28" width="196" height="68" rx="4" fill="#1a6b52" fill-opacity="0.45" stroke="#2bb07a" stroke-width="0.8"/>
+  <text x="106" y="44" text-anchor="middle" fill="#2bb07a" font-size="10" font-weight="600">±15V CHAIN</text>
+  <text x="106" y="57" text-anchor="middle" fill="#8b949e" font-size="9">U9 TPS7A39</text>
+  <text x="106" y="69" text-anchor="middle" fill="#8b949e" font-size="9">U10 LT3042  U11 LT3094</text>
+  <text x="106" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C25–C34  R14–R19</text>
+  <text x="106" y="94" text-anchor="middle" fill="#2bb07a" font-size="8">19 components</text>
+
+  <!-- 5V Ref block -->
+  <rect x="212" y="28" width="196" height="68" rx="4" fill="#1a6b52" fill-opacity="0.45" stroke="#2bb07a" stroke-width="0.8"/>
+  <text x="310" y="44" text-anchor="middle" fill="#2bb07a" font-size="10" font-weight="600">5V REF CHAIN</text>
+  <text x="310" y="57" text-anchor="middle" fill="#8b949e" font-size="9">U1 LM7808  U2 LT3042</text>
+  <text x="310" y="69" text-anchor="middle" fill="#8b949e" font-size="9">U3 LTC6655  U4 OPA192</text>
+  <text x="310" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C9–C16  R10–R11  D4</text>
+  <text x="310" y="94" text-anchor="middle" fill="#2bb07a" font-size="8">15 components</text>
+
+  <!-- 5V Laser block -->
+  <rect x="416" y="28" width="220" height="68" rx="4" fill="#1a6b52" fill-opacity="0.45" stroke="#2bb07a" stroke-width="0.8"/>
+  <text x="526" y="44" text-anchor="middle" fill="#2bb07a" font-size="10" font-weight="600">+5V LASER CHAIN</text>
+  <text x="526" y="57" text-anchor="middle" fill="#8b949e" font-size="9">U14 LM7812  U15 LM7808</text>
+  <text x="526" y="69" text-anchor="middle" fill="#8b949e" font-size="9">U16/U17 LT3045×2</text>
+  <text x="526" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C49–C57  R34–R37  D12/D13</text>
+  <text x="526" y="94" text-anchor="middle" fill="#2bb07a" font-size="8">19 components</text>
+
+  <!-- 3V3 block -->
+  <rect x="644" y="28" width="200" height="68" rx="4" fill="#1a6b52" fill-opacity="0.45" stroke="#2bb07a" stroke-width="0.8"/>
+  <text x="744" y="44" text-anchor="middle" fill="#2bb07a" font-size="10" font-weight="600">3.3V CHAIN</text>
+  <text x="744" y="57" text-anchor="middle" fill="#8b949e" font-size="9">U5 LM7812  U6 LM7805</text>
+  <text x="744" y="69" text-anchor="middle" fill="#8b949e" font-size="9">U7 LT3045  U8 LP5907</text>
+  <text x="744" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C17–C24  R12–R13  D5/D6</text>
+  <text x="744" y="94" text-anchor="middle" fill="#2bb07a" font-size="8">16 components</text>
+
+  <!-- ══ ZONE B — Mains PSU ══ -->
+  <text x="75" y="122" text-anchor="middle" fill="#e8921a" font-size="10" font-weight="600" letter-spacing="0.5">ZONE B</text>
+  <text x="75" y="135" text-anchor="middle" fill="#e8921a" font-size="9">MAINS PSU</text>
+  <!-- Rectifier/soft-start -->
+  <rect x="8" y="145" width="134" height="70" rx="4" fill="#7a4a10" fill-opacity="0.5" stroke="#e8921a" stroke-width="0.8"/>
+  <text x="75" y="162" text-anchor="middle" fill="#e8921a" font-size="9" font-weight="600">RECTIFIER / SOFT-START</text>
+  <text x="75" y="174" text-anchor="middle" fill="#8b949e" font-size="8">D1 ABS10 bridge</text>
+  <text x="75" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q1/Q2 IRF530/IRF9530</text>
+  <text x="75" y="196" text-anchor="middle" fill="#8b949e" font-size="8">F1 fuse · T1 xfmr header</text>
+  <text x="75" y="208" text-anchor="middle" fill="#e8921a" font-size="8">8 components</text>
+  <!-- Bulk caps -->
+  <rect x="8" y="224" width="134" height="80" rx="4" fill="#7a4a10" fill-opacity="0.5" stroke="#e8921a" stroke-width="0.8"/>
+  <text x="75" y="242" text-anchor="middle" fill="#e8921a" font-size="9" font-weight="600">±18V BULK CAPS</text>
+  <text x="75" y="255" text-anchor="middle" fill="#8b949e" font-size="8">C3/C4  2×2200 µF</text>
+  <text x="75" y="267" text-anchor="middle" fill="#8b949e" font-size="8">C5/C6  2×1000 µF</text>
+  <text x="75" y="279" text-anchor="middle" fill="#8b949e" font-size="8">D2/D3 zeners</text>
+  <text x="75" y="291" text-anchor="middle" fill="#8b949e" font-size="8">C1/C2/C7/C8  R1–R9</text>
+  <text x="75" y="297" text-anchor="middle" fill="#e8921a" font-size="8">17 components</text>
+
+  <!-- Left edge connectors -->
+  <rect x="0" y="320" width="8" height="100" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
+  <text x="4" y="380" text-anchor="middle" fill="#c4407a" font-size="8" transform="rotate(-90,4,380)">J4 J5 J6 J7 J8</text>
+
+  <!-- ══ ZONE C — ±6V TEC supply ══ -->
+  <text x="240" y="122" text-anchor="middle" fill="#e05a2a" font-size="10" font-weight="600" letter-spacing="0.5">ZONE C</text>
+  <text x="240" y="135" text-anchor="middle" fill="#e05a2a" font-size="9">±6V TEC SUPPLY</text>
+  <rect x="158" y="145" width="164" height="80" rx="4" fill="#7a2e18" fill-opacity="0.5" stroke="#e05a2a" stroke-width="0.8"/>
+  <text x="240" y="163" text-anchor="middle" fill="#e05a2a" font-size="9" font-weight="600">RECTIFIER / CTRL</text>
+  <text x="240" y="175" text-anchor="middle" fill="#8b949e" font-size="8">D7 KBPC1501W bridge</text>
+  <text x="240" y="186" text-anchor="middle" fill="#8b949e" font-size="8">Q3/Q4 IRF530/IRF9530</text>
+  <text x="240" y="197" text-anchor="middle" fill="#8b949e" font-size="8">Q5/Q6 MJL21193/94 TO-264</text>
+  <text x="240" y="208" text-anchor="middle" fill="#8b949e" font-size="8">U12/U13 LM4040  D8–D11</text>
+  <text x="240" y="218" text-anchor="middle" fill="#e05a2a" font-size="8">11 components</text>
+
+  <rect x="158" y="234" width="164" height="120" rx="4" fill="#7a2e18" fill-opacity="0.5" stroke="#e05a2a" stroke-width="0.8"/>
+  <text x="240" y="252" text-anchor="middle" fill="#e05a2a" font-size="9" font-weight="600">±6V BULK CAPS</text>
+  <text x="240" y="265" text-anchor="middle" fill="#8b949e" font-size="8">C35/C36  2×1000 µF</text>
+  <text x="240" y="276" text-anchor="middle" fill="#8b949e" font-size="8">C41/C42  2×2200 µF</text>
+  <text x="240" y="287" text-anchor="middle" fill="#8b949e" font-size="8">C43–C46  4×1000 µF</text>
+  <text x="240" y="298" text-anchor="middle" fill="#8b949e" font-size="8">C37–C40/C47/C48 bypass</text>
+  <text x="240" y="309" text-anchor="middle" fill="#8b949e" font-size="8">R20–R33 bias/bleed</text>
+  <text x="240" y="344" text-anchor="middle" fill="#e05a2a" font-size="8">28 components</text>
+
+  <!-- ══ ZONE D — Laser/TEC ctrl ══ -->
+  <text x="480" y="122" text-anchor="middle" fill="#2d7dd2" font-size="10" font-weight="600" letter-spacing="0.5">ZONE D — LASER &amp; TEC ANALOGUE CONTROL</text>
+
+  <!-- Laser ctrl left -->
+  <rect x="338" y="133" width="220" height="112" rx="4" fill="#0d3a6b" fill-opacity="0.5" stroke="#2d7dd2" stroke-width="0.8"/>
+  <text x="448" y="150" text-anchor="middle" fill="#2d7dd2" font-size="9" font-weight="600">DUAL LASER DRIVERS + DAC/DDS</text>
+  <text x="448" y="163" text-anchor="middle" fill="#8b949e" font-size="8">U23/U24 OPA192  U30 74AHCT125</text>
+  <text x="448" y="174" text-anchor="middle" fill="#8b949e" font-size="8">U31/U33 AD9833 DDS  U32 AD5064 DAC</text>
+  <text x="448" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q15/Q16 IRLML6344  D22/D23 BAT54</text>
+  <text x="448" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R64–R73 (scalers/sense/gate)</text>
+  <text x="448" y="207" text-anchor="middle" fill="#8b949e" font-size="8">R_P1–R_P7 butterfly pin prot.</text>
+  <text x="448" y="234" text-anchor="middle" fill="#2d7dd2" font-size="8">~50 components</text>
+
+  <!-- TEC ctrl right -->
+  <rect x="566" y="133" width="156" height="112" rx="4" fill="#0d3a6b" fill-opacity="0.5" stroke="#2d7dd2" stroke-width="0.8"/>
+  <text x="644" y="150" text-anchor="middle" fill="#2d7dd2" font-size="9" font-weight="600">TEC H-BRIDGE CTRL</text>
+  <text x="644" y="163" text-anchor="middle" fill="#8b949e" font-size="8">U18–U20 OPA192</text>
+  <text x="644" y="174" text-anchor="middle" fill="#8b949e" font-size="8">U21/U22 OPA551U</text>
+  <text x="644" y="185" text-anchor="middle" fill="#8b949e" font-size="8">D14–D21 BZX384</text>
+  <text x="644" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R38–R63 bias/Kelvin</text>
+  <text x="644" y="207" text-anchor="middle" fill="#8b949e" font-size="8">C58/C59 bypass</text>
+  <text x="644" y="220" text-anchor="middle" fill="#2d7dd2" font-size="8">30 components</text>
+
+  <!-- ══ ZONE E — Readback ══ -->
+  <text x="742" y="122" text-anchor="middle" fill="#7b6ad4" font-size="10" font-weight="600" letter-spacing="0.5">ZONE E — READBACK</text>
+  <rect x="638" y="133" width="209" height="112" rx="4" fill="#2d2469" fill-opacity="0.5" stroke="#7b6ad4" stroke-width="0.8"/>
+  <text x="742" y="150" text-anchor="middle" fill="#7b6ad4" font-size="9" font-weight="600">INA826 · OPA380 · BNC</text>
+  <text x="742" y="163" text-anchor="middle" fill="#8b949e" font-size="8">U25–U28 INA826 (curr. sense)</text>
+  <text x="742" y="174" text-anchor="middle" fill="#8b949e" font-size="8">U_TIA1–U_TIA6 OPA380 TIA</text>
+  <text x="742" y="185" text-anchor="middle" fill="#8b949e" font-size="8">U29 OPA2141 dual opamp</text>
+  <text x="742" y="196" text-anchor="middle" fill="#8b949e" font-size="8">J1/J2 BNC coax inputs</text>
+  <text x="742" y="207" text-anchor="middle" fill="#8b949e" font-size="8">AAF filters · NTC · R_f · C_f</text>
+  <text x="742" y="220" text-anchor="middle" fill="#7b6ad4" font-size="8">42 components</text>
+
+  <!-- ══ ZONE F — TEC MOSFETs ══ -->
+  <text x="490" y="378" text-anchor="middle" fill="#c94020" font-size="10" font-weight="600" letter-spacing="0.5">ZONE F — TEC H-BRIDGE POWER MOSFETs  (8× TO-220)</text>
+
+  <!-- Two H-bridge channels side by side -->
+  <rect x="338" y="392" width="250" height="80" rx="4" fill="#6b2318" fill-opacity="0.5" stroke="#c94020" stroke-width="0.8"/>
+  <text x="463" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 1  (Q7–Q10)</text>
+  <text x="463" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q7/Q9 IRLB8721 N-ch</text>
+  <text x="463" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q8/Q10 IRF9540N P-ch</text>
+  <text x="463" y="445" text-anchor="middle" fill="#8b949e" font-size="8">4× TO-220 Vertical</text>
+  <text x="463" y="463" text-anchor="middle" fill="#c94020" font-size="8">4 MOSFETs</text>
+
+  <rect x="596" y="392" width="250" height="80" rx="4" fill="#6b2318" fill-opacity="0.5" stroke="#c94020" stroke-width="0.8"/>
+  <text x="721" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 2  (Q11–Q14)</text>
+  <text x="721" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q11/Q13 IRLB8721 N-ch</text>
+  <text x="721" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q12/Q14 IRF9540N P-ch</text>
+  <text x="721" y="445" text-anchor="middle" fill="#8b949e" font-size="8">4× TO-220 Vertical</text>
+  <text x="721" y="463" text-anchor="middle" fill="#c94020" font-size="8">4 MOSFETs</text>
+
+  <!-- TEC output connector -->
+  <rect x="0" y="480" width="8" height="44" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
+  <text x="4" y="505" text-anchor="middle" fill="#c4407a" font-size="7" transform="rotate(-90,4,505)">J8 TEC</text>
+
+  <!-- ══ ZONE G — Digital ══ -->
+  <text x="742" y="378" text-anchor="middle" fill="#4c9e1f" font-size="10" font-weight="600" letter-spacing="0.5">ZONE G — DIGITAL</text>
+  <!-- Teensy -->
+  <rect x="638" y="392" width="209" height="54" rx="4" fill="#1e4a0d" fill-opacity="0.6" stroke="#4c9e1f" stroke-width="0.8"/>
+  <text x="742" y="410" text-anchor="middle" fill="#4c9e1f" font-size="9" font-weight="600">A1 — TEENSY 4.1</text>
+  <text x="742" y="423" text-anchor="middle" fill="#8b949e" font-size="8">35 × 18 mm module (600 MHz Cortex-M7)</text>
+  <text x="742" y="434" text-anchor="middle" fill="#8b949e" font-size="8">SPI → DAC/DDS  ·  ADC readback</text>
+  <!-- Clock -->
+  <rect x="638" y="454" width="209" height="60" rx="4" fill="#1e4a0d" fill-opacity="0.6" stroke="#4c9e1f" stroke-width="0.8"/>
+  <text x="742" y="470" text-anchor="middle" fill="#4c9e1f" font-size="9" font-weight="600">CLOCK DISTRIBUTION</text>
+  <text x="742" y="482" text-anchor="middle" fill="#8b949e" font-size="8">Y1 ASE 10 MHz osc</text>
+  <text x="742" y="493" text-anchor="middle" fill="#8b949e" font-size="8">U34 LMV7219  U35 SN74LVC1G3157</text>
+  <text x="742" y="504" text-anchor="middle" fill="#8b949e" font-size="8">U36 CDCE913  J3 BNC in</text>
+
+  <!-- ══ ZONE H — DFB connectors ══ -->
+  <text x="877" y="122" text-anchor="middle" fill="#c4407a" font-size="8" font-weight="600" transform="rotate(-90,877,122)">ZONE H — DFB</text>
+  <!-- J_BTF1 -->
+  <rect x="860" y="133" width="32" height="90" rx="3" fill="#5c1f45" fill-opacity="0.7" stroke="#c4407a" stroke-width="1"/>
+  <text x="876" y="160" text-anchor="middle" fill="#c4407a" font-size="8" font-weight="600" transform="rotate(-90,876,160)">J_BTF1 · DFB1550LP #1</text>
+  <text x="876" y="200" text-anchor="middle" fill="#8b949e" font-size="7" transform="rotate(-90,876,200)">2×7  2.54mm  R_P1–P7</text>
+
+  <!-- J_BTF2 -->
+  <rect x="860" y="234" width="32" height="90" rx="3" fill="#5c1f45" fill-opacity="0.7" stroke="#c4407a" stroke-width="1"/>
+  <text x="876" y="260" text-anchor="middle" fill="#c4407a" font-size="8" font-weight="600" transform="rotate(-90,876,260)">J_BTF2 · DFB1550LP #2</text>
+  <text x="876" y="300" text-anchor="middle" fill="#8b949e" font-size="7" transform="rotate(-90,876,300)">2×7  2.54mm  R90–R96</text>
+
+  <!-- Power connectors (top edge) -->
+  <rect x="8"   y="0" width="40" height="8" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
+  <text x="28"  y="6" text-anchor="middle" fill="#c4407a" font-size="7">J4 ±15V</text>
+  <rect x="52"  y="0" width="36" height="8" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
+  <text x="70"  y="6" text-anchor="middle" fill="#c4407a" font-size="7">J5 +5V</text>
+  <rect x="92"  y="0" width="32" height="8" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
+  <text x="108" y="6" text-anchor="middle" fill="#c4407a" font-size="7">J6 3V3</text>
+
+  <!-- ── Copper zone labels ── -->
+  <text x="165" y="595" fill="#30363d" font-size="9" fill-opacity="0.8">AGND plane (left)</text>
+  <text x="340" y="595" fill="#30363d" font-size="9" fill-opacity="0.8">PGND plane (right)</text>
+  <text x="640" y="595" fill="#30363d" font-size="9" fill-opacity="0.8">AGND / PGND split ≈ X=110 mm</text>
+
+  <!-- ── Corner markers ── -->
+  <circle cx="6"   cy="6"   r="3" fill="none" stroke="#58a6ff" stroke-width="0.8"/>
+  <circle cx="894" cy="6"   r="3" fill="none" stroke="#58a6ff" stroke-width="0.8"/>
+  <circle cx="6"   cy="594" r="3" fill="none" stroke="#58a6ff" stroke-width="0.8"/>
+  <circle cx="894" cy="594" r="3" fill="none" stroke="#58a6ff" stroke-width="0.8"/>
+</svg>
+</div><!-- board-wrap -->
+
+<!-- ══ ZONE DESCRIPTIONS ══ -->
+<h2>Zone descriptions</h2>
+<div class="zones-grid">
+
+  <div class="zone-card" style="border-left-color:#2bb07a">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#2bb07a">Zone A</span>
+        <h3 style="color:#2bb07a;margin-top:6px">Power Supply Strip</h3>
+      </div>
+      <div class="zone-counts">
+        <span>73 total</span><span class="label-smd">59 SMD</span><span class="label-tht">14 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Full-width strip across the top of the board (Y = 0–35 mm). All primary LDO regulator chains: ±15V (TPS7A39 + LT3042 + LT3094), 5 V reference (LM7808 → LT3042 → LTC6655 → OPA192 buffer), +5 V laser (LM7812 → LM7808 → 2× LT3045), 3.3 V (LM7812 → LM7805 → LT3045 → LP5907 1.8 V). Extensive decoupling on every sub-rail.</div>
+    <div class="zone-refs">Key ICs: U1–U17 · U9 TPS7A39 · U3 LTC6655 · U7/U16/U17 LT3045</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#e8921a">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#e8921a">Zone B</span>
+        <h3 style="color:#e8921a;margin-top:6px">Mains PSU &amp; Bulk Caps</h3>
+      </div>
+      <div class="zone-counts">
+        <span>25 total</span><span class="label-smd">14 SMD</span><span class="label-tht">11 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Left column (X = 0–50 mm, Y = 35–200 mm). AC mains path: F1 fuse, T1 transformer header, D1 ABS10 bridge rectifier. Soft-start: Q1 IRF530 N-ch + Q2 IRF9530 P-ch gate control with D2/D3 zener clamps. C3/C4 2×2200 µF and C5/C6 2×1000 µF large THT electrolytic caps for ±18 V rails.</div>
+    <div class="zone-refs">Key parts: D1 · Q1/Q2 · F1 · T1 · C3–C6</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#e05a2a">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#e05a2a">Zone C</span>
+        <h3 style="color:#e05a2a;margin-top:6px">±6V TEC Supply</h3>
+      </div>
+      <div class="zone-counts">
+        <span>39 total</span><span class="label-smd">24 SMD</span><span class="label-tht">15 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Second column (X = 50–110 mm, Y = 35–200 mm). D7 KBPC1501W through-hole bridge rectifier. Q3/Q4 control gate MOSFETs. Q5/Q6 MJL21193/21194 TO-264 bipolar power transistors. U12/U13 LM4040 shunt references. C35–C48: 12 large bulk electrolytic caps (up to 2200 µF). Bias, bleed, and filter resistors R20–R33.</div>
+    <div class="zone-refs">Key parts: D7 · Q3–Q6 · U12/U13 · C35–C48 (12 caps)</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#2d7dd2">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#2d7dd2">Zone D</span>
+        <h3 style="color:#2d7dd2;margin-top:6px">Laser &amp; TEC Analogue Control</h3>
+      </div>
+      <div class="zone-counts">
+        <span>80 total</span><span class="label-smd">80 SMD</span><span class="label-tht">0 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Centre block (X = 110–210 mm, Y = 35–120 mm). Fully SMD. Dual-channel laser drivers: U23/U24 OPA192, U30 74AHCT125 level shifter, U31/U33 AD9833 DDS dither injection, U32 AD5064 16-bit DAC. Gate FETs Q15/Q16, BAT54 clamps, Kelvin sense Rs, inrush limiters. TEC H-bridge control: U18–U20 OPA192, U21/U22 OPA551U drivers, BZX384 gate clamps, precision voltage dividers.</div>
+    <div class="zone-refs">Key ICs: U18–U24 · U30–U33 · Q15/Q16</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#7b6ad4">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#7b6ad4">Zone E</span>
+        <h3 style="color:#7b6ad4;margin-top:6px">Readback</h3>
+      </div>
+      <div class="zone-counts">
+        <span>42 total</span><span class="label-smd">40 SMD</span><span class="label-tht">2 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Right-centre block (X = 210–285 mm, Y = 35–120 mm). U25–U28: 4× INA826 instrumentation amplifiers for laser and TEC current readback. U_TIA1–U_TIA6: 6× OPA380 transimpedance amplifiers for monitor photodiode (MPD) channels. U29 OPA2141 dual precision op-amp. J1/J2 BNC horizontal coax inputs. Anti-alias filters, NTC thermistor dividers, feedback and bias networks.</div>
+    <div class="zone-refs">Key ICs: U25–U29 · U_TIA1–U_TIA6 · J1/J2 BNC</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#c94020">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#c94020">Zone F</span>
+        <h3 style="color:#c94020;margin-top:6px">TEC H-Bridge MOSFETs</h3>
+      </div>
+      <div class="zone-counts">
+        <span>8 total</span><span class="label-smd">0 SMD</span><span class="label-tht">8 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Lower centre (X = 110–210 mm, Y = 120–200 mm). All 8 TO-220 vertical power MOSFETs for dual-channel TEC H-bridge. Channel 1: Q7 (IRLB8721), Q8 (IRF9540N), Q9 (IRLB8721), Q10 (IRF9540N). Channel 2: Q11/Q12/Q13/Q14 same arrangement. N-ch and P-ch MOSFETs interleaved for complementary switching. Positioned close to J8 TEC output connector for short high-current loops.</div>
+    <div class="zone-refs">Q7–Q14 · All TO-220-3 Vertical · rated ≥ 2A TEC</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#4c9e1f">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#4c9e1f">Zone G</span>
+        <h3 style="color:#4c9e1f;margin-top:6px">Digital — Teensy / Clock / DAC</h3>
+      </div>
+      <div class="zone-counts">
+        <span>21 total</span><span class="label-smd">19 SMD</span><span class="label-tht">2 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Lower right (X = 210–285 mm, Y = 120–200 mm). A1 Teensy 4.1 MCU module (600 MHz ARM Cortex-M7, 35×18 mm). 10 MHz clock distribution chain: Y1 ASE oscillator module, U34 LMV7219M5 comparator, U35 SN74LVC1G3157 analog mux, U36 CDCE913 PLL/clock fanout. J3 BNC horizontal for external 10 MHz clock injection. Supporting decoupling and termination resistors R80–R89, C68–C71.</div>
+    <div class="zone-refs">A1 Teensy 4.1 · U34–U36 · Y1 · J3 BNC</div>
+  </div>
+
+  <div class="zone-card" style="border-left-color:#c4407a">
+    <div class="zone-header">
+      <div>
+        <span class="zone-id" style="color:#c4407a">Zone H</span>
+        <h3 style="color:#c4407a;margin-top:6px">DFB Laser Connectors</h3>
+      </div>
+      <div class="zone-counts">
+        <span>10 total</span><span class="label-smd">8 SMD</span><span class="label-tht">2 THT</span>
+      </div>
+    </div>
+    <div class="zone-desc">Right edge strip (X = 285–300 mm). J_BTF1 and J_BTF2: 2× 2×7 2.54 mm vertical pin-header sockets for DFB1550LP butterfly laser packages. R_P1–R_P7 (Zone D): 7× 47Ω SMD series protection for J_BTF1 confirmed pins (P1/P2/P5/P10/P11/P13/P14). R90–R96: 7× 47Ω series protection for J_BTF2. All confirmed butterfly signal pins have 47Ω in-series protection. Laser reverse-bias protection: BAT54 clamps (Vr_max = 2V).</div>
+    <div class="zone-refs">J_BTF1 · J_BTF2 · 14× 47Ω prot. (R_P1–P7, R90–R96)</div>
+  </div>
+
+</div><!-- zones-grid -->
+
+<!-- ══ PARTS COUNT TABLES ══ -->
+<h2>Component count by mount type</h2>
+<div class="table-wrap">
+<table>
+<thead><tr>
+  <th>Zone</th><th>Total</th><th>SMD</th><th>Through-hole</th>
+  <th>Resistors</th><th>Capacitors</th><th>ICs</th><th>Transistors</th><th>Diodes</th><th>Connectors</th>
+</tr></thead>
+<tbody>
+  <tr>
+    <td><span style="color:#2bb07a;font-family:'IBM Plex Mono',monospace;font-weight:600">A — Power Strip</span></td>
+    <td class="num">73</td><td class="num label-smd">59</td><td class="num label-tht">14</td>
+    <td class="num">20</td><td class="num">44</td><td class="num">8</td><td class="num">0</td><td class="num">1</td><td class="num">0</td>
+  </tr>
+  <tr>
+    <td><span style="color:#e8921a;font-family:'IBM Plex Mono',monospace;font-weight:600">B — Mains PSU</span></td>
+    <td class="num">25</td><td class="num label-smd">14</td><td class="num label-tht">11</td>
+    <td class="num">9</td><td class="num">8</td><td class="num">0</td><td class="num">2</td><td class="num">3</td><td class="num">3</td>
+  </tr>
+  <tr>
+    <td><span style="color:#e05a2a;font-family:'IBM Plex Mono',monospace;font-weight:600">C — ±6V TEC</span></td>
+    <td class="num">39</td><td class="num label-smd">24</td><td class="num label-tht">15</td>
+    <td class="num">14</td><td class="num">14</td><td class="num">2</td><td class="num">4</td><td class="num">5</td><td class="num">0</td>
+  </tr>
+  <tr>
+    <td><span style="color:#2d7dd2;font-family:'IBM Plex Mono',monospace;font-weight:600">D — Laser/TEC Ctrl</span></td>
+    <td class="num">80</td><td class="num label-smd">80</td><td class="num label-tht">0</td>
+    <td class="num">49</td><td class="num">12</td><td class="num">7</td><td class="num">2</td><td class="num">10</td><td class="num">0</td>
+  </tr>
+  <tr>
+    <td><span style="color:#7b6ad4;font-family:'IBM Plex Mono',monospace;font-weight:600">E — Readback</span></td>
+    <td class="num">42</td><td class="num label-smd">40</td><td class="num label-tht">2</td>
+    <td class="num">18</td><td class="num">12</td><td class="num">9</td><td class="num">0</td><td class="num">0</td><td class="num">3</td>
+  </tr>
+  <tr>
+    <td><span style="color:#c94020;font-family:'IBM Plex Mono',monospace;font-weight:600">F — H-Bridge FETs</span></td>
+    <td class="num">8</td><td class="num label-smd">0</td><td class="num label-tht">8</td>
+    <td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">8</td><td class="num">0</td><td class="num">0</td>
+  </tr>
+  <tr>
+    <td><span style="color:#4c9e1f;font-family:'IBM Plex Mono',monospace;font-weight:600">G — Digital</span></td>
+    <td class="num">21</td><td class="num label-smd">19</td><td class="num label-tht">2</td>
+    <td class="num">11</td><td class="num">4</td><td class="num">4</td><td class="num">0</td><td class="num">1</td><td class="num">1</td>
+  </tr>
+  <tr>
+    <td><span style="color:#c4407a;font-family:'IBM Plex Mono',monospace;font-weight:600">H — DFB Connectors</span></td>
+    <td class="num">10</td><td class="num label-smd">8</td><td class="num label-tht">2</td>
+    <td class="num">7</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">2</td>
+  </tr>
+  <tr style="background:var(--bg3);font-weight:600">
+    <td class="mono" style="color:var(--text)">TOTAL</td>
+    <td class="num big">298</td><td class="num big label-smd">244</td><td class="num big label-tht">54</td>
+    <td class="num">128</td><td class="num">94</td><td class="num">30</td><td class="num">16</td><td class="num">21</td><td class="num">9</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<h2>Package / footprint breakdown</h2>
+<div class="table-wrap">
+<table>
+<thead><tr>
+  <th>Package</th><th>Mount</th><th>Count</th><th>Typical use on this board</th>
+</tr></thead>
+<tbody>
+  <tr><td class="mono">R_0402_1005Metric</td><td><span class="label-smd">SMD</span></td><td class="num">80</td><td class="mono" style="color:var(--muted)">Bias, pull, gate, filter resistors</td></tr>
+  <tr><td class="mono">C_0805_2012Metric (incl. HandSolder)</td><td><span class="label-smd">SMD</span></td><td class="num">52</td><td class="mono" style="color:var(--muted)">Decoupling, RC filter, bypass caps</td></tr>
+  <tr><td class="mono">R_0805_2012Metric (incl. HandSolder)</td><td><span class="label-smd">SMD</span></td><td class="num">28</td><td class="mono" style="color:var(--muted)">Precision dividers, load, bleed</td></tr>
+  <tr><td class="mono">TO-220-3_Vertical</td><td><span class="label-tht">THT</span></td><td class="num">17</td><td class="mono" style="color:var(--muted)">Regulators (LM78xx), H-bridge MOSFETs</td></tr>
+  <tr><td class="mono">C_0402_1005Metric</td><td><span class="label-smd">SMD</span></td><td class="num">16</td><td class="mono" style="color:var(--muted)">High-freq bypass, TIA feedback caps</td></tr>
+  <tr><td class="mono">SOIC-8_3.9x4.9mm_P1.27mm</td><td><span class="label-smd">SMD</span></td><td class="num">14</td><td class="mono" style="color:var(--muted)">INA826, OPA380, OPA551U, OPA2141</td></tr>
+  <tr><td class="mono">CP_Radial_D12.5mm_P5.00mm</td><td><span class="label-tht">THT</span></td><td class="num">12</td><td class="mono" style="color:var(--muted)">1000 µF / 2200 µF bulk electrolytic</td></tr>
+  <tr><td class="mono">R_0805_2012Metric</td><td><span class="label-smd">SMD</span></td><td class="num">12</td><td class="mono" style="color:var(--muted)">TEC scaler, bleed, gate drive</td></tr>
+  <tr><td class="mono">D_DO-41_SOD81 (THT diode)</td><td><span class="label-tht">THT</span></td><td class="num">9</td><td class="mono" style="color:var(--muted)">1N4007 / 1N4742A zener rectifiers</td></tr>
+  <tr><td class="mono">D_SOD-323</td><td><span class="label-smd">SMD</span></td><td class="num">8</td><td class="mono" style="color:var(--muted)">BZX384-C15 gate clamps (TEC FETs)</td></tr>
+  <tr><td class="mono">DFN-10-1EP_3x3mm_P0.5mm</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">LT3042/LT3045/LT3094/LT3094 LDOs</td></tr>
+  <tr><td class="mono">SOIC-5-6_4.4x3.6mm_P1.27mm</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">OPA192 precision op-amps (SOT-23-6)</td></tr>
+  <tr><td class="mono">R_Shunt_Vishay_WSKW0612</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">Kelvin 4-terminal current sense Rs</td></tr>
+  <tr><td class="mono">SOT-23 (3-pin)</td><td><span class="label-smd">SMD</span></td><td class="num">5</td><td class="mono" style="color:var(--muted)">IRLML6344 gate FETs, LM4040 refs</td></tr>
+  <tr><td class="mono">SOIC-14_3.9x8.7mm</td><td><span class="label-smd">SMD</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">74AHCT125 quad level-shifter, CDCE913</td></tr>
+  <tr><td class="mono">TSSOP-16_4.4x5mm_P0.65mm</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">AD5064 16-bit quad DAC</td></tr>
+  <tr><td class="mono">MSOP-10_3x3mm_P0.5mm</td><td><span class="label-smd">SMD</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">AD9833 DDS (dither injection)</td></tr>
+  <tr><td class="mono">TO-264-3_Vertical</td><td><span class="label-tht">THT</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">MJL21193/MJL21194 power transistors</td></tr>
+  <tr><td class="mono">Texas_S-PVSON-N10</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">TPS7A39 dual LDO (±15V)</td></tr>
+  <tr><td class="mono">ASE-10.000MHZ-LC-T (oscillator)</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">10 MHz TCXO clock source</td></tr>
+  <tr><td class="mono">PinHeader 2×7 (14-pin)</td><td><span class="label-tht">THT</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">J_BTF1/J_BTF2 butterfly laser sockets</td></tr>
+  <tr><td class="mono">BNC horizontal coax</td><td><span class="label-tht">THT</span></td><td class="num">3</td><td class="mono" style="color:var(--muted)">J1 MPD, J2 MPD, J3 10 MHz clock in</td></tr>
+  <tr><td class="mono">TEENSY_4.1:TEENSY_LONG_EXT</td><td><span class="label-tht">THT</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">A1 MCU module (600 MHz Cortex-M7)</td></tr>
+  <tr><td class="mono">PinHeader 1×02 / 1×04</td><td><span class="label-tht">THT</span></td><td class="num">7</td><td class="mono" style="color:var(--muted)">J4–J8 board edge power/signal headers</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Copper zones &amp; ground planes</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Net</th><th>Layer(s)</th><th>Area (approx.)</th><th>Coverage</th></tr></thead>
+<tbody>
+  <tr><td class="mono">AGND</td><td class="mono">F.Cu · B.Cu</td><td class="mono">110 × 165 mm</td><td>Analogue ground — left half of board (X = 0–110 mm, Y = 35–200 mm). Poured both sides. All analogue ICs, opamps, and precision references connect to this plane.</td></tr>
+  <tr><td class="mono">PGND</td><td class="mono">F.Cu · B.Cu</td><td class="mono">175 × 165 mm</td><td>Power/digital ground — right half (X = 110–285 mm, Y = 35–200 mm). H-bridge MOSFETs, digital ICs, Teensy module, and clock chain connect here.</td></tr>
+  <tr><td class="mono">+15V</td><td class="mono">F.Cu</td><td class="mono">300 × 35 mm</td><td>Top strip power pour. Feeds regulator inputs across the full width of Zone A.</td></tr>
+  <tr><td class="mono">+5V_LASER</td><td class="mono">F.Cu</td><td class="mono">65 × 35 mm</td><td>Partial pour within Zone A (X = 145–210 mm), distributing the clean +5 V laser supply from LT3045 outputs to laser driver circuitry.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Board specifications</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
+<tbody>
+  <tr><td>Board dimensions</td><td class="mono">300 × 200 mm</td><td>Accommodates 12× large THT electrolytic caps and 8× TO-220 power MOSFETs</td></tr>
+  <tr><td>Copper layers</td><td class="mono">2 (F.Cu · B.Cu)</td><td>AGND/PGND split-plane topology</td></tr>
+  <tr><td>Board thickness</td><td class="mono">1.6 mm</td><td>Standard FR4</td></tr>
+  <tr><td>Pad-to-mask clearance</td><td class="mono">0.1 mm</td><td>Defined in board setup</td></tr>
+  <tr><td>Solder mask</td><td class="mono">Front + back (tented vias)</td><td>No via-in-pad on standard vias</td></tr>
+  <tr><td>Total components</td><td class="mono">298</td><td>All from 13 schematic sheets; old-PCB example refs excluded</td></tr>
+  <tr><td>SMD components</td><td class="mono">244 (81.9%)</td><td>Reflow soldering — standard SMD assembly</td></tr>
+  <tr><td>THT components</td><td class="mono">54 (18.1%)</td><td>Wave or hand solder — TO-220/TO-264, bulk caps, connectors</td></tr>
+  <tr><td>DFB connectors</td><td class="mono">2 × (2×7, 2.54 mm)</td><td>J_BTF1 (DFBLaser sheet) + J_BTF2 (LaserPackage sheet)</td></tr>
+  <tr><td>Output files</td><td class="mono">laser_driver_v3_full.kicad_pcb</td><td>KiCad 10 format; open and run Update PCB from Schematic</td></tr>
+</tbody>
+</table>
+</div>
+
+</div><!-- container -->
+
+<footer>
+  <span>Laser Driver v3.0 — PCB Layout Report &nbsp;·&nbsp; Rev 3.0 &nbsp;·&nbsp; 2025-05-22</span>
+  <span>Generated from laser_driver_v3_full.kicad_pcb &nbsp;·&nbsp; 298 footprints across 8 zones</span>
+</footer>
+
+</body>
+</html>
