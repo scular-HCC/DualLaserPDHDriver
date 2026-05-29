@@ -38,6 +38,7 @@
 #define PIN_TFT_CS        15   // free SPI chip select for ILI9341
 #define PIN_TFT_DC        14   // free data/command pin
 #define PIN_TFT_RST       4    // free reset pin
+// ILI9341 LED (backlight) pin must be connected to VIN through a 100 ohm resistor — not handled in software.
 
 #define PIN_FREQ_TEST     9    // optional: CDCE913 CLKOUT0 -> pin 9 for FreqCount
 
@@ -169,6 +170,12 @@ int lastRead1 = 0;
 int lastRead2 = 0;
 float lastErr1 = 0.0f;
 float lastErr2 = 0.0f;
+float lastTemp1 = 0.0f;
+float lastTemp2 = 0.0f;
+uint16_t lastTecSet1 = 0x8000;
+uint16_t lastTecSet2 = 0x8000;
+int lastTecRead1 = 0;
+int lastTecRead2 = 0;
 
 // -----------------------------
 // ADC scaling and offsets
@@ -184,6 +191,20 @@ const float REFCLK_HZ = 25000000.0f;
 // Convert raw ADC to normalized error (-1..1) assuming midscale carrier
 inline float adc_to_error(int raw) {
   return (raw - ADC_MID) / (float)ADC_MID;
+}
+
+// NTC thermistor beta equation. NTC is the bottom leg of a voltage divider with
+// NTC_R_SERIES as the pull-up to VREF. Tune these three constants to your parts.
+const float NTC_R_SERIES = 10000.0f;  // series resistor (ohms)
+const float NTC_R25      = 10000.0f;  // NTC resistance at 25 C (ohms)
+const float NTC_BETA     = 3950.0f;   // NTC beta coefficient
+
+inline float ntc_to_celsius(int raw) {
+  if (raw <= 0 || raw >= ADC_MAX) return NAN;
+  float ratio = raw / (float)ADC_MAX;
+  float r = NTC_R_SERIES * ratio / (1.0f - ratio);
+  float t_k = 1.0f / (1.0f / 298.15f + logf(r / NTC_R25) / NTC_BETA);
+  return t_k - 273.15f;
 }
 
 // -----------------------------
@@ -383,6 +404,11 @@ void update_display() {
   tft.print("L1 read:"); tft.print(lastRead1); tft.print(" ADC"); tft.println();
   tft.print("L1 err:"); tft.print(lastErr1, 3); tft.println();
   tft.print("State:"); tft.println(state_name(ch1.state));
+  tft.print("Temp1:");
+  if (isnan(lastTemp1)) tft.println(" --- C");
+  else { tft.print(lastTemp1, 1); tft.println(" C"); }
+  tft.print("TEC1 set:"); tft.print(lastTecSet1 * 100.0f / 65535.0f, 1);
+  tft.print("% rd:"); tft.println(lastTecRead1);
   tft.println();
 
   tft.setTextColor(ILI9341_YELLOW);
@@ -390,6 +416,11 @@ void update_display() {
   tft.print("L2 read:"); tft.print(lastRead2); tft.print(" ADC"); tft.println();
   tft.print("L2 err:"); tft.print(lastErr2, 3); tft.println();
   tft.print("State:"); tft.println(state_name(ch2.state));
+  tft.print("Temp2:");
+  if (isnan(lastTemp2)) tft.println(" --- C");
+  else { tft.print(lastTemp2, 1); tft.println(" C"); }
+  tft.print("TEC2 set:"); tft.print(lastTecSet2 * 100.0f / 65535.0f, 1);
+  tft.print("% rd:"); tft.println(lastTecRead2);
 }
 
 void lock_init_channels() {
@@ -548,6 +579,10 @@ void loop() {
   lastRead2 = raw2;
   lastErr1 = err1;
   lastErr2 = err2;
+  lastTemp1  = ntc_to_celsius(analogRead(PIN_NTC1_MON));
+  lastTemp2  = ntc_to_celsius(analogRead(PIN_NTC2_MON));
+  lastTecRead1 = analogRead(PIN_TEC1_IMON);
+  lastTecRead2 = analogRead(PIN_TEC2_IMON);
 
   // --- Channel 1 state machine ---
   switch (ch1.state) {
