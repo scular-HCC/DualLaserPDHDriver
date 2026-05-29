@@ -62,7 +62,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "Mains to +-18V.kicad_sch"
+		(property "Sheetfile" "Mains_to_pm18V.kicad_sch"
 			(at 21.59 52.6546 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -108,7 +108,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "TEC Control.kicad_sch"
+		(property "Sheetfile" "TEC_Control.kicad_sch"
 			(at 66.04 125.0446 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -154,7 +154,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "+-6V TEC.kicad_sch"
+		(property "Sheetfile" "pm6V_TEC.kicad_sch"
 			(at 59.69 50.1146 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -338,7 +338,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "5V Laser.kicad_sch"
+		(property "Sheetfile" "5V_Laser.kicad_sch"
 			(at 66.04 93.2946 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -476,7 +476,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "+-15V.kicad_sch"
+		(property "Sheetfile" "pm15V.kicad_sch"
 			(at 22.86 83.1346 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -625,7 +625,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "Laser Control.kicad_sch"
+		(property "Sheetfile" "Laser_Control.kicad_sch"
 			(at 67.31 152.9846 0)
 			(show_name no)
 			(do_not_autoplace no)

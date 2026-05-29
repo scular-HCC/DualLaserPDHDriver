@@ -4863,7 +4863,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal"
 			(at 68.58 102.108 90)
 			(hide yes)
 			(show_name no)
@@ -5015,7 +5015,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1000 uF"
+		(property "Value" "1000uF 25V"
 			(at 86.36 148.9709 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5026,7 +5026,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm"
 			(at 83.5152 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -5109,7 +5109,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 111.252 64.77 90)
 			(hide yes)
 			(show_name no)
@@ -5191,7 +5191,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 111.252 123.19 90)
 			(hide yes)
 			(show_name no)
@@ -5343,7 +5343,7 @@
 				)
 			)
 		)
-		(property "Value" "4.75, 2+W"
+		(property "Value" "4.75R 2W"
 			(at 137.16 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5353,7 +5353,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder"
 			(at 137.16 57.658 90)
 			(hide yes)
 			(show_name no)
@@ -5424,7 +5424,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2200 uF"
+		(property "Value" "2200uF 35V"
 			(at 130.81 34.6709 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5435,7 +5435,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D18.0mm_P7.50mm"
 			(at 127.9652 38.1 0)
 			(hide yes)
 			(show_name no)
@@ -5687,7 +5687,7 @@
 				)
 			)
 		)
-		(property "Value" "15"
+		(property "Value" "15R"
 			(at 83.566 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5697,7 +5697,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 83.82 57.658 90)
 			(hide yes)
 			(show_name no)
@@ -5855,7 +5855,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal"
 			(at 68.58 142.748 90)
 			(hide yes)
 			(show_name no)
@@ -6007,7 +6007,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1000 uF"
+		(property "Value" "1000uF 25V"
 			(at 148.59 48.6409 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6018,7 +6018,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm"
 			(at 145.7452 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -6098,7 +6098,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 91.44 39.878 90)
 			(hide yes)
 			(show_name no)
@@ -6252,7 +6252,7 @@
 				)
 			)
 		)
-		(property "Value" "Q_PMOS_DGS IRF9530"
+		(property "Value" "IRF9540NPBF"
 			(at 85.09 60.96 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6262,7 +6262,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
 			(at 82.55 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -6421,7 +6421,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2200 uF"
+		(property "Value" "2200uF 35V"
 			(at 130.81 48.6409 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6432,7 +6432,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D18.0mm_P7.50mm"
 			(at 127.9652 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -6914,7 +6914,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 90.932 76.2 90)
 			(hide yes)
 			(show_name no)
@@ -6984,7 +6984,7 @@
 				)
 			)
 		)
-		(property "Value" "Q_NMOS_DGS IRF530"
+		(property "Value" "IRF540NPBF"
 			(at 85.09 30.48 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6994,7 +6994,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
 			(at 82.55 31.75 0)
 			(hide yes)
 			(show_name no)
@@ -7155,7 +7155,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1000 uF"
+		(property "Value" "1000uF 25V"
 			(at 148.59 33.4009 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7166,7 +7166,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm"
 			(at 145.7452 36.83 0)
 			(hide yes)
 			(show_name no)
@@ -7507,7 +7507,7 @@
 				)
 			)
 		)
-		(property "Value" "15"
+		(property "Value" "15R"
 			(at 83.566 25.4 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7517,7 +7517,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 83.82 27.178 90)
 			(hide yes)
 			(show_name no)
@@ -7743,7 +7743,7 @@
 				)
 			)
 		)
-		(property "Value" "4.75"
+		(property "Value" "4.75R"
 			(at 134.62 25.4 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7753,7 +7753,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 134.62 27.178 90)
 			(hide yes)
 			(show_name no)
@@ -7824,7 +7824,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1000 uF"
+		(property "Value" "1000uF 25V"
 			(at 86.36 108.3309 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7835,7 +7835,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm"
 			(at 83.5152 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -7918,7 +7918,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 111.252 33.02 90)
 			(hide yes)
 			(show_name no)
@@ -8001,7 +8001,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 111.252 147.32 90)
 			(hide yes)
 			(show_name no)
@@ -8129,11 +8129,6 @@
 					(unit 1)
 				)
 			)
-		)
-	)
-	(sheet_instances
-		(path "/"
-			(page "1")
 		)
 	)
 )

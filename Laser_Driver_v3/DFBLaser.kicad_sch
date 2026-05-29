@@ -3346,7 +3346,7 @@
 				)
 			)
 		)
-		(property "Value" "47R P1 prot"
+		(property "Value" "47R prot"
 			(at 44.95 33.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3356,7 +3356,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -285.55 73.56 0)
 			(hide yes)
 			(show_name no)
@@ -3436,7 +3436,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 88.9 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -3659,7 +3659,7 @@
 				)
 			)
 		)
-		(property "Value" "100pF NP0 stability"
+		(property "Value" "100pF NP0"
 			(at 76.454 112.268 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3669,7 +3669,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 74.93 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -3738,7 +3738,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "OPA192"
+		(property "Value" "OPA192IDR"
 			(at 53.34 100.584 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3749,7 +3749,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:SOIC-5-6_4.4x3.6mm_P1.27mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 68.326 87.884 0)
 			(hide yes)
 			(show_name no)
@@ -3919,7 +3919,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -261.99 130.26 0)
 			(hide yes)
 			(show_name no)
@@ -4150,7 +4150,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF X7R bypass"
+		(property "Value" "100nF X7R"
 			(at 140.16 149.09 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4161,7 +4161,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 137.16 148.59 0)
 			(hide yes)
 			(show_name no)
@@ -4228,7 +4228,7 @@
 				)
 			)
 		)
-		(property "Value" "100pF NP0 stability"
+		(property "Value" "100pF NP0"
 			(at 78.994 170.688 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4238,7 +4238,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 77.47 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -4305,7 +4305,7 @@
 				)
 			)
 		)
-		(property "Value" "47R P2 prot"
+		(property "Value" "47R prot"
 			(at 45.466 39.878 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4315,7 +4315,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -288.55 76.1 0)
 			(hide yes)
 			(show_name no)
@@ -4628,7 +4628,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "199k 0.1% scaler_top"
+		(property "Value" "200k 0.1% scaler_top"
 			(at 51.59 159.354 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4940,7 +4940,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF X7R bypass"
+		(property "Value" "100nF X7R"
 			(at 137.62 90.67 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4951,7 +4951,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 134.62 90.17 0)
 			(hide yes)
 			(show_name no)
@@ -5018,7 +5018,7 @@
 				)
 			)
 		)
-		(property "Value" "DFB1550LP (Thorlabs)"
+		(property "Value" "DFB1550LP Socket"
 			(at 62.992 32.766 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5028,7 +5028,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Vertical"
 			(at 2.23 -294.82 0)
 			(hide yes)
 			(show_name no)
@@ -5142,7 +5142,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -297.55 83.72 0)
 			(hide yes)
 			(show_name no)
@@ -5220,7 +5220,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -249.99 122.64 0)
 			(hide yes)
 			(show_name no)
@@ -5454,7 +5454,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "199k 0.1% scaler_top"
+		(property "Value" "200k 0.1% scaler_top"
 			(at 49.05 100.934 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5534,7 +5534,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "OPA192"
+		(property "Value" "OPA192IDR"
 			(at 55.88 159.004 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5545,7 +5545,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:SOIC-5-6_4.4x3.6mm_P1.27mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 70.866 146.304 0)
 			(hide yes)
 			(show_name no)
@@ -5709,7 +5709,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -264.99 132.8 0)
 			(hide yes)
 			(show_name no)
@@ -5868,7 +5868,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 86.36 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -6103,7 +6103,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at -252.99 125.18 0)
 			(hide yes)
 			(show_name no)

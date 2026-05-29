@@ -1214,7 +1214,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DFB1550LP #1 BTF"
+		(property "Value" "DFB1550LP #2 Socket"
 			(at 170.434 64.008 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1225,7 +1225,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Vertical"
 			(at 180.594 85.598 0)
 			(hide yes)
 			(show_name no)
@@ -1340,7 +1340,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 191.77 72.39 0)
 			(hide yes)
 			(show_name no)
@@ -1419,7 +1419,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 66.04 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -1498,7 +1498,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 191.77 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -1577,7 +1577,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 95.25 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -1656,7 +1656,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 66.04 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -1735,7 +1735,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 95.25 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -1814,7 +1814,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 162.56 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -1893,7 +1893,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 95.25 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -1972,7 +1972,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 191.77 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -2041,7 +2041,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "DFB1550LP #1 BTF"
+		(property "Value" "DFB1550LP #1 Socket"
 			(at 73.914 60.198 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2052,7 +2052,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Vertical"
 			(at 84.074 81.788 0)
 			(hide yes)
 			(show_name no)
@@ -2167,7 +2167,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 162.56 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -2246,7 +2246,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 162.56 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -2325,7 +2325,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 95.25 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -2404,7 +2404,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 191.77 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -2483,7 +2483,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 66.04 73.66 0)
 			(hide yes)
 			(show_name no)

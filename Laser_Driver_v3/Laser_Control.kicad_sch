@@ -3684,7 +3684,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 86.36 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -3763,7 +3763,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 185.42 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4022,7 +4022,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "383k 1% dith inj"
+		(property "Value" "383k 1%"
 			(at 203.962 146.558 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4033,7 +4033,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 196.85 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4295,7 +4295,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "383k 1% dith inj"
+		(property "Value" "383k 1%"
 			(at 104.902 145.542 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4306,7 +4306,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 96.52 143.51 0)
 			(hide yes)
 			(show_name no)

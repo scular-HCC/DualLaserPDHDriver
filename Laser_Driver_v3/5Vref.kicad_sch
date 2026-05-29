@@ -2983,7 +2983,7 @@
 				)
 			)
 		)
-		(property "Value" "LM7808_TO220"
+		(property "Value" "MC7808CTG"
 			(at 67.31 74.93 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3066,7 +3066,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF Vref RC Film"
+		(property "Value" "10uF 16V Polymer"
 			(at 231.14 91.186 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3076,7 +3076,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm"
 			(at 75.52 60.9 0)
 			(hide yes)
 			(show_name no)
@@ -3484,7 +3484,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 60.35 58.17 0)
 			(hide yes)
 			(show_name no)
@@ -3654,7 +3654,7 @@
 				)
 			)
 		)
-		(property "Value" "LT3042EDD +5.5V"
+		(property "Value" "LT3042EMSE +5.5V"
 			(at 121.92 74.676 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3664,7 +3664,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm"
+		(property "Footprint" "Package_SO:MSOP-16_3x5mm_P0.65mm"
 			(at 41.92 60.55 0)
 			(hide yes)
 			(show_name no)
@@ -3756,7 +3756,7 @@
 				)
 			)
 		)
-		(property "Value" "1k Vref RC"
+		(property "Value" "1k"
 			(at 217.67 80.55 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3766,7 +3766,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 195.17 222.55 0)
 			(hide yes)
 			(show_name no)
@@ -3913,7 +3913,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "OPA192"
+		(property "Value" "OPA192IDR"
 			(at 240.03 108.204 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3924,7 +3924,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:SOIC-5-6_4.4x3.6mm_P1.27mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 255.016 95.504 0)
 			(hide yes)
 			(show_name no)

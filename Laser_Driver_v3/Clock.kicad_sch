@@ -4500,7 +4500,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10 MHz Isolated Coax"
+		(property "Value" "10MHz Ref SMA"
 			(at 39.878 92.456 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4511,7 +4511,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Coaxial:SMA_THT_Horizontal"
 			(at 31.75 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -5191,7 +5191,7 @@
 				)
 			)
 		)
-		(property "Value" "SN74LVC1G3157DCKR"
+		(property "Value" "SN74LVC1G3157DBVR"
 			(at 152.4 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5201,7 +5201,7 @@
 				)
 			)
 		)
-		(property "Footprint" "SN74LVC1G3157DCKR:SOT65P210X110-6N"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
 			(at 152.4 68.58 0)
 			(hide yes)
 			(show_name no)
