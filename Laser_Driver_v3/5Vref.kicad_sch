@@ -2452,7 +2452,7 @@
 		(uuid "fedca78f-a670-4648-8d47-d1af0f3ee3e8")
 	)
 	(global_label "-15V"
-		(shape input)
+		(shape output)
 		(at 250.19 121.92 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2476,7 +2476,7 @@
 		)
 	)
 	(global_label "+18V"
-		(shape input)
+		(shape output)
 		(at 46.99 78.74 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2524,7 +2524,7 @@
 		)
 	)
 	(global_label "+15V"
-		(shape input)
+		(shape output)
 		(at 247.65 102.87 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2582,7 +2582,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0d3fabf4-b7f7-4a65-851e-4e7ec824575a")
-		(property "Reference" "C15"
+		(property "Reference" "C14"
 			(at 174.72 83.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2643,7 +2643,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C15")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -2660,7 +2660,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "221e80ad-e964-4001-badc-8016f78bd437")
-		(property "Reference" "C11"
+		(property "Reference" "C10"
 			(at 80.74 81.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2721,7 +2721,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C11")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -2738,7 +2738,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "274beed0-bc84-4852-a92f-00c829e31015")
-		(property "Reference" "C16"
+		(property "Reference" "C15"
 			(at 208.28 85.852 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2799,7 +2799,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C16")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -2817,7 +2817,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3fb6fa0b-00df-451e-85d1-687ac55d3237")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR05"
 			(at 102.87 107.95 0)
 			(hide yes)
 			(show_name no)
@@ -2877,7 +2877,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "#PWR03")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -2894,7 +2894,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "57bebf40-7024-4c67-9cf8-4aac5674b07c")
-		(property "Reference" "C13"
+		(property "Reference" "C11"
 			(at 94.71 83.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2955,7 +2955,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C13")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -2973,7 +2973,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5bfaf9f8-1ef4-4e1e-a2db-29df1a191540")
-		(property "Reference" "U4"
+		(property "Reference" "U1"
 			(at 67.31 72.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3039,7 +3039,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "U4")
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -3056,7 +3056,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "737901a0-8ff4-4096-8185-d7ba00d85f3a")
-		(property "Reference" "C17"
+		(property "Reference" "C16"
 			(at 226.06 87.122 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3117,7 +3117,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C17")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -3134,7 +3134,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "808faa4c-7e04-4a14-b3eb-c3568eb1a3d0")
-		(property "Reference" "C14"
+		(property "Reference" "C13"
 			(at 158.21 79.78 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3195,7 +3195,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C14")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -3212,7 +3212,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "878d3c4d-90af-4107-94d6-989090677a50")
-		(property "Reference" "C10"
+		(property "Reference" "C9"
 			(at 55.34 81.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3273,7 +3273,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C10")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -3290,7 +3290,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "87b6a5e6-49dc-4b79-b40b-f8862b695c92")
-		(property "Reference" "C44"
+		(property "Reference" "C12"
 			(at 145.542 88.392 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3351,7 +3351,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "C44")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -3368,7 +3368,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8eab4e9c-f4d2-4c74-817f-24e8d9a533f1")
-		(property "Reference" "U6"
+		(property "Reference" "U3"
 			(at 193.04 73.66 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3447,7 +3447,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "U6")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -3543,7 +3543,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a9093fe0-d5b5-4bc1-a7ee-d7ccd983c62f")
-		(property "Reference" "D6"
+		(property "Reference" "D4"
 			(at 66.04 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3627,7 +3627,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "D6")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -3644,7 +3644,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b9260bb4-de1e-4ff7-ad5f-cd59f94a29d7")
-		(property "Reference" "U19"
+		(property "Reference" "U2"
 			(at 121.92 76.2 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3729,7 +3729,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "U19")
+					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -3824,7 +3824,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "df318403-172f-4b3b-a937-45b6fbd3dd05")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR06"
 			(at 204.47 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -3884,7 +3884,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "#PWR05")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -3902,7 +3902,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e770b9c2-49d3-4e70-aae9-cf5dcd902cc4")
-		(property "Reference" "U26"
+		(property "Reference" "U4"
 			(at 241.554 106.426 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3974,7 +3974,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
-					(reference "U26")
+					(reference "U4")
 					(unit 1)
 				)
 			)

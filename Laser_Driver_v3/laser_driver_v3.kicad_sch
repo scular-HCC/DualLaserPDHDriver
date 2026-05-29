@@ -24,7 +24,7 @@
 		)
 		(uuid "4b0a0f47-200c-43ce-bd3a-46b9d54d0e3e")
 	)
-	(text "KEY DESIGN PARAMETERS (v3.0):\nLaser: ML20550KK14Z600L 1550nm 70mW DFB butterfly\n  Iop=500mA typ, 600mA max, Vf=2V, Vr_max=2V\n  Sense: R5=0.25R, INA826 G=12 (Rg=4.53k), Vout_max=3.0V @ 600mA\nTEC bipolar H-bridge: -1.5A to +2.5A, ±3.8V max\n  Virtual zero: TEC_VZERO=1.875V (R19=12.7k/R20=9.31k from 5V_DAC)\n  DAC code 24576 = 0A TEC | 0 = +2.5A cool | 65535 = -1.5A heat\n  Sense: R7=0.1R, INA826 G=20 (Rg=2.61k), Vout_max=3.0V @ 2.5A\n  H-bridge: Q3/Q5=IRF9540N P-ch, Q4/Q6=IRLB8721 N-ch, TO-220 offboard\n  Control supply: +6V/-6V from LT3045/LT3094 (0.8uV rms each)\n  H-bridge power: +8V/-8V directly from LM7808/LM7908\nNTC: 10k @ 25C, beta=3950K, divider 10k->3V3, spans 1.18-2.06V\nMPD TIA: OPA380, Rf=10k, Cf=2.2pF, Vout=Ipd*10k (3V @ 300uA)\nButterfly pinout confirmed: P1=TEC+ P2=NTC_A P5=NTC_GND\n  P10=CHIP+ P11=CHIP- P13=GND P14=TEC- | P3/4/6/7/8/9/12=NC pend YBP"
+	(text "KEY DESIGN PARAMETERS (v3.0):\nLaser: DFB1550LP 1550nm 20mW DFB butterfly\n  Iop=60mA typ, 100mA max, Vf=3.0V, Vr_max=xV\n  Sense: R5=0.25R, INA826 G=12 (Rg=4.53k), Vout_max=3.0V @ 600mA\nTEC bipolar H-bridge: -2.0A to +2.0A, ±4.0V max\n  Virtual zero: TEC_VZERO=1.875V (R19=12.7k/R20=9.31k from 5V_DAC)\n  DAC code 24576 = 0A TEC | 0 = +2.5A cool | 65535 = -1.5A heat\n  Sense: R7=0.1R, INA826 G=20 (Rg=2.61k), Vout_max=3.0V @ 2.5A\n  H-bridge: Q3/Q5=IRF9540N P-ch, Q4/Q6=IRLB8721 N-ch, TO-220 offboard\n  Control supply: +6V/-6V from LT3045/LT3094 (0.8uV rms each)\n  H-bridge power: +8V/-8V directly from LM7808/LM7908\nNTC: 10k @ 25C, beta=3950K, divider 10k->3V3, spans 1.18-2.06V\nMPD TIA: OPA380, Rf=10k, Cf=2.2pF, Vout=Ipd*10k (3V @ 300uA)\nButterfly pinout confirmed: P1=TEC+ P2=NTC_A P5=NTC_GND\n  P10=CHIP+ P11=CHIP- P13=GND P14=TEC- | P3/4/6/7/8/9/12=NC pend YBP"
 		(exclude_from_sim no)
 		(at 201.676 145.034 0)
 		(effects
@@ -419,7 +419,7 @@
 			(color 0 0 0 0)
 		)
 		(uuid "8f1d8420-6d65-4b14-9d89-baaedfa51091")
-		(property "Sheetname" "3p3V"
+		(property "Sheetname" "3p3V and 1p8V"
 			(at 22.86 118.6684 0)
 			(show_name no)
 			(do_not_autoplace no)

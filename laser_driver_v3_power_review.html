@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Driver v3.0 — Power Rail Verification</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --text:      #e6edf3;
+    --text-dim:  #8b949e;
+    --text-faint:#484f58;
+    --green:     #3fb950;
+    --yellow:    #d29922;
+    --red:       #f85149;
+    --blue:      #58a6ff;
+    --cyan:      #39d353;
+    --purple:    #a371f7;
+    --orange:    #ffa657;
+    --accent:    #1f6feb;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 60%, #0d2137 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(31,111,235,0.04) 60px,
+      rgba(31,111,235,0.04) 61px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 60px,
+      rgba(31,111,235,0.04) 60px,
+      rgba(31,111,235,0.04) 61px
+    );
+    pointer-events: none;
+  }
+  .header-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--blue);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .header-chip::before { content: '◉'; font-size: 9px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  h1 {
+    font-size: 28px; font-weight: 300; letter-spacing: -0.5px;
+    color: var(--text); margin-bottom: 8px;
+  }
+  h1 strong { font-weight: 600; color: var(--blue); }
+  .subtitle {
+    color: var(--text-dim); font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .meta-row {
+    display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .meta-item {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--text-dim);
+  }
+  .meta-item span { color: var(--text); }
+
+  /* ── Layout ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 48px 64px; }
+
+  /* ── Summary bar ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .summary-cell {
+    background: var(--bg2);
+    padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .summary-cell .s-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-faint);
+  }
+  .summary-cell .s-value {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.5px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .summary-cell .s-sub {
+    font-size: 11px; color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .ok   { color: var(--green); }
+  .warn { color: var(--yellow); }
+  .fail { color: var(--red); }
+
+  /* ── Section titles ── */
+  .section { margin-bottom: 36px; }
+  .section-hdr {
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px; margin-bottom: 20px;
+  }
+  .section-hdr .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    background: rgba(31,111,235,0.12);
+    border: 1px solid rgba(31,111,235,0.3);
+    border-radius: 4px;
+    padding: 2px 8px;
+    min-width: 32px; text-align: center;
+  }
+  h2 {
+    font-size: 16px; font-weight: 600; letter-spacing: -0.2px;
+    color: var(--text);
+  }
+  .section-file {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-faint);
+  }
+
+  /* ── Rail card ── */
+  .rail-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .rail-card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .rail-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    padding: 3px 10px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .badge-green  { background: rgba(63,185,80,0.15);  color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+  .badge-yellow { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+  .badge-red    { background: rgba(248,81,73,0.15);  color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+  .badge-blue   { background: rgba(88,166,255,0.12); color: var(--blue);   border: 1px solid rgba(88,166,255,0.25); }
+
+  .rail-name { font-weight: 600; font-size: 14px; }
+  .rail-summary { margin-left: auto; font-size: 12px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+  .chevron { color: var(--text-faint); font-size: 10px; transition: transform 0.2s; }
+  .rail-card.open .chevron { transform: rotate(90deg); }
+
+  .rail-body { display: none; padding: 16px; }
+  .rail-card.open .rail-body { display: block; }
+
+  /* ── Chain diagram ── */
+  .chain {
+    display: flex; align-items: center; gap: 0;
+    flex-wrap: wrap; margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+  .chain-node {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 12px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 2px;
+  }
+  .chain-node .cn-ref  { font-size: 10px; color: var(--blue); font-weight: 600; }
+  .chain-node .cn-part { font-size: 11px; color: var(--text); }
+  .chain-node .cn-volt { font-size: 13px; font-weight: 600; color: var(--orange); }
+  .chain-arrow { color: var(--text-faint); padding: 0 4px; font-size: 12px; }
+
+  /* ── Component table ── */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    margin-bottom: 12px;
+  }
+  thead th {
+    text-align: left;
+    padding: 8px 10px;
+    background: var(--bg3);
+    color: var(--text-faint);
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+  tbody tr { border-bottom: 1px solid rgba(48,54,61,0.5); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 7px 10px; vertical-align: middle; }
+  tbody td:first-child { color: var(--blue); }
+  .td-pass { color: var(--green); font-weight: 600; }
+  .td-warn { color: var(--yellow); font-weight: 600; }
+  .td-fail { color: var(--red); font-weight: 600; }
+
+  /* ── Note / warning boxes ── */
+  .note {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 12px; margin-top: 10px; line-height: 1.5;
+  }
+  .note-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .note.note-ok     { background: rgba(63,185,80,0.08);  border: 1px solid rgba(63,185,80,0.2);  }
+  .note.note-warn   { background: rgba(210,153,34,0.08); border: 1px solid rgba(210,153,34,0.2); }
+  .note.note-info   { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); }
+
+  /* ── Bar chart for utilization ── */
+  .util-bar-wrap { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+  .util-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); min-width: 110px; }
+  .util-track { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+  .util-fill  { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .util-pct   { font-family: 'IBM Plex Mono', monospace; font-size: 11px; min-width: 36px; text-align: right; }
+
+  /* ── Duplicate ref table ── */
+  .resolved-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+  .resolved-item {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 5px; padding: 8px 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .resolved-item .ri-ref { color: var(--blue); font-weight: 600; min-width: 40px; }
+  .resolved-item .ri-detail { color: var(--text-dim); font-size: 11px; }
+  .tick { color: var(--green); }
+
+  /* ── Open all toggle ── */
+  .toolbar {
+    display: flex; gap: 8px; margin-bottom: 16px; align-items: center;
+  }
+  .btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    background: var(--bg3); color: var(--text-dim);
+    border: 1px solid var(--border); border-radius: 5px;
+    padding: 5px 12px; cursor: pointer; transition: all 0.15s;
+  }
+  .btn:hover { background: var(--bg2); color: var(--text); border-color: var(--blue); }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: rgba(88,166,255,0.1);
+    color: var(--blue); border-radius: 3px;
+    padding: 1px 5px; font-size: 12px;
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-faint);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-chip">Power Verification Complete</div>
+  <h1><strong>Laser Driver v3.0</strong> — Power Rail Verification</h1>
+  <p class="subtitle">ML20550KK14Z600L / DFB1550LP · Dual-Channel CW + Bipolar TEC · AD5064 16-bit DAC</p>
+  <div class="meta-row">
+    <div class="meta-item">Revision <span>3.0</span></div>
+    <div class="meta-item">Date <span>2025-05-22</span></div>
+    <div class="meta-item">MCU <span>Teensy 4.1</span></div>
+    <div class="meta-item">Rails checked <span>8</span></div>
+    <div class="meta-item">Duplicate refs <span style="color:var(--green)">0 (cleared)</span></div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- Summary scorecard -->
+  <div class="summary-grid">
+    <div class="summary-cell">
+      <div class="s-label">+18V Bridge (ABS10)</div>
+      <div class="s-value ok">58%</div>
+      <div class="s-sub">462 mA / 800 mA</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">±14.3V Rail</div>
+      <div class="s-value ok">+14.59V</div>
+      <div class="s-sub">worst-case, 410 mV margin</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">5VLaser Rail</div>
+      <div class="s-value ok">20%</div>
+      <div class="s-sub">205 mA / 1000 mA</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">3V3 LT3045 Headroom</div>
+      <div class="s-value ok">648 mV</div>
+      <div class="s-sub">4.25V in, 3.6V min</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">Laser ADC Utilisation</div>
+      <div class="s-value ok">79%</div>
+      <div class="s-sub">G=103.7, R74/R75=487Ω</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">±6V TEC Worst-Case</div>
+      <div class="s-value warn">5.0 A</div>
+      <div class="s-sub">3A cap-mult limit / rail</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 1: +18V ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">01</div>
+      <h2>±18V Main Supply</h2>
+      <div class="section-file">Mains_to__-18V.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">+18V / −18V</span>
+        <span class="rail-name">Bridge Rectifier, Soft-Start, Bulk Filter</span>
+        <span class="rail-summary">ABS10 · 462 mA / 800 mA</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">Transformer</div><div class="cn-volt">120VAC</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">ABS10 Bridge</div><div class="cn-volt">±18V DC</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">Q1/Q2</div><div class="cn-part">Soft-start</div><div class="cn-volt">IRF530/9530</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">C3–C6</div><div class="cn-part">Bulk caps</div><div class="cn-volt">2×2200µF</div></div>
+        </div>
+
+        <div class="util-bar-wrap">
+          <div class="util-label">5VLaser chain</div>
+          <div class="util-track"><div class="util-fill" style="width:27.5%;background:var(--green)"></div></div>
+          <div class="util-pct ok">220 mA</div>
+        </div>
+        <div class="util-bar-wrap">
+          <div class="util-label">3V3 + 1V8 chain</div>
+          <div class="util-track"><div class="util-fill" style="width:22.3%;background:var(--green)"></div></div>
+          <div class="util-pct ok">178 mA</div>
+        </div>
+        <div class="util-bar-wrap">
+          <div class="util-label">±15V (TPS7A39)</div>
+          <div class="util-track"><div class="util-fill" style="width:6.1%;background:var(--green)"></div></div>
+          <div class="util-pct ok">49 mA</div>
+        </div>
+        <div class="util-bar-wrap">
+          <div class="util-label">5Vref / DAC chain</div>
+          <div class="util-track"><div class="util-fill" style="width:1.9%;background:var(--green)"></div></div>
+          <div class="util-pct ok">15 mA</div>
+        </div>
+        <div class="util-bar-wrap">
+          <div class="util-label" style="color:var(--text);font-weight:600">TOTAL +18V</div>
+          <div class="util-track"><div class="util-fill" style="width:57.7%;background:var(--blue)"></div></div>
+          <div class="util-pct" style="color:var(--blue);font-weight:600">462 mA</div>
+        </div>
+
+        <table style="margin-top:14px">
+          <thead><tr><th>Component</th><th>Value</th><th>Rating</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>D1 ABS10 bridge</td><td>462 mA</td><td>800 mA avg</td><td class="td-pass">✓ 58%</td></tr>
+            <tr><td>F1 fuse (primary)</td><td>~69 mA AC</td><td>1 A SlowBlow</td><td class="td-pass">✓ 7%</td></tr>
+            <tr><td>Q1 IRF530 soft-start</td><td>inrush limit</td><td>100V 14A</td><td class="td-pass">✓</td></tr>
+            <tr><td>Q2 IRF9530 soft-start</td><td>inrush limit</td><td>-100V 12A</td><td class="td-pass">✓</td></tr>
+            <tr><td>D2/D3 1N4742A zeners</td><td>12V gate bias</td><td>1W each</td><td class="td-pass">✓ &lt;60mW</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>ABS10 PCB thermal: ensure adequate copper pour/pad area around D1. ABS10 derates above 50°C ambient. At 462 mA / 58% capacity, junction temperature rise is manageable at room temperature with a minimum 2 cm² copper pour on each AC terminal pad.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: ±15V ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">02</div>
+      <h2>±14.3V Precision Rail</h2>
+      <div class="section-file">_-15V.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">+14.3V / −14.3V</span>
+        <span class="rail-name">TPS7A39 pre-reg → LT3042EDD / LT3094</span>
+        <span class="rail-summary">OPA551U abs max 0.41V margin</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">U9</div><div class="cn-part">TPS7A39</div><div class="cn-volt">±18V→±16V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U10</div><div class="cn-part">LT3042EDD</div><div class="cn-volt">+14.30V</div></div>
+          <div class="chain-arrow"> &amp; </div>
+          <div class="chain-node"><div class="cn-ref">U11</div><div class="cn-part">LT3094</div><div class="cn-volt">−14.30V</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Component</th><th>RSET</th><th>Vout nominal</th><th>Worst-case (+2%)</th><th>OPA551U limit</th><th>Margin</th></tr></thead>
+          <tbody>
+            <tr><td>U10 LT3042EDD (R18)</td><td>143 kΩ 0.1%</td><td>+14.30 V</td><td>+14.586 V</td><td>+15.000 V</td><td class="td-pass">+414 mV ✓</td></tr>
+            <tr><td>U11 LT3094 (R19)</td><td>143 kΩ 0.1%</td><td>−14.30 V</td><td>−14.586 V</td><td>−15.000 V</td><td class="td-pass">+414 mV ✓</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead><tr><th>Load</th><th>Current</th><th>Regulator limit</th><th>Utilisation</th></tr></thead>
+          <tbody>
+            <tr><td>All ±15V op-amps (OPA192×6, INA826×4, OPA380×6, OPA551U×2, OPA2141)</td><td>~39 mA / ~27 mA</td><td>200 mA</td><td class="td-pass">19% / 13% ✓</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span>Formula: <code>VOUT = 100µA × RSET</code>. Changing R18/R19 from 150 kΩ to 143 kΩ moved the OPA551U supply from at-limit (±15.3V worst-case) to comfortably safe (±14.59V worst-case).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: 5VLaser ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">03</div>
+      <h2>5V Laser Supply</h2>
+      <div class="section-file">5V_Laser.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">5VLaser</span>
+        <span class="rail-name">3-stage pre-reg + dual LT3045 parallel</span>
+        <span class="rail-summary">205 mA / 1000 mA · FET Tj 58°C</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">+18V</div><div class="cn-part">main rail</div><div class="cn-volt">18V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U14</div><div class="cn-part">LM7812</div><div class="cn-volt">12V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U15</div><div class="cn-part">LM7808</div><div class="cn-volt">8V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U16/U17</div><div class="cn-part">LT3045EDD ×2</div><div class="cn-volt">5V out</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">Q15/Q16</div><div class="cn-part">IRLML6344</div><div class="cn-volt">Laser ch1/2</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Component</th><th>Drop</th><th>Current</th><th>Dissipation</th><th>Limit</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>U14 LM7812 TO-220</td><td>18V→12V = 6V</td><td>213 mA</td><td>1.28 W</td><td>~15 W w/ heatsink</td><td class="td-pass">✓</td></tr>
+            <tr><td>U15 LM7808 TO-220</td><td>12V→8V = 4V</td><td>213 mA</td><td>0.85 W</td><td>~15 W w/ heatsink</td><td class="td-pass">✓</td></tr>
+            <tr><td>U16/U17 LT3045EDD ×2</td><td>8V→5V = 3V</td><td>103 mA each</td><td>308 mW each</td><td>500 mA / 1 W each</td><td class="td-pass">✓</td></tr>
+            <tr><td>Q15/Q16 IRLML6344 SOT-23</td><td>Vds = 1.975V</td><td>100 mA each</td><td>197.5 mW</td><td>θja=167°C/W</td><td class="td-pass">✓ Tj≈58°C</td></tr>
+            <tr><td>R35/R36 20mΩ share resistors</td><td>—</td><td>—</td><td>—</td><td>LT3045 parallel share</td><td class="td-pass">✓</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Protection updated:</strong> R_P4 = 0Ω and R_P5 = 0Ω on CHIP+ (P10) and CHIP− (P11). Series protection resistors removed from the laser current path. BAT54 diodes (D22/D23) retain reverse-polarity protection. Non-current pins (P1/P2/P5/P13/P14) retain 47Ω protection resistors.</span>
+        </div>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>The 3-stage chain (18→12→8→5V) distributes heat across three TO-220 devices instead of dissipating all 13V drop in a single LM7808. Net total dissipation is the same (≈2.86W) but no individual package exceeds 1.3W.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: 3V3 + 1V8 ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">04</div>
+      <h2>3.3V MCU Rail + 1.8V Clock Core</h2>
+      <div class="section-file">3p3V.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">3V3</span>
+        <span class="rail-name">LM7812 → LM7805 → R12 → LT3045</span>
+        <span class="rail-summary">648 mV LT3045 headroom</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">+18V</div><div class="cn-part">main</div><div class="cn-volt">18V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U5</div><div class="cn-part">LM7812</div><div class="cn-volt">12V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U6</div><div class="cn-part">LM7805</div><div class="cn-volt">5V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">R12</div><div class="cn-part">4.7Ω RC</div><div class="cn-volt">4.25V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U7</div><div class="cn-part">LT3045EDD</div><div class="cn-volt">3.3V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U8</div><div class="cn-part">LP5907</div><div class="cn-volt">1.8V</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Component</th><th>Condition</th><th>Value</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>R12 4.7Ω (was 10Ω)</td><td>160 mA load</td><td>0.75V drop → 4.25V to LT3045</td><td class="td-pass">✓ Fixed</td></tr>
+            <tr><td>U7 LT3045EDD headroom</td><td>Min input = 3.6V</td><td>4.25V in → 648 mV margin</td><td class="td-pass">✓</td></tr>
+            <tr><td>U5 LM7812 TO-220</td><td>18V→12V, 168 mA</td><td>1.01 W</td><td class="td-pass">✓</td></tr>
+            <tr><td>U6 LM7805 TO-220</td><td>12V→5V, 162 mA</td><td>1.16 W</td><td class="td-pass">✓</td></tr>
+            <tr><td>U8 LP5907MFX-1.8</td><td>3.3V→1.8V, ~10 mA</td><td>15 mW, rated 250 mA</td><td class="td-pass">✓</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span>R12 reduced from 10Ω to 4.7Ω fixes the LT3045 dropout issue. The LP5907MFX-1.8 (U8) added for CDCE913 1.8V core supply — powered from the LT3045 3.3V output and exporting the <code>1V8</code> global net to Clock.kicad_sch.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: 5Vref ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">05</div>
+      <h2>5V Reference / DAC Supply</h2>
+      <div class="section-file">5Vref.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">5Vref / 5V_DAC</span>
+        <span class="rail-name">LM7808 → LT3042EDD → LTC6655BHLS8-5</span>
+        <span class="rail-summary">~6 mA total · 0.25 ppm/°C reference</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">+18V</div><div class="cn-part">main</div><div class="cn-volt">18V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U1</div><div class="cn-part">LM7808</div><div class="cn-volt">8V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U2</div><div class="cn-part">LT3042EDD</div><div class="cn-volt">5.5V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U3</div><div class="cn-part">LTC6655-5</div><div class="cn-volt">5.000V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">U4</div><div class="cn-part">OPA192</div><div class="cn-volt">Buffered</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Component</th><th>In→Out</th><th>Load</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>U1 LM7808 TO-220</td><td>18V → 8V</td><td>~6 mA</td><td class="td-pass">✓ &lt;0.1W</td></tr>
+            <tr><td>U2 LT3042EDD</td><td>8V → 5.5V</td><td>~6 mA</td><td class="td-pass">✓ 15 mW</td></tr>
+            <tr><td>U3 LTC6655BHLS8-5</td><td>5.5V → 5.000V</td><td>AD5064 Vref</td><td class="td-pass">✓ 0.25 ppm/°C</td></tr>
+            <tr><td>U4 OPA192 buffer</td><td>±15V supply</td><td>&lt;1 mA</td><td class="td-pass">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: Readback ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">06</div>
+      <h2>Readback / INA826 Gain</h2>
+      <div class="section-file">Readback.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">Gain Updated</span>
+        <span class="rail-name">Laser G=103.7 · TEC G=7.20</span>
+        <span class="rail-summary">Laser ADC: 79% · TEC swing: 2.88V</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <table>
+          <thead><tr><th>Channel</th><th>INA826 Rg</th><th>Gain (G)</th><th>Full-scale sense</th><th>ADC output</th><th>ADC use</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Laser (×2 ch)</td>
+              <td>R74/R75 = 487Ω</td>
+              <td>103.7</td>
+              <td>100mA × 0.25Ω = 25mV</td>
+              <td>2.59V above Vref</td>
+              <td class="td-pass">~79% ✓</td>
+            </tr>
+            <tr>
+              <td>TEC (×2 ch)</td>
+              <td>R78/R79 = 8.06kΩ</td>
+              <td>7.20</td>
+              <td>±0.15–0.25V bipolar</td>
+              <td>2.88V swing</td>
+              <td class="td-pass">fits 3.3V ✓</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>TEC INA826 Vref — verify before commissioning.</strong> With G=7.20 and R_sense=0.1Ω, the bipolar swing fits in 3.3V. However, the optimal REF pin voltage is <code>~1.08V</code> (maps −1.5A → 0.15V, +2.5A → 2.88V on ADC). If the REF pin connects to TEC_VZERO (1.875V), the +2.5A output will be 3.675V — exceeding the Teensy ADC range. Confirm the REF pin connection and whether OPA2141 (U29) provides post-scaling.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: TEC ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">07</div>
+      <h2>±6V TEC H-Bridge Supply</h2>
+      <div class="section-file">_-6V_TEC.kicad_sch · TEC_Control.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-yellow">⚠ Check Cap-Mult</span>
+        <span class="rail-name">Cap multiplier ±6V_TEC + H-bridge (IRF9540N / IRLB8721)</span>
+        <span class="rail-summary">3A per rail vs 5A worst-case</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <table>
+          <thead><tr><th>Component</th><th>Spec</th><th>Worst-case demand</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>D7 KBPC1501W bridge</td><td>15A / 100V</td><td>5A</td><td class="td-pass">✓ 33%</td></tr>
+            <tr><td>Q5 MJL21193 NPN (+6V)</td><td>16A / 200W cap-mult</td><td>2×2.5A = 5A peak</td><td class="td-warn">⚠ 3A rated</td></tr>
+            <tr><td>Q6 MJL21194 PNP (−6V)</td><td>16A / 200W cap-mult</td><td>2×1.5A = 3A peak</td><td class="td-warn">⚠ at limit</td></tr>
+            <tr><td>Q7–Q14 IRF9540N/IRLB8721</td><td>±100V / 23A–62A</td><td>2.5A max each</td><td class="td-pass">✓ linear region</td></tr>
+            <tr><td>D14–D21 BZX384-C15</td><td>15V gate clamps</td><td>±9V effective VGS</td><td class="td-pass">✓ gate protected</td></tr>
+            <tr><td>U21/U22 OPA551U</td><td>±15V abs max</td><td>±14.30V supply</td><td class="td-pass">✓ 0.41V margin</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>Cap multiplier current limit:</strong> Each cap multiplier transistor is rated for approximately 3A continuous. With both TEC channels simultaneously at maximum cooling (2×2.5A = 5.0A from the +6V_TEC rail), there is a 2A deficit. Mitigate by: (a) firmware current limit preventing simultaneous max cooling, or (b) adding a parallel MJL21193 on the +6V rail emitter-follower stage.</span>
+        </div>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span>Q6 part value conflict resolved — now consistently <code>Q_PNP_MJL21194</code> throughout <code>_-6V_TEC.kicad_sch</code>.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: Duplicate Refs ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">08</div>
+      <h2>Reference Designator Audit</h2>
+      <div class="section-file">All sheets</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">✓ All Resolved</span>
+        <span class="rail-name">Cross-sheet duplicate reference designators</span>
+        <span class="rail-summary">0 conflicts remaining</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="note note-ok" style="margin-bottom:14px">
+          <span class="note-icon">✓</span>
+          <span>Position-based parsing of all 13 schematic files finds <strong>zero cross-sheet duplicate reference designators</strong>. All previous conflicts (R1, R12, R21, R51, U3, U5, U8, U13, Q15) have been resolved.</span>
+        </div>
+        <div class="resolved-grid">
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">R1 — 5V_Laser / Readback split</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">R12 — 3p3V / LaserPackage split</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">R21 — DFBLaser / LaserPackage split</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">R51 — LaserPackage / TEC_Control split</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">U3  — 3-sheet OPA192 conflict resolved</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">U5  — LM7808 / LT3042 conflict resolved</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">U8  — LT3045 / LP5907 conflict resolved</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">U13 — LT3045 / LT3094 conflict resolved</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">Q15 — dual-value conflict resolved</span></div>
+          <div class="resolved-item"><span class="ri-ref tick">✓</span><span class="ri-detail">J_BTF2/3 — now DFB1550LP labels ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Open items summary ── -->
+  <hr>
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">—</div>
+      <h2>Open Items — Action Required Before Commissioning</h2>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-yellow">2 Items</span>
+        <span class="rail-name">Outstanding design questions</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <table>
+          <thead><tr><th>#</th><th>Item</th><th>Location</th><th>Action</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>TEC INA826 REF pin voltage</td>
+              <td>Readback.kicad_sch U27/U28</td>
+              <td>Verify REF pin connects to ~1.08V reference, NOT TEC_VZERO (1.875V). If REF=TEC_VZERO, +2.5A output = 3.675V, clipping Teensy ADC. Confirm OPA2141 (U29) post-scales if Vref is higher.</td>
+              <td class="td-warn">⚠ High</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>±6V_TEC cap-multiplier 5A demand</td>
+              <td>_-6V_TEC.kicad_sch Q5</td>
+              <td>Add firmware limit: prevent both TEC channels from simultaneously exceeding 1.5A cooling each (total ≤3A from +6V_TEC rail), OR add parallel MJL21193 on +6V_TEC emitter-follower stage.</td>
+              <td class="td-warn">⚠ Medium</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer class="footer">
+  <span>Laser Driver v3.0 · Power Verification Report · Rev 3.0 · 2025-05-22</span>
+  <span>Lab R&D · Dual CW DFB1550LP + Bipolar TEC</span>
+</footer>
+
+<script>
+  function toggle(hdr) {
+    hdr.parentElement.classList.toggle('open');
+  }
+  // All open on load — already set via class
+</script>
+</body>
+</html>

@@ -1660,193 +1660,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Regulator_Linear:LP5907MFX-1.8"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -3.81 6.35 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "LP5907MFX-1.8"
-				(at 6.35 6.35 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-				(at 0 8.89 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lp5907.pdf"
-				(at 0 12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "250-mA Ultra-Low-Noise Low-IQ LDO, 1.8V, SOT-23"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "Single Output LDO Low-Noise"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "SOT?23*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "LP5907MFX-1.8_0_1"
-				(rectangle
-					(start -5.08 -5.08)
-					(end 5.08 5.08)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin power_in line
-					(at -7.62 2.54 0)
-					(length 2.54)
-					(name "IN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 0 -7.62 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 2.54)
-					(name "EN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin no_connect line
-					(at 5.08 0 180)
-					(length 2.54)
-					(hide yes)
-					(name "NC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_out line
-					(at 7.62 2.54 180)
-					(length 2.54)
-					(name "OUT"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "SN74LVC1G3157DCKR:SN74LVC1G3157DCKR"
 			(pin_names
 				(offset 1.016)
@@ -2131,7 +1944,7 @@
 		)
 		(uuid "2bcd810a-56c1-46e4-8e20-0ceeac564cf5")
 	)
-	(text "CDCE913 uses a 1.8 V core.  Added a LDO here (consider moving into power section)."
+	(text "CDCE913 uses a 1.8 V core."
 		(exclude_from_sim no)
 		(at 233.68 40.894 0)
 		(effects
@@ -2214,6 +2027,12 @@
 		(uuid "6d29cce5-9fcb-4483-a35c-7f74f044eade")
 	)
 	(junction
+		(at 205.74 66.04)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6f493c72-44fd-4948-9bf2-d24b7c9bf997")
+	)
+	(junction
 		(at 80.01 119.38)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2230,24 +2049,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7aaca095-527b-40c5-a4fb-9f41b167d272")
-	)
-	(junction
-		(at 204.47 66.04)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "832ee883-7479-4a00-a141-b2669e2045f2")
-	)
-	(junction
-		(at 204.47 73.66)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "83f368b3-c2fa-436b-8574-db5e8aafde6a")
-	)
-	(junction
-		(at 179.07 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "84742d2e-3ca7-4758-a5b7-47fa6ecf8f6b")
 	)
 	(junction
 		(at 109.22 113.03)
@@ -2292,34 +2093,10 @@
 		(uuid "c7884c0d-4213-428e-98fe-24cbf39f9a41")
 	)
 	(junction
-		(at 179.07 67.31)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c79446aa-703d-4fa8-b8a9-b7577eb74ae1")
-	)
-	(junction
 		(at 45.72 76.2)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d5bca9c4-6186-4c55-a9ce-d127473834ef")
-	)
-	(junction
-		(at 205.74 66.04)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "db0b08b2-6b78-4899-9628-8a4544b13c23")
-	)
-	(junction
-		(at 191.77 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e14ec956-91ee-46e8-8e9a-8d9ad6ea17be")
-	)
-	(junction
-		(at 182.88 67.31)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e54b28c5-63ba-4d7a-a738-fe54efa6e167")
 	)
 	(junction
 		(at 80.01 110.49)
@@ -2597,16 +2374,6 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 77.47) (xy 191.77 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3f2931d8-94c1-43fa-874d-12fb824328e2")
-	)
-	(wire
-		(pts
 			(xy 170.18 76.2) (xy 172.72 76.2)
 		)
 		(stroke
@@ -2647,16 +2414,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 69.85) (xy 182.88 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4c849f93-258e-4ea8-a2df-430f8468b0cf")
-	)
-	(wire
-		(pts
 			(xy 57.15 86.36) (xy 55.88 86.36)
 		)
 		(stroke
@@ -2667,7 +2424,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 77.47) (xy 179.07 77.47)
+			(xy 172.72 77.47) (xy 201.93 77.47)
 		)
 		(stroke
 			(width 0)
@@ -2694,16 +2451,6 @@
 			(type default)
 		)
 		(uuid "568752e9-b07d-46eb-8783-300c46a238d5")
-	)
-	(wire
-		(pts
-			(xy 204.47 66.04) (xy 205.74 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "586c8b78-2c6f-4cdb-b544-ee96d72fc147")
 	)
 	(wire
 		(pts
@@ -2807,13 +2554,13 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 67.31) (xy 201.93 66.04)
+			(xy 198.12 66.04) (xy 205.74 66.04)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "811b31f0-e95f-4269-9007-2df6f7832ac0")
+		(uuid "84f6800a-1838-4002-b178-eafca1349e09")
 	)
 	(wire
 		(pts
@@ -2827,16 +2574,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 74.93) (xy 179.07 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8c815c54-7fe8-4c38-86f5-935886654682")
-	)
-	(wire
-		(pts
 			(xy 172.72 85.09) (xy 166.37 85.09)
 		)
 		(stroke
@@ -2844,16 +2581,6 @@
 			(type default)
 		)
 		(uuid "8e6cf98f-04a0-4c83-8af2-dad9b5bad04d")
-	)
-	(wire
-		(pts
-			(xy 179.07 67.31) (xy 182.88 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "909024f1-a418-4e97-ae8a-c2ada1845e5f")
 	)
 	(wire
 		(pts
@@ -3067,16 +2794,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 73.66) (xy 213.36 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c11b54fb-7f50-47e2-9ce0-68237e645504")
-	)
-	(wire
-		(pts
 			(xy 248.92 77.47) (xy 254 77.47)
 		)
 		(stroke
@@ -3084,16 +2801,6 @@
 			(type default)
 		)
 		(uuid "c2094bf8-472f-4edf-a251-c8bf389dacbd")
-	)
-	(wire
-		(pts
-			(xy 184.15 69.85) (xy 182.88 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c3cc6fb5-a303-447f-ba76-aa046bab6ebc")
 	)
 	(wire
 		(pts
@@ -3144,16 +2851,6 @@
 			(type default)
 		)
 		(uuid "cf36b706-215e-4620-9fb7-2dc146ac4efe")
-	)
-	(wire
-		(pts
-			(xy 179.07 77.47) (xy 191.77 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d04895f6-0b1c-4299-aa1d-0d77f900c79d")
 	)
 	(wire
 		(pts
@@ -3237,26 +2934,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 67.31) (xy 184.15 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e1759524-8e62-4a01-9d77-f3f0b01b50d7")
-	)
-	(wire
-		(pts
-			(xy 176.53 67.31) (xy 179.07 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e331b220-9e59-499c-b3fb-0863aa4e15e0")
-	)
-	(wire
-		(pts
 			(xy 106.68 46.99) (xy 175.26 46.99)
 		)
 		(stroke
@@ -3307,7 +2984,7 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 73.66) (xy 204.47 73.66)
+			(xy 201.93 73.66) (xy 213.36 73.66)
 		)
 		(stroke
 			(width 0)
@@ -3324,16 +3001,6 @@
 			(type default)
 		)
 		(uuid "ee220789-6701-4f08-b585-ee14fbe6f226")
-	)
-	(wire
-		(pts
-			(xy 201.93 66.04) (xy 204.47 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f101c6ea-8ffc-4703-8d0e-59077c463422")
 	)
 	(wire
 		(pts
@@ -3367,16 +3034,6 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 67.31) (xy 201.93 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fc6f26c5-c4a2-4013-a737-65371014bfdc")
-	)
-	(wire
-		(pts
 			(xy 106.68 58.42) (xy 100.33 58.42)
 		)
 		(stroke
@@ -3394,30 +3051,6 @@
 			(type default)
 		)
 		(uuid "fea1ff0e-e70f-431a-a0da-dd8048f16c06")
-	)
-	(global_label "3V3"
-		(shape output)
-		(at 203.2 80.01 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "06d62fb9-9b71-4609-ac46-82c0e4e36ec9")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 196.7072 80.01 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 	)
 	(global_label "DGND"
 		(shape bidirectional)
@@ -3731,9 +3364,9 @@
 			)
 		)
 	)
-	(global_label "3V3"
+	(global_label "1V8"
 		(shape output)
-		(at 176.53 67.31 180)
+		(at 198.12 66.04 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3741,9 +3374,9 @@
 			)
 			(justify right)
 		)
-		(uuid "a65eca0c-8b5e-467f-a13a-2eef25874104")
+		(uuid "b2cd7f94-da67-464d-9056-3986772b2b39")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 170.0372 67.31 0)
+			(at 191.6272 66.04 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3815,7 +3448,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "139e1a2f-61cd-43c1-bc37-b3b6b4d5da5c")
-		(property "Reference" "R33"
+		(property "Reference" "R82"
 			(at 46.99 128.2699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3879,7 +3512,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R33")
+					(reference "R82")
 					(unit 1)
 				)
 			)
@@ -3896,7 +3529,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "157003f8-4c5e-428f-a75a-1aab07534b69")
-		(property "Reference" "R34"
+		(property "Reference" "R86"
 			(at 102.87 101.6 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3958,7 +3591,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R34")
+					(reference "R86")
 					(unit 1)
 				)
 			)
@@ -4054,7 +3687,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2221f6b9-8e8b-419e-a7d8-7bc460c1dfaa")
-		(property "Reference" "C2"
+		(property "Reference" "C70"
 			(at 53.594 92.456 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4116,7 +3749,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C2")
+					(reference "C70")
 					(unit 1)
 				)
 			)
@@ -4134,7 +3767,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2aa12f3f-6575-40c0-8460-308420040229")
-		(property "Reference" "R25"
+		(property "Reference" "R80"
 			(at 43.18 87.6299 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4198,7 +3831,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R25")
+					(reference "R80")
 					(unit 1)
 				)
 			)
@@ -4537,7 +4170,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4618307e-8be6-4444-ab31-071c6e65a131")
-		(property "Reference" "R85"
+		(property "Reference" "R88"
 			(at 267.716 52.07 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4599,7 +4232,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R85")
+					(reference "R88")
 					(unit 1)
 				)
 			)
@@ -4616,7 +4249,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4abb98d2-5afa-4b6e-9301-cc3436a5957a")
-		(property "Reference" "R38"
+		(property "Reference" "R84"
 			(at 59.436 96.52 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4678,7 +4311,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R38")
+					(reference "R84")
 					(unit 1)
 				)
 			)
@@ -4695,7 +4328,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4fd28d16-340a-4085-b996-47a2dab7422b")
-		(property "Reference" "R37"
+		(property "Reference" "R85"
 			(at 81.534 114.554 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4759,7 +4392,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R37")
+					(reference "R85")
 					(unit 1)
 				)
 			)
@@ -4776,7 +4409,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "715187b6-bc24-409b-84ba-e3d83744112d")
-		(property "Reference" "R84"
+		(property "Reference" "R89"
 			(at 268.986 61.214 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4838,95 +4471,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R84")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Regulator_Linear:LP5907MFX-1.8")
-		(at 191.77 69.85 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "76c48728-c1d9-4da4-9bd1-ad7eb29b2e4e")
-		(property "Reference" "U33"
-			(at 191.516 61.214 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "LP5907MFX-1.8"
-			(at 191.77 63.246 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-			(at 191.77 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lp5907.pdf"
-			(at 191.77 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "250-mA Ultra-Low-Noise Low-IQ LDO, 1.8V, SOT-23"
-			(at 191.77 69.85 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "af017aac-3a27-43b1-ac63-03516a7eb2e4")
-		)
-		(pin "5"
-			(uuid "c292d41e-be3d-4940-b554-efa633acd5d1")
-		)
-		(pin "4"
-			(uuid "64f5cb42-2646-4427-b8f4-37d9c59c6c33")
-		)
-		(pin "2"
-			(uuid "2f7ea1b8-12ad-40e3-844d-9a56b1598e88")
-		)
-		(pin "3"
-			(uuid "b35c00bf-36df-4b19-9f96-d6f3fcb6021b")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "U33")
+					(reference "R89")
 					(unit 1)
 				)
 			)
@@ -4944,7 +4489,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "87308877-f43f-4163-9349-a913d975c01f")
-		(property "Reference" "J2"
+		(property "Reference" "J3"
 			(at 27.94 95.5431 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5014,7 +4559,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "J2")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -5031,7 +4576,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "87ab6f0e-1cb8-4e31-9541-40134ed038d2")
-		(property "Reference" "C22"
+		(property "Reference" "C71"
 			(at 74.422 113.538 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5093,7 +4638,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C22")
+					(reference "C71")
 					(unit 1)
 				)
 			)
@@ -5193,7 +4738,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "98697c90-f2f7-4b25-8e60-cc52b9e4186b")
-		(property "Reference" "C26"
+		(property "Reference" "C69"
 			(at 53.594 82.296 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5255,7 +4800,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C26")
+					(reference "C69")
 					(unit 1)
 				)
 			)
@@ -5273,7 +4818,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a61691b0-6da4-4ec3-b80a-1d7ffb2bf30a")
-		(property "Reference" "R26"
+		(property "Reference" "R81"
 			(at 46.99 118.1099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5337,7 +4882,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R26")
+					(reference "R81")
 					(unit 1)
 				)
 			)
@@ -5355,7 +4900,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b354efcc-5b6f-49ed-9873-57277d37ce14")
-		(property "Reference" "U32"
+		(property "Reference" "U36"
 			(at 231.14 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5539,7 +5084,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "U32")
+					(reference "U36")
 					(unit 1)
 				)
 			)
@@ -5556,7 +5101,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c6064d68-f530-4334-92b6-58439f586a46")
-		(property "Reference" "C25"
+		(property "Reference" "C68"
 			(at 49.022 66.548 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5618,165 +5163,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C25")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 179.07 71.12 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "cf53d6d5-f3c4-4f15-ab09-60b87ed563f2")
-		(property "Reference" "C28"
-			(at 175.006 70.104 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1uF"
-			(at 175.006 72.136 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 178.1048 67.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 179.07 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "3fe7dc06-18e1-48cc-8fd4-51b9761c846d")
-		)
-		(pin "1"
-			(uuid "b7c633dd-86d8-4e91-86cd-ddd7971bd3e8")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C28")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 204.47 69.85 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "d82d4094-59e3-4c5c-aa14-38bda868bddd")
-		(property "Reference" "C60"
-			(at 207.772 67.818 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1uF"
-			(at 207.772 72.39 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 203.5048 66.04 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 204.47 69.85 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 204.47 69.85 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "c8157b8e-2f03-4ca8-9b1d-f1343718ef9f")
-		)
-		(pin "1"
-			(uuid "2b0b97a1-e127-406a-be81-a96a561b3e12")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "C60")
+					(reference "C68")
 					(unit 1)
 				)
 			)
@@ -5794,7 +5181,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f4e9a092-4888-4a8b-ae75-e212cab1bdf0")
-		(property "Reference" "U21"
+		(property "Reference" "U35"
 			(at 152.4 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5954,7 +5341,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "U21")
+					(reference "U35")
 					(unit 1)
 				)
 			)
@@ -5971,7 +5358,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ffa82dfe-9a58-4834-8ef8-9b4b16b3184c")
-		(property "Reference" "R86"
+		(property "Reference" "R83"
 			(at 59.436 86.36 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6033,7 +5420,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4858802c-cb9b-4721-97ea-d5e718762850"
-					(reference "R86")
+					(reference "R83")
 					(unit 1)
 				)
 			)

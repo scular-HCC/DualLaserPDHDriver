@@ -508,7 +508,7 @@
 		)
 		(uuid "dfbd39ad-e7f8-4f5d-946e-2d4325b58c7b")
 	)
-	(text "BUTTERFLY CONNECTORS — 2x ML20550KK14Z600L  |  2x7 2.54mm ZIF sockets"
+	(text "BUTTERFLY CONNECTORS — 2x DFB1550LP  |  2x7 2.54mm ZIF sockets"
 		(exclude_from_sim no)
 		(at 41.18 30.61 0)
 		(effects
@@ -1214,7 +1214,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "ML20550 #1 BTF"
+		(property "Value" "DFB1550LP #1 BTF"
 			(at 170.434 64.008 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1318,7 +1318,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1f3571a6-2d9f-43b7-a0ef-644d1e3c6906")
-		(property "Reference" "R113"
+		(property "Reference" "R100"
 			(at 194.438 72.456 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1380,7 +1380,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R113")
+					(reference "R100")
 					(unit 1)
 				)
 			)
@@ -1397,7 +1397,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "43b05ca2-4789-4f2e-be56-95ed4fde687f")
-		(property "Reference" "R12"
+		(property "Reference" "R90"
 			(at 67.818 63.5 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1459,7 +1459,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R12")
+					(reference "R90")
 					(unit 1)
 				)
 			)
@@ -1476,7 +1476,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "449831b5-6a55-456b-a232-20c1d7172a5d")
-		(property "Reference" "R132"
+		(property "Reference" "R102"
 			(at 194.184 80.156 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1538,7 +1538,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R132")
+					(reference "R102")
 					(unit 1)
 				)
 			)
@@ -1555,7 +1555,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "454e0dce-e0dd-4cb9-8d74-1ea5c4be0268")
-		(property "Reference" "R131"
+		(property "Reference" "R95"
 			(at 97.664 76.346 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1617,7 +1617,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R131")
+					(reference "R95")
 					(unit 1)
 				)
 			)
@@ -1634,7 +1634,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "547d95d2-b921-479a-a138-f28cf5f5f326")
-		(property "Reference" "R21"
+		(property "Reference" "R91"
 			(at 68.072 66.04 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1696,7 +1696,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R21")
+					(reference "R91")
 					(unit 1)
 				)
 			)
@@ -1713,7 +1713,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5becaa0a-c40c-4c2e-bf12-4f40de2a72d5")
-		(property "Reference" "R112"
+		(property "Reference" "R93"
 			(at 97.918 68.646 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1775,7 +1775,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R112")
+					(reference "R93")
 					(unit 1)
 				)
 			)
@@ -1792,7 +1792,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "74c41588-3323-4a32-ad17-4021a4c5d3be")
-		(property "Reference" "R88"
+		(property "Reference" "R97"
 			(at 164.338 67.31 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1854,7 +1854,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R88")
+					(reference "R97")
 					(unit 1)
 				)
 			)
@@ -1871,7 +1871,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "9f7fdf4c-558f-4135-a9ee-9c27ad29747c")
-		(property "Reference" "R101"
+		(property "Reference" "R96"
 			(at 98.044 78.74 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1933,7 +1933,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R101")
+					(reference "R96")
 					(unit 1)
 				)
 			)
@@ -1950,7 +1950,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b61c01a7-fc49-4727-bd74-1ee4a5eabcba")
-		(property "Reference" "R114"
+		(property "Reference" "R101"
 			(at 194.438 74.996 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2012,7 +2012,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R114")
+					(reference "R101")
 					(unit 1)
 				)
 			)
@@ -2041,7 +2041,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "ML20550 #1 BTF"
+		(property "Value" "DFB1550LP #1 BTF"
 			(at 73.914 60.198 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2145,7 +2145,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cae57cda-1950-4a9d-9126-677e716b8b93")
-		(property "Reference" "R89"
+		(property "Reference" "R98"
 			(at 164.592 69.85 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2207,7 +2207,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R89")
+					(reference "R98")
 					(unit 1)
 				)
 			)
@@ -2224,7 +2224,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d463c2ce-bdf9-4260-9bf1-7a01ba7cf3cb")
-		(property "Reference" "R90"
+		(property "Reference" "R99"
 			(at 164.592 77.47 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2286,7 +2286,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R90")
+					(reference "R99")
 					(unit 1)
 				)
 			)
@@ -2303,7 +2303,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e0cbc0ee-09a1-4a26-9f74-716a8fc6f2aa")
-		(property "Reference" "R111"
+		(property "Reference" "R94"
 			(at 97.918 71.186 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2365,7 +2365,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R111")
+					(reference "R94")
 					(unit 1)
 				)
 			)
@@ -2382,7 +2382,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e84db255-40d2-4eaf-b59a-8a91b2e46770")
-		(property "Reference" "R102"
+		(property "Reference" "R103"
 			(at 194.564 82.55 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2444,7 +2444,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R102")
+					(reference "R103")
 					(unit 1)
 				)
 			)
@@ -2461,7 +2461,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ea75dd81-585e-4244-a7a7-c4212a739e09")
-		(property "Reference" "R51"
+		(property "Reference" "R92"
 			(at 68.072 73.66 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2523,7 +2523,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3cc9b630-4516-4d07-8624-99717cc6cbce"
-					(reference "R51")
+					(reference "R92")
 					(unit 1)
 				)
 			)
