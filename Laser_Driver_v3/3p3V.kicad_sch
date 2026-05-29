@@ -587,7 +587,7 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U8"
+			(property "Reference" "U7"
 				(at 0 6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -597,7 +597,7 @@
 					)
 				)
 			)
-			(property "Value" "LT3045EDD 3.3V"
+			(property "Value" "LT3045EMSE 3.3V"
 				(at 0 7.874 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -607,7 +607,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Package_DFN_QFN:DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm"
+			(property "Footprint" "Package_SO:MSOP-16_3x5mm_P0.65mm"
 				(at -80 22 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -805,7 +805,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin input line
 					(at 6.35 1.27 180)
 					(length 2.54)
 					(name "OUTS"
@@ -823,7 +823,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin power_out line
 					(at 6.35 3.81 180)
 					(length 2.54)
 					(name "OUT"
@@ -1007,8 +1007,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -3.81 6.35 0)
+			(property "Reference" "U8"
+				(at -0.254 8.636 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -1018,7 +1018,7 @@
 				)
 			)
 			(property "Value" "LP5907MFX-1.8"
-				(at 6.35 6.35 0)
+				(at 0 6.604 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -1050,7 +1050,7 @@
 				)
 			)
 			(property "Description" "250-mA Ultra-Low-Noise Low-IQ LDO, 1.8V, SOT-23"
-				(at 0 0 0)
+				(at 1.27 -17.526 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -2101,6 +2101,16 @@
 	)
 	(wire
 		(pts
+			(xy 212.09 57.15) (xy 222.25 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4d31114-cc73-4c81-82f8-b8bc016fda54")
+	)
+	(wire
+		(pts
 			(xy 240.03 77.47) (xy 240.03 81.28)
 		)
 		(stroke
@@ -2308,16 +2318,6 @@
 			(type default)
 		)
 		(uuid "f4061d90-2175-4684-9e85-f8694cb4bb1d")
-	)
-	(wire
-		(pts
-			(xy 212.09 57.15) (xy 222.25 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f564eff5-9a7a-4013-8693-8ed742b7d20c")
 	)
 	(wire
 		(pts
@@ -2880,7 +2880,7 @@
 			)
 		)
 		(property "Description" "250-mA Ultra-Low-Noise Low-IQ LDO, 1.8V, SOT-23"
-			(at 231.14 73.66 0)
+			(at 232.41 91.186 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

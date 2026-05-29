@@ -5,6 +5,284 @@
 	(uuid "fa6108a5-aa2a-4881-82f8-5c94beb824dc")
 	(paper "A4")
 	(lib_symbols
+		(symbol "AD9833xRM_1"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U31"
+				(at 0.508 -0.762 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AD9833xRM"
+				(at -0.508 -3.048 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:MSOP-10_3x3mm_P0.5mm"
+				(at 0 -15.24 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ad9833.pdf"
+				(at -1.27 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "10 bit 25 MHz Programmable Waveform Generator, 2.3V to 5.5V, 12.65mW, MSOP-10"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Direct Digital Synthesizer DDS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "MSOP*3x3mm*P0.5mm*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AD9833xRM_1_0_1"
+				(rectangle
+					(start -12.7 10.16)
+					(end 12.7 -10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AD9833xRM_1_1_1"
+				(pin passive line
+					(at 15.24 2.54 180)
+					(length 2.54)
+					(name "COMP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 12.7 270)
+					(length 2.54)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -2.54 12.7 270)
+					(length 2.54)
+					(name "CAP/2.5V"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 -12.7 90)
+					(length 2.54)
+					(name "DGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 2.54)
+					(name "MCLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 2.54 0)
+					(length 2.54)
+					(name "SDATA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 5.08 0)
+					(length 2.54)
+					(name "SCLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 2.54)
+					(name "~{FSYNC}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 -12.7 90)
+					(length 2.54)
+					(name "AGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 -2.54 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Analog:AD5064"
 			(pin_names
 				(offset 1.016)
@@ -765,26 +1043,24 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -12.7 11.43 0)
+			(property "Reference" "U33"
+				(at 0.508 -0.762 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Value" "AD9833xRM"
-				(at 5.08 11.43 0)
+				(at -0.508 -3.048 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Footprint" "Package_SO:MSOP-10_3x3mm_P0.5mm"
@@ -892,7 +1168,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin input line
 					(at -2.54 12.7 270)
 					(length 2.54)
 					(name "CAP/2.5V"
@@ -1665,8 +1941,16 @@
 		(uuid "d38a1b82-8e22-48ae-aec8-b8c99a2e858b")
 	)
 	(no_connect
+		(at 176.53 138.43)
+		(uuid "0ffa75bf-55ee-4df9-a8ec-1e3cc741e9cb")
+	)
+	(no_connect
 		(at 111.76 73.66)
 		(uuid "c59db5ca-3aa2-4136-86ce-8c02f6adee50")
+	)
+	(no_connect
+		(at 76.2 138.43)
+		(uuid "d9c15c20-adfe-4db9-b261-666ed1ee8b5c")
 	)
 	(wire
 		(pts
@@ -1700,6 +1984,16 @@
 	)
 	(wire
 		(pts
+			(xy 40.64 163.83) (xy 40.64 168.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b1c6cce-b9f2-4444-a636-c4d0f3529562")
+	)
+	(wire
+		(pts
 			(xy 44.45 62.23) (xy 44.45 43.18)
 		)
 		(stroke
@@ -1717,6 +2011,16 @@
 			(type default)
 		)
 		(uuid "14fdbe52-77a5-4ee7-91f8-27c51e36bb04")
+	)
+	(wire
+		(pts
+			(xy 29.21 91.44) (xy 36.83 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "18729234-4718-42c5-bd33-c01a0c3bfe35")
 	)
 	(wire
 		(pts
@@ -2380,16 +2684,6 @@
 	)
 	(wire
 		(pts
-			(xy 29.21 91.44) (xy 36.83 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ca91cc98-99c5-42e2-9670-d21c127b4589")
-	)
-	(wire
-		(pts
 			(xy 66.04 59.69) (xy 69.85 59.69)
 		)
 		(stroke
@@ -2507,6 +2801,16 @@
 			(type default)
 		)
 		(uuid "e568ad86-650e-4782-88ee-feeb9bde2b32")
+	)
+	(wire
+		(pts
+			(xy 35.56 163.83) (xy 40.64 163.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ef2e097d-5d7c-46ae-92a3-770035efd93a")
 	)
 	(wire
 		(pts
@@ -2665,7 +2969,7 @@
 		)
 	)
 	(global_label "DGND"
-		(shape bidirectional)
+		(shape output)
 		(at 55.88 157.48 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2676,7 +2980,7 @@
 		)
 		(uuid "1bc998bd-c00d-4aff-96d9-968deb1a1782")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 46.643 157.48 0)
+			(at 47.7543 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2689,7 +2993,7 @@
 		)
 	)
 	(global_label "DGND"
-		(shape bidirectional)
+		(shape output)
 		(at 156.21 157.48 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2700,7 +3004,7 @@
 		)
 		(uuid "1f779eac-18f4-42dc-a9b8-22f231cc55e3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 146.973 157.48 0)
+			(at 148.0843 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2809,7 +3113,7 @@
 		)
 	)
 	(global_label "AGND"
-		(shape bidirectional)
+		(shape output)
 		(at 166.37 157.48 0)
 		(fields_autoplaced yes)
 		(effects
@@ -2820,7 +3124,7 @@
 		)
 		(uuid "3a695add-f0c5-4ce7-bbcb-68cf1a42236b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 175.4256 157.48 0)
+			(at 174.3143 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3144,6 +3448,30 @@
 			)
 		)
 	)
+	(global_label "DGND"
+		(shape input)
+		(at 35.56 163.83 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a54a92fa-edcc-4194-bb25-1e1775f1a3ba")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 27.4343 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
 	(global_label "DDS2_FSYNC"
 		(shape input)
 		(at 143.51 140.97 180)
@@ -3169,7 +3497,7 @@
 		)
 	)
 	(global_label "AGND"
-		(shape bidirectional)
+		(shape input)
 		(at 29.21 91.44 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3180,7 +3508,7 @@
 		)
 		(uuid "e34b79a9-8919-4afb-8c45-62a0701d7f79")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 20.1544 91.44 0)
+			(at 21.2657 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3193,7 +3521,7 @@
 		)
 	)
 	(global_label "AGND"
-		(shape bidirectional)
+		(shape output)
 		(at 66.04 157.48 0)
 		(fields_autoplaced yes)
 		(effects
@@ -3204,7 +3532,7 @@
 		)
 		(uuid "eab81c4c-31d2-4620-9b93-0481eccf2213")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 75.0956 157.48 0)
+			(at 73.9843 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3472,6 +3800,7 @@
 		)
 	)
 	(symbol
+		(lib_name "AD9833xRM_1")
 		(lib_id "Interface:AD9833xRM")
 		(at 60.96 140.97 0)
 		(unit 1)
@@ -4296,7 +4625,7 @@
 			)
 		)
 		(property "Value" "383k 1%"
-			(at 104.902 145.542 90)
+			(at 99.314 146.558 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4319,6 +4648,7 @@
 		)
 		(property "Datasheet" ""
 			(at 96.52 143.51 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4347,6 +4677,83 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
 					(reference "R_d1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 40.64 168.91 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d34c40a7-4b42-404c-b397-073d696bb6d7")
+		(property "Reference" "#PWR032"
+			(at 40.64 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DGND"
+			(at 42.672 169.418 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 40.64 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 40.64 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 40.64 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9de43f22-8b2b-43ec-a8cf-a287e8e57ded")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)

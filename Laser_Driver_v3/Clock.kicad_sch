@@ -1954,6 +1954,16 @@
 		)
 		(uuid "2f278da7-c84e-4b14-9389-c3fbeaedd345")
 	)
+	(text "check this needs to be 3.3V"
+		(exclude_from_sim no)
+		(at 199.39 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "444b03a4-2241-4e30-b826-d2e7e2142c2c")
+	)
 	(text "Common Clock for all digital."
 		(exclude_from_sim no)
 		(at 53.34 18.542 0)
@@ -2111,6 +2121,10 @@
 	(no_connect
 		(at 248.92 58.42)
 		(uuid "5075fbf4-84d0-4a75-acc8-acededcd0d62")
+	)
+	(no_connect
+		(at 71.12 101.6)
+		(uuid "74b393f3-2c76-4dd1-b6bf-83757b73e669")
 	)
 	(wire
 		(pts
@@ -2404,6 +2418,16 @@
 	)
 	(wire
 		(pts
+			(xy 200.66 80.01) (xy 209.55 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "460273be-1dd4-468b-883c-f8601a1076bb")
+	)
+	(wire
+		(pts
 			(xy 248.92 73.66) (xy 254 73.66)
 		)
 		(stroke
@@ -2441,16 +2465,6 @@
 			(type default)
 		)
 		(uuid "511fa935-234c-469a-9ecd-565b65b6bee5")
-	)
-	(wire
-		(pts
-			(xy 203.2 80.01) (xy 209.55 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "568752e9-b07d-46eb-8783-300c46a238d5")
 	)
 	(wire
 		(pts
@@ -3051,6 +3065,30 @@
 			(type default)
 		)
 		(uuid "fea1ff0e-e70f-431a-a0da-dd8048f16c06")
+	)
+	(global_label "3V3"
+		(shape output)
+		(at 200.66 80.01 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "01633316-59af-40ff-a51e-ab99604eb8a0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 194.1672 80.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
 	(global_label "DGND"
 		(shape bidirectional)
@@ -4511,7 +4549,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Coaxial:SMA_THT_Horizontal"
+		(property "Footprint" "Connector_Coaxial:SMA_BAT_Wireless_BWSMA-KWE-Z001"
 			(at 31.75 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -5201,7 +5239,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6_Handsoldering"
 			(at 152.4 68.58 0)
 			(hide yes)
 			(show_name no)

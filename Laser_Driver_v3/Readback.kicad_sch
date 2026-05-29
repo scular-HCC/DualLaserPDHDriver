@@ -260,28 +260,30 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U36"
+			(property "Reference" "U29"
 				(at 1.27 13.97 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "OPA2141"
+			(property "Value" "OPA2141AID"
 				(at 1.778 11.938 0)
 				(show_name no)
 				(do_not_autoplace no)
+				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" ""
-				(at 0 0 0)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at 0.762 -12.954 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -559,7 +561,7 @@
 						)
 					)
 				)
-				(pin input line
+				(pin power_in line
 					(at -7.62 -3.81 0)
 					(length 2.54)
 					(name "V-"
@@ -631,115 +633,9 @@
 						)
 					)
 				)
-				(pin output line
+				(pin power_in line
 					(at 11.43 7.62 180)
 					(length 2.54)
-					(name "V+"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "OPA2134_2_1"
-				(polyline
-					(pts
-						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin input line
-					(at -7.62 2.54 0)
-					(length 2.54)
-					(name "+"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -7.62 -2.54 0)
-					(length 2.54)
-					(name "-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 7.62 0 180)
-					(length 2.54)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "OPA2134_3_1"
-				(pin power_in line
-					(at -2.54 -7.62 90)
-					(length 3.81)
-					(name "V-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at -2.54 7.62 270)
-					(length 3.81)
 					(name "V+"
 						(effects
 							(font
@@ -3936,7 +3832,7 @@
 		)
 	)
 	(global_label "5V_DAC"
-		(shape input)
+		(shape output)
 		(at 158.75 157.48 0)
 		(fields_autoplaced yes)
 		(effects
@@ -4225,7 +4121,7 @@
 	)
 	(global_label "3V3"
 		(shape input)
-		(at 183.93 67.12 180)
+		(at 184.15 67.31 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4235,7 +4131,7 @@
 		)
 		(uuid "518bcd9a-a61b-4737-871c-cfff790f0321")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 183.93 67.12 0)
+			(at 184.15 67.31 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4945,7 +4841,7 @@
 	)
 	(global_label "3V3"
 		(shape input)
-		(at 183.93 36.64 180)
+		(at 184.15 36.83 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4955,7 +4851,7 @@
 		)
 		(uuid "db1ed42d-f7b4-43f9-ab8e-db85ff2d1cf6")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 183.93 36.64 0)
+			(at 184.15 36.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5220,6 +5116,7 @@
 		(uuid "03fdb188-b473-454f-9726-37b7953e97f6")
 		(property "Reference" "U29"
 			(at 140.97 151.13 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5230,6 +5127,7 @@
 		)
 		(property "Value" "OPA2141AID"
 			(at 141.478 153.162 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5239,7 +5137,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 139.7 165.1 0)
+			(at 140.462 178.054 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5294,21 +5192,6 @@
 		)
 		(pin "4"
 			(uuid "aa31e5dc-b38d-43a2-b8ab-c23cb8d1b187")
-		)
-		(pin "6"
-			(uuid "a96c5c5b-97e7-46d2-bb73-7038ec483502")
-		)
-		(pin "8"
-			(uuid "71919cbd-3ad2-4c6b-b525-ac529c8ed752")
-		)
-		(pin "4"
-			(uuid "abb12aa4-aa17-4567-8088-cdb6a76f031a")
-		)
-		(pin "5"
-			(uuid "9e53b5a5-1fdf-404f-85ae-b295fc96adce")
-		)
-		(pin "7"
-			(uuid "400f20e8-8db5-4cee-b631-e0fc2a187638")
 		)
 		(instances
 			(project "laser_driver_v3"

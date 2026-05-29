@@ -260,7 +260,12 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      [
+        "pin_to_pin|660400|647700|72663a0c-cbd2-4cf9-9011-f2ec2892239c|342696bc-529b-46bc-8ae8-076bd86f50ac|/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf|/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf|/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d",
+        ""
+      ]
+    ],
     "meta": {
       "version": 0
     },
@@ -672,7 +677,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "J_BTF3-4,R104-117",
+    "used_designators": "#PWR20-21,#PWR32,#FLG1-18",
     "variants": []
   },
   "sheets": [

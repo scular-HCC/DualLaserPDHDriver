@@ -2715,6 +2715,121 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(rectangle
 		(start 41.91 53.34)
@@ -2779,10 +2894,22 @@
 		(uuid "e98bde1d-2911-41da-bb0a-6fdc9074fbe8")
 	)
 	(junction
+		(at 246.38 82.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "04b32e6e-ac2f-4bea-bab5-66a349de3575")
+	)
+	(junction
 		(at 144.78 52.07)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "08be6bfe-080d-4579-80e4-336dc6e45553")
+	)
+	(junction
+		(at 246.38 52.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "09bab629-1164-411a-b2b1-fc55099304b0")
 	)
 	(junction
 		(at 191.77 64.77)
@@ -2863,6 +2990,12 @@
 		(uuid "8a93c5e2-19da-4db4-b666-157ef7b04587")
 	)
 	(junction
+		(at 57.15 68.58)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8cba2324-6277-48a0-9645-16855a2da906")
+	)
+	(junction
 		(at 241.3 64.77)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2917,6 +3050,18 @@
 		(uuid "e8293599-2a1d-4390-96f7-05b5dc20a90a")
 	)
 	(junction
+		(at 57.15 58.42)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e8f345ee-0851-4c06-9af2-ae4a9531a9a9")
+	)
+	(junction
+		(at 57.15 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ec92cccf-ff9d-48e3-97ad-a02a698c374d")
+	)
+	(junction
 		(at 123.19 60.96)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2927,6 +3072,10 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "fffdee26-f1f6-4b31-8783-6b2fb23b24c5")
+	)
+	(no_connect
+		(at 97.79 63.5)
+		(uuid "a0ce8f26-84e1-4bcc-adb2-0c4039a58bd6")
 	)
 	(wire
 		(pts
@@ -2980,7 +3129,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 74.93) (xy 71.12 74.93)
+			(xy 50.8 74.93) (xy 57.15 74.93)
 		)
 		(stroke
 			(width 0)
@@ -3050,7 +3199,7 @@
 	)
 	(wire
 		(pts
-			(xy 53.34 68.58) (xy 77.47 68.58)
+			(xy 53.34 68.58) (xy 57.15 68.58)
 		)
 		(stroke
 			(width 0)
@@ -3070,7 +3219,7 @@
 	)
 	(wire
 		(pts
-			(xy 53.34 58.42) (xy 64.77 58.42)
+			(xy 53.34 58.42) (xy 57.15 58.42)
 		)
 		(stroke
 			(width 0)
@@ -3190,6 +3339,16 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 68.58) (xy 77.47 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bbeca4a-3bbc-4b10-9efd-0665f8ea20d2")
+	)
+	(wire
+		(pts
 			(xy 134.62 99.06) (xy 134.62 100.33)
 		)
 		(stroke
@@ -3260,6 +3419,26 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 58.42) (xy 64.77 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d49a8d9-9a72-481e-b922-6d9df2148b59")
+	)
+	(wire
+		(pts
+			(xy 57.15 74.93) (xy 71.12 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d6783ff-a4f4-4c74-b15b-dec60f2154ac")
+	)
+	(wire
+		(pts
 			(xy 120.65 63.5) (xy 123.19 63.5)
 		)
 		(stroke
@@ -3270,7 +3449,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 82.55) (xy 241.3 82.55)
+			(xy 247.65 82.55) (xy 246.38 82.55)
 		)
 		(stroke
 			(width 0)
@@ -3550,6 +3729,16 @@
 	)
 	(wire
 		(pts
+			(xy 246.38 52.07) (xy 241.3 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d784bb1c-74a9-4c38-a7b7-997008b1485e")
+	)
+	(wire
+		(pts
 			(xy 113.03 71.12) (xy 113.03 73.66)
 		)
 		(stroke
@@ -3630,7 +3819,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 52.07) (xy 241.3 52.07)
+			(xy 247.65 52.07) (xy 246.38 52.07)
 		)
 		(stroke
 			(width 0)
@@ -3718,6 +3907,16 @@
 		)
 		(uuid "fd01fafe-26ef-4ff3-90b0-24bb3ccc98ef")
 	)
+	(wire
+		(pts
+			(xy 246.38 82.55) (xy 241.3 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe0a8c38-3ae4-4cab-8e7a-07662a5c3131")
+	)
 	(global_label "-18V"
 		(shape input)
 		(at 247.65 82.55 0)
@@ -3743,7 +3942,7 @@
 		)
 	)
 	(global_label "120Vac"
-		(shape input)
+		(shape output)
 		(at 53.34 58.42 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3791,7 +3990,7 @@
 		)
 	)
 	(global_label "0Vac"
-		(shape input)
+		(shape output)
 		(at 53.34 68.58 180)
 		(fields_autoplaced yes)
 		(effects
@@ -4045,6 +4244,164 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
 					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 57.15 58.42 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1cb08234-fd65-4934-9869-ec701a38661b")
+		(property "Reference" "#FLG01"
+			(at 57.15 56.515 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 57.15 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 57.15 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.15 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 57.15 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2fc925cb-a7ee-4042-a9d4-cf4f5de9578a")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
+					(reference "#FLG01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 246.38 52.07 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1e40bbbb-68a8-45ba-a809-100554acaea0")
+		(property "Reference" "#FLG06"
+			(at 246.38 50.165 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 246.38 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 246.38 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 246.38 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 246.38 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "836fa309-16a2-4485-b1d3-21212eda2a53")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
+					(reference "#FLG06")
 					(unit 1)
 				)
 			)
@@ -4370,6 +4727,85 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
 					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 57.15 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "65e9bf46-45db-48d4-a685-74118e6fa82f")
+		(property "Reference" "#FLG03"
+			(at 57.15 73.025 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 57.15 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 57.15 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.15 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 57.15 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f285fe77-5c61-4109-9711-6e3828efb008")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
+					(reference "#FLG03")
 					(unit 1)
 				)
 			)
@@ -4932,6 +5368,85 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
 					(reference "F1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 57.15 68.58 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9e60ef31-8a7a-407a-bbcc-077034198924")
+		(property "Reference" "#FLG02"
+			(at 57.15 66.675 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 57.15 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 57.15 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.15 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 57.15 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a056a967-bd96-4eaf-aed5-84c5c090d48a")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)
@@ -5744,6 +6259,85 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
 					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 246.38 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c95e1f0d-a5e3-4066-9411-d68a22c8441c")
+		(property "Reference" "#FLG07"
+			(at 246.38 80.645 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 246.38 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 246.38 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 246.38 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 246.38 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6ffe97f9-1cca-4afd-a2be-fd8bdf491cd2")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
+					(reference "#FLG07")
 					(unit 1)
 				)
 			)
