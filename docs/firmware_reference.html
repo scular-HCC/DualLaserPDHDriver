@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dual-PDH Controller — Firmware Reference</title>
+<style>
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg:      #070b11;
+  --bg2:     #0a0f17;
+  --panel:   #0e141e;
+  --panel2:  #121a26;
+  --rule:    #1b2533;
+  --rule-s:  #141c28;
+  --ink:     #e8eef6;
+  --dim:     #8696aa;
+  --faint:   #6b7a8e;
+  --mute:    #4a586b;
+  --ch1:     #2dd4cf;
+  --ch2:     #f5a524;
+  --lock:    #34e0a1;
+  --sweep:   #5aa9ff;
+  --acq:     #fbbf24;
+  --hold:    #a78bfa;
+  --fault:   #ff5a6a;
+  --idle:    #64748b;
+  --f:       'Segoe UI', system-ui, -apple-system, sans-serif;
+  --m:       'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── Page shell ─────────────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f);
+  font-size: 15px;
+  line-height: 1.65;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+/* ── Sidebar nav ────────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--bg2);
+  border-right: 1px solid var(--rule);
+  padding: 24px 0 40px;
+  font-size: 13px;
+}
+.nav-logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 16px;
+}
+.nav-logo .title { font-weight: 700; font-size: 14px; letter-spacing: .4px; color: var(--ink); }
+.nav-logo .sub   { font-size: 11px; color: var(--mute); margin-top: 2px; font-family: var(--m); }
+nav ul { list-style: none; }
+nav li { margin: 0; }
+nav a {
+  display: block;
+  padding: 5px 20px;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color .12s, background .12s;
+  border-left: 2px solid transparent;
+}
+nav a:hover { color: var(--ink); background: var(--panel); }
+nav a.active { color: var(--ch1); border-left-color: var(--ch1); background: color-mix(in srgb, var(--ch1) 8%, var(--bg2)); }
+.nav-section {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+  padding: 14px 20px 4px;
+}
+
+/* ── Main content ───────────────────────────────────────────── */
+main {
+  max-width: 940px;
+  padding: 48px 56px 80px;
+}
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.doc-meta {
+  font-family: var(--m);
+  font-size: 11px;
+  color: var(--mute);
+  letter-spacing: .4px;
+  margin-bottom: 36px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.doc-meta span::before { content: '· '; color: var(--rule); }
+.doc-meta span:first-child::before { content: ''; }
+
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 52px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: 24px;
+}
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 28px 0 10px;
+  scroll-margin-top: 24px;
+}
+h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dim);
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  margin: 20px 0 8px;
+}
+p { margin-bottom: 14px; color: var(--dim); }
+p strong { color: var(--ink); font-weight: 600; }
+a { color: var(--ch1); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Callout boxes ──────────────────────────────────────────── */
+.callout {
+  border-left: 3px solid var(--ch1);
+  background: color-mix(in srgb, var(--ch1) 8%, var(--panel));
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin: 16px 0 20px;
+  font-size: 14px;
+  color: var(--dim);
+}
+.callout.warn  { border-color: var(--acq);  background: color-mix(in srgb, var(--acq)  8%, var(--panel)); }
+.callout.note  { border-color: var(--sweep); background: color-mix(in srgb, var(--sweep) 8%, var(--panel)); }
+.callout strong { color: var(--ink); }
+
+/* ── File table ─────────────────────────────────────────────── */
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-bottom: 24px;
+}
+.file-table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.file-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rule-s);
+  vertical-align: top;
+}
+.file-table tr:last-child td { border-bottom: none; }
+.file-table tr:hover td { background: var(--panel2); }
+.file-tag {
+  font-family: var(--m);
+  font-size: 12px;
+  color: var(--ch1);
+  background: color-mix(in srgb, var(--ch1) 12%, var(--panel2));
+  border: 1px solid color-mix(in srgb, var(--ch1) 30%, transparent);
+  border-radius: 4px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+.file-tag.pair {
+  color: var(--sweep);
+  background: color-mix(in srgb, var(--sweep) 10%, var(--panel2));
+  border-color: color-mix(in srgb, var(--sweep) 28%, transparent);
+}
+.file-tag.entry {
+  color: var(--lock);
+  background: color-mix(in srgb, var(--lock) 10%, var(--panel2));
+  border-color: color-mix(in srgb, var(--lock) 28%, transparent);
+}
+.file-role { color: var(--ink); font-weight: 500; }
+.file-desc { color: var(--dim); font-size: 13px; margin-top: 2px; }
+
+/* ── State machine table ────────────────────────────────────── */
+.state-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-bottom: 24px;
+}
+.state-table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.state-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--rule-s);
+  vertical-align: top;
+  color: var(--dim);
+  font-size: 13.5px;
+}
+.state-table tr:last-child td { border-bottom: none; }
+.state-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: var(--m);
+  letter-spacing: .5px;
+}
+.state-dot::before {
+  content: '';
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.st-idle    .state-dot::before { background: var(--idle); box-shadow: 0 0 6px var(--idle); }
+.st-search  .state-dot::before { background: var(--sweep); box-shadow: 0 0 6px var(--sweep); }
+.st-acquire .state-dot::before { background: var(--acq); box-shadow: 0 0 6px var(--acq); }
+.st-locked  .state-dot::before { background: var(--lock); box-shadow: 0 0 6px var(--lock); }
+.st-hold    .state-dot::before { background: var(--hold); box-shadow: 0 0 6px var(--hold); }
+.st-relock  .state-dot::before { background: var(--fault); box-shadow: 0 0 6px var(--fault); }
+.st-idle    .state-dot { color: var(--idle); }
+.st-search  .state-dot { color: var(--sweep); }
+.st-acquire .state-dot { color: var(--acq); }
+.st-locked  .state-dot { color: var(--lock); }
+.st-hold    .state-dot { color: var(--hold); }
+.st-relock  .state-dot { color: var(--fault); }
+
+/* ── Screenshots ────────────────────────────────────────────── */
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0 32px;
+}
+.screenshot-grid.single { grid-template-columns: 1fr; }
+.ss-card {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ss-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ss-cap {
+  padding: 8px 12px 10px;
+  font-size: 12px;
+  color: var(--dim);
+  border-top: 1px solid var(--rule-s);
+}
+.ss-cap strong { color: var(--ink); }
+
+/* ── Command reference ──────────────────────────────────────── */
+.cmd-block {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.cmd-header {
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--rule-s);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cmd-name {
+  font-family: var(--m);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ch1);
+}
+.cmd-sig {
+  font-family: var(--m);
+  font-size: 13px;
+  color: var(--dim);
+}
+.cmd-sig em { font-style: italic; color: var(--faint); }
+.cmd-badges { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.badge.usb    { color: var(--lock);  border-color: color-mix(in srgb, var(--lock)  40%, transparent); background: color-mix(in srgb, var(--lock)  10%, transparent); }
+.badge.eth    { color: var(--sweep); border-color: color-mix(in srgb, var(--sweep) 40%, transparent); background: color-mix(in srgb, var(--sweep) 10%, transparent); }
+.badge.web    { color: var(--ch2);   border-color: color-mix(in srgb, var(--ch2)   40%, transparent); background: color-mix(in srgb, var(--ch2)   10%, transparent); }
+.cmd-desc { padding: 10px 16px 0; font-size: 14px; color: var(--dim); }
+.cmd-desc strong { color: var(--ink); }
+.cmd-examples { padding: 10px 16px 16px; }
+.ex-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
+.ex-label:first-child { margin-top: 0; }
+
+pre.terminal {
+  background: var(--bg2);
+  border: 1px solid var(--rule-s);
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-family: var(--m);
+  font-size: 12.5px;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+pre.terminal .prompt { color: var(--mute); }
+pre.terminal .in     { color: var(--ch1); }
+pre.terminal .ok     { color: var(--lock); }
+pre.terminal .warn   { color: var(--acq); }
+pre.terminal .err    { color: var(--fault); }
+pre.terminal .info   { color: var(--dim); }
+pre.terminal .val    { color: var(--ink); }
+
+/* ── Interface table ────────────────────────────────────────── */
+.iface-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.iface-card {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px;
+}
+.iface-card .iface-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.iface-card .iface-sub {
+  font-family: var(--m);
+  font-size: 11px;
+  color: var(--mute);
+  margin-bottom: 10px;
+}
+.iface-card ul {
+  list-style: none;
+  font-size: 13px;
+  color: var(--dim);
+}
+.iface-card li { padding: 2px 0; }
+.iface-card li::before { content: '→ '; color: var(--rule); }
+
+/* ── Misc ────────────────────────────────────────────────────── */
+code {
+  font-family: var(--m);
+  font-size: 12.5px;
+  background: var(--panel2);
+  border: 1px solid var(--rule-s);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--ch1);
+}
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-family: var(--m);
+}
+.tag.hw  { color: var(--ch1); background: color-mix(in srgb, var(--ch1) 12%, var(--panel)); border: 1px solid color-mix(in srgb, var(--ch1) 28%, transparent); }
+.tag.sw  { color: var(--sweep); background: color-mix(in srgb, var(--sweep) 12%, var(--panel)); border: 1px solid color-mix(in srgb, var(--sweep) 28%, transparent); }
+.tag.net { color: var(--ch2); background: color-mix(in srgb, var(--ch2) 12%, var(--panel)); border: 1px solid color-mix(in srgb, var(--ch2) 28%, transparent); }
+
+hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+
+/* ── Sidebar active tracking ─────────────────────────────────── */
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <div class="title">Dual-PDH Controller</div>
+    <div class="sub">Firmware Reference v1.0</div>
+  </div>
+  <ul>
+    <li><span class="nav-section">Overview</span></li>
+    <li><a href="#overview">Introduction</a></li>
+    <li><a href="#hardware">Hardware Summary</a></li>
+    <li><a href="#interfaces">Control Interfaces</a></li>
+
+    <li><span class="nav-section">Firmware</span></li>
+    <li><a href="#file-overview">File Overview</a></li>
+    <li><a href="#config">config.h</a></li>
+    <li><a href="#cdce913">cdce913</a></li>
+    <li><a href="#ad9833">ad9833</a></li>
+    <li><a href="#ad5064">ad5064</a></li>
+    <li><a href="#pid">pid</a></li>
+    <li><a href="#lock">lock</a></li>
+    <li><a href="#display">display</a></li>
+    <li><a href="#comms">comms</a></li>
+    <li><a href="#network">network</a></li>
+    <li><a href="#webpage">webpage</a></li>
+    <li><a href="#main-ino">main .ino</a></li>
+
+    <li><span class="nav-section">State Machine</span></li>
+    <li><a href="#states">States &amp; Transitions</a></li>
+
+    <li><span class="nav-section">Display</span></li>
+    <li><a href="#tft-display">TFT Screen</a></li>
+    <li><a href="#web-dashboard">Web Dashboard</a></li>
+
+    <li><span class="nav-section">Command Reference</span></li>
+    <li><a href="#cmd-lock">lock1 / lock2</a></li>
+    <li><a href="#cmd-stop">stop1 / stop2</a></li>
+    <li><a href="#cmd-hold">hold1 / hold2</a></li>
+    <li><a href="#cmd-break">break1 / break2</a></li>
+    <li><a href="#cmd-reset">reset1 / reset2</a></li>
+    <li><a href="#cmd-p">p1 / p2</a></li>
+    <li><a href="#cmd-thresh">thresh1 / thresh2</a></li>
+    <li><a href="#cmd-dither">dither</a></li>
+    <li><a href="#cmd-status">s / status</a></li>
+    <li><a href="#cmd-d">d</a></li>
+    <li><a href="#cmd-r">r</a></li>
+    <li><a href="#cmd-help">help</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+<main>
+
+<!-- ─────────────── OVERVIEW ─────────────── -->
+<h1>Dual-PDH Controller — Firmware Reference</h1>
+<div class="doc-meta">
+  <span>Teensy 4.1</span>
+  <span>Arduino / Teensyduino</span>
+  <span>ILI9341 320×240 TFT</span>
+  <span>QNEthernet</span>
+  <span>Revision 1.0 · 2026-05-30</span>
+</div>
+
+<section id="overview">
+<h2>Introduction</h2>
+<p>
+  The Dual-PDH Controller runs on a <strong>Teensy 4.1</strong> and implements two simultaneous
+  Pound–Drever–Hall (PDH) frequency locks for 1550 nm and 1560 nm DFB lasers.
+  Each channel follows an automated <strong>sweep-to-lock</strong> sequence: a coarse
+  TEC/temperature scan locates the cavity resonance, followed by a fine laser-current
+  scan that walks onto the transmission peak, then the PDH servo engages and
+  holds the lock.
+</p>
+<p>
+  The <strong>320×240 ILI9341 TFT</strong> is read-only — it shows live state, sweep traces,
+  and lock quality. All control is exercised over one of three interfaces: USB serial,
+  Ethernet Telnet, or the built-in HTTP web dashboard.
+</p>
+
+<div class="tag-row">
+  <span class="tag hw">CDCE913 25 MHz clock</span>
+  <span class="tag hw">Dual AD9833 DDS dither</span>
+  <span class="tag hw">AD5064 16-bit DAC</span>
+  <span class="tag hw">ILI9341 TFT</span>
+  <span class="tag hw">Built-in Ethernet PHY</span>
+  <span class="tag sw">1 kHz control loop</span>
+  <span class="tag sw">10 Hz display refresh</span>
+  <span class="tag net">HTTP port 80</span>
+  <span class="tag net">Telnet port 23</span>
+</div>
+</section>
+
+<!-- ─────────────── HARDWARE ─────────────── -->
+<section id="hardware">
+<h2>Hardware Summary</h2>
+<table class="file-table">
+  <thead><tr><th>Component</th><th>Interface</th><th>Role</th></tr></thead>
+  <tbody>
+    <tr><td><span class="file-tag">CDCE913</span></td><td>I²C (0x65)</td><td class="file-desc">PLL clock synthesiser — 10 MHz input → 25 MHz reference for both AD9833 chips. EEPROM image is version-stamped and re-programmed automatically on first boot if stale.</td></tr>
+    <tr><td><span class="file-tag">AD9833 ×2</span></td><td>SPI</td><td class="file-desc">Direct Digital Synthesis oscillators generating the PDH dither sine. CH1 on CS pin 2, CH2 on CS pin 3. Default frequency: 10 kHz.</td></tr>
+    <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 reserved for TEC setpoints.</td></tr>
+    <tr><td><span class="file-tag">ILI9341</span></td><td>SPI (CS 15, DC 14)</td><td class="file-desc">2.8″ 320×240 colour TFT, landscape orientation. Read-only instrument display at 10 Hz.</td></tr>
+    <tr><td><span class="file-tag">Teensy 4.1 ETH</span></td><td>Built-in PHY</td><td class="file-desc">10/100 Ethernet via QNEthernet library. DHCP with static fallback 192.168.1.200. mDNS hostname: <code>dual-pdh.local</code>.</td></tr>
+    <tr><td><span class="file-tag">NTC ×2</span></td><td>Analog A8/A9</td><td class="file-desc">Thermistors on TEC stages. Beta-equation conversion to °C (R₂₅ = 10 kΩ, β = 3950).</td></tr>
+    <tr><td><span class="file-tag">PDH error ×2</span></td><td>Analog A0/A1</td><td class="file-desc">Demodulated PDH error signals. 12-bit ADC, normalised to −1…+1 around midscale.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ─────────────── INTERFACES ─────────────── -->
+<section id="interfaces">
+<h2>Control Interfaces</h2>
+<p>All three interfaces share an identical command set. Responses are identical plain text regardless of interface.</p>
+<div class="iface-grid">
+  <div class="iface-card">
+    <div class="iface-title" style="color:var(--lock)">USB Serial</div>
+    <div class="iface-sub">115200 8N1 · line-buffered</div>
+    <ul>
+      <li>Any terminal program</li>
+      <li>Arduino Serial Monitor</li>
+      <li>Available immediately on power-up</li>
+      <li>1 Hz debug telemetry printed automatically</li>
+    </ul>
+  </div>
+  <div class="iface-card">
+    <div class="iface-title" style="color:var(--sweep)">Telnet CLI</div>
+    <div class="iface-sub">port 23 · single client</div>
+    <ul>
+      <li><code>telnet dual-pdh.local</code></li>
+      <li><code>telnet 192.168.1.200</code></li>
+      <li>Prompt <code>&gt;</code> after each command</li>
+      <li>Backspace supported</li>
+    </ul>
+  </div>
+  <div class="iface-card">
+    <div class="iface-title" style="color:var(--ch2)">Web Dashboard</div>
+    <div class="iface-sub">port 80 · HTTP/1.0</div>
+    <ul>
+      <li><code>http://dual-pdh.local</code></li>
+      <li>Live traces poll at 500 ms</li>
+      <li>PID / threshold sliders</li>
+      <li><code>GET /api/status</code> → JSON</li>
+      <li><code>POST /api/cmd</code> → text</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout note">
+  <strong>JSON API:</strong> <code>GET /api/status</code> returns a complete telemetry object
+  including both channel states, PID gains, thresholds, error RMS, temperatures, laser
+  currents, and PLL status. Suitable for logging with any HTTP client (curl, Python requests, LabVIEW).
+</div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ─────────────── FILE OVERVIEW ─────────────── -->
+<section id="file-overview">
+<h2>Firmware File Overview</h2>
+<p>
+  The sketch lives in <code>Teensy/teensyskeletoninArduinoIDE/</code>.
+  Each logical subsystem is a <code>.h</code>/<code>.cpp</code> pair compiled
+  by the Arduino build system. The main <code>.ino</code> ties them together
+  and holds <code>setup()</code> / <code>loop()</code>.
+</p>
+
+<table class="file-table">
+  <thead>
+    <tr><th>File(s)</th><th>Type</th><th>Role</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="file-tag">config.h</span></td>
+      <td>Header only</td>
+      <td>
+        <div class="file-role">Hardware configuration</div>
+        <div class="file-desc">All <code>#define</code>s for pin numbers, ADC/DAC constants, NTC thermistor coefficients, laser IMON scaling, dither frequency, control loop timing, and display refresh rate. Every tunable hardware constant lives here.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">cdce913.h / .cpp</span></td>
+      <td>I²C driver</td>
+      <td>
+        <div class="file-role">CDCE913 PLL clock synthesiser</div>
+        <div class="file-desc">Reads the EEPROM version byte; re-programs the chip only when the image changes (version-stamped at 0x51). Polls for PLL lock after startup. Optional 25 MHz self-test via <code>FreqCount</code> on pin 9.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">ad9833.h / .cpp</span></td>
+      <td>SPI driver</td>
+      <td>
+        <div class="file-role">AD9833 DDS — dither oscillators</div>
+        <div class="file-desc">Resets both chips on startup, then programs the 28-bit frequency word for a sine output. Frequency is live-tunable via the <code>dither</code> command without interrupting the servo loops.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">ad5064.h / .cpp</span></td>
+      <td>SPI driver</td>
+      <td>
+        <div class="file-role">AD5064 quad 16-bit DAC — setpoints</div>
+        <div class="file-desc">Writes 24-bit frames (CMD=0x3, write-and-update) to each DAC channel. <code>ad5064_set_midscale()</code> is called at startup to centre all outputs before the control loops activate, preventing transients on the laser drivers.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">pid.h / .cpp</span></td>
+      <td>Algorithm</td>
+      <td>
+        <div class="file-role">Discrete PID controller</div>
+        <div class="file-desc">Anti-windup integrator clamp, derivative on error. <code>pid_step()</code> returns the output clamped to [out_min, out_max]. <code>pid_to_dac()</code> maps the ±1 output to a 16-bit unsigned DAC code. Integrator and previous-error state are reset when gains are changed via command.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">lock.h / .cpp</span></td>
+      <td>State machine</td>
+      <td>
+        <div class="file-role">PDH lock state machine</div>
+        <div class="file-desc">Defines the <code>LockState</code> enum (IDLE, SEARCH, ACQUIRE, LOCKED, HOLD, RELOCK) and the <code>LockChannel</code> struct that carries per-channel thresholds, timestamps, and relock counters. <code>lock_enter()</code> records the entry time for timeout tracking.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">display.h / .cpp</span></td>
+      <td>TFT renderer</td>
+      <td>
+        <div class="file-role">320×240 ILI9341 dashboard</div>
+        <div class="file-desc">Draws the full pixel-matched instrument display at 10 Hz via <code>display_update()</code>. Renders state-appropriate traces (Lorentzian sweep peak, dispersive S-curve at acquisition, noise trace in lock, railing trace on fault), stat cells, servo health bar, and top status bar. Consumes a <code>DispModel</code> struct populated by the main loop.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">comms.h / .cpp</span></td>
+      <td>Command processor</td>
+      <td>
+        <div class="file-role">Unified CLI command parser &amp; JSON generator</div>
+        <div class="file-desc">All commands are processed here regardless of which interface delivered them. <code>comms_process()</code> takes a <code>Print&amp;</code> sink so responses go directly to Serial, a TCP client, or any other Arduino <code>Print</code> subclass. <code>comms_json_status()</code> streams a complete JSON telemetry object.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">network.h / .cpp</span></td>
+      <td>Ethernet stack</td>
+      <td>
+        <div class="file-role">QNEthernet HTTP + Telnet server</div>
+        <div class="file-desc">Initialises the Teensy 4.1 built-in Ethernet PHY via QNEthernet. DHCP with automatic static-IP fallback (192.168.1.200). Listens on port 80 for HTTP (routes GET /, GET /api/status, POST /api/cmd, OPTIONS) and port 23 for a Telnet CLI. HTTP request parsing is timeout-guarded (200 ms per header line). Non-blocking — services up to 4 HTTP connections per <code>network_poll()</code> call.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag">webpage.h</span></td>
+      <td>Embedded asset</td>
+      <td>
+        <div class="file-role">Self-contained HTML dashboard</div>
+        <div class="file-desc">The entire web UI as a C++ raw-string literal (<code>R"HTMLEND(...)HTMLEND"</code>). Served verbatim at <code>GET /</code>. Contains inline CSS (dark instrument theme matching the TFT palette), inline JavaScript (trace rendering ported from <code>pdh-screen.js</code>), and a command console. Polls <code>/api/status</code> every 500 ms.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag entry">teensyskeletoninArduinoIDE.ino</span></td>
+      <td>Main sketch</td>
+      <td>
+        <div class="file-role">Entry point — setup() / loop()</div>
+        <div class="file-desc">Declares all global objects (<code>tft</code>, <code>ch[2]</code>, <code>pid[2]</code>, <code>disp</code>, <code>g_dither_freq</code>). Drives the 1 kHz control loop (<code>elapsedMicros loopTimer</code>), 10 Hz display/network tick, 1 Hz debug print, and USB serial line buffer. Calls into all modules.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag">serial_console.h / .cpp</span></td>
+      <td>Compatibility stub</td>
+      <td>
+        <div class="file-role">Legacy stub (delegates to comms)</div>
+        <div class="file-desc">Retained for build compatibility. The function body is empty — USB serial is now handled directly in <code>loop()</code> via <code>comms_process()</code>.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<!-- Per-file detail sections -->
+<section id="config">
+<h3>config.h — Hardware Configuration</h3>
+<p>Single header included by every other module. Contains three categories of defines:</p>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li><strong style="color:var(--ink)">Pin mapping</strong> — all Teensy 4.1 pin numbers matched to the schematic net names (I²C, SPI, DDS CS/RESET, DAC CS/LDAC/CLR, TFT, analog inputs).</li>
+  <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code.</li>
+  <li><strong style="color:var(--ink)">Timing</strong> — <code>CONTROL_PERIOD_US</code> (1000 µs = 1 kHz), <code>DISPLAY_PERIOD_MS</code> (100 ms = 10 Hz), <code>SCAN_PERIOD_MS</code> (5000 ms sweep animation), <code>DEBUG_PERIOD_MS</code> (1000 ms).</li>
+</ul>
+<div class="callout warn"><strong>Calibration note:</strong> <code>LASER_IMON_MA_PER_LSB</code> defaults to 0.0806 mA/LSB (~330 mA full-scale on 12-bit ADC). Adjust this value and the NTC coefficients to match your actual hardware.</div>
+</section>
+
+<section id="cdce913"><h3>cdce913.h / .cpp — PLL Clock</h3>
+<p>Programs the CDCE913 via I²C to synthesise 25 MHz from the 10 MHz board reference. The 32-byte EEPROM image is version-stamped; the chip is re-programmed only when the version byte differs from the compiled image. <code>cdce_wait_for_lock()</code> polls the lock-detect bit with a 200 ms timeout. <code>cdce_selftest_25mhz()</code> uses the Teensy <code>FreqCount</code> library to measure the output on pin 9 and verify 25.000 ±10 kHz.</p>
+</section>
+
+<section id="ad9833"><h3>ad9833.h / .cpp — Dither DDS</h3>
+<p>Each AD9833 receives a three-word SPI transaction to load a 28-bit frequency register (B28=1 mode). The dither frequency is set from <code>g_dither_freq</code> (default 10 kHz) and can be changed live via the <code>dither</code> command. Both chips share the SPI bus and are differentiated by their FSYNC (chip-select) lines.</p>
+</section>
+
+<section id="ad5064"><h3>ad5064.h / .cpp — Setpoint DAC</h3>
+<p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 are currently midscale-initialised and reserved for TEC setpoints.</p>
+</section>
+
+<section id="pid"><h3>pid.h / .cpp — PID Controller</h3>
+<p>Each channel has an independent <code>PID</code> struct. The integrator is clamped symmetrically to <code>integrator_limit</code> (default 0.5) to prevent windup during acquisition. When gains are changed via <code>p1</code> / <code>p2</code> commands, <code>integrator</code> and <code>prev_err</code> are zeroed to prevent a step transient on the output.</p>
+</section>
+
+<section id="lock"><h3>lock.h / .cpp — State Machine</h3>
+<p>See the <a href="#states">States &amp; Transitions</a> section below for the full state diagram. Key struct fields on <code>LockChannel</code>:</p>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li><code>lock_threshold</code> — |error| below which ACQUIRE transitions to LOCKED (default 0.02).</li>
+  <li><code>acquire_threshold</code> — |error| above which SEARCH transitions to ACQUIRE, and above which LOCKED transitions to RELOCK (default 0.10).</li>
+  <li><code>acquire_timeout_ms</code> — ACQUIRE aborts to RELOCK after this many ms without achieving lock (default 2000 ms).</li>
+  <li><code>relock_backoff_ms</code> — base backoff before retrying from RELOCK; multiplied by (1 + relock_attempts) for exponential back-off (default 500 ms).</li>
+</ul>
+</section>
+
+<section id="display"><h3>display.h / .cpp — TFT Renderer</h3>
+<p>Reads a <code>DispModel</code> struct (filled by the main loop at 10 Hz) and renders the full 320×240 display. Each of the six lock states maps to a distinct trace style:</p>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li><strong style="color:var(--idle)">IDLE</strong> — dashed flat baseline.</li>
+  <li><strong style="color:var(--sweep)">SEARCH</strong> — filled Lorentzian transmission peak + moving scan-marker line. Peak position is fixed; scan phase advances over <code>SCAN_PERIOD_MS</code>.</li>
+  <li><strong style="color:var(--acq)">ACQUIRE</strong> — transmission curve + overlaid dispersive PDH S-curve + setpoint dot at peak.</li>
+  <li><strong style="color:var(--lock)">LOCKED</strong> — tight noise trace; amplitude driven by live <code>err_rms</code>.</li>
+  <li><strong style="color:var(--hold)">HOLD</strong> — wider noise trace (amplitude 10× locked).</li>
+  <li><strong style="color:var(--fault)">RELOCK</strong> — railing/diverging random-walk trace in fault red.</li>
+</ul>
+</section>
+
+<section id="comms"><h3>comms.h / .cpp — Command Processor</h3>
+<p><code>comms_process(line, out, ch, pid, disp)</code> is the single entry point for all command handling. The <code>Print&amp;</code> argument accepts <code>Serial</code>, an <code>EthernetClient</code>, or any other Arduino Print subclass, making it trivial to add new interfaces.</p>
+<p><code>comms_json_status()</code> streams JSON directly without intermediate buffering, which keeps heap usage flat even under rapid polling.</p>
+</section>
+
+<section id="network"><h3>network.h / .cpp — Ethernet</h3>
+<p>Requires the <strong>QNEthernet</strong> library by Luni64 (install via Arduino Library Manager). Uses the Teensy 4.1's built-in 10/100 Ethernet MAC/PHY — no external W5500 or similar chip is needed.</p>
+<p>The HTTP parser reads one header line at a time with a 200 ms timeout per line; malformed or stalled connections are dropped cleanly. POST bodies up to 127 bytes are supported (sufficient for all commands). Responses use <code>HTTP/1.0</code> with the connection closed after each response.</p>
+</section>
+
+<section id="webpage"><h3>webpage.h — Embedded Dashboard</h3>
+<p>The dashboard is ~12 KB of HTML/CSS/JS stored as a C++ raw-string literal and served verbatim. It requires no external CDN or filesystem. The JavaScript trace renderer is a direct port of <code>pdh-screen.js</code> from the desktop prototype, so the browser view matches the TFT display exactly.</p>
+</section>
+
+<section id="main-ino"><h3>teensyskeletoninArduinoIDE.ino — Main Sketch</h3>
+<p>Loop priorities (highest to lowest):</p>
+<ol style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li><strong style="color:var(--ink)">USB serial input</strong> — polled every loop iteration via <code>Serial.available()</code>. Lines are buffered until <code>\n</code> or <code>\r</code>, then dispatched to <code>comms_process()</code>.</li>
+  <li><strong style="color:var(--ink)">1 kHz control loop</strong> — gated by <code>elapsedMicros loopTimer</code>. Reads ADC, runs both channel state machines and PID steps, accumulates RMS.</li>
+  <li><strong style="color:var(--ink)">10 Hz display + network tick</strong> — gated by <code>millis()</code> delta. Updates <code>DispModel</code>, calls <code>display_update()</code>, then calls <code>network_poll()</code>. Placed after the display update so Ethernet servicing cannot delay a control tick.</li>
+  <li><strong style="color:var(--ink)">1 Hz debug print</strong> — per-channel state, error, RMS, temperature, and laser current to serial.</li>
+</ol>
+</section>
+
+<hr class="section-rule">
+
+<!-- ─────────────── STATE MACHINE ─────────────── -->
+<section id="states">
+<h2>Lock State Machine</h2>
+<p>Each channel has an independent state machine. States and transitions are identical for both channels; only the DAC channel index and ADC input differ.</p>
+
+<table class="state-table">
+  <thead>
+    <tr><th>State</th><th>Entry condition</th><th>Action</th><th>Exit condition</th></tr>
+  </thead>
+  <tbody>
+    <tr class="st-idle">
+      <td><span class="state-dot">IDLE</span></td>
+      <td>Power-on, <code>stop</code> command, or explicit <code>lock_enter(IDLE)</code></td>
+      <td>No output. DAC holds last value. Display shows flat baseline.</td>
+      <td><code>lock1</code> / <code>lock2</code> command → SEARCH</td>
+    </tr>
+    <tr class="st-search">
+      <td><span class="state-dot">SEARCH</span></td>
+      <td><code>lock1</code> / <code>lock2</code> command, or RELOCK backoff expires</td>
+      <td>Dither active. Polls |error| each 1 kHz tick. Display animates a sweep marker across the Lorentzian trace over 5 s.</td>
+      <td>|error| &gt; <code>acquire_threshold</code> → ACQUIRE</td>
+    </tr>
+    <tr class="st-acquire">
+      <td><span class="state-dot">ACQUIRE</span></td>
+      <td>Error signal exceeds <code>acquire_threshold</code></td>
+      <td>PID loop active, output to DAC channel. Integrator building. Display shows transmission + S-curve overlay.</td>
+      <td>|error| &lt; <code>lock_threshold</code> → LOCKED<br>Timeout (<code>acquire_timeout_ms</code>) → RELOCK</td>
+    </tr>
+    <tr class="st-locked">
+      <td><span class="state-dot">LOCKED</span></td>
+      <td>Error RMS drops below <code>lock_threshold</code></td>
+      <td>PID maintains lock. RMS accumulator runs. Display shows tight in-lock noise trace. Servo health bar fills.</td>
+      <td>|error| &gt; <code>acquire_threshold</code> → RELOCK<br><code>break</code> command → RELOCK<br><code>hold</code> command → HOLD</td>
+    </tr>
+    <tr class="st-hold">
+      <td><span class="state-dot">HOLD</span></td>
+      <td><code>hold1</code> / <code>hold2</code> command</td>
+      <td>DAC output frozen. No PID computation. Display shows wider noise trace. Servo health at 50%.</td>
+      <td><code>lock</code> command → SEARCH<br><code>stop</code> command → IDLE</td>
+    </tr>
+    <tr class="st-relock">
+      <td><span class="state-dot">RELOCK</span></td>
+      <td>Lock loss or acquire timeout</td>
+      <td>Backoff timer runs. Increments <code>relock_attempts</code>. Backoff = 500 ms × (1 + attempts). Display shows railing fault trace.</td>
+      <td>Backoff expires → SEARCH<br><code>stop</code> command → IDLE</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Channels are fully independent.</strong> CH1 can be LOCKED while CH2 is still in SEARCH. The <code>lock1</code> / <code>lock2</code> commands start them independently; <code>lock1</code> followed immediately by <code>lock2</code> (or the web "RUN BOTH" button) starts both with a shared timeline.
+</div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ─────────────── TFT DISPLAY ─────────────── -->
+<section id="tft-display">
+<h2>TFT Display (320×240)</h2>
+<p>The 2.8″ ILI9341 display is divided into three zones: a 22-pixel top status bar and two equal channel panels (109 px each). All content is rendered by <code>display.cpp</code> at 10 Hz.</p>
+
+<div class="screenshot-grid">
+  <div class="ss-card">
+    <img src="img/screen-final.png" alt="Prototype dashboard with host console">
+    <div class="ss-cap"><strong>Fig 1.</strong> Desktop prototype showing TFT render at 2× scale (left) alongside the host console panel. CH1 (teal) and CH2 (amber) both in COARSE SWEEP state with live TEC temperature readout.</div>
+  </div>
+  <div class="ss-card">
+    <img src="img/screen-notop.png" alt="TFT close-up coarse sweep">
+    <div class="ss-cap"><strong>Fig 2.</strong> TFT-only view during coarse sweep. CH1 at 31.07 °C, CH2 at 28.27 °C. Scan markers (vertical blue lines) track the current sweep position; dashed green markers show the located peak.</div>
+  </div>
+</div>
+
+<div class="screenshot-grid single">
+  <div class="ss-card">
+    <img src="img/screen-board.png" alt="All states screen board">
+    <div class="ss-cap"><strong>Fig 3.</strong> Screen board showing all states. Top row (left to right): IDLE, COARSE SWEEP. Bottom row: LOCK LOST (RELOCK), MANUAL. Each frame is a true 320×240 pixel render shown at 2×.</div>
+  </div>
+</div>
+
+<h3>Display Layout</h3>
+<table class="file-table">
+  <thead><tr><th>Zone</th><th>Pixels</th><th>Content</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Top bar</strong></td><td>320 × 22</td><td>PLL lock dot (green/amber), CLK PLL / CLK UNLK label, reference clock MHz</td></tr>
+    <tr><td><strong>CH1 panel</strong></td><td>320 × 109</td><td>Teal rail (4 px), plot area (144 × 100), stat cells 2×2, servo health bar</td></tr>
+    <tr><td><strong>CH2 panel</strong></td><td>320 × 109</td><td>Amber rail (4 px), plot area (144 × 100), stat cells 2×2, servo health bar</td></tr>
+  </tbody>
+</table>
+
+<h3>Stat Cells (per channel)</h3>
+<table class="file-table">
+  <thead><tr><th>Cell</th><th>Source</th><th>Format</th></tr></thead>
+  <tbody>
+    <tr><td><strong>TEC TEMP</strong></td><td>NTC thermistor via beta equation</td><td><code>24.50 °C</code></td></tr>
+    <tr><td><strong>LASER I</strong></td><td>IMON ADC × <code>LASER_IMON_MA_PER_LSB</code></td><td><code>138.2 mA</code></td></tr>
+    <tr><td><strong>SETPOINT</strong></td><td>DAC code / 65535 × 100</td><td><code>52.3 %</code></td></tr>
+    <tr><td><strong>ERR RMS</strong></td><td>√(Σ err²/N) over last display interval</td><td><code>0.0034</code></td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ─────────────── WEB DASHBOARD ─────────────── -->
+<section id="web-dashboard">
+<h2>Web Dashboard</h2>
+<p>Navigate to <code>http://dual-pdh.local</code> (or the device IP) in any modern browser. The page is self-contained — no internet connection required.</p>
+
+<div class="screenshot-grid single">
+  <div class="ss-card">
+    <img src="img/screen-coarse.png" alt="Web dashboard coarse sweep">
+    <div class="ss-cap"><strong>Fig 4.</strong> Browser dashboard during coarse sweep. Live SVG traces match the TFT display. Top bar shows PLL status, IP, and uptime. Per-channel control buttons are immediately accessible.</div>
+  </div>
+</div>
+
+<h3>API Endpoints</h3>
+<table class="file-table">
+  <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>GET</code></td><td><code>/</code></td><td>Full HTML dashboard (self-contained, ~12 KB)</td></tr>
+    <tr><td><code>GET</code></td><td><code>/api/status</code></td><td>JSON telemetry object (both channels)</td></tr>
+    <tr><td><code>POST</code></td><td><code>/api/cmd</code></td><td>Body: plain-text command. Response: plain-text output.</td></tr>
+    <tr><td><code>OPTIONS</code></td><td><code>*</code></td><td>CORS preflight (Access-Control-Allow-Origin: *)</td></tr>
+  </tbody>
+</table>
+
+<h4>Example: curl status poll</h4>
+<pre class="terminal"><span class="prompt">$ </span><span class="in">curl http://dual-pdh.local/api/status | python3 -m json.tool</span>
+<span class="info">{
+  "t": 45231,
+  "pll": 1,
+  "refclk": 25.000,
+  "dither": 10000,
+  "ip": "192.168.1.200",
+  "ch": [
+    {
+      "n": 1, "st": "LOCKED",
+      "rms": 0.00312, "temp": 24.52, "ima": 138.2,
+      "setp": 52.30, "scan": 0.000, "peak": 0.614,
+      "qual": 0.844, "relk": 0,
+      "kp": 0.08000, "ki": 0.50000, "kd": 0.00000,
+      "lthr": 0.02000, "athr": 0.10000
+    },
+    {
+      "n": 2, "st": "SEARCH",
+      "rms": 0.42100, "temp": 23.87, "ima": 138.0,
+      "setp": 50.00, "scan": 0.347, "peak": 0.600,
+      "qual": 0.000, "relk": 0,
+      "kp": 0.08000, "ki": 0.50000, "kd": 0.00000,
+      "lthr": 0.02000, "athr": 0.10000
+    }
+  ]
+}</span></pre>
+</section>
+
+<hr class="section-rule">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--                  COMMAND REFERENCE                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="cmd-overview">Command Reference</h2>
+<p>Commands are identical on all three interfaces. Channel index is always <strong>1</strong> or <strong>2</strong> (not 0-based). Responses are plain text; the <code>s</code>/<code>status</code> command returns formatted multi-line text on the CLI and JSON when called from the web.</p>
+
+<!-- ── lock ── -->
+<div class="cmd-block" id="cmd-lock">
+  <div class="cmd-header">
+    <span class="cmd-name">lock1</span>
+    <span class="cmd-sig">/ <strong>lock2</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Transitions the specified channel from any state into <strong>SEARCH</strong>, beginning the sweep-to-lock sequence. The scan phase resets to 0. The channel will automatically advance: SEARCH → ACQUIRE → LOCKED without further commands. Use <code>lock1</code> then <code>lock2</code> in quick succession (or the web "RUN BOTH" button) to start both channels.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Start CH1 sweep-to-lock</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">lock1</span>
+<span class="ok">CH1 -> SEARCH</span></pre>
+
+    <div class="ex-label">Start both channels</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">lock1</span>
+<span class="ok">CH1 -> SEARCH</span>
+<span class="prompt">&gt; </span><span class="in">lock2</span>
+<span class="ok">CH2 -> SEARCH</span></pre>
+
+    <div class="ex-label">Automatic progression (printed by 1 Hz debug loop)</div>
+    <pre class="terminal"><span class="info">CH1 SEARCH  err=0.0312  rms=0.42100  T=26.3  I=138.0 mA</span>
+<span class="ok">CH1 peak -> ACQUIRE</span>
+<span class="info">CH1 ACQUIRE err=0.0180  rms=0.18200  T=26.3  I=138.4 mA</span>
+<span class="ok">CH1 LOCKED</span>
+<span class="info">CH1 LOCKED  err=0.0021  rms=0.00340  T=26.3  I=138.4 mA</span></pre>
+  </div>
+</div>
+
+<!-- ── stop ── -->
+<div class="cmd-block" id="cmd-stop">
+  <div class="cmd-header">
+    <span class="cmd-name">stop1</span>
+    <span class="cmd-sig">/ <strong>stop2</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Immediately transitions the channel to <strong>IDLE</strong> from any state. The DAC output is <em>not</em> zeroed — it holds the last written value. Use this to safely park a channel without disturbing the laser current.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Stop CH2</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">stop2</span>
+<span class="ok">CH2 -> IDLE</span></pre>
+
+    <div class="ex-label">Stop both channels</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">stop1</span>
+<span class="ok">CH1 -> IDLE</span>
+<span class="prompt">&gt; </span><span class="in">stop2</span>
+<span class="ok">CH2 -> IDLE</span></pre>
+  </div>
+</div>
+
+<!-- ── hold ── -->
+<div class="cmd-block" id="cmd-hold">
+  <div class="cmd-header">
+    <span class="cmd-name">hold1</span>
+    <span class="cmd-sig">/ <strong>hold2</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Freezes the DAC output at its current value and pauses PID computation, entering <strong>HOLD</strong>. Useful when you need to temporarily suspend the servo without losing the cavity setpoint. Resume with <code>lock1</code>/<code>lock2</code> to re-enter SEARCH, or <code>stop</code> to go IDLE.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Hold CH1 while locked</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">hold1</span>
+<span class="ok">CH1 -> HOLD</span></pre>
+
+    <div class="ex-label">Resume from HOLD</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">lock1</span>
+<span class="ok">CH1 -> SEARCH</span></pre>
+  </div>
+</div>
+
+<!-- ── break ── -->
+<div class="cmd-block" id="cmd-break">
+  <div class="cmd-header">
+    <span class="cmd-name">break1</span>
+    <span class="cmd-sig">/ <strong>break2</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Deliberately breaks the lock by forcing the channel from LOCKED, ACQUIRE, or HOLD into <strong>RELOCK</strong>. This triggers the backoff-and-retry cycle. Has no effect if the channel is already IDLE or SEARCH. Useful for testing the relock behaviour or when the cavity mode has drifted and a fresh acquisition is needed.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Break CH1 lock</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">break1</span>
+<span class="ok">CH1 lock broken -> RELOCK</span></pre>
+
+    <div class="ex-label">Attempting to break when not locked</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">break2</span>
+<span class="warn">CH2 not locked</span></pre>
+  </div>
+</div>
+
+<!-- ── reset ── -->
+<div class="cmd-block" id="cmd-reset">
+  <div class="cmd-header">
+    <span class="cmd-name">reset1</span>
+    <span class="cmd-sig">/ <strong>reset2</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Clears the <code>relock_attempts</code> counter without changing channel state. The backoff time is multiplied by <code>(1 + relock_attempts)</code>, so resetting this counter returns the backoff to the base 500 ms. Use after diagnosing and correcting a recurring lock-loss cause.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Clear relock counter after many faults</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">reset1</span>
+<span class="ok">CH1 relock counter reset</span></pre>
+  </div>
+</div>
+
+<!-- ── p1 / p2 ── -->
+<div class="cmd-block" id="cmd-p">
+  <div class="cmd-header">
+    <span class="cmd-name">p1</span>
+    <span class="cmd-sig"><em>&lt;kp&gt;</em> <em>&lt;ki&gt;</em> <em>&lt;kd&gt;</em> &nbsp;/&nbsp; <strong>p2</strong> <em>&lt;kp&gt;</em> <em>&lt;ki&gt;</em> <em>&lt;kd&gt;</em></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Sets the <strong>proportional</strong>, <strong>integral</strong>, and <strong>derivative</strong> gains for CH1 or CH2 respectively. The integrator state and previous-error term are reset to zero on every gain change to prevent output steps. Gains take effect immediately on the next 1 kHz control tick. All three values are required; omitting any produces a usage error.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Set CH1 gains (proportional-only, no derivative)</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">p1 0.08 0.5 0</span>
+<span class="ok">CH1 PID kp=0.0800 ki=0.5000 kd=0.0000</span></pre>
+
+    <div class="ex-label">Set CH2 gains with light derivative</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">p2 0.12 0.3 0.002</span>
+<span class="ok">CH2 PID kp=0.1200 ki=0.3000 kd=0.0020</span></pre>
+
+    <div class="ex-label">Wrong number of arguments</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">p1 0.1 0.5</span>
+<span class="err">Usage: p1 &lt;kp&gt; &lt;ki&gt; &lt;kd&gt;</span></pre>
+
+    <div class="ex-label">Disable integral action (pure P)</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">p1 0.15 0 0</span>
+<span class="ok">CH1 PID kp=0.1500 ki=0.0000 kd=0.0000</span></pre>
+  </div>
+</div>
+
+<!-- ── thresh ── -->
+<div class="cmd-block" id="cmd-thresh">
+  <div class="cmd-header">
+    <span class="cmd-name">thresh1</span>
+    <span class="cmd-sig"><em>&lt;lock&gt;</em> <em>&lt;acq&gt;</em> &nbsp;/&nbsp; <strong>thresh2</strong> <em>&lt;lock&gt;</em> <em>&lt;acq&gt;</em></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Sets the <strong>lock threshold</strong> and <strong>acquire threshold</strong> for a channel.
+    <br><br>
+    <strong>lock</strong> — |error| below which ACQUIRE considers the lock achieved (default 0.02, normalised ±1 scale).
+    <br>
+    <strong>acq</strong> — |error| above which SEARCH enters ACQUIRE, and above which LOCKED triggers RELOCK (default 0.10).
+    <br><br>
+    Thresholds are in the normalised ADC scale (0…1, where 1.0 = full ADC range from midscale). Tighten <em>lock</em> for quieter cavities; loosen it if acquisition is failing.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Default thresholds</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">thresh1 0.02 0.10</span>
+<span class="ok">CH1 lock_thr=0.02000 acq_thr=0.10000</span></pre>
+
+    <div class="ex-label">Tighter lock threshold for a low-noise cavity</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">thresh1 0.005 0.08</span>
+<span class="ok">CH1 lock_thr=0.00500 acq_thr=0.08000</span></pre>
+
+    <div class="ex-label">Loosen acquire threshold (noisy signal)</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">thresh2 0.02 0.15</span>
+<span class="ok">CH2 lock_thr=0.02000 acq_thr=0.15000</span></pre>
+
+    <div class="ex-label">Wrong number of arguments</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">thresh1 0.02</span>
+<span class="err">Usage: thresh1 &lt;lock&gt; &lt;acq&gt;</span></pre>
+  </div>
+</div>
+
+<!-- ── dither ── -->
+<div class="cmd-block" id="cmd-dither">
+  <div class="cmd-header">
+    <span class="cmd-name">dither</span>
+    <span class="cmd-sig"><em>&lt;hz&gt;</em></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Sets the dither frequency for <strong>both</strong> AD9833 DDS chips simultaneously, taking effect on the next SPI transaction (within microseconds). The valid range is 100 Hz to 500 kHz. The value is stored in <code>g_dither_freq</code> and included in the JSON status. Note: frequency is <em>not</em> saved to non-volatile memory — it resets to <code>DITHER_FREQ_HZ</code> (10 kHz default) on power cycle.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Set dither to 10 kHz (default)</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 10000</span>
+<span class="ok">Dither -> 10000 Hz</span></pre>
+
+    <div class="ex-label">Increase dither to 50 kHz</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 50000</span>
+<span class="ok">Dither -> 50000 Hz</span></pre>
+
+    <div class="ex-label">Below minimum</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 50</span>
+<span class="err">Usage: dither &lt;hz&gt;  (100–500000)</span></pre>
+  </div>
+</div>
+
+<!-- ── status ── -->
+<div class="cmd-block" id="cmd-status">
+  <div class="cmd-header">
+    <span class="cmd-name">s</span>
+    <span class="cmd-sig">/ <strong>status</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Prints a full human-readable telemetry dump for both channels plus the dither frequency. For machine consumption, prefer the JSON API endpoint <code>GET /api/status</code> which returns all the same data in structured JSON.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Status when CH1 is locked and CH2 is searching</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
+<span class="val">CH1 LOCKED  rms=0.00312  temp=24.5°C  I=138.2mA  setp=52.3%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="val">CH2 SEARCH  rms=0.41800  temp=23.9°C  I=138.0mA  setp=50.0%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="info">dither=10000 Hz</span></pre>
+
+    <div class="ex-label">Status after several relocks on CH2</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
+<span class="val">CH1 LOCKED  rms=0.00298  temp=24.5°C  I=138.3mA  setp=52.4%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="warn">CH2 RELOCK  rms=0.54200  temp=24.1°C  I=138.0mA  setp=50.0%  relk=3</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="info">dither=10000 Hz</span></pre>
+  </div>
+</div>
+
+<!-- ── d ── -->
+<div class="cmd-block" id="cmd-d">
+  <div class="cmd-header">
+    <span class="cmd-name">d</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Dumps the raw 12-bit ADC counts from all six monitored analog inputs. Useful for verifying hardware connectivity, offset calibration, and checking that the PDH demodulation chain is producing a signal before enabling the control loops.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Raw ADC dump — both channels active</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">d</span>
+<span class="val">LOCK1=2064 LOCK2=2031 NTC1=1820 NTC2=1834 LAS1=1712 LAS2=1709</span></pre>
+
+    <div class="ex-label">Interpreting the values</div>
+    <pre class="terminal"><span class="info">LOCK1=2064  → PDH error CH1: (2064-2047)/2047 = +0.0083 (near zero, locked)
+LOCK2=2031  → PDH error CH2: (2031-2047)/2047 = -0.0078 (near zero, locked)
+NTC1 =1820  → NTC voltage ratio → ~24.5 °C (via beta equation)
+NTC2 =1834  → ~24.2 °C
+LAS1 =1712  → 1712 × 0.0806 = 138.0 mA
+LAS2 =1709  → 1709 × 0.0806 = 137.8 mA</span></pre>
+  </div>
+</div>
+
+<!-- ── r ── -->
+<div class="cmd-block" id="cmd-r">
+  <div class="cmd-header">
+    <span class="cmd-name">r</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Forces a re-program of the <strong>CDCE913 EEPROM</strong> regardless of the current version byte. Use this after modifying the clock configuration in <code>cdce913.cpp</code> and incrementing the version byte. The operation takes approximately 25 ms and does not interrupt the control loops.
+    <br><br>
+    Under normal operation this command is never needed — <code>cdce_program_if_needed()</code> in <code>setup()</code> handles automatic programming.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Force EEPROM reprogram</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">r</span>
+<span class="ok">CDCE913 EEPROM reprogrammed</span></pre>
+  </div>
+</div>
+
+<!-- ── help ── -->
+<div class="cmd-block" id="cmd-help">
+  <div class="cmd-header">
+    <span class="cmd-name">help</span>
+    <span class="cmd-sig">/ <strong>?</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">Prints the full command list with one-line descriptions.</div>
+  <div class="cmd-examples">
+    <div class="ex-label">Output</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">help</span>
+<span class="val">Commands:
+  s / status           — telemetry
+  lock1 / lock2        — start sweep+lock
+  stop1 / stop2        — stop to IDLE
+  hold1 / hold2        — enter HOLD
+  break1 / break2      — break lock -> RELOCK
+  reset1 / reset2      — clear relock counter
+  p1 kp ki kd          — set CH1 PID gains
+  p2 kp ki kd          — set CH2 PID gains
+  thresh1 lock acq     — set CH1 thresholds
+  thresh2 lock acq     — set CH2 thresholds
+  dither &lt;hz&gt;          — set dither frequency
+  d                    — raw ADC dump
+  r                    — reprogram CDCE913</span></pre>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- ─────────────── QUICK START ─────────────── -->
+<h2>Typical Operating Sequence</h2>
+<div class="callout">
+<strong>First power-on checklist:</strong>
+<ol style="margin-top:8px;padding-left:18px;line-height:2">
+  <li>Connect USB. Open terminal at 115200. Confirm <code>CDCE913: PLL locked</code> and <code>25 MHz OK</code>.</li>
+  <li>Type <code>d</code> and verify all six ADC channels return plausible values (non-zero, not rail at 0 or 4095).</li>
+  <li>Confirm TEC temperatures with <code>s</code> — should read near ambient.</li>
+  <li>Type <code>lock1</code>. Observe CH1 advancing SEARCH → ACQUIRE → LOCKED on the TFT.</li>
+  <li>Once CH1 shows LOCKED and ERR RMS &lt; 0.01, type <code>lock2</code>.</li>
+  <li>Navigate to <code>http://dual-pdh.local</code> to monitor both channels from a browser.</li>
+</ol>
+</div>
+
+<div class="callout warn" style="margin-top:16px">
+<strong>If ACQUIRE times out repeatedly:</strong> Check the PDH demodulation chain with <code>d</code>. The LOCK1/LOCK2 readings should change as the laser frequency sweeps through resonance. If they are static, the RF path (mixer, low-pass filter, or AD9833 output) may be disconnected. Reduce <code>acquire_threshold</code> via <code>thresh1</code> if the signal level is low.
+</div>
+
+</main>
+
+<script>
+// Sidebar active-link tracking on scroll
+const headings = document.querySelectorAll('section[id], h2[id], h3[id], div.cmd-block[id]');
+const links = document.querySelectorAll('nav a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector('nav a[href="#' + e.target.id + '"]');
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -75% 0px' });
+headings.forEach(h => obs.observe(h));
+</script>
+</body>
+</html>

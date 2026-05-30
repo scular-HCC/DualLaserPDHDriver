@@ -1,0 +1,330 @@
+/* ============================================================
+   Dual-PDH Controller — Screen component (the 320x240 TFT view)
+   Used by BOTH the interactive prototype and the screen board.
+   ============================================================ */
+
+.pdh {
+  width: 320px;
+  height: 240px;
+  background: var(--screen);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: .2px;
+}
+
+/* ---------------- top status bar ---------------- */
+.pdh-top {
+  height: 22px;
+  flex: 0 0 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 7px;
+  background: linear-gradient(#0c121b, #090e15);
+  border-bottom: 1px solid var(--rule);
+}
+.pdh-mark {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  color: var(--ink);
+}
+.pdh-mark b { color: var(--ch1); }
+.pdh-mark i { color: var(--ch2); font-style: normal; }
+.pdh-top .sp { flex: 1; }
+.pdh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  letter-spacing: .4px;
+  color: var(--ink-dim);
+  font-family: var(--f-num);
+}
+.pdh-chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--st-lock);
+  box-shadow: 0 0 6px var(--st-lock);
+}
+.pdh-chip .dot.warn { background: var(--st-acq); box-shadow: 0 0 6px var(--st-acq); }
+.pdh-chip .dot.bad  { background: var(--st-fault); box-shadow: 0 0 6px var(--st-fault); }
+.pdh-run {
+  font-family: var(--f-ui);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--st-lock);
+  background: color-mix(in srgb, var(--st-lock) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-lock) 45%, transparent);
+}
+.pdh-run.stop {
+  color: var(--ink-dim);
+  background: #0c1119;
+  border-color: var(--rule);
+}
+
+/* ---------------- channel panel ---------------- */
+.pdh-chan {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: 4px 1fr;
+  min-height: 0;
+  position: relative;
+  background: var(--panel);
+}
+.pdh-chan + .pdh-chan { border-top: 1px solid var(--rule); }
+.pdh-rail { background: var(--accent); box-shadow: 0 0 14px -2px var(--accent); }
+
+.pdh-chan-in {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 4px 7px 5px 8px;
+}
+
+/* channel header */
+.pdh-chead {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+.pdh-cid {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .6px;
+  color: var(--accent);
+}
+.pdh-cname {
+  font-size: 9.5px;
+  letter-spacing: .3px;
+  color: var(--ink-faint);
+  font-family: var(--f-num);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pdh-chead .sp { flex: 1; }
+
+/* state badge */
+.pdh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 9.5px;
+  letter-spacing: .7px;
+  padding: 2px 7px 2px 6px;
+  border-radius: 999px;
+  color: var(--sc);
+  background: color-mix(in srgb, var(--sc) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sc) 42%, transparent);
+  white-space: nowrap;
+}
+.pdh-badge .bdot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--sc);
+  box-shadow: 0 0 6px var(--sc);
+}
+.pdh-badge.pulse .bdot { animation: bpulse 1s steps(2, jump-none) infinite; }
+@keyframes bpulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+/* channel body: plot | readouts (plot fills full height; id+badge overlay it) */
+.pdh-body {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 7px;
+  min-height: 0;
+  margin-top: 0;
+}
+
+/* ---------------- plot ---------------- */
+.pdh-plot {
+  position: relative;
+  background:
+    linear-gradient(#0a1019, #080d14);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 0;
+}
+.pdh-plot svg { display: block; width: 100%; height: 100%; }
+
+/* plot vector styling — strokes stay crisp under non-uniform scale */
+.pdh-plot svg .gln    { stroke: var(--grid); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pdh-plot svg .tflat  { stroke: var(--ink-mute); stroke-width: 1; stroke-dasharray: 2 3; vector-effect: non-scaling-stroke; opacity: .6; }
+.pdh-plot svg .tarea  { fill: color-mix(in srgb, var(--accent) 18%, transparent); stroke: none; }
+.pdh-plot svg .tline  { fill: none; stroke: var(--accent); stroke-width: 1.6; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent) 60%, transparent)); }
+.pdh-plot svg .eline  { fill: none; stroke: var(--ch2); stroke-width: 1.3; vector-effect: non-scaling-stroke; opacity: .92; }
+.pdh-plot svg .ezero  { stroke: var(--ink-mute); stroke-width: 1; stroke-dasharray: 1 4; vector-effect: non-scaling-stroke; opacity: .7; }
+.pdh-plot svg .setln  { stroke: var(--st-lock); stroke-width: 1; stroke-dasharray: 3 2; vector-effect: non-scaling-stroke; opacity: .8; }
+.pdh-plot svg .setpt  { fill: var(--st-lock); stroke: #06210f; stroke-width: 1; filter: drop-shadow(0 0 4px var(--st-lock)); }
+.pdh-plot svg .scanln { stroke: var(--sc); stroke-width: 1.4; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 4px var(--sc)); }
+.pdh-plot svg .etime  { fill: none; stroke-width: 1.3; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 3px currentColor); }
+.pdh-plot svg .erail  { fill: none; stroke: var(--st-fault); stroke-width: 1.4; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 3px var(--st-fault)); }
+.pdh-plot .plab {
+  position: absolute;
+  left: 6px; bottom: 3px;
+  font-size: 8px;
+  letter-spacing: .8px;
+  color: var(--ink-mute);
+  font-family: var(--f-num);
+  text-transform: uppercase;
+  z-index: 2;
+  text-shadow: 0 1px 3px #000, 0 0 6px #000;
+}
+.pdh-plot .pval {
+  position: absolute;
+  right: 6px; bottom: 3px;
+  font-size: 8.5px;
+  letter-spacing: .3px;
+  color: var(--accent);
+  font-family: var(--f-num);
+  z-index: 2;
+  text-shadow: 0 1px 3px #000, 0 0 6px #000;
+}
+/* channel id + state badge overlaid on the plot */
+.pdh-plot .pov-id {
+  position: absolute;
+  left: 6px; top: 4px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: var(--accent);
+  z-index: 3;
+  text-shadow: 0 1px 4px #000, 0 0 8px rgba(0,0,0,.9);
+}
+.pdh-plot .pov-badge {
+  position: absolute;
+  right: 5px; top: 4px;
+  z-index: 3;
+  backdrop-filter: blur(1px);
+}
+
+/* ---------------- readouts ---------------- */
+.pdh-reads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 4px;
+  min-width: 0;
+}
+.pdh-stat {
+  background: var(--panel-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  padding: 2px 5px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.pdh-stat .k {
+  font-size: 7.5px;
+  letter-spacing: .7px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.pdh-stat .v {
+  font-family: var(--f-num);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.05;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.pdh-stat .v small {
+  font-size: 8px;
+  color: var(--ink-faint);
+  font-weight: 400;
+  margin-left: 1px;
+}
+.pdh-stat.accent .v { color: var(--accent); }
+.pdh-stat.span2 { grid-column: span 2; }
+
+/* lock health bar (spans both readout columns) */
+.pdh-health {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  padding: 0 6px;
+}
+.pdh-health .hlab {
+  font-size: 7.5px;
+  letter-spacing: .6px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+.pdh-health .bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #0a1019;
+  overflow: hidden;
+  position: relative;
+}
+.pdh-health .bar > i {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--sc);
+  border-radius: 3px;
+}
+.pdh-health .hval {
+  font-family: var(--f-num);
+  font-size: 9px;
+  color: var(--sc);
+}
+
+/* ---------------- settings / calibration screen ---------------- */
+.pdh-set { flex: 1 1 0; display: flex; flex-direction: column; padding: 6px 9px; min-height: 0; }
+.pdh-set-h {
+  font-size: 10px; letter-spacing: 1px; color: var(--ink-dim);
+  text-transform: uppercase; font-weight: 600; margin-bottom: 5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.pdh-set-h::after { content:''; flex:1; height:1px; background: var(--rule); }
+.pdh-rows { display: flex; flex-direction: column; gap: 0; }
+.pdh-row {
+  display: grid; grid-template-columns: 12px 1fr auto;
+  align-items: center; gap: 8px;
+  height: 21px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 11px;
+}
+.pdh-row .ico { color: var(--ink-mute); font-family: var(--f-num); font-size: 10px; text-align:center; }
+.pdh-row .lab { color: var(--ink); letter-spacing: .2px; }
+.pdh-row .val { font-family: var(--f-num); font-size: 11px; color: var(--ink-dim); }
+.pdh-row.sel { background: color-mix(in srgb, var(--ch1) 12%, transparent); border-radius: 3px; }
+.pdh-row.sel .ico { color: var(--ch1); }
+.pdh-row.sel .val { color: var(--ch1); }
+.pdh-set-foot {
+  margin-top: auto; padding-top: 5px;
+  display: flex; gap: 6px; align-items: center;
+  font-size: 8.5px; color: var(--ink-mute); font-family: var(--f-num); letter-spacing: .3px;
+}
+.pdh-key {
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 1px 5px; color: var(--ink-dim);
+}
+
+/* scanline / glass nuance for realism (very subtle) */
+.pdh::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(130% 100% at 50% 50%, transparent 72%, rgba(0,0,0,.28) 100%);
+}

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dual Dual-Channel CW Laser + TEC Driver — Design Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0a0c0f;
+    --bg2:         #111418;
+    --bg3:         #181c22;
+    --border:      #1e2530;
+    --border2:     #2a3340;
+    --accent:      #00d4ff;
+    --accent2:     #ff6b35;
+    --accent3:     #7fff6b;
+    --accent4:     #ffd700;
+    --text:        #c8d4e0;
+    --text2:       #7a8fa8;
+    --text3:       #4a5a6a;
+    --warn:        #ff6b35;
+    --ok:          #7fff6b;
+    --mono:        'IBM Plex Mono', monospace;
+    --sans:        'IBM Plex Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── SCAN LINE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,212,255,0.012) 2px,
+      rgba(0,212,255,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── LAYOUT ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  nav {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-header .doc-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .nav-header h1 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-header .rev {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 8px;
+  }
+
+  .nav-section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    padding: 18px 20px 6px;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(0,212,255,0.04);
+  }
+
+  nav a .num {
+    color: var(--text3);
+    font-size: 9px;
+    min-width: 18px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    padding: 48px 56px;
+    max-width: 1000px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-bottom: 64px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .section-head h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+    font-family: var(--mono);
+  }
+
+  p { margin-bottom: 12px; color: var(--text); }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .hero-stat label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat .val {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .hero-stat .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    margin-left: 4px;
+  }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; margin: 16px 0 24px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  thead tr {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--accent);
+  }
+
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tr:hover td { background: rgba(0,212,255,0.03); }
+
+  td.mono { font-family: var(--mono); color: var(--accent2); }
+  td.ok   { color: var(--ok); }
+  td.warn { color: var(--warn); }
+  td.dim  { color: var(--text2); }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent2);
+    padding: 18px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 16px 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .code-block .cm  { color: var(--text2); font-style: italic; }
+  .code-block .kw  { color: var(--accent); }
+  .code-block .num { color: var(--accent2); }
+  .code-block .str { color: var(--accent3); }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 3px solid;
+    font-size: 13px;
+  }
+  .callout.warn  { border-color: var(--warn);  background: rgba(255,107,53,0.06);  color: var(--text); }
+  .callout.info  { border-color: var(--accent); background: rgba(0,212,255,0.05);  color: var(--text); }
+  .callout.ok    { border-color: var(--ok);     background: rgba(127,255,107,0.05);color: var(--text); }
+
+  .callout strong { color: inherit; }
+
+  /* ── RAIL DIAGRAM ── */
+  .rail-chain {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .rail-node {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: center;
+    min-width: 110px;
+  }
+
+  .rail-node .part { color: var(--accent); font-weight: 500; display: block; }
+  .rail-node .volt { color: var(--accent2); font-size: 13px; font-weight: 600; display: block; margin-top: 2px; }
+  .rail-node .note { color: var(--text2); font-size: 10px; display: block; margin-top: 2px; }
+
+  .rail-arrow {
+    color: var(--text3);
+    font-size: 16px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* ── SPEC GRID ── */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 16px 0;
+    background: var(--border);
+  }
+
+  .spec-item {
+    background: var(--bg2);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .spec-item .spec-label {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .spec-item .spec-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ── PIN TABLE (coloured rows) ── */
+  .pin-confirmed td:first-child { color: var(--ok); }
+  .pin-nc td:first-child        { color: var(--text3); }
+  .pin-warn td:first-child      { color: var(--warn); }
+
+  /* ── NOISE TABLE ── */
+  .noise-bar {
+    display: inline-block;
+    height: 8px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ══ SIDEBAR NAVIGATION ══ -->
+<nav>
+  <div class="nav-header">
+    <div class="doc-label">Design Reference</div>
+    <h1>Dual Channel CW Laser + TEC Driver</h1>
+    <div class="rev">Rev 4.0 &nbsp;·&nbsp; 2× ML20550KK14Z600L</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a href="#overview"><span class="num">01</span> System Overview</a>
+  <a href="#laser"><span class="num">02</span> Laser Channels 1 &amp; 2</a>
+  <a href="#tec"><span class="num">03</span> TEC H-Bridges 1 &amp; 2</a>
+
+  <div class="nav-section-label">Power</div>
+  <a href="#psu"><span class="num">04</span> PSU &amp; Rectifier</a>
+  <a href="#tracking"><span class="num">05</span> ±15V Tracking</a>
+  <a href="#rails"><span class="num">06</span> Supply Rails</a>
+
+  <div class="nav-section-label">Signal Chain</div>
+  <a href="#dac"><span class="num">07</span> DAC &amp; Reference</a>
+  <a href="#spi"><span class="num">08</span> SPI Interface</a>
+  <a href="#readback"><span class="num">09</span> Readback</a>
+
+  <div class="nav-section-label">Mechanical</div>
+  <a href="#butterfly"><span class="num">10</span> Butterfly Connector</a>
+  <a href="#pcb"><span class="num">11</span> PCB Layout</a>
+  <a href="#bom"><span class="num">12</span> BOM Summary</a>
+</nav>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-stat">
+      <label>Laser current (each)</label>
+      <span class="val">600<span class="unit">mA max ×2</span></span>
+    </div>
+    <div class="hero-stat">
+      <label>TEC current (each)</label>
+      <span class="val">±2.5<span class="unit">A ×2</span></span>
+    </div>
+    <div class="hero-stat">
+      <label>DAC resolution</label>
+      <span class="val">16<span class="unit">bit · 152µV/LSB</span></span>
+    </div>
+    <div class="hero-stat">
+      <label>Laser wavelength</label>
+      <span class="val">1550<span class="unit">nm DFB</span></span>
+    </div>
+    <div class="hero-stat">
+      <label>Reference noise</label>
+      <span class="val">1.6<span class="unit">µV p-p</span></span>
+    </div>
+    <div class="hero-stat">
+      <label>Channels</label>
+      <span class="val">2<span class="unit">laser + 2 TEC</span></span>
+    </div>
+  </div>
+
+  <!-- ══ 01 SYSTEM OVERVIEW ══ -->
+  <div class="section" id="overview">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>System Overview</h2>
+    </div>
+
+    <p>Precision dual-channel linear driver for the Mitsubishi ML20550KK14Z600L 1550 nm DFB butterfly laser module. Two independent control channels run on a Teensy 4.1 MCU via separate PID and ACC firmware loops: a constant-current ACC laser driver and a bipolar linear TEC temperature controller.</p>
+
+    <div class="spec-grid">
+      <div class="spec-item"><span class="spec-label">Laser device</span><span class="spec-val">ML20550KK14Z600L</span></div>
+      <div class="spec-item"><span class="spec-label">Wavelength</span><span class="spec-val">1550 nm DFB</span></div>
+      <div class="spec-item"><span class="spec-label">Package</span><span class="spec-val">14-pin butterfly</span></div>
+      <div class="spec-item"><span class="spec-label">Optical output</span><span class="spec-val">~70 mW</span></div>
+      <div class="spec-item"><span class="spec-label">Laser I_op</span><span class="spec-val">500 mA typ / 600 mA max</span></div>
+      <div class="spec-item"><span class="spec-label">Laser V_f</span><span class="spec-val">~2 V at I_op</span></div>
+      <div class="spec-item"><span class="spec-label">TEC I_max cool</span><span class="spec-val">+2.5 A</span></div>
+      <div class="spec-item"><span class="spec-label">TEC I_max heat</span><span class="spec-val">−1.5 A</span></div>
+      <div class="spec-item"><span class="spec-label">TEC V_max</span><span class="spec-val">3.8 V (cool) / 2.5 V (heat)</span></div>
+      <div class="spec-item"><span class="spec-label">Thermistor</span><span class="spec-val">10 kΩ NTC β=3950 K</span></div>
+      <div class="spec-item"><span class="spec-label">MCU</span><span class="spec-val">Teensy 4.1 (600 MHz ARM)</span></div>
+      <div class="spec-item"><span class="spec-label">DAC</span><span class="spec-val">AD5064 quad 16-bit SPI</span></div>
+    </div>
+  </div>
+
+  <!-- ══ 02 LASER CHANNEL ══ -->
+  <div class="section" id="laser">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Laser Channel — ACC Driver</h2>
+    </div>
+
+    <p>Low-side N-channel MOSFET current source with LT1028 error amplifier in a closed feedback loop. The DAC set-point drives the op-amp non-inverting input through a precision resistor scaler; the sense voltage across R5 feeds back to the inverting input. The loop regulates current regardless of laser diode forward voltage variation.</p>
+
+    <h3>Signal Path</h3>
+    <div class="rail-chain">
+      <div class="rail-node"><span class="part">AD5064 VOUTA</span><span class="volt">0–5 V</span><span class="note">Ch A set-point</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">R1/R2 scaler</span><span class="volt">×0.05</span><span class="note">19k / 1k</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT1028 IN+</span><span class="volt">0–250 mV</span><span class="note">error amp</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">IRLML6344</span><span class="volt">SOT-23</span><span class="note">pass element</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">R5 sense</span><span class="volt">0.25 Ω</span><span class="note">Kelvin 4-term</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT1028 IN−</span><span class="volt">feedback</span><span class="note">closes loop</span></div>
+    </div>
+
+    <h3>Component Values</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">U3A</td><td>—</td><td>LT1028ACN8</td><td class="dim">0.85 nV/√Hz, ±15V supply, DIP-8</td></tr>
+        <tr><td class="mono">Q1</td><td>—</td><td>IRLML6344TRPBF</td><td class="dim">Replaces discontinued IRLML2502 · SOT-23 · 30V/5A · Vgs(th)=1.1V max</td></tr>
+        <tr><td class="mono">R1</td><td>19 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler top — maps 5V DAC to 250mV at 1A</td></tr>
+        <tr><td class="mono">R2</td><td>1 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler bottom</td></tr>
+        <tr><td class="mono">R3</td><td>10 kΩ</td><td>0402</td><td class="dim">Gate series resistor</td></tr>
+        <tr><td class="mono">R5</td><td>0.25 Ω 1W Kelvin</td><td>WSL2512R2500FEA</td><td class="dim">4-terminal — K pads to signal traces only</td></tr>
+        <tr><td class="mono">D3</td><td>BAT54</td><td>SOD-123</td><td class="dim">Reverse protection — Vr_max = 2V on laser</td></tr>
+        <tr><td class="mono">C2</td><td>100 pF NP0</td><td>0402</td><td class="dim">Gate stability cap</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠ Polarity critical:</strong> The ML20550KK14Z600L has a maximum reverse voltage of 2V. The BAT54 (D3) is mandatory. Verify pin 10 = chip+ and pin 11 = chip− with YB Photonics datasheet before first power-on.
+    </div>
+
+    <h3>Full-Scale Calculation</h3>
+    <div class="code-block"><span class="cm">// Laser channel — full scale at 600mA</span>
+V_DAC_FS  = 5.000 V  (from LTC6655-5 reference)
+V_sense   = I × R5  = 0.600 × 0.25 = <span class="num">150 mV</span>
+V_scaler  = V_sense / (R2/(R1+R2)) = 150mV / (1k/20k) = <span class="num">3.00 V</span>
+DAC code  = 3.00 / 5.000 × 65536 = <span class="num">39322</span>  (0x9999)
+Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span></div>
+
+    <h3>Soft-Start</h3>
+    <p>Implemented in Teensy firmware — ramp DAC code 0 → set-point over 5 ms at startup and after any fault condition. Never write a non-zero code without first confirming PGOOD high from the TPS7A39.</p>
+  </div>
+
+  <!-- ══ 03 TEC H-BRIDGE ══ -->
+  <div class="section" id="tec">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>TEC Channel — Bipolar Linear H-Bridge</h2>
+    </div>
+
+    <p>Four-quadrant linear H-bridge providing −1.5 A (heating) to +2.5 A (cooling) through the butterfly package internal Peltier element. Linear topology chosen specifically to avoid switching noise coupling into laser temperature through shared thermal mass.</p>
+
+    <div class="callout info">
+      <strong>Virtual ground:</strong> The AD5064 DAC outputs 0–5V unipolar. A precision resistor divider (R19 = 12.7 kΩ, R20 = 9.31 kΩ) from the 5V_DAC rail creates a TEC_VZERO reference at 1.875V. DAC code 24576 = 0A TEC current. Codes below = heating, codes above = cooling.
+    </div>
+
+    <h3>H-Bridge Topology</h3>
+    <div class="code-block">          +8V_TEC (from LM7808 directly — not via LT3045)
+               │
+         Q3 (IRF9540N)  ──── Q5 (IRF9540N)
+         P-ch high-side       P-ch high-side
+               │                   │
+            TEC+  ─────────────  TEC−
+               │                   │
+         Q4 (IRLB8721) ──── Q6 (IRLB8721)
+         N-ch low-side        N-ch low-side
+               │
+          R7 0.1Ω (Kelvin sense)
+               │
+          −8V_TEC (from LM7908 directly)</div>
+
+    <div class="callout warn">
+      <strong>⚠ Off-board FETs:</strong> Q3–Q6 mount on chassis heatsink via J8 flying lead (4-wire: +6V_TEC, −6V_TEC, TEC_SENSE_P, TEC_SENSE_N). Maximum FET dissipation at 2.5A: (8V − 3.8V) × 2.5A / 2 = 5.25W per device. Thermal resistance to chassis must be ≤ 10°C/W.
+    </div>
+
+    <h3>Key Values</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">U3B</td><td>—</td><td>LT1028ACN8</td><td class="dim">TEC error amp, ±6V supply from LT3045/LT3094</td></tr>
+        <tr><td class="mono">Q3, Q5</td><td>—</td><td>IRF9540N</td><td class="dim">P-ch TO-220, −100V/−23A, high-side H-bridge</td></tr>
+        <tr><td class="mono">Q4, Q6</td><td>—</td><td>IRLB8721PBF</td><td class="dim">N-ch TO-220, 30V/62A, low-side H-bridge</td></tr>
+        <tr><td class="mono">R7</td><td>0.1 Ω 1W Kelvin</td><td>WSL2512R1000FEA</td><td class="dim">TEC sense — 4-terminal Kelvin connection</td></tr>
+        <tr><td class="mono">R9</td><td>33 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler top — maps 5V DAC to 250mV at 2.5A</td></tr>
+        <tr><td class="mono">R16</td><td>1 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler bottom, ties to TEC_VZERO not AGND</td></tr>
+        <tr><td class="mono">R19</td><td>12.7 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Virtual GND divider high</td></tr>
+        <tr><td class="mono">R20</td><td>9.31 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Virtual GND divider low → TEC_VZERO = 1.875V</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ══ 04 PSU & RECTIFIER ══ -->
+  <div class="section" id="psu">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>PSU &amp; Rectifier Filter</h2>
+    </div>
+
+    <p>Centre-tapped transformer with full-wave bridge rectifier and CRC π-filter feeds the TPS7A39 tracking regulator. Both rails derive from the same transformer winding, ensuring inherent AC-level tracking before the TPS7A39 even operates.</p>
+
+    <h3>Transformer</h3>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="spec-label">Secondary voltage</span><span class="spec-val">18-0-18V CT</span></div>
+      <div class="spec-item"><span class="spec-label">VA rating</span><span class="spec-val">≥ 15 VA</span></div>
+      <div class="spec-item"><span class="spec-label">Peak rectified</span><span class="spec-val">±24V (18×√2 − 1.4V)</span></div>
+      <div class="spec-item"><span class="spec-label">Ripple frequency</span><span class="spec-val">100 Hz (50Hz mains)</span></div>
+    </div>
+
+    <h3>CRC π-Filter Values</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>Rail</th><th>Value</th><th>Rating</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">D1–D4</td><td class="dim">both</td><td>Bridge</td><td>3A 100V</td><td class="dim">1N5401 ×4 or W04G module — 3A for capacitor charge peaks</td></tr>
+        <tr><td class="mono">C1+</td><td class="dim">+24V</td><td>2200 µF</td><td>35V</td><td class="dim">Panasonic FC — 0.73V ripple at 160mA load</td></tr>
+        <tr><td class="mono">C1−</td><td class="dim">−24V</td><td>1000 µF</td><td>35V</td><td class="dim">0.27V ripple at 27mA load</td></tr>
+        <tr><td class="mono">R_filt+</td><td class="dim">+24V</td><td>4.7 Ω 5W</td><td>wirewound</td><td class="dim">72Hz RC corner with C2+ · 0.75V DC drop at 160mA</td></tr>
+        <tr><td class="mono">R_filt−</td><td class="dim">−24V</td><td>10 Ω 2W</td><td>wirewound</td><td class="dim">34Hz RC corner with C2− · 0.27V drop at 27mA</td></tr>
+        <tr><td class="mono">C2+</td><td class="dim">+24V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INP · also input cap</td></tr>
+        <tr><td class="mono">C2−</td><td class="dim">−24V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INN · also input cap</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠ LM79xx pinout:</strong> Negative series regulators (LM7908, LM7915 if used) have GND=pin1, IN=pin2, OUT=pin3 — reversed from 78xx. The tab connects to OUTPUT (negative voltage), not GND. Always use an insulating washer between the tab and any grounded heatsink.
+    </div>
+  </div>
+
+  <!-- ══ 05 TRACKING ══ -->
+  <div class="section" id="tracking">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>±15V Tracking — TPS7A39</h2>
+    </div>
+
+    <p>The TPS7A39 is a monolithic dual LDO (positive + negative) sharing a single internal reference voltage. Both error amplifiers compare their feedback against the same Vref — ratiometric tracking is a mathematical consequence, not a separate circuit. The LM7815/LM7915 are not used — the TPS7A39 replaces them.</p>
+
+    <h3>How Tracking Works</h3>
+    <div class="code-block"><span class="cm">// Both outputs are slaves to the same Vref</span>
+VOUTP = Vref × (1 + R1P/R2P) = Vref × 12.9   <span class="cm">// positive</span>
+VOUTN = −Vref × (1 + R1N/R2N) = −Vref × 12.9  <span class="cm">// negative</span>
+
+<span class="cm">// At startup: NR/SS cap charges via 2µA → Vref ramps 0→1.2V
+// At Vref = 0.6V (halfway):
+//   VOUTP = +0.6 × 12.9 = +7.74V
+//   VOUTN = −0.6 × 12.9 = −7.74V  ← simultaneously
+// The rails are always equal and opposite at every instant</span></div>
+
+    <h3>TPS7A39 Pin Connections</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Pin</th><th>Name</th><th>Connection</th><th>Component</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">1</td><td>INP</td><td class="dim">+24V raw DC</td><td class="dim">C_INP 10µF X7R to GND · place close</td></tr>
+        <tr><td class="mono">2</td><td>EN</td><td class="dim">Teensy GPIO 3.3V</td><td class="dim">Logic high=on · or tie to INP for always-on</td></tr>
+        <tr><td class="mono">3</td><td>NR/SS</td><td class="dim">CSS to GND</td><td class="dim">100nF → 60ms ramp (t = CSS × 1.2V / 2µA)</td></tr>
+        <tr><td class="mono">4</td><td>GND</td><td class="dim">AGND + thermal pad</td><td class="dim">Multiple vias to AGND plane</td></tr>
+        <tr><td class="mono">5</td><td>INN</td><td class="dim">−24V raw DC</td><td class="dim">C_INN 10µF X7R to GND · place close</td></tr>
+        <tr><td class="mono">6</td><td>OUTN</td><td class="dim">→ LT3094 IN pins</td><td class="dim">C_OUTN 10µF X7R to GND · = −16.5V node</td></tr>
+        <tr><td class="mono">7</td><td>FBN</td><td class="dim">R1N/R2N divider</td><td class="dim">R1N 119kΩ to OUTN · R2N 10kΩ to GND</td></tr>
+        <tr><td class="mono">8</td><td>BUF</td><td class="dim">NC</td><td class="dim">Leave unconnected or 10nF to GND</td></tr>
+        <tr><td class="mono">9</td><td>FBP</td><td class="dim">R1P/R2P divider</td><td class="dim">R1P 119kΩ to OUTP · R2P 10kΩ to GND</td></tr>
+        <tr><td class="mono">10</td><td>OUTP</td><td class="dim">→ LT3045 IN pins</td><td class="dim">C_OUTP 10µF X7R to GND · = +16.5V node</td></tr>
+        <tr><td class="mono">EP</td><td>Thermal pad</td><td class="dim">AGND plane</td><td class="dim">Solder fully · primary thermal + GND path</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Feedback Resistor Calculation</h3>
+    <div class="code-block">Target VOUTP = +16.5V  (gives LT3045 1.5V headroom above +15V)
+VOUTP = 1.2 × (1 + R1P/R2P)
+16.5  = 1.2 × (1 + R1P/10k)
+R1P   = 10k × (16.5/1.2 − 1) = 10k × 12.75 = <span class="num">127.5kΩ</span>
+Use   <span class="num">127kΩ 0.1%</span> → VOUTP = 1.2 × 13.7 = 16.44V  ✓
+
+Same ratio for negative: R1N = 127kΩ → VOUTN = −16.44V  ✓</div>
+  </div>
+
+  <!-- ══ 06 SUPPLY RAILS ══ -->
+  <div class="section" id="rails">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>Supply Rails — Five Regulated Rails</h2>
+    </div>
+
+    <h3>Rail 1 — ±15V Analog (LT1028 supplies)</h3>
+    <div class="rail-chain">
+      <div class="rail-node"><span class="part">±24V raw</span><span class="volt">from CRC</span><span class="note">±24V</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">TPS7A39</span><span class="volt">±16.5V</span><span class="note">tracked · 150mA</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT3045</span><span class="volt">+15.0V</span><span class="note">2µV rms</span></div>
+      <div class="rail-arrow">+</div>
+      <div class="rail-node"><span class="part">LT3094</span><span class="volt">−15.0V</span><span class="note">0.8µV rms</span></div>
+    </div>
+
+    <h3>Rail 2 — 5V DAC Reference &amp; Supply</h3>
+    <div class="rail-chain">
+      <div class="rail-node"><span class="part">+15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LM7807</span><span class="volt">7V</span><span class="note">40mW</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT3042</span><span class="volt">5.5V</span><span class="note">2nV/√Hz</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LTC6655-5</span><span class="volt">5.000V</span><span class="note">Vref · 0.25ppm</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">RC filter</span><span class="volt">16Hz LPF</span><span class="note">R11 1k + C17 10µF</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">AD5064 REFA/B</span><span class="volt">Vref pins</span></div>
+    </div>
+    <p style="margin-top:8px">A separate LT3042 (U_DAC) derives 5.0V from the 5.5V intermediate rail to supply the AD5064 VDD (4mA) and 74AHCT125 VCC independently from the reference output.</p>
+
+    <h3>Rail 3 — 3.3V MCU (Teensy)</h3>
+    <div class="rail-chain">
+      <div class="rail-node"><span class="part">+15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LM7805</span><span class="volt">5V</span><span class="note">2.5W · heatsink</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">R12+C19</span><span class="volt">RC</span><span class="note">1Ω + 47µF · 3Hz</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT3045</span><span class="volt">3.3V</span><span class="note">2µV rms</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">Teensy J6</span><span class="volt">3.3V</span><span class="note">~100mA typ</span></div>
+    </div>
+
+    <h3>Rails 4/5 — ±8V/±6V TEC</h3>
+    <div class="rail-chain">
+      <div class="rail-node"><span class="part">+15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LM7808</span><span class="volt">+8V</span><span class="note">H-bridge power</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT3045</span><span class="volt">+6V</span><span class="note">LT1028 TEC supply</span></div>
+    </div>
+    <div class="rail-chain" style="margin-top:4px">
+      <div class="rail-node"><span class="part">−15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LM7908</span><span class="volt">−8V</span><span class="note">H-bridge power</span></div>
+      <div class="rail-arrow">→</div>
+      <div class="rail-node"><span class="part">LT3094</span><span class="volt">−6V</span><span class="note">LT1028 TEC supply</span></div>
+    </div>
+
+    
+    <div class="callout info">
+      <strong>v4 power budget update:</strong> Adding two more LT1028 op-amps (U3C + U3D) adds
+      2 × 7.6mA = 15.2mA to the ±15V rails. The ±8V TEC rails now drive two H-bridges
+      simultaneously (up to 5A total). Two independent +5V_LASER supplies (J5a, J5b) replace
+      the single J5 — each must be rated ≥ 3.5A for full simultaneous operation.
+    </div>
+    <h3>Current Budget</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Rail</th><th>Typical</th><th>Peak</th><th>Dominant load</th></tr></thead>
+      <tbody>
+        <tr><td>+15V input</td><td>150 mA</td><td class="warn">173 mA</td><td class="dim">Teensy chain + 4× LT1028 (4 × 7.6mA)</td></tr>
+        <tr><td>−15V input</td><td>40 mA</td><td>42 mA</td><td class="dim">4× LT1028 V− rails (4 × 7.6mA) + LT3094</td></tr>
+        <tr><td>+5V_LASER Ch1 (J5a)</td><td>~700 mA</td><td class="warn">~3.5 A</td><td class="dim">Laser1 600mA + TEC1 2.5A</td></tr>
+        <tr><td>+5V_LASER Ch2 (J5b)</td><td>~700 mA</td><td class="warn">~3.5 A</td><td class="dim">Laser2 600mA + TEC2 2.5A — independent supply</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ══ 07 DAC & REFERENCE ══ -->
+  <div class="section" id="dac">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <h2>DAC &amp; Voltage Reference</h2>
+    </div>
+
+    <h3>AD5064 — Quad 16-bit DAC</h3>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="spec-label">Resolution</span><span class="spec-val">16-bit · ±1LSB INL</span></div>
+      <div class="spec-item"><span class="spec-label">Full scale</span><span class="spec-val">0 → Vref = 5.000V</span></div>
+      <div class="spec-item"><span class="spec-label">LSB size</span><span class="spec-val">76.3 µV</span></div>
+      <div class="spec-item"><span class="spec-label">Interface</span><span class="spec-val">SPI · 24-bit word</span></div>
+      <div class="spec-item"><span class="spec-label">Ch A</span><span class="spec-val">Laser ACC set-point</span></div>
+      <div class="spec-item"><span class="spec-label">Ch B</span><span class="spec-val">TEC current set-point</span></div>
+      <div class="spec-item"><span class="spec-label">Ch C, D</span><span class="spec-val">Spare (future use)</span></div>
+      <div class="spec-item"><span class="spec-label">VDD supply</span><span class="spec-val">5.0V from U_DAC LT3042</span></div>
+    </div>
+
+    
+    <div class="callout ok">
+      <strong>✓ No DAC change needed:</strong> The AD5064 is already quad. Channels A and B served
+      laser 1 and TEC 1. Channels C and D now serve laser 2 and TEC 2 — the same SPI bus,
+      same CS line, same 24-bit word format, only the address nibble changes.
+    </div>
+    <h3>Channel Assignment — v4 Dual Configuration</h3>
+    <div class="code-block"><span class="cm">// AD5064 — all four channels in use</span>
+dac_write(<span class="num">0x1</span>, laser1_code);  <span class="cm">// Ch A 0x13xxxx → Laser 1 ACC</span>
+dac_write(<span class="num">0x2</span>, tec1_code);    <span class="cm">// Ch B 0x23xxxx → TEC 1</span>
+dac_write(<span class="num">0x3</span>, laser2_code);  <span class="cm">// Ch C 0x33xxxx → Laser 2 ACC  ← new</span>
+dac_write(<span class="num">0x4</span>, tec2_code);    <span class="cm">// Ch D 0x43xxxx → TEC 2         ← new</span></div>
+    <h3>LTC6655-5 — Precision Reference</h3>
+    <p>The LTC6655-5 serves exclusively as the AD5064 voltage reference — its output drives REFA (pin 13) and REFB (pin 14) only, through the RC Vref filter. A separate LT3042 (U_DAC) supplies the AD5064 VDD to avoid loading the reference output with the 4mA DAC supply current.</p>
+
+    <h3>Vref RC Filter</h3>
+    <div class="code-block">R11 = 1kΩ (series from LTC6655 VOUT_F)
+C17 = 10µF X7R 1206 (shunt from VREF_FILT node to AGND)
+f_corner = 1 / (2π × 1k × 10µ) = <span class="num">15.9 Hz</span>
+
+At 160Hz:  attenuation = 20dB  (×10 noise reduction)
+At 1.6kHz: attenuation = 40dB  (×100 noise reduction)
+
+<span class="cm">// Noise at AD5064 Vref pins after filter:</span>
+LTC6655 noise  = 1.6µV p-p (0.1–10Hz) → passes through unattenuated
+Wideband noise = 7nV/√Hz → attenuated ×10 at 160Hz and beyond
+DAC output uncertainty = 1.6µV / 76.3µV × 1LSB ≈ <span class="num">0.02 LSB</span></div>
+
+    <div class="callout ok">
+      <strong>✓ C17 capacitor type matters:</strong> Use X7R 1206 (Murata GRM31 series). Avoid Y5V or Z5U — capacitance drops 60–70% at 5V DC bias, shifting the filter corner to 40–50Hz and reducing noise rejection significantly.
+    </div>
+  </div>
+
+  <!-- ══ 08 SPI INTERFACE ══ -->
+  <div class="section" id="spi">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <h2>SPI Interface &amp; Level Shifting</h2>
+    </div>
+
+    <p>The Teensy 4.1 operates at 3.3V logic. The AD5064 requires 5V logic (VIH min ≈ 3.5V). A 74AHCT125 quad buffer translates SCLK, MOSI, and CS from 3.3V to 5V. The MISO/SDO return path uses a 10kΩ/20kΩ resistor divider (5V → 3.3V).</p>
+
+    <h3>74AHCT125 Connections</h3>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Signal</th><th>74AHCT125 pins</th><th>Direction</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>SCLK</td><td>A1(1) → Y1(3)</td><td class="dim">3.3V→5V</td><td class="dim">OE tied to GND</td></tr>
+        <tr><td>MOSI/DIN</td><td>A2(4) → Y2(6)</td><td class="dim">3.3V→5V</td><td class="dim"></td></tr>
+        <tr><td>CS</td><td>A3(9) → Y3(8)</td><td class="dim">3.3V→5V</td><td class="dim"></td></tr>
+        <tr><td>MISO/SDO</td><td>—</td><td class="dim">5V→3.3V</td><td class="dim">R14 10kΩ + R15 20kΩ voltage divider</td></tr>
+        <tr><td>VCC</td><td>pin 14</td><td class="dim">supply</td><td class="dim">From U_DAC 5.0V rail</td></tr>
+        <tr><td>GND</td><td>pin 7</td><td class="dim">ground</td><td class="dim">AGND</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>AD5064 SPI Word Format (24-bit)</h3>
+    <div class="code-block"><span class="cm">// 24-bit SPI word: [C3 C2 C1 C0 A3 A2 A1 A0 D15...D0]</span>
+<span class="cm">// Command = 0x3 (write and update DAC register)</span>
+<span class="cm">// Channel address: A=0x1, B=0x2, C=0x3, D=0x4</span>
+
+<span class="kw">void</span> dac_write(<span class="kw">uint8_t</span> ch, <span class="kw">uint16_t</span> code) {
+    <span class="kw">uint8_t</span> buf[3];
+    buf[0] = (<span class="num">0x3</span> << <span class="num">4</span>) | (ch & <span class="num">0xF</span>);  <span class="cm">// cmd | address</span>
+    buf[1] = code >> <span class="num">8</span>;               <span class="cm">// MSB</span>
+    buf[2] = code & <span class="num">0xFF</span>;             <span class="cm">// LSB</span>
+    SPI.transfer(buf, <span class="num">3</span>);
+}
+
+<span class="cm">// Usage:</span>
+dac_write(<span class="num">0x1</span>, laser_code);   <span class="cm">// laser  Ch A: 0x13xxxx</span>
+dac_write(<span class="num">0x2</span>, tec_code);     <span class="cm">// TEC    Ch B: 0x23xxxx</span></div>
+  </div>
+
+  <!-- ══ 09 READBACK ══ -->
+  <div class="section" id="readback">
+    <div class="section-head">
+      <span class="section-num">09</span>
+      <h2>Readback Circuits</h2>
+    </div>
+
+    <p>Four readback signals feed the Teensy ADC (0–3.3V range, 12-bit). All readback ICs powered from the 3.3V Rail 3 supply.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Signal</th><th>IC</th><th>Gain / config</th><th>Full-scale input</th><th>Output at FS</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>LAS_IMON</td>
+          <td class="mono">INA826 U_RB1</td>
+          <td class="dim">G = 12× (Rg = 4.53kΩ)</td>
+          <td class="dim">250mV at 600mA · R5 sense</td>
+          <td class="ok">3.0V</td>
+        </tr>
+        <tr>
+          <td>TEC_IMON</td>
+          <td class="mono">INA826 U_RB2</td>
+          <td class="dim">G = 20× (Rg = 2.61kΩ)</td>
+          <td class="dim">250mV at 2.5A · R7 sense</td>
+          <td class="ok">3.0V</td>
+        </tr>
+        <tr>
+          <td>NTC_MON</td>
+          <td class="dim">10kΩ divider</td>
+          <td class="dim">Pullup 10kΩ to 3.3V</td>
+          <td class="dim">15–40°C NTC 10kΩ β=3950</td>
+          <td class="ok">1.18–2.06V</td>
+        </tr>
+        <tr>
+          <td>PD_MON</td>
+          <td class="mono">OPA380 U_TIA</td>
+          <td class="dim">Rf = 10kΩ, Cf = 2.2pF</td>
+          <td class="dim">MPD photocurrent 0–300µA</td>
+          <td class="ok">0–3.0V</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>INA826 Gain Formula</h3>
+    <div class="code-block">G = 1 + (49.4kΩ / Rg)
+<span class="cm">// Laser:  G = 1 + 49.4k/4.53k = 11.9×   Rg = 4.53kΩ 0.1%</span>
+<span class="cm">// TEC:    G = 1 + 49.4k/2.61k = 19.9×   Rg = 2.61kΩ 0.1%</span>
+
+Vout_max (laser) = 0.250V × 11.9 = <span class="num">2.97V</span>  ← fits 0–3.3V ADC ✓
+Vout_max (TEC)   = 0.250V × 19.9 = <span class="num">2.99V</span>  ← fits 0–3.3V ADC ✓</div>
+
+    <h3>NTC Temperature Calculation (Steinhart-Hart)</h3>
+    <div class="code-block"><span class="kw">float</span> ntc_temperature(<span class="kw">uint16_t</span> adc_code) {
+    <span class="kw">float</span> v = adc_code * <span class="num">3.3f</span> / <span class="num">4095.0f</span>;
+    <span class="kw">float</span> r_ntc = <span class="num">10000.0f</span> * v / (<span class="num">3.3f</span> - v);  <span class="cm">// 10k pullup</span>
+    <span class="kw">float</span> t_k = <span class="num">1.0f</span> / (log(r_ntc/<span class="num">10000.0f</span>)/<span class="num">3950.0f</span> + <span class="num">1.0f</span>/<span class="num">298.15f</span>);
+    <span class="kw">return</span> t_k - <span class="num">273.15f</span>;  <span class="cm">// °C</span>
+}</div>
+  </div>
+
+  <!-- ══ 10 BUTTERFLY CONNECTOR ══ -->
+  <div class="section" id="butterfly">
+    <div class="section-head">
+      <span class="section-num">10</span>
+      <h2>14-Pin Butterfly Connector</h2>
+    </div>
+
+    <p>ZIF socket footprint: 2×7, 2.54mm pitch. All confirmed pins have 47Ω series protection resistors between the PCB trace and the connector pad. Unconfirmed pins are broken out to unpopulated NC pads — connect only after full pinout confirmed with YB Photonics.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Pin</th><th>Function</th><th>Connects to</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr class="pin-confirmed"><td class="mono">1</td><td>TEC+</td><td class="dim">TEC H-bridge output + via R_P1 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-confirmed"><td class="mono">2</td><td>NTC thermistor A</td><td class="dim">NTC divider mid-point via R_P2 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-nc"><td class="mono">3</td><td>Unknown</td><td class="dim">NC pad — do not connect</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-nc"><td class="mono">4</td><td>Unknown</td><td class="dim">NC pad — do not connect</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-confirmed"><td class="mono">5</td><td>NTC GND</td><td class="dim">AGND via R_P5 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-nc"><td class="mono">6</td><td>Unknown</td><td class="dim">NC pad — likely MPD</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-nc"><td class="mono">7</td><td>Unknown</td><td class="dim">NC pad — likely MPD</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-nc"><td class="mono">8</td><td>Unknown</td><td class="dim">NC pad</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-nc"><td class="mono">9</td><td>Unknown</td><td class="dim">NC pad</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-confirmed"><td class="mono">10</td><td>CHIP+ (laser anode)</td><td class="dim">Laser driver output + via R_P10 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-confirmed"><td class="mono">11</td><td>CHIP− (laser cathode)</td><td class="dim">Laser driver output − via R_P11 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-nc"><td class="mono">12</td><td>Unknown</td><td class="dim">NC pad</td><td class="warn">Pending YBP</td></tr>
+        <tr class="pin-confirmed"><td class="mono">13</td><td>GND</td><td class="dim">PGND via R_P13 47Ω</td><td class="ok">Confirmed</td></tr>
+        <tr class="pin-confirmed"><td class="mono">14</td><td>TEC−</td><td class="dim">TEC H-bridge output − via R_P14 47Ω</td><td class="ok">Confirmed</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠ Before connecting:</strong> Request full 14-pin pinout from YB Photonics — specifically confirm which pins are MPD anode and cathode. Do not power the laser until all NC pins are identified. Pins 3, 4, 6, 7, 8, 9, 12 must remain unconnected until confirmed.
+    </div>
+  </div>
+
+  <!-- ══ 11 PCB LAYOUT ══ -->
+  <div class="section" id="pcb">
+    <div class="section-head">
+      <span class="section-num">11</span>
+      <h2>PCB Layout Notes</h2>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-item"><span class="spec-label">Board size</span><span class="spec-val">200 × 120 mm</span></div>
+      <div class="spec-item"><span class="spec-label">Layers</span><span class="spec-val">2-layer FR4 1.6mm</span></div>
+      <div class="spec-item"><span class="spec-label">AGND zone</span><span class="spec-val">x = 3–89mm</span></div>
+      <div class="spec-item"><span class="spec-label">PGND zone</span><span class="spec-val">x = 90–197mm</span></div>
+      <div class="spec-item"><span class="spec-label">Supply strip</span><span class="spec-val">y = 3–30mm (full width)</span></div>
+      <div class="spec-item"><span class="spec-label">GND star bridge</span><span class="spec-val">Via pair at (89mm, 73mm)</span></div>
+    </div>
+
+    <h3>Critical Layout Rules</h3>
+    <ul style="padding-left:20px; margin:12px 0; color:var(--text);">
+      <li style="margin-bottom:8px">LT3042 / LT3045 SET pin: surround with guard ring at OUT potential on both layers. PCB leakage of 1nA = 55µV output error on 54.9kΩ SET resistor.</li>
+      <li style="margin-bottom:8px">R5 and R7 Kelvin sense resistors: the K (sense) pads must connect only to signal traces to the INA826 inputs — never shared with the power current path.</li>
+      <li style="margin-bottom:8px">LTC6655-5 VOUT_S (pin 6): connect with a separate Kelvin trace directly to the AD5064 REFA/REFB pads — not back to VOUT_F through a shared trace.</li>
+      <li style="margin-bottom:8px">C17 (Vref RC cap): place within 5mm of AD5064 REFA/REFB pins, GND side direct to AGND plane via.</li>
+      <li style="margin-bottom:8px">TPS7A39 FBP/FBN pins: keep R1P/R2P and R1N/R2N resistors within 5mm. No switching signals within 10mm of these nodes.</li>
+      <li style="margin-bottom:8px">H-bridge FETs Q3–Q6: off-board only. Flying lead J8 kept under 150mm. Heatsink thermally isolated from laser mount.</li>
+    </ul>
+  </div>
+
+  <!-- ══ 12 BOM SUMMARY ══ -->
+  <div class="section" id="bom">
+    <div class="section-head">
+      <span class="section-num">12</span>
+      <h2>BOM Summary — Key Parts</h2>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ref</th><th>Part</th><th>Package</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">U_TRACK</td><td>TPS7A39DSCR</td><td class="dim">WSON-10</td><td class="dim">±15V tracking regulator · soft-start · EN · PGOOD</td></tr>
+        <tr><td class="mono">U_POS</td><td>LT3045EDD</td><td class="dim">DFN-10</td><td class="dim">+16.5V → +15.0V · 500mA · 2µV rms</td></tr>
+        <tr><td class="mono">U_NEG</td><td>LT3094EDD</td><td class="dim">DFN-10</td><td class="dim">−16.5V → −15.0V · 500mA · 0.8µV rms</td></tr>
+        <tr><td class="mono">U4</td><td>LM7807</td><td class="dim">TO-220</td><td class="dim">+15V → 7V coarse (Rail 2)</td></tr>
+        <tr><td class="mono">U5</td><td>LT3042EDD</td><td class="dim">DFN-10</td><td class="dim">7V → 5.5V pre-reg (Rail 2)</td></tr>
+        <tr><td class="mono">U6</td><td>LTC6655BHLS8-5</td><td class="dim">SOIC-8</td><td class="dim">5.5V → 5.000V precision Vref</td></tr>
+        <tr><td class="mono">U_DAC</td><td>LT3042EDD</td><td class="dim">DFN-10</td><td class="dim">5.5V → 5.0V AD5064 VDD supply</td></tr>
+        <tr><td class="mono">U7</td><td>LM7805</td><td class="dim">TO-220</td><td class="dim">+15V → 5V coarse (Rail 3) · heatsink</td></tr>
+        <tr><td class="mono">U8</td><td>LT3045EDD</td><td class="dim">DFN-10</td><td class="dim">5V → 3.3V Teensy supply · 2µV rms</td></tr>
+        <tr><td class="mono">U10</td><td>LM7808</td><td class="dim">TO-220</td><td class="dim">+15V → +8V TEC H-bridge power</td></tr>
+        <tr><td class="mono">U11</td><td>LT3045EDD</td><td class="dim">DFN-10</td><td class="dim">+8V → +6V TEC control supply</td></tr>
+        <tr><td class="mono">U12</td><td>LM7908</td><td class="dim">TO-220</td><td class="dim">−15V → −8V TEC H-bridge power</td></tr>
+        <tr><td class="mono">U13</td><td>LT3094EDD</td><td class="dim">DFN-10</td><td class="dim">−8V → −6V TEC control supply</td></tr>
+        <tr><td class="mono">U2</td><td>AD5064BRUZ</td><td class="dim">TSSOP-16</td><td class="dim">Quad 16-bit DAC · ext Vref · SPI</td></tr>
+        <tr><td class="mono">U3A/B</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">Ultra-low noise op-amps (laser + TEC)</td></tr>
+        <tr><td class="mono">U9</td><td>74AHCT125</td><td class="dim">SOIC-14</td><td class="dim">3.3V→5V SPI level shifter</td></tr>
+        <tr><td class="mono">U_RB1/2</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Current readback in-amps (laser + TEC)</td></tr>
+        <tr><td class="mono">U_TIA</td><td>OPA380AIDR</td><td class="dim">SOIC-8</td><td class="dim">Monitor PD transimpedance amp</td></tr>
+        <tr><td class="mono">Q1</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser pass element · active production</td></tr>
+        <tr><td class="mono">Q3,Q5</td><td>IRF9540N</td><td class="dim">TO-220</td><td class="dim">P-ch H-bridge high-side · off-board</td></tr>
+        <tr><td class="mono">Q4,Q6</td><td>IRLB8721PBF</td><td class="dim">TO-220</td><td class="dim">N-ch H-bridge low-side · off-board</td></tr>
+        <tr><td class="mono">R5</td><td>0.25Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R2500FEA · laser sense</td></tr>
+        <tr><td class="mono">R7</td><td>0.1Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R1000FEA · TEC sense</td></tr>
+        
+        <tr><td class="mono">U3C</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">Laser 2 error amp — identical to U3A</td></tr>
+        <tr><td class="mono">U3D</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">TEC 2 error amp — identical to U3B</td></tr>
+        <tr><td class="mono">U_RB3</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Laser 2 current readback G=12 (Rg3=4.53kΩ)</td></tr>
+        <tr><td class="mono">U_RB4</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">TEC 2 current readback G=20 (Rg4=2.61kΩ)</td></tr>
+        <tr><td class="mono">U_TIA2</td><td>OPA380AIDR</td><td class="dim">SOIC-8</td><td class="dim">Laser 2 monitor PD TIA — identical to U_TIA1</td></tr>
+        <tr><td class="mono">Q1b</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser 2 pass element — identical to Q1</td></tr>
+        <tr><td class="mono">Q7–Q10</td><td>IRF9540N + IRLB8721 ×2</td><td class="dim">TO-220 ×4</td><td class="dim">TEC 2 H-bridge — off-board via J8b</td></tr>
+        <tr><td class="mono">R5b</td><td>0.25Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R2500FEA — Laser 2 sense</td></tr>
+        <tr><td class="mono">R7b</td><td>0.1Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R1000FEA — TEC 2 sense</td></tr>
+        <tr><td class="mono">D3b</td><td>BAT54</td><td class="dim">SOD-123</td><td class="dim">Laser 2 reverse protection — identical to D3</td></tr>
+        <tr><td class="mono">J_BTF2</td><td>ZIF 2×7 2.54mm</td><td class="dim">THT</td><td class="dim">ML20550KK14Z600L #2 butterfly socket</td></tr>
+        <tr><td class="mono">J5a, J5b</td><td>1×2 2.54mm</td><td class="dim">THT</td><td class="dim">Independent +5V laser supplies per channel</td></tr>
+        <tr><td class="mono">J7b</td><td>1×4 2.54mm</td><td class="dim">THT</td><td class="dim">ADC Ch2 to Teensy: LAS2_IMON TEC2_IMON NTC2_MON PD2_MON</td></tr>
+        <tr><td class="mono">J8b</td><td>1×4 2.54mm</td><td class="dim">THT</td><td class="dim">TEC 2 H-bridge flying leads to Q7–Q10</td></tr>
+        <tr><td class="mono">J_BTF1</td><td>ZIF 2×7 2.54mm</td><td class="dim">THT</td><td class="dim">ML20550KK14Z600L butterfly socket</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <footer>
+    <span>Dual Dual-Channel CW Laser + TEC Driver · Rev 4.0</span>
+    <span>2× ML20550KK14Z600L · Independent Teensy control loops</span>
+    <span>Generated 2025-05-23</span>
+  </footer>
+
+</main>
+</div>
+
+</body>
+</html>

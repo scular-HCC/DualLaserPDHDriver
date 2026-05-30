@@ -1,0 +1,52 @@
+/* ============================================================
+   Dual-PDH Controller — Design Tokens
+   Target: 320x240 ILI9341 TFT, landscape, ~10 Hz refresh
+   Style: modern dark instrument dashboard
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* --- surfaces --- */
+  --bg:        #070b11;   /* device-deep background */
+  --screen:    #0a0f17;   /* the TFT field */
+  --panel:     #0e141e;   /* channel panel */
+  --panel-2:   #121a26;   /* raised stat cell */
+  --rule:      #1b2533;   /* hairline */
+  --rule-soft: #141c28;
+
+  /* --- ink --- */
+  --ink:       #e8eef6;   /* primary text */
+  --ink-dim:   #8696aa;   /* labels */
+  --ink-faint: #6b7a8e;   /* secondary label */
+  --ink-mute:  #4a586b;   /* axis / faint */
+
+  /* --- channel identity --- */
+  --ch1:       #2dd4cf;   /* CH1 — teal/cyan */
+  --ch1-deep:  #0c2f30;
+  --ch2:       #f5a524;   /* CH2 — amber */
+  --ch2-deep:  #33240a;
+
+  /* --- semantic state colors (shared by both channels) --- */
+  --st-idle:   #64748b;   /* slate */
+  --st-sweep:  #5aa9ff;   /* blue — coarse/fine sweep */
+  --st-acq:    #fbbf24;   /* amber — peak found / acquiring */
+  --st-lock:   #34e0a1;   /* green — locked */
+  --st-hold:   #a78bfa;   /* violet — hold */
+  --st-fault:  #ff5a6a;   /* red — lost / fault */
+
+  /* --- plot --- */
+  --grid:      #16202e;
+  --trace-tx:  #2dd4cf;   /* transmission (overridden per channel) */
+  --trace-err: #f5a524;   /* error signal */
+
+  --shadow: 0 18px 50px -12px rgba(0,0,0,.8);
+}
+
+/* type roles */
+:root {
+  --f-ui:  'Saira Semi Condensed', system-ui, sans-serif;
+  --f-num: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
