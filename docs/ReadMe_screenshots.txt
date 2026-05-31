@@ -1,0 +1,1 @@
+cd docs && python capture_screenshots.py

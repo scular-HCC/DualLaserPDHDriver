@@ -1,12 +1,4 @@
-#pragma once
-
-// ============================================================
-// Web dashboard — served at HTTP GET /
-// Single self-contained HTML/CSS/JS file embedded as a string.
-// Uses raw-string literal (C++11) to avoid escaping.
-// ============================================================
-
-static const char WEBPAGE_HTML[] = R"HTMLEND(<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -122,6 +114,17 @@ details.settings[open] summary::before{content:"▾  "}
 #cmd-send{appearance:none;background:color-mix(in srgb,var(--c1) 14%,var(--p2));border:1px solid color-mix(in srgb,var(--c1) 50%,transparent);color:var(--c1);font-family:var(--f);font-weight:600;font-size:12px;padding:7px 14px;border-radius:5px;cursor:pointer;white-space:nowrap}
 #cmd-out{font-family:var(--m);font-size:11px;color:var(--dim);margin-top:8px;min-height:18px;line-height:1.6;white-space:pre-wrap;max-height:200px;overflow-y:auto}
 </style>
+
+<script>
+const _origFetch = window.fetch;
+window.fetch = async (url, opts) => {
+  if(typeof url==='string' && url.includes('/api/status'))
+    return { ok:true, json: async()=>JSON.parse(JSON.stringify(window.__MOCK__||{})) };
+  if(typeof url==='string' && url.includes('/api/cmd'))
+    return { ok:true, text: async()=>'[preview - command not sent]' };
+  return _origFetch(url, opts);
+};
+</script>
 </head>
 <body>
 <div class="hdr">
@@ -482,4 +485,3 @@ poll();
 </script>
 </body>
 </html>
-)HTMLEND";

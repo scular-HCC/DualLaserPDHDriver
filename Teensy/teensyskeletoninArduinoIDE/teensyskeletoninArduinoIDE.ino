@@ -3,6 +3,11 @@
    Hardware : CDCE913 clock, dual AD9833 dither DDS, AD5064 setpoint DAC,
               ILI9341 320×240 TFT, built-in Ethernet (QNEthernet)
    Interfaces: USB-serial CLI | Ethernet Telnet CLI (port 23) | HTTP dashboard (port 80)
+
+   Demo mode is a RUNTIME setting — no recompile needed:
+     'demo on'   — switch to hardware simulation (Teensy + TFT only)
+     'demo off'  — switch to real PDH hardware
+   The setting persists in EEPROM across power cycles.
 */
 
 #include <Arduino.h>
@@ -20,12 +25,18 @@
 #include "lock.h"
 #include "display.h"
 #include "comms.h"
+#include "net_settings.h"
 #include "network.h"
+#include "demo.h"   // always compiled; only driven when g_demo_mode == true
 
-// ---- Hardware ----
+// ============================================================
+// Hardware
+// ============================================================
 Adafruit_ILI9341 tft(PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
 
-// ---- Control state (accessed by comms.cpp via extern) ----
+// ============================================================
+// Control state
+// ============================================================
 LockChannel ch[2];
 
 PID pid[2] = {
@@ -33,30 +44,29 @@ PID pid[2] = {
   {0.08f, 0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.5f}
 };
 
-float g_dither_freq = DITHER_FREQ_HZ;  // mutable, accessible by comms.cpp
+float g_dither_freq = DITHER_FREQ_HZ;
+
+// Runtime demo flag — loaded from EEPROM, toggled by 'demo on/off'
+bool g_demo_mode = false;
 
 elapsedMicros loopTimer;
 
-// ---- Sensor readings (updated every control tick) ----
-static float s_err[2]      = {0.0f, 0.0f};
-static float s_laser_i[2]  = {0.0f, 0.0f};
-static float s_tec_temp[2] = {NAN,  NAN};
-static uint16_t s_dac[2]   = {DAC_MID_CODE, DAC_MID_CODE};
-
-// ---- RMS accumulators (flushed each display tick) ----
-static float s_rms_sum[2] = {0.0f, 0.0f};
-static int   s_rms_cnt[2] = {0, 0};
-static float s_rms_val[2] = {0.5f, 0.5f};
-
-// ---- Display model ----
+// ============================================================
+// Display model
+// ============================================================
 DispModel disp;
 
-// ---- USB serial line buffer ----
-static String usb_line;
-
 // ============================================================
-// ADC helpers
+// Real-hardware sensor values (always compiled; only used when
+// g_demo_mode == false so they don't shadow the demo values)
 // ============================================================
+static float    s_err[2]     = {0.0f, 0.0f};
+static float    s_laser_i[2] = {0.0f, 0.0f};
+static float    s_tec_temp[2]= {NAN,  NAN};
+static uint16_t s_dac[2]     = {DAC_MID_CODE, DAC_MID_CODE};
+static float    s_rms_sum[2] = {0.0f, 0.0f};
+static int      s_rms_cnt[2] = {0, 0};
+static float    s_rms_val[2] = {0.5f, 0.5f};
 
 static inline float adc_to_error(int raw) {
   return (raw - ADC_MID) / (float)ADC_MID;
@@ -69,10 +79,6 @@ static float ntc_to_celsius(int raw) {
   float t_k = 1.0f / (1.0f / 298.15f + logf(r / NTC_R25) / NTC_BETA);
   return t_k - 273.15f;
 }
-
-// ============================================================
-// Update display model (called at display rate)
-// ============================================================
 
 static void update_disp_model() {
   for (int i = 0; i < 2; i++) {
@@ -89,10 +95,10 @@ static void update_disp_model() {
       disp.ch[i].scan_phase = fmodf(elapsed / (float)SCAN_PERIOD_MS, 1.0f);
     }
 
-    disp.ch[i].tec_temp_c  = s_tec_temp[i];
-    disp.ch[i].laser_i_ma  = s_laser_i[i];
+    disp.ch[i].tec_temp_c   = s_tec_temp[i];
+    disp.ch[i].laser_i_ma   = s_laser_i[i];
     disp.ch[i].setpoint_pct = s_dac[i] * 100.0f / 65535.0f;
-    disp.ch[i].err_rms     = s_rms_val[i];
+    disp.ch[i].err_rms      = s_rms_val[i];
 
     if (ch[i].state == LOCK_LOCKED) {
       float q = 1.0f - s_rms_val[i] / ch[i].acquire_threshold;
@@ -107,10 +113,6 @@ static void update_disp_model() {
   disp.refclk_mhz = 25.0f;
 }
 
-// ============================================================
-// Per-channel control step (1 kHz)
-// ============================================================
-
 static void control_step(int i, float e, float dt) {
   switch (ch[i].state) {
     case LOCK_IDLE:
@@ -120,7 +122,7 @@ static void control_step(int i, float e, float dt) {
       if (fabsf(e) > ch[i].acquire_threshold) {
         disp.ch[i].peak_phase = disp.ch[i].scan_phase;
         lock_enter(ch[i], LOCK_ACQUIRE);
-        Serial.print(F("CH")); Serial.print(i + 1); Serial.println(F(" peak -> ACQUIRE"));
+        Serial.print(F("CH")); Serial.print(i+1); Serial.println(F(" peak -> ACQUIRE"));
       }
       break;
 
@@ -131,7 +133,7 @@ static void control_step(int i, float e, float dt) {
       if (fabsf(e) < ch[i].lock_threshold) {
         ch[i].locked = true;
         lock_enter(ch[i], LOCK_LOCKED);
-        Serial.print(F("CH")); Serial.print(i + 1); Serial.println(F(" LOCKED"));
+        Serial.print(F("CH")); Serial.print(i+1); Serial.println(F(" LOCKED"));
       } else if (millis() - ch[i].state_ts > ch[i].acquire_timeout_ms) {
         ch[i].relock_attempts++;
         lock_enter(ch[i], LOCK_RELOCK);
@@ -146,7 +148,7 @@ static void control_step(int i, float e, float dt) {
       if (fabsf(e) > ch[i].acquire_threshold) {
         ch[i].locked = false;
         lock_enter(ch[i], LOCK_RELOCK);
-        Serial.print(F("CH")); Serial.print(i + 1); Serial.println(F(" LOCK LOST"));
+        Serial.print(F("CH")); Serial.print(i+1); Serial.println(F(" LOCK LOST"));
       }
       break;
     }
@@ -159,18 +161,20 @@ static void control_step(int i, float e, float dt) {
         lock_enter(ch[i], LOCK_SEARCH);
       break;
   }
-
   s_rms_sum[i] += e * e;
   s_rms_cnt[i]++;
 }
 
 // ============================================================
+// USB serial line buffer
+// ============================================================
+static String usb_line;
+
+// ============================================================
 // Setup
 // ============================================================
-
 void setup() {
   Serial.begin(115200);
-
   Wire.begin();
   SPI.begin();
 
@@ -196,33 +200,43 @@ void setup() {
   digitalWrite(PIN_AD5064_CLR,   HIGH);
 
   delay(50);
-
   display_init(tft);
 
-  // CDCE913
+  // ── Load runtime settings from EEPROM ─────────────────────
+  {
+    NetSettings ns;
+    net_settings_load(ns);
+    g_demo_mode = ns.demo_mode;
+  }
+
+  // ── Hardware init (always runs; safe even without hardware) ─
+  // In demo mode the peripherals are initialised but never driven.
   cdce_program_if_needed();
   cdce_wait_for_lock();
   disp.pll_lock   = cdce_pll_locked();
   disp.refclk_mhz = 25.0f;
   if (cdce_selftest_25mhz()) Serial.println(F("CDCE913: 25 MHz OK"));
-  else                       Serial.println(F("CDCE913: 25 MHz FAIL"));
+  else                       Serial.println(F("CDCE913: 25 MHz FAIL / not connected"));
 
-  // AD9833 dither
   ad9833_reset(PIN_AD9833_1_CS, PIN_AD9833_1_RESET);
   ad9833_reset(PIN_AD9833_2_CS, PIN_AD9833_2_RESET);
   ad9833_set_freq(PIN_AD9833_1_CS, g_dither_freq, REFCLK_HZ);
   ad9833_set_freq(PIN_AD9833_2_CS, g_dither_freq, REFCLK_HZ);
-
   ad5064_set_midscale();
 
-  lock_init(ch[0]);
-  lock_init(ch[1]);
-  disp.ch[0].peak_phase = 0.6f;
-  disp.ch[1].peak_phase = 0.6f;
+  // ── Mode-specific channel init ─────────────────────────────
+  if (g_demo_mode) {
+    demo_init(ch, disp);
+    Serial.println(F("*** DEMO MODE — type 'demo off' for real hardware ***"));
+  } else {
+    lock_init(ch[0]);
+    lock_init(ch[1]);
+    disp.ch[0].peak_phase = 0.6f;
+    disp.ch[1].peak_phase = 0.6f;
+    Serial.println(F("Real hardware mode. Type 'demo on' to enable simulation."));
+  }
 
-  // Ethernet (non-fatal — system works without it)
   network_init();
-
   loopTimer = 0;
   Serial.println(F("Ready. Type 'help' for commands."));
 }
@@ -230,60 +244,63 @@ void setup() {
 // ============================================================
 // Main loop
 // ============================================================
-
 void loop() {
-  // ---- USB serial (line-buffered) ----
+
+  // ---- USB serial (line-buffered) ----------------------------
   while (Serial.available()) {
     char c = (char)Serial.read();
     if (c == '\n' || c == '\r') {
       usb_line.trim();
-      if (usb_line.length()) {
+      if (usb_line.length())
         comms_process(usb_line, Serial, ch, pid, disp);
-      }
       usb_line = "";
     } else {
       usb_line += c;
     }
   }
 
-  // ---- 1 kHz control loop ----
+  // ---- 1 kHz control / simulation tick ----------------------
   if (loopTimer < CONTROL_PERIOD_US) return;
   float dt = loopTimer / 1e6f;
   loopTimer = 0;
 
-  s_err[0]      = adc_to_error(analogRead(PIN_LOCK1_IN));
-  s_err[1]      = adc_to_error(analogRead(PIN_LOCK2_IN));
-  s_laser_i[0]  = analogRead(PIN_LAS1_IMON) * LASER_IMON_MA_PER_LSB;
-  s_laser_i[1]  = analogRead(PIN_LAS2_IMON) * LASER_IMON_MA_PER_LSB;
-  s_tec_temp[0] = ntc_to_celsius(analogRead(PIN_NTC1_MON));
-  s_tec_temp[1] = ntc_to_celsius(analogRead(PIN_NTC2_MON));
+  if (g_demo_mode) {
+    // Demo: drive state machine and fill DispModel from simulation
+    demo_update(ch, disp, dt);
+  } else {
+    // Real hardware: read sensors, run PID control loops
+    s_err[0]      = adc_to_error(analogRead(PIN_LOCK1_IN));
+    s_err[1]      = adc_to_error(analogRead(PIN_LOCK2_IN));
+    s_laser_i[0]  = analogRead(PIN_LAS1_IMON) * LASER_IMON_MA_PER_LSB;
+    s_laser_i[1]  = analogRead(PIN_LAS2_IMON) * LASER_IMON_MA_PER_LSB;
+    s_tec_temp[0] = ntc_to_celsius(analogRead(PIN_NTC1_MON));
+    s_tec_temp[1] = ntc_to_celsius(analogRead(PIN_NTC2_MON));
+    control_step(0, s_err[0], dt);
+    control_step(1, s_err[1], dt);
+  }
 
-  control_step(0, s_err[0], dt);
-  control_step(1, s_err[1], dt);
-
-  // ---- 10 Hz display + network tick ----
+  // ---- 10 Hz display + network tick -------------------------
   static unsigned long last_disp = 0;
   if (millis() - last_disp >= DISPLAY_PERIOD_MS) {
     last_disp = millis();
-    update_disp_model();
+    if (!g_demo_mode) update_disp_model();  // demo fills disp each tick
     display_update(tft, disp);
-    // Service Ethernet — runs after display to avoid jitter on control loop
     network_poll(ch, pid, disp, disp.pll_lock, disp.refclk_mhz);
   }
 
-  // ---- 1 Hz debug print ----
+  // ---- 1 Hz debug print -------------------------------------
   static unsigned long last_dbg = 0;
   if (millis() - last_dbg >= DEBUG_PERIOD_MS) {
     last_dbg = millis();
+    if (g_demo_mode) Serial.print(F("[DEMO] "));
     for (int i = 0; i < 2; i++) {
-      Serial.print(F("CH")); Serial.print(i + 1);
+      Serial.print(F("CH")); Serial.print(i+1);
       Serial.print(' '); Serial.print(lock_state_name(ch[i].state));
-      Serial.print(F(" err=")); Serial.print(s_err[i], 4);
-      Serial.print(F(" rms=")); Serial.print(s_rms_val[i], 5);
-      if (!isnan(s_tec_temp[i])) {
-        Serial.print(F(" T=")); Serial.print(s_tec_temp[i], 1);
+      Serial.print(F(" rms="));  Serial.print(disp.ch[i].err_rms, 5);
+      if (!isnan(disp.ch[i].tec_temp_c)) {
+        Serial.print(F(" T="));  Serial.print(disp.ch[i].tec_temp_c, 1);
       }
-      Serial.print(F(" I=")); Serial.print(s_laser_i[i], 1);
+      Serial.print(F(" I="));   Serial.print(disp.ch[i].laser_i_ma, 1);
       Serial.println(F(" mA"));
     }
     Serial.print(F("IP: ")); Serial.println(network_ip());

@@ -1,6 +1,19 @@
 #pragma once
 
 // ============================================================
+// DEMO MODE DEFAULT (first-boot only)
+// Demo mode is now a runtime setting stored in EEPROM.
+// Use the command  'demo on'  or  'demo off'  via USB serial,
+// Telnet, or the web dashboard — no recompile required.
+//
+// This value is only written to EEPROM when the device boots
+// with a blank or invalid EEPROM (first flash after firmware
+// update). Change it here if you want demo OFF as the factory
+// default. After the first boot it has no effect.
+// ============================================================
+#define DEMO_MODE_DEFAULT  1   // 1 = demo on, 0 = real hardware
+
+// ============================================================
 // Hardware pin mapping — matches Dual-PDH schematic
 // ============================================================
 

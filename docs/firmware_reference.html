@@ -439,7 +439,9 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <li><a href="#display">display</a></li>
     <li><a href="#comms">comms</a></li>
     <li><a href="#network">network</a></li>
+    <li><a href="#net-settings">net_settings</a></li>
     <li><a href="#webpage">webpage</a></li>
+    <li><a href="#demo">demo</a></li>
     <li><a href="#main-ino">main .ino</a></li>
 
     <li><span class="nav-section">State Machine</span></li>
@@ -462,6 +464,15 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <li><a href="#cmd-d">d</a></li>
     <li><a href="#cmd-r">r</a></li>
     <li><a href="#cmd-help">help</a></li>
+    <li><span class="nav-section">Network Config</span></li>
+    <li><a href="#default-ip">Default IP / DHCP</a></li>
+    <li><a href="#cmd-netinfo">netinfo</a></li>
+    <li><a href="#cmd-netset">netset</a></li>
+    <li><a href="#cmd-netreset">netreset</a></li>
+    <li><span class="nav-section">Demo Mode</span></li>
+    <li><a href="#demo-overview">Overview</a></li>
+    <li><a href="#demo-cycle">Cycle &amp; States</a></li>
+    <li><a href="#cmd-demo">demo on / demo off</a></li>
   </ul>
 </nav>
 
@@ -675,6 +686,22 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
       </td>
     </tr>
     <tr>
+      <td><span class="file-tag pair">net_settings.h / .cpp</span></td>
+      <td>EEPROM settings</td>
+      <td>
+        <div class="file-role">Network settings persistence</div>
+        <div class="file-desc">Stores IP, subnet, gateway, hostname, and DHCP flag in Teensy EEPROM emulation (4284 bytes of flash-backed storage). A 32-bit magic number (<code>0x50444831</code> = "PDH1") detects first-boot and writes defaults automatically. <code>net_parse_ip()</code> validates dotted-decimal strings; <code>net_fmt_ip()</code> formats them for display and JSON.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="file-tag pair">demo.h / .cpp</span></td>
+      <td>Hardware simulation</td>
+      <td>
+        <div class="file-role">Demo mode — Teensy + TFT only</div>
+        <div class="file-desc"><strong>Always compiled.</strong> Controlled at runtime by the <code>demo on</code> / <code>demo off</code> command — no recompile required. Replaces real ADC reads and PID control with a physics-flavoured simulation: 10-second TEC sweep → 2-second PID convergence → 40-second in-lock with organic drift → 1.5-second fault → retry. CH2 starts 5 seconds later so the channels are never in the same state simultaneously. The setting is saved to EEPROM and persists across power cycles.</div>
+      </td>
+    </tr>
+    <tr>
       <td><span class="file-tag">serial_console.h / .cpp</span></td>
       <td>Compatibility stub</td>
       <td>
@@ -741,9 +768,19 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p><code>comms_json_status()</code> streams JSON directly without intermediate buffering, which keeps heap usage flat even under rapid polling.</p>
 </section>
 
+<section id="net-settings"><h3>net_settings.h / .cpp — EEPROM Settings</h3>
+<p>Settings are stored in the Teensy's EEPROM emulation (4 KiB of flash-backed storage at byte offset 0). The struct is 77 bytes including the 4-byte magic header. On first boot — or after a firmware flash that changes the magic number — defaults are written automatically: DHCP on, static fallback 192.168.1.200/24, hostname "dual-pdh".</p>
+<div class="callout warn"><strong>EEPROM write endurance:</strong> Teensy 4.1 EEPROM emulation is rated for ~100,000 write cycles. The network settings should only be written when the user issues a <code>netset</code> command, not in the control loop. The current code only writes on explicit commands.</div>
+</section>
+
 <section id="network"><h3>network.h / .cpp — Ethernet</h3>
 <p>Requires the <strong>QNEthernet</strong> library by Luni64 (install via Arduino Library Manager). Uses the Teensy 4.1's built-in 10/100 Ethernet MAC/PHY — no external W5500 or similar chip is needed.</p>
 <p>The HTTP parser reads one header line at a time with a 200 ms timeout per line; malformed or stalled connections are dropped cleanly. POST bodies up to 127 bytes are supported (sufficient for all commands). Responses use <code>HTTP/1.0</code> with the connection closed after each response.</p>
+</section>
+
+<section id="demo"><h3>demo.h / .cpp — Hardware Simulation</h3>
+<p><strong>Always compiled</strong> regardless of mode. <code>demo_update()</code> is called at 1 kHz from <code>loop()</code> only when the runtime flag <code>g_demo_mode</code> is true. It writes directly to <code>DispModel</code> and <code>LockChannel</code> state, so the TFT display, web dashboard, Telnet CLI, and USB serial show live animated data — indistinguishable from real operation.</p>
+<p>When <code>demo off</code> is issued, <code>g_demo_mode</code> is set false, the DAC is reset to midscale, and <code>lock_init()</code> is called on both channels. When <code>demo on</code> is issued, <code>demo_init()</code> restarts the simulation from the beginning. Both transitions are instantaneous and the new setting is saved to EEPROM immediately.</p>
 </section>
 
 <section id="webpage"><h3>webpage.h — Embedded Dashboard</h3>
@@ -866,12 +903,92 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <!-- ─────────────── WEB DASHBOARD ─────────────── -->
 <section id="web-dashboard">
 <h2>Web Dashboard</h2>
-<p>Navigate to <code>http://dual-pdh.local</code> (or the device IP) in any modern browser. The page is self-contained — no internet connection required.</p>
+<p>
+  Navigate to <code>http://dual-pdh.local</code> (or the device IP) in any modern browser.
+  The page is fully self-contained — no internet connection, CDN, or extra files required.
+  It is served directly from the Teensy's flash memory (embedded in <code>webpage.h</code>)
+  and polls <code>/api/status</code> every 500 ms to update live traces and telemetry.
+</p>
 
+<!-- ── Main dashboard ── -->
 <div class="screenshot-grid single">
   <div class="ss-card">
-    <img src="img/screen-coarse.png" alt="Web dashboard coarse sweep">
-    <div class="ss-cap"><strong>Fig 4.</strong> Browser dashboard during coarse sweep. Live SVG traces match the TFT display. Top bar shows PLL status, IP, and uptime. Per-channel control buttons are immediately accessible.</div>
+    <img src="img/web-01-main.png" alt="Web dashboard — CH1 LOCKED, CH2 SEARCH">
+    <div class="ss-cap">
+      <strong>Fig 4 — Main dashboard.</strong>
+      CH1 (teal, left) is LOCKED with a tight noise trace and ERR RMS 0.00312.
+      CH2 (amber, right) is in SEARCH — the sweep marker tracks across the Lorentzian
+      transmission peak. The yellow DEMO banner is visible when demo mode is active,
+      with a one-click "Switch to real hardware" button.
+    </div>
+  </div>
+</div>
+
+<!-- ── Both locked / fault states ── -->
+<div class="screenshot-grid">
+  <div class="ss-card">
+    <img src="img/web-02-both-locked.png" alt="Both channels LOCKED">
+    <div class="ss-cap">
+      <strong>Fig 5 — Both LOCKED.</strong>
+      Both channels showing tight in-lock noise traces.
+      Servo health bars at 94 % and 96 %. ERR RMS in the 0.003 range.
+    </div>
+  </div>
+  <div class="ss-card">
+    <img src="img/web-04-relock.png" alt="CH1 HOLD, CH2 RELOCK">
+    <div class="ss-cap">
+      <strong>Fig 6 — HOLD and RELOCK.</strong>
+      CH1 frozen in HOLD (violet, wider noise trace). CH2 in RELOCK after 3 attempts —
+      the red railing trace shows the diverging error signal before the retry sweep begins.
+    </div>
+  </div>
+</div>
+
+<!-- ── Acquire ── -->
+<div class="screenshot-grid">
+  <div class="ss-card">
+    <img src="img/web-03-acquire.png" alt="CH1 ACQUIRE">
+    <div class="ss-cap">
+      <strong>Fig 7 — ACQUIRE.</strong>
+      CH1 in acquisition: the dispersive PDH S-curve is overlaid on the transmission peak.
+      ERR RMS is dropping (0.085), servo health bar is at 61 % and rising.
+    </div>
+  </div>
+  <div class="ss-card">
+    <img src="img/web-05-demo-off.png" alt="Real hardware mode — no demo banner">
+    <div class="ss-cap">
+      <strong>Fig 8 — Real hardware mode.</strong>
+      After typing <code>demo off</code>, the DEMO banner disappears and both channels
+      run the real PID servo. The page is otherwise identical.
+    </div>
+  </div>
+</div>
+
+<!-- ── Settings panel ── -->
+<div class="screenshot-grid single">
+  <div class="ss-card">
+    <img src="img/web-06-settings.png" alt="Settings & PID Tuning panel open">
+    <div class="ss-cap">
+      <strong>Fig 9 — Settings &amp; PID Tuning.</strong>
+      Expanding the accordion reveals per-channel Kp / Ki / Kd gain fields and
+      lock / acquire threshold inputs. Each section has an Apply button that sends
+      the corresponding <code>p1</code> / <code>thresh1</code> command immediately.
+      The Global section exposes the dither frequency.
+    </div>
+  </div>
+</div>
+
+<!-- ── Network panel ── -->
+<div class="screenshot-grid single">
+  <div class="ss-card">
+    <img src="img/web-07-network.png" alt="Network Configuration panel open">
+    <div class="ss-cap">
+      <strong>Fig 10 — Network Configuration.</strong>
+      The Demo Mode toggle and all Ethernet settings (DHCP/Static, IP, subnet, gateway,
+      hostname) are exposed here. Changes are written to EEPROM on "Save &amp; Restart
+      Ethernet" — no reflash required. The mDNS hostname shown below the fields updates
+      immediately after a restart.
+    </div>
   </div>
 </div>
 
@@ -1268,6 +1385,302 @@ LAS2 =1709  → 1709 × 0.0806 = 137.8 mA</span></pre>
   dither &lt;hz&gt;          — set dither frequency
   d                    — raw ADC dump
   r                    — reprogram CDCE913</span></pre>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--                NETWORK CONFIGURATION                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="default-ip">Network Configuration</h2>
+
+<p>
+  The Teensy 4.1 uses its built-in 10/100 Ethernet PHY via the <strong>QNEthernet</strong> library.
+  Settings (IP, subnet, gateway, hostname, DHCP flag) are saved to Teensy EEPROM and persist
+  across power cycles. They can be changed at any time without reflashing.
+</p>
+
+<h3>Default Settings (first boot)</h3>
+<table class="file-table">
+  <thead><tr><th>Setting</th><th>Default value</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Mode</strong></td><td>DHCP</td><td>Router assigns address automatically</td></tr>
+    <tr><td><strong>Static IP fallback</strong></td><td><code>192.168.1.200</code></td><td>Used if DHCP times out after 3 s</td></tr>
+    <tr><td><strong>Subnet</strong></td><td><code>255.255.255.0</code></td><td>Standard /24</td></tr>
+    <tr><td><strong>Gateway</strong></td><td><code>192.168.1.1</code></td><td>Standard home/lab router</td></tr>
+    <tr><td><strong>Hostname</strong></td><td><code>dual-pdh</code></td><td>Accessible as <code>dual-pdh.local</code> via mDNS</td></tr>
+  </tbody>
+</table>
+
+<div class="callout note"><strong>Finding the IP:</strong> Open a serial terminal at 115 200 baud. On boot the Teensy prints the assigned IP: <code>Ethernet: DHCP...&nbsp; IP: 192.168.1.45</code>. Or type <code>netinfo</code> at any time — it shows both the active IP and the saved static fallback.</div>
+
+<!-- ── netinfo ── -->
+<div class="cmd-block" id="cmd-netinfo">
+  <div class="cmd-header">
+    <span class="cmd-name">netinfo</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">Displays all saved network settings plus the current active IP address.</div>
+  <div class="cmd-examples">
+    <div class="ex-label">Running in DHCP mode</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netinfo</span>
+<span class="val">Mode:      DHCP</span>
+<span class="info">Static IP: 192.168.1.200</span>
+<span class="info">Subnet:    255.255.255.0</span>
+<span class="info">Gateway:   192.168.1.1</span>
+<span class="info">Hostname:  dual-pdh</span>
+<span class="val">Active IP: 192.168.1.47</span>
+<span class="info">(Changes require 'netreset' to take effect)</span></pre>
+
+    <div class="ex-label">Running in static mode</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netinfo</span>
+<span class="val">Mode:      Static</span>
+<span class="info">Static IP: 192.168.10.50</span>
+<span class="info">Subnet:    255.255.255.0</span>
+<span class="info">Gateway:   192.168.10.1</span>
+<span class="info">Hostname:  laser-lab</span>
+<span class="val">Active IP: 192.168.10.50</span></pre>
+  </div>
+</div>
+
+<!-- ── netset ── -->
+<div class="cmd-block" id="cmd-netset">
+  <div class="cmd-header">
+    <span class="cmd-name">netset</span>
+    <span class="cmd-sig">ip <em>&lt;a.b.c.d&gt;</em> &nbsp;|&nbsp; sub <em>&lt;a.b.c.d&gt;</em> &nbsp;|&nbsp; gw <em>&lt;a.b.c.d&gt;</em> &nbsp;|&nbsp; host <em>&lt;name&gt;</em> &nbsp;|&nbsp; dhcp on|off</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Saves one network setting to EEPROM. The change is <strong>stored immediately</strong> but does not take effect until <code>netreset</code> is called (or the device reboots). This allows multiple settings to be changed atomically before applying.
+    <br><br>
+    <strong>Hostname</strong> rules: alphanumeric characters and hyphens only, 1–31 characters. The device becomes accessible at <code>&lt;hostname&gt;.local</code> via mDNS after netreset.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Switch to a specific static IP</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netset dhcp off</span>
+<span class="ok">Static IP mode. Run 'netreset' to apply.</span>
+<span class="prompt">&gt; </span><span class="in">netset ip 192.168.10.50</span>
+<span class="ok">Static IP saved. Run 'netreset' to apply.</span>
+<span class="prompt">&gt; </span><span class="in">netset gw 192.168.10.1</span>
+<span class="ok">Gateway saved. Run 'netreset' to apply.</span>
+<span class="prompt">&gt; </span><span class="in">netreset</span>
+<span class="ok">Restarting Ethernet with saved settings...</span>
+<span class="val">Active IP: 192.168.10.50</span></pre>
+
+    <div class="ex-label">Change hostname</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netset host laser-lab</span>
+<span class="ok">Hostname saved: laser-lab</span>
+<span class="ok">Run 'netreset' to apply. mDNS: laser-lab.local</span>
+<span class="prompt">&gt; </span><span class="in">netreset</span>
+<span class="val">Active IP: 192.168.1.47</span></pre>
+
+    <div class="ex-label">Re-enable DHCP</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netset dhcp on</span>
+<span class="ok">DHCP enabled. Run 'netreset' to apply.</span></pre>
+
+    <div class="ex-label">Invalid IP format</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netset ip 999.0.0.1</span>
+<span class="err">Invalid IP address (use a.b.c.d)</span></pre>
+
+    <div class="ex-label">Invalid hostname (space not allowed)</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netset host my device</span>
+<span class="err">Invalid hostname (a-z 0-9 hyphens, max 31 chars)</span></pre>
+  </div>
+</div>
+
+<!-- ── netreset ── -->
+<div class="cmd-block" id="cmd-netreset">
+  <div class="cmd-header">
+    <span class="cmd-name">netreset</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Immediately applies all saved EEPROM network settings by restarting the Ethernet stack. Any active HTTP or Telnet connections are dropped. The device re-announces itself on the network with the new hostname/IP within about 200 ms.
+    <br><br>
+    If called over Telnet and the IP address changes, the Telnet session will disconnect — reconnect using the new IP or hostname.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Apply after changing settings</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">netreset</span>
+<span class="info">Restarting Ethernet with saved settings...</span>
+<span class="info">Ethernet: DHCP...  IP: 192.168.1.47</span>
+<span class="info">  hostname: laser-lab.local</span>
+<span class="info">  HTTP port 80 | Telnet port 23</span>
+<span class="info">network_reinit: done</span>
+<span class="val">Active IP: 192.168.1.47</span></pre>
+
+    <div class="ex-label">Web interface — "Save &amp; Restart Ethernet" button</div>
+    <pre class="terminal"><span class="info">The Network Configuration panel in the web dashboard sends all five
+netset commands followed by netreset in sequence. The page will briefly
+show "offline" then reconnect automatically when the device comes back.</span></pre>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--                     DEMO MODE                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="demo-overview">Demo Mode</h2>
+
+<p>
+  Demo mode lets you run the full software stack — TFT display, web dashboard, Telnet CLI, USB serial,
+  and all commands — with <strong>only a Teensy 4.1 and the ILI9341 TFT connected</strong>.
+  No PDH electronics, lasers, TECs, or ADC signals are required.
+</p>
+<p>
+  Demo mode is a <strong>runtime setting stored in EEPROM</strong>. Toggle it with a single command from
+  any interface — no recompile or reflash required. The setting persists across power cycles.
+</p>
+
+<div class="callout">
+  <strong>Demo is ON by default</strong> (first boot). Type <code>demo off</code> at any time — via USB serial,
+  Telnet, or the web dashboard — to switch to real hardware. Type <code>demo on</code> to go back.
+  The web dashboard shows a yellow <strong>DEMO</strong> banner when active, with a one-click toggle button.
+</div>
+
+<div class="callout note">
+  <strong>First-boot default</strong> is controlled by <code>DEMO_MODE_DEFAULT</code> in <code>config.h</code>
+  (default 1 = demo on). This value is only written to EEPROM when the EEPROM is blank — i.e., on the first
+  flash of new firmware. After that, the runtime command is the only way to change it.
+</div>
+
+<h3 id="demo-cycle">Demo Cycle</h3>
+
+<p>Each channel runs an independent loop. CH2 is staggered by 5 seconds so the channels are never in the same state simultaneously — you always have something interesting on screen.</p>
+
+<table class="state-table">
+  <thead>
+    <tr><th>State</th><th>Duration</th><th>What you see</th></tr>
+  </thead>
+  <tbody>
+    <tr class="st-idle">
+      <td><span class="state-dot">IDLE</span></td>
+      <td>0.5 s (initial only)</td>
+      <td>Flat dashed baseline. Both channels at 24 °C, 138 mA.</td>
+    </tr>
+    <tr class="st-search">
+      <td><span class="state-dot">SEARCH</span></td>
+      <td><strong>10 seconds</strong></td>
+      <td>TEC temperature sweeps linearly (CH1: 18→32 °C, CH2: 20→30 °C). Lorentzian transmission peak fixed at a random position; scan-marker line moves left to right. ERR RMS ≈ 0.42.</td>
+    </tr>
+    <tr class="st-acquire">
+      <td><span class="state-dot">ACQUIRE</span></td>
+      <td>2 seconds</td>
+      <td>Transmission peak + dispersive S-curve overlay. ERR RMS decays as <em>0.22·e<sup>−5t</sup> + 0.003</em>. Servo health bar fills via smoothstep curve.</td>
+    </tr>
+    <tr class="st-locked">
+      <td><span class="state-dot">LOCKED</span></td>
+      <td>40 seconds</td>
+      <td>Tight noise trace; ERR RMS ≈ 0.003. TEC temp and laser I drift slowly with sinusoidal organic noise. Servo health 92–97 %.</td>
+    </tr>
+    <tr class="st-relock">
+      <td><span class="state-dot">RELOCK</span></td>
+      <td>1.5 seconds</td>
+      <td>Railing fault trace. ERR RMS climbs 0.35 → 0.60. Simulates a lock loss before the channel retries.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="screenshot-grid">
+  <div class="ss-card">
+    <img src="img/screen-final.png" alt="Demo sweep state">
+    <div class="ss-cap"><strong>Demo — SEARCH.</strong> CH1 (teal) and CH2 (amber) sweeping simultaneously. TEC temperature advances in the readout; the scan marker (vertical line) tracks sweep progress.</div>
+  </div>
+  <div class="ss-card">
+    <img src="img/screen-board.png" alt="Demo all states">
+    <div class="ss-cap"><strong>All demo states.</strong> Top row: IDLE, COARSE SWEEP. Bottom row: LOCK LOST (RELOCK), MANUAL TUNE. Each advances automatically on the 10-second sweep cycle.</div>
+  </div>
+</div>
+
+<h3>Commands in Demo Mode</h3>
+<p>All standard commands work while the demo is running:</p>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px;line-height:2">
+  <li><code>stop1</code> / <code>stop2</code> — pauses the demo on that channel (stays IDLE until commanded)</li>
+  <li><code>lock1</code> / <code>lock2</code> — resumes demo from SEARCH with a fresh random peak position</li>
+  <li><code>hold1</code> / <code>hold2</code> — the demo respects HOLD and will not auto-advance out of it</li>
+  <li><code>s</code> — shows simulated telemetry with a <code>[DEMO MODE]</code> prefix</li>
+  <li>All <code>netset</code> / <code>netreset</code> commands work normally</li>
+  <li>All <code>p1</code>, <code>thresh1</code>, <code>dither</code> commands save correctly (effective when real hardware is connected)</li>
+</ul>
+<p>The web dashboard shows a yellow <strong>DEMO</strong> banner in the top bar while demo mode is active, with a one-click "Switch to real hardware" button. The Network Configuration panel also contains a toggle button.</p>
+
+<!-- ── demo on / demo off command block ── -->
+<div class="cmd-block" id="cmd-demo">
+  <div class="cmd-header">
+    <span class="cmd-name">demo on</span>
+    <span class="cmd-sig">/ <strong>demo off</strong></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span>
+      <span class="badge eth">Telnet</span>
+      <span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    Toggles between <strong>demo (simulation)</strong> and <strong>real hardware</strong> mode at runtime.
+    <strong>No recompile or reflash is required.</strong> The choice is saved to EEPROM immediately and
+    survives power cycles.
+    <br><br>
+    <strong>demo on</strong> — starts the hardware simulation. Calls <code>demo_init()</code> to reset
+    both channels to IDLE and begin the sweep→lock sequence. The PDH electronics are not driven
+    (DAC outputs are held at midscale from the last real-hardware run, or from startup).
+    <br><br>
+    <strong>demo off</strong> — enters real hardware mode. Resets the DAC to midscale via
+    <code>ad5064_set_midscale()</code>, calls <code>lock_init()</code> on both channels, and begins
+    reading live ADC signals. Type <code>lock1</code> / <code>lock2</code> to start the sweep.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Switch to real hardware</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">demo off</span>
+<span class="ok">Demo mode OFF — real hardware mode.</span>
+<span class="ok">Type 'lock1' / 'lock2' to start sweep+lock.</span></pre>
+
+    <div class="ex-label">Switch back to simulation</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">demo on</span>
+<span class="ok">Demo mode ON — simulation running.</span>
+<span class="ok">Type 'demo off' to switch to real hardware (persists across reboot).</span></pre>
+
+    <div class="ex-label">Already in the requested mode</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">demo on</span>
+<span class="warn">Demo mode already ON</span></pre>
+
+    <div class="ex-label">Check current mode via status</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
+<span class="warn">[DEMO MODE — type 'demo off' to switch to real hardware]</span>
+<span class="val">CH1 LOCKED  rms=0.00301  temp=24.5°C  I=140.5mA  setp=52.3%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="val">CH2 SEARCH  rms=0.42100  temp=24.1°C  I=138.0mA  setp=43.0%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="info">dither=10000 Hz</span></pre>
+
+    <div class="ex-label">Check mode in JSON API</div>
+    <pre class="terminal"><span class="prompt">$ </span><span class="in">curl -s http://dual-pdh.local/api/status | python3 -m json.tool | grep demo</span>
+<span class="val">    "demo": 1,</span></pre>
+
+    <div class="ex-label">Full power-on sequence for real hardware</div>
+    <pre class="terminal"><span class="info"># First time connecting real PDH electronics:</span>
+<span class="prompt">&gt; </span><span class="in">demo off</span>
+<span class="ok">Demo mode OFF — real hardware mode.</span>
+<span class="prompt">&gt; </span><span class="in">d</span>
+<span class="val">LOCK1=2064 LOCK2=2031 NTC1=1820 NTC2=1834 LAS1=1712 LAS2=1709</span>
+<span class="info"># Verify ADC readings look sensible, then start locks:</span>
+<span class="prompt">&gt; </span><span class="in">lock1</span>
+<span class="ok">CH1 -> SEARCH</span>
+<span class="prompt">&gt; </span><span class="in">lock2</span>
+<span class="ok">CH2 -> SEARCH</span></pre>
   </div>
 </div>
 
