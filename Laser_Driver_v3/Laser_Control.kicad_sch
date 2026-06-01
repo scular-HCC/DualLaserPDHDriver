@@ -3473,7 +3473,7 @@
 		)
 	)
 	(global_label "DDS2_FSYNC"
-		(shape input)
+		(shape output)
 		(at 143.51 140.97 180)
 		(fields_autoplaced yes)
 		(effects
@@ -3484,7 +3484,7 @@
 		)
 		(uuid "c1a48000-52e2-421a-bdc8-2d9d3ff51952")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 143.51 140.97 0)
+			(at 128.611 140.97 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
