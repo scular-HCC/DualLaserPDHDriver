@@ -2756,7 +2756,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_THT:D_DO-15_P12.70mm_Horizontal"
 			(at 116.84 50.165 0)
 			(hide yes)
 			(show_name no)
@@ -2946,7 +2946,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_THT:D_DO-15_P12.70mm_Horizontal"
 			(at 74.93 50.165 0)
 			(hide yes)
 			(show_name no)
