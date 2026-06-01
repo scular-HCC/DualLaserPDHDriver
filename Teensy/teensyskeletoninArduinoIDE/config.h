@@ -14,48 +14,57 @@
 #define DEMO_MODE_DEFAULT  1   // 1 = demo on, 0 = real hardware
 
 // ============================================================
-// Hardware pin mapping — matches Dual-PDH schematic
+// Hardware pin mapping — Teensy 4.1
+//
+// SPI0 (pins 11/12/13): AD5064 + AD9833 x2  (signal-path chips)
+// SPI1 (pins 26/27/39): ILI9341 TFT          (dedicated display bus)
+// I2C0 (pins 18/19):    CDCE913 clock gen
 // ============================================================
 
-// I2C
+// --- I2C0 ---------------------------------------------------
 #define PIN_SDA           18
 #define PIN_SCL           19
 
-// SPI
+// --- SPI0 (signal-path) — MOSI=11, MISO=12, SCK=13 ---------
 #define PIN_SCK           13
 #define PIN_MOSI          11
+#define PIN_MISO          12
 
 // AD9833 DDS chips
 #define PIN_AD9833_1_CS    2    // DDS1_FSYNC
 #define PIN_AD9833_2_CS    3    // DDS2_FSYNC
-#define PIN_AD9833_1_RESET 5
-#define PIN_AD9833_2_RESET 6
+#define PIN_AD9833_1_RESET 4
+#define PIN_AD9833_2_RESET 5
 
-// AD5064 setpoint DAC
-#define PIN_AD5064_CS     10    // CS_3V3
-#define PIN_AD5064_LDAC    7
-#define PIN_AD5064_CLR     8
+// AD5064 setpoint DAC  (pin 10 = hardware CS0 on SPI0)
+#define PIN_AD5064_CS     10
+#define PIN_AD5064_CLR     7    // active-low async zero; driven HIGH normally
 
-// ILI9341 TFT — free SPI pins
-#define PIN_TFT_CS        15
-#define PIN_TFT_DC        14
-#define PIN_TFT_RST        4
-// Backlight: wire through 100 Ω to VIN; not software-controlled.
-
-// Optional CDCE913 CLKOUT0 frequency self-test
+// CDCE913 clock-output frequency self-test
+// FreqCount library on Teensy 4.1 is hardwired to pin 9 — do not change
 #define PIN_FREQ_TEST      9
 
-// Analog inputs
-#define PIN_LOCK1_IN      A0    // PDH error CH1
-#define PIN_LOCK2_IN      A1    // PDH error CH2
-#define PIN_MPD1_MON      A2
-#define PIN_MPD2_MON      A3
-#define PIN_LAS1_IMON     A4    // Laser 1 current monitor
-#define PIN_LAS2_IMON     A5    // Laser 2 current monitor
-#define PIN_TEC1_IMON     A6
-#define PIN_TEC2_IMON     A7
-#define PIN_NTC1_MON      A8    // TEC thermistor CH1
-#define PIN_NTC2_MON      A9    // TEC thermistor CH2
+// --- SPI1 (display) — MOSI=26, MISO=39, SCK=27 -------------
+// All five TFT signals are on adjacent pins for clean PCB routing.
+#define PIN_TFT_MOSI      26   // SPI1 MOSI
+#define PIN_TFT_SCK       27   // SPI1 SCK
+#define PIN_TFT_CS        28
+#define PIN_TFT_DC        29   // data/command select — required
+#define PIN_TFT_RST       30
+// Backlight: wire through 100 Ω to 3.3 V; not software-controlled.
+
+// --- Analog inputs (pins 14-25 = A0-A11) --------------------
+#define PIN_NTC1_MON      A0   // pin 14 — TEC thermistor CH1
+#define PIN_TEC1_IMON     A1   // pin 15
+#define PIN_LAS1_IMON     A2   // pin 16 — Laser 1 current monitor
+#define PIN_MPD1_MON      A3   // pin 17
+// pins 18/19: I2C (A4/A5 not available while Wire is active)
+#define PIN_NTC2_MON      A6   // pin 20 — TEC thermistor CH2
+#define PIN_TEC2_IMON     A7   // pin 21
+#define PIN_LAS2_IMON     A8   // pin 22 — Laser 2 current monitor
+#define PIN_MPD2_MON      A9   // pin 23
+#define PIN_LOCK1_IN      A10  // pin 24 — PDH error CH1
+#define PIN_LOCK2_IN      A11  // pin 25 — PDH error CH2
 
 // ============================================================
 // ADC / DAC constants

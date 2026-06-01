@@ -32,7 +32,8 @@
 // ============================================================
 // Hardware
 // ============================================================
-Adafruit_ILI9341 tft(PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST);
+// SPI1 hardware bus: MOSI=26, SCK=27 — explicit constructor required
+Adafruit_ILI9341 tft(&SPI1, PIN_TFT_DC, PIN_TFT_CS, PIN_TFT_RST);
 
 // ============================================================
 // Control state
@@ -176,7 +177,8 @@ static String usb_line;
 void setup() {
   Serial.begin(115200);
   Wire.begin();
-  SPI.begin();
+  SPI.begin();   // SPI0 — signal-path chips
+  SPI1.begin();  // SPI1 — TFT display
 
   analogReadResolution(ADC_BITS);
   analogReadAveraging(8);
@@ -184,7 +186,7 @@ void setup() {
   const uint8_t out_pins[] = {
     PIN_AD9833_1_CS, PIN_AD9833_2_CS, PIN_AD5064_CS,
     PIN_AD9833_1_RESET, PIN_AD9833_2_RESET,
-    PIN_AD5064_LDAC, PIN_AD5064_CLR,
+    PIN_AD5064_CLR,
     PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST
   };
   for (uint8_t p : out_pins) pinMode(p, OUTPUT);
@@ -196,7 +198,6 @@ void setup() {
   digitalWrite(PIN_TFT_CS,       HIGH);
   digitalWrite(PIN_TFT_DC,       HIGH);
   digitalWrite(PIN_TFT_RST,      HIGH);
-  digitalWrite(PIN_AD5064_LDAC,  LOW);
   digitalWrite(PIN_AD5064_CLR,   HIGH);
 
   delay(50);

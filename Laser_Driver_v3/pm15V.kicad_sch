@@ -3010,7 +3010,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SO:MSOP-10_3x3mm_P0.5mm"
+		(property "Footprint" "Package_SO:Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm_ThermalVias"
 			(at 107.96 59.28 0)
 			(hide yes)
 			(show_name no)
@@ -3853,7 +3853,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SO:MSOP-16_3x5mm_P0.65mm"
+		(property "Footprint" "Package_SO:MSOP-10-1EP_3x3mm_P0.5mm_EP2.2x3.1mm_Mask1.83x1.89mm_ThermalVias"
 			(at 107.96 36.42 0)
 			(hide yes)
 			(show_name no)
