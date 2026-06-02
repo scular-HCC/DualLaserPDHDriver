@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Power Budget — Dual Channel CW Laser + TEC Driver (v3.0) — Midpoint as Nominal</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; line-height:1.45; margin:24px; color:#111; }
+  h1,h2,h3 { color:#0b4f6c; }
+  table { border-collapse: collapse; width:100%; margin-bottom:18px; }
+  th,td { border:1px solid #ccc; padding:8px; text-align:left; font-size:14px; }
+  th { background:#f0f7fb; }
+  .note { font-size:13px; color:#333; background:#f8f8f8; padding:8px; border-left:4px solid #ddd; }
+  .small { font-size:12px; color:#444; }
+  .mono { font-family: "Courier New", monospace; background:#f6f6f6; padding:2px 6px; border-radius:3px; }
+</style>
+</head>
+<body>
+<h1>Power Budget Report — Dual Channel CW Laser + TEC Driver (ML20550 butterfly)</h1>
+
+<p class="note">
+  This report uses values and constraints stated in the provided KiCad schematic and fills missing currents with conservative engineering assumptions. Two short lines quoted from the schematic are shown below and were used as primary inputs.
+</p>
+
+<blockquote>
+  <p><strong>Quoted from schematic:</strong></p>
+  <p class="mono">Need 300 mA +15 V<br>Need 150 mA -15 V<br>Need 5 V 600 mA for laser</p>
+  <p class="mono">TEC bipolar H-bridge: -1.5A to +2.5A, ±3.8V max</p>
+</blockquote>
+
+<h2>Assumptions and interpretation</h2>
+<ul>
+  <li><strong>Laser supply (5 V):</strong> schematic states 5 V, 600 mA for laser. The board has two laser channels (Channel 1 and Channel 2). <em>Assumption A1:</em> the 600 mA figure is per laser channel. If instead 600 mA is total, scale results by 0.5.</li>
+  <li><strong>±15 V rails:</strong> schematic lists 300 mA on +15 V and 150 mA on -15 V (used by op amps). Treat those as the stated needs (nominal). A 20% margin is applied for a conservative "max" number unless a component max is explicitly stated.</li>
+  <li><strong>TEC H-bridge and H-bridge rails (+8 V / -8 V):</strong> the TEC can be driven from the H-bridge with TEC current range -1.5 A to +2.5 A and a maximum TEC voltage of ±3.8 V. The H-bridge power rails are ±8 V (LM7808/LM7908). We compute delivered TEC power using the stated TEC voltage/current limits (3.8 V × I). For rail power we show a conservative worst-case where both TEC channels draw maximum current in the same direction (worst-case rail current).</li>
+  <li><strong>Control supplies ±6 V:</strong> LT3045/LT3094 provide ±6 V control supplies for gate drivers and analog circuits. The schematic does not list explicit currents; we assume small control currents for nominal operation and a higher conservative max for worst-case. These are flagged clearly below.</li>
+  <li><strong>3.3 V MCU rail:</strong> Teensy and digital peripherals. If you have measured MCU current, replace the assumed values. We use 200 mA nominal and 500 mA worst-case (including peripherals, level shifters, SPI/DDS activity).</li>
+  <li><strong>Midpoint rule:</strong> for this updated document the nominal column has been set to the midpoint between the original nominal and the previously computed conservative max (i.e., nominal = (original_nominal + conservative_max) / 2). Use the conservative worst-case numbers for final supply sizing.</li>
+</ul>
+
+<hr>
+
+<h2>Per-rail calculations (formulas shown)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rail</th>
+      <th>Primary consumers (components)</th>
+      <th>Nominal current (A)</th>
+      <th>Nominal power (W)</th>
+      <th>Conservative max current (A)</th>
+      <th>Conservative max power (W)</th>
+      <th>Notes / formula</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>+15 V</strong></td>
+      <td>Op amps, analog front ends (schematic: 300 mA)</td>
+      <td>0.330</td>
+      <td>15 × 0.330 = 4.95 W</td>
+      <td>0.360</td>
+      <td>15 × 0.360 = 5.40 W</td>
+      <td>Nominal set to midpoint between 0.300 and 0.360 (midpoint = 0.330 A).</td>
+    </tr>
+
+    <tr>
+      <td><strong>-15 V</strong></td>
+      <td>Op amps, analog negative supplies (schematic: 150 mA)</td>
+      <td>0.165</td>
+      <td>15 × 0.165 = 2.48 W</td>
+      <td>0.180</td>
+      <td>15 × 0.180 = 2.70 W</td>
+      <td>Nominal set to midpoint between 0.150 and 0.180 (midpoint = 0.165 A).</td>
+    </tr>
+
+    <tr>
+      <td><strong>+5 V (digital / lasers)</strong></td>
+      <td>Laser driver power (schematic: 5 V, 600 mA per laser assumed)</td>
+      <td>1.320</td>
+      <td>5 × 1.320 = 6.60 W</td>
+      <td>1.440</td>
+      <td>5 × 1.440 = 7.20 W</td>
+      <td>Nominal set to midpoint between 1.200 and 1.440 (midpoint = 1.320 A). If 0.6 A is total, divide currents/power by 2.</td>
+    </tr>
+
+    <tr>
+      <td><strong>+3.3 V (MCU & digital)</strong></td>
+      <td>Teensy MCU, level shifters, DDS control, logic</td>
+      <td>0.350</td>
+      <td>3.3 × 0.350 = 1.16 W</td>
+      <td>0.500</td>
+      <td>3.3 × 0.500 = 1.65 W</td>
+      <td>Nominal set to midpoint between 0.200 and 0.500 (midpoint = 0.350 A).</td>
+    </tr>
+
+    <tr>
+      <td><strong>+6 V (control supply)</strong></td>
+      <td>Gate drive / analog control rails (LT3045 etc.)</td>
+      <td>0.300</td>
+      <td>6 × 0.300 = 1.80 W</td>
+      <td>0.500</td>
+      <td>6 × 0.500 = 3.00 W</td>
+      <td>Nominal set to midpoint between 0.100 and 0.500 (midpoint = 0.300 A).</td>
+    </tr>
+
+    <tr>
+      <td><strong>-6 V (control supply)</strong></td>
+      <td>Gate drive / analog negative control</td>
+      <td>0.300</td>
+      <td>6 × 0.300 = 1.80 W</td>
+      <td>0.500</td>
+      <td>6 × 0.500 = 3.00 W</td>
+      <td>Nominal set to midpoint between 0.100 and 0.500 (midpoint = 0.300 A).</td>
+    </tr>
+
+    <tr>
+      <td><strong>+8 V (H-bridge rail)</strong></td>
+      <td>TEC H-bridge positive rail (supplies TEC current)</td>
+      <td>2.500</td>
+      <td>8 × 2.500 = 20.00 W</td>
+      <td>5.00</td>
+      <td>8 × 5.00 = 40.00 W</td>
+      <td>Original nominal was idle (~0 A); midpoint between 0 A and 5.0 A conservative rail current = 2.5 A.</td>
+    </tr>
+
+    <tr>
+      <td><strong>-8 V (H-bridge rail)</strong></td>
+      <td>TEC H-bridge negative rail</td>
+      <td>2.500</td>
+      <td>8 × 2.500 = 20.00 W</td>
+      <td>5.00</td>
+      <td>8 × 5.00 = 40.00 W</td>
+      <td>Symmetric midpoint for negative rail (2.5 A nominal).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>TEC delivered power (per TEC channel) — midpoint nominal</h3>
+<p class="small">Schematic states TEC bipolar H-bridge: <em>-1.5 A to +2.5 A, ±3.8 V max</em>. For midpoint nominal we use the midpoint between idle and the design max where appropriate.</p>
+<p class="mono">P<sub>TEC</sub> = I<sub>TEC</sub> × V<sub>TEC,max</sub> = I × 3.8 V</p>
+
+<table>
+  <thead>
+    <tr><th>Case</th><th>I (A)</th><th>P<sub>TEC</sub> (W) = I × 3.8 V</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>TEC midpoint heating (per channel)</td><td>1.25</td><td>1.25 × 3.8 = 4.75 W</td></tr>
+    <tr><td>TEC midpoint cooling (per channel)</td><td>0.75</td><td>0.75 × 3.8 = 2.85 W</td></tr>
+    <tr><td>Two TECs both at midpoint (+1.25 A each)</td><td>2 × 1.25 = 2.50</td><td>2.50 × 3.8 = 9.50 W (delivered to TECs)</td></tr>
+  </tbody>
+</table>
+
+<p class="small">
+  <strong>Important note:</strong> the power drawn from the ±8 V rails can be larger than the delivered TEC power because MOSFET conduction losses and headroom exist. The table above shows delivered power to the TECs (what the TECs dissipate). For supply selection we used a conservative rail-power approach (8 V × rail current) and set nominal rail current to the midpoint (2.5 A) for this document.
+</p>
+
+<hr>
+
+<h2>Two system scenarios (summaries)</h2>
+
+<h3>Midpoint nominal scenario</h3>
+<ul>
+  <li>Lasers: both channels on at 0.6 A each (assumption) → midpoint nominal 1.32 A @ 5 V → 6.60 W</li>
+  <li>±15 V rails: midpoint nominal currents → +15 V @ 0.33 A = 4.95 W; -15 V @ 0.165 A = 2.48 W</li>
+  <li>3.3 V MCU: midpoint nominal 0.35 A → 1.16 W</li>
+  <li>±6 V control rails: midpoint nominal 0.30 A each → 1.80 W each</li>
+  <li>H-bridge rails: midpoint nominal 2.5 A each → 20.00 W each</li>
+</ul>
+
+<table>
+  <thead><tr><th>Rail</th><th>Midpoint nominal power (W)</th></tr></thead>
+  <tbody>
+    <tr><td>+15 V</td><td>4.95</td></tr>
+    <tr><td>-15 V</td><td>2.48</td></tr>
+    <tr><td>+5 V (lasers)</td><td>6.60</td></tr>
+    <tr><td>+3.3 V (MCU)</td><td>1.16</td></tr>
+    <tr><td>+6 V</td><td>1.80</td></tr>
+    <tr><td>-6 V</td><td>1.80</td></tr>
+    <tr><td>+8 V (H-bridge)</td><td>20.00</td></tr>
+    <tr><td>-8 V (H-bridge)</td><td>20.00</td></tr>
+    <tr><th>Total midpoint nominal</th><th>≈ 58.78 W</th></tr>
+  </tbody>
+</table>
+
+<h3>Conservative worst-case (design / supply sizing)</h3>
+<ul>
+  <li>Both lasers at 0.6 A each (1.2 A total) with 20% margin → 7.20 W</li>
+  <li>Both TECs at +2.5 A simultaneously (conservative worst-case) → delivered TEC power 19.0 W; rail power conservatively sized as 8 V × 5 A = 40 W on +8 V rail (and symmetric 40 W on -8 V if currents reverse)</li>
+  <li>±15 V rails with 20% margin: +15 V → 5.40 W; -15 V → 2.70 W</li>
+  <li>+3.3 V worst-case 0.5 A → 1.65 W</li>
+  <li>±6 V control rails worst-case 0.5 A each → 3.00 W each</li>
+</ul>
+
+<table>
+  <thead><tr><th>Rail</th><th>Conservative max power (W)</th></tr></thead>
+  <tbody>
+    <tr><td>+15 V</td><td>5.40</td></tr>
+    <tr><td>-15 V</td><td>2.70</td></tr>
+    <tr><td>+5 V (lasers)</td><td>7.20</td></tr>
+    <tr><td>+3.3 V</td><td>1.65</td></tr>
+    <tr><td>+6 V</td><td>3.00</td></tr>
+    <tr><td>-6 V</td><td>3.00</td></tr>
+    <tr><td>+8 V (H-bridge rail)</td><td>40.00</td></tr>
+    <tr><td>-8 V (H-bridge rail)</td><td>40.00</td></tr>
+    <tr><th>Total conservative worst-case (Scenario B)</th><th>≈ 103.95 W</th></tr>
+  </tbody>
+</table>
+
+<p class="note">
+  <strong>Interpretation:</strong> the dominant loads in worst-case are the H-bridge rails that must be sized to handle the TEC currents. The delivered TEC power (what the TECs dissipate) is ~19 W when both TECs are at +2.5 A (9.5 W each). However, the supply rails must be sized for MOSFET conduction and headroom; a conservative rail sizing of 5 A at 8 V gives 40 W per rail. Use the rail numbers for power-supply and thermal design.
+</p>
+
+<hr>
+
+<h2>Per-component maxima (summary table)</h2>
+<p class="small">Where the schematic lists component limits, those are used. Where not listed, conservative maxima are assumed. Nominal column now reflects midpoint values.</p>
+
+<table>
+  <thead>
+    <tr><th>Component / block</th><th>Nominal current / power</th><th>Max (conservative)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Laser (per channel)</td><td>0.66 A @ 5 V → 3.30 W (midpoint nominal per-channel)</td><td>0.72 A @ 5 V (20% margin) → 3.6 W</td></tr>
+    <tr><td>Lasers (both channels)</td><td>1.32 A @ 5 V → 6.6 W</td><td>1.44 A @ 5 V → 7.2 W</td></tr>
+    <tr><td>TEC (per channel)</td><td>1.25 A × 3.8 V = 4.75 W (midpoint delivered)</td><td>2.5 A (design limit) × 3.8 V = 9.5 W</td></tr>
+    <tr><td>TEC (other direction)</td><td>0.75 A × 3.8 V = 2.85 W</td><td>1.5 A × 3.8 V = 5.7 W</td></tr>
+    <tr><td>Op amps / analog (+15 V)</td><td>0.33 A → 4.95 W</td><td>0.36 A → 5.4 W</td></tr>
+    <tr><td>Op amps / analog (-15 V)</td><td>0.165 A → 2.48 W</td><td>0.18 A → 2.7 W</td></tr>
+    <tr><td>Teensy + digital</td><td>0.35 A @ 3.3 V → 1.16 W</td><td>0.5 A @ 3.3 V → 1.65 W</td></tr>
+    <tr><td>Control rails ±6 V</td><td>0.30 A each → 1.8 W each</td><td>0.5 A each → 3.0 W each</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Recommendations (practical)</h2>
+<ol>
+  <li><strong>Power supplies:</strong> size the ±8 V H-bridge rails to handle the conservative worst-case rail current (design example: 8 V, 5 A capability per rail). Use the midpoint nominal numbers for average thermal estimates but rely on worst-case for supply selection.</li>
+  <li><strong>5 V supply:</strong> choose a 5 V regulator capable of at least 2.0 A if you want comfortable margin for two lasers (1.32 A midpoint nominal / 1.44 A conservative) plus other 5 V loads and inrush.</li>
+  <li><strong>±15 V rails:</strong> the midpoint nominal currents are modest; a ±15 V supply rated for 500 mA on +15 V and 300 mA on -15 V (or a single supply with split rails) gives margin for future additions.</li>
+  <li><strong>3.3 V MCU:</strong> a 3.3 V regulator rated for 1 A gives comfortable margin for Teensy, DDS, and level-shifter loads.</li>
+  <li><strong>Thermal design:</strong> the H-bridge MOSFETs and TECs will generate significant heat at high currents — ensure heatsinking and board copper are sized for the expected dissipation (use the rail-power numbers for worst-case thermal budget).</li>
+  <li><strong>Measurement & verification:</strong> measure actual currents on each rail during representative operation (laser on, TEC heating/cooling, DDS active) and update the budget with measured values before finalizing supply selection.</li>
+</ol>
+
+<hr>
+
+<h2>Final totals (recap)</h2>
+<table>
+  <thead><tr><th>Scenario</th><th>Total power (W)</th></tr></thead>
+  <tbody>
+    <tr><td>Midpoint nominal</td><td><strong>≈ 58.78 W</strong></td></tr>
+    <tr><td>Conservative worst-case (Scenario B)</td><td><strong>≈ 104.0 W</strong></td></tr>
+  </tbody>
+</table>
+
+<p class="note">
+  Use the <strong>conservative worst-case</strong> numbers for power-supply selection and thermal design. Use the midpoint nominal numbers for average energy budgeting and to evaluate typical thermal loads.
+</p>
+
+<hr>
+<p class="small">If you want, I can: (1) re-run the budget with different midpoint rules (for example, midpoint between original nominal and half the conservative max), (2) produce a CSV of the per-rail numbers, or (3) compute MOSFET conduction losses given Rds(on) and expected gate voltages — tell me which refinement you prefer and I will update the report.</p>
+
+</body>
+</html>

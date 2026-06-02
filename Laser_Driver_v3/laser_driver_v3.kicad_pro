@@ -69,7 +69,13 @@
           "thermal_relief_spoke_width": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -140,7 +146,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.0,
+        "min_clearance": 0.2,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -152,7 +158,7 @@
         "min_silk_clearance": 0.0,
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
-        "min_through_hole_diameter": 0.3,
+        "min_through_hole_diameter": 0.4,
         "min_track_width": 0.2,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
@@ -203,7 +209,16 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        0.2,
+        0.25,
+        0.4,
+        0.8,
+        1.5,
+        1.5,
+        2.5
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -230,7 +245,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -516,6 +536,83 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
+      },
+      {
+        "clearance": 0.5,
+        "name": "HV_Rail",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": "",
+        "via_diameter": 1.6,
+        "via_drill": 1.0
+      },
+      {
+        "clearance": 0.3,
+        "name": "Laser_Drive",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 4,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.4,
+        "tuning_profile": "",
+        "via_diameter": 1.0,
+        "via_drill": 0.6
+      },
+      {
+        "clearance": 8.0,
+        "name": "Mains",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": "",
+        "via_diameter": 1.8,
+        "via_drill": 1.2
+      },
+      {
+        "clearance": 0.25,
+        "name": "Power",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 3,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.8,
+        "tuning_profile": "",
+        "via_diameter": 1.3,
+        "via_drill": 1.0
+      },
+      {
+        "clearance": 0.3,
+        "name": "Sensitive",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 6,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "tuning_profile": "",
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "Signal",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 5,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "tuning_profile": "",
+        "via_diameter": 0.9,
+        "via_drill": 0.5
+      },
+      {
+        "clearance": 0.4,
+        "name": "TEC_Power",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 2.5,
+        "tuning_profile": "",
+        "via_diameter": 1.6,
+        "via_drill": 1.0
       }
     ],
     "meta": {
@@ -523,7 +620,236 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "Mains",
+        "pattern": "+12Vac"
+      },
+      {
+        "netclass": "Mains",
+        "pattern": "-12Vac"
+      },
+      {
+        "netclass": "Mains",
+        "pattern": "0Vac"
+      },
+      {
+        "netclass": "Mains",
+        "pattern": "120Vac"
+      },
+      {
+        "netclass": "Mains",
+        "pattern": "Earth"
+      },
+      {
+        "netclass": "HV_Rail",
+        "pattern": "+18V"
+      },
+      {
+        "netclass": "HV_Rail",
+        "pattern": "-18V"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "TEC1_BTF_P"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "TEC2_BTF_P"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "TEC1_BTF_N"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "TEC2_BTF_N"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "+6V_TEC"
+      },
+      {
+        "netclass": "TEC_Power",
+        "pattern": "-6V_TEC"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+15V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "-15V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+5V_LASER"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "5V_DAC"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "5Vref"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "1V8"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+6V_TEC"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "-6V_TEC"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "LASER1_A"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "LASER1_K"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "LASER2_A"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "LASER_K"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "BTF1_LASER"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "BTF1_LASER_K"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "BTF2_LASER"
+      },
+      {
+        "netclass": "Laser_Drive",
+        "pattern": "BTF2_LASER_K"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "MOSI_3V3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "SCK_3V3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "DDS1_FSYNC"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "DDS2_FSYNC"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "MCU_SCL"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "MCU_SDA"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "VOUTA"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "VOUTB"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "VOUTC"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "VOUTD"
+      },
+      {
+        "netclass": "Default",
+        "pattern": "DITH1_SUM"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "DITH2_SUM"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "LAS1_SENSE_P"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "LAS1_SENSE_N"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "LAS2_SENSE_P"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "LAS2_SENSE_N"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "TEC1_SENSE_P"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "TEC1_SENSE_N"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "TEC2_SENSE_P"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "TEC2_SENSE_N"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "MPD1_K"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "MPD2_K"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "MPD1_MON"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "MPD2_MON"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "PD1_MON"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "PD2_MON"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "NTC1_A"
+      },
+      {
+        "netclass": "Sensitive",
+        "pattern": "NTC2_A"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
@@ -677,7 +1003,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "#PWR21,#PWR33-34,U37",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [

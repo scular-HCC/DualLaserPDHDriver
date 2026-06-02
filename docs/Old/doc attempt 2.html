@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dual Channel CW Laser + TEC Driver — Design Reference</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Typography & Base Styles -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0a0c0f;
+    --bg2:     #111418;
+    --bg3:     #181c22;
+    --border:  #1e2530;
+    --border2: #2a3340;
+    --accent:  #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff6b;
+    --accent4: #ffd700;
+    --text:    #c8d4e0;
+    --text2:   #7a8fa8;
+    --text3:   #4a5a6a;
+    --warn:    #ff6b35;
+    --ok:      #7fff6b;
+    --mono:    'IBM Plex Mono', monospace;
+    --sans:    'IBM Plex Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  nav {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .nav-header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-header .doc-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .nav-header h1 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .nav-header .rev {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 8px;
+  }
+  .nav-section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    padding: 18px 20px 6px;
+  }
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  nav a:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(0,212,255,0.04);
+  }
+  nav a .num {
+    color: var(--text3);
+    font-size: 9px;
+    min-width: 18px;
+  }
+
+  /* Main */
+  main {
+    padding: 40px 56px 60px;
+    max-width: 1100px;
+  }
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .section-head h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 26px 0 10px;
+    font-family: var(--mono);
+  }
+  p { margin-bottom: 10px; }
+
+  /* Hero */
+  .hero {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 18px;
+  }
+  .hero-stat label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hero-stat .val {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .hero-stat .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    margin-left: 4px;
+  }
+
+  /* Tables */
+  .tbl-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  thead tr {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--accent);
+  }
+  th {
+    padding: 8px 10px;
+    text-align: left;
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(0,212,255,0.03); }
+  td.mono { font-family: var(--mono); color: var(--accent2); }
+  td.dim  { color: var(--text2); }
+  td.ok   { color: var(--ok); }
+  td.warn { color: var(--warn); }
+
+  /* Callouts */
+  .callout {
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-left: 3px solid;
+    font-size: 13px;
+  }
+  .callout.warn  { border-color: var(--warn);  background: rgba(255,107,53,0.06); }
+  .callout.info  { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .callout.ok    { border-color: var(--ok);     background: rgba(127,255,107,0.05); }
+
+  /* Rail / Block chains */
+  .rail-chain {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .rail-node {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 8px 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: center;
+    min-width: 110px;
+  }
+  .rail-node .part { color: var(--accent); display: block; }
+  .rail-node .volt { color: var(--accent2); font-size: 12px; font-weight: 600; display: block; }
+  .rail-node .note { color: var(--text2); font-size: 10px; display: block; }
+  .rail-arrow {
+    color: var(--text3);
+    font-size: 16px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* Spec grid */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 2px;
+    margin: 14px 0;
+    background: var(--border);
+  }
+  .spec-item {
+    background: var(--bg2);
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .spec-item .spec-label {
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .spec-item .spec-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Simple SVG containers */
+  .svg-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 10px;
+    margin: 12px 0 18px;
+  }
+  .svg-wrap svg {
+    width: 100%;
+    height: auto;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+    nav { position: static; height: auto; }
+    main { padding: 24px 18px 40px; }
+    .hero { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <nav>
+    <div class="nav-header">
+      <div class="doc-label">Design Reference</div>
+      <h1>Dual Channel CW Laser + TEC Driver</h1>
+      <div class="rev">Rev 3.0 · ML20550KK14Z600L</div>
+    </div>
+
+    <div class="nav-section-label">Overview</div>
+    <a href="#overview"><span class="num">01</span> System Overview</a>
+    <a href="#block-diagram"><span class="num">02</span> Top-Level Block Diagram</a>
+    <a href="#signal-flow"><span class="num">03</span> Signal Flow</a>
+
+    <div class="nav-section-label">Power</div>
+    <a href="#power-distribution"><span class="num">04</span> Power Distribution</a>
+    <a href="#rails"><span class="num">05</span> Supply Rails</a>
+    <a href="#tracking"><span class="num">06</span> ±15V Tracking</a>
+
+    <div class="nav-section-label">Laser &amp; TEC</div>
+    <a href="#laser-driver"><span class="num">07</span> Laser Drivers</a>
+    <a href="#tec-driver"><span class="num">08</span> TEC H-Bridges</a>
+    <a href="#readback"><span class="num">09</span> Readback &amp; Lock-in Path</a>
+
+    <div class="nav-section-label">Control &amp; IO</div>
+    <a href="#dac-control"><span class="num">10</span> DAC &amp; Dither</a>
+    <a href="#clocking"><span class="num">11</span> Clocking</a>
+    <a href="#butterfly"><span class="num">12</span> Butterfly Pinout</a>
+
+    <div class="nav-section-label">Rationale</div>
+    <a href="#design-rationale"><span class="num">13</span> Design Rationale</a>
+  </nav>
+
+  <!-- Main content -->
+  <main>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-stat">
+        <label>Laser</label>
+        <span class="val">2×<span class="unit">ML20550KK14Z600L</span></span>
+      </div>
+      <div class="hero-stat">
+        <label>Laser current</label>
+        <span class="val">600<span class="unit">mA max / ch</span></span>
+      </div>
+      <div class="hero-stat">
+        <label>TEC range</label>
+        <span class="val">−1.5 / +2.5<span class="unit">A</span></span>
+      </div>
+      <div class="hero-stat">
+        <label>DAC</label>
+        <span class="val">AD5064<span class="unit">16-bit quad</span></span>
+      </div>
+      <div class="hero-stat">
+        <label>Reference</label>
+        <span class="val">LTC6655-5<span class="unit">0.25 ppm</span></span>
+      </div>
+      <div class="hero-stat">
+        <label>MCU</label>
+        <span class="val">Teensy 4.1<span class="unit">3.3V</span></span>
+      </div>
+    </div>
+
+    <!-- 01 System Overview -->
+    <section class="section" id="overview">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>System Overview</h2>
+      </div>
+
+      <p>
+        The design is a dual-channel CW laser and TEC driver for 1550&nbsp;nm DFB butterfly modules.
+        The top-level KiCad sheet describes it as:
+        “Dual Channel CW Laser + TEC Driver — ML20550KK14Z600L” with
+        “1550nm 70mW DFB butterfly | Bipolar TEC H-bridge -1.5A/+2.5A | AD5064 16-bit DAC”.
+      </p>
+      <p>
+        Each channel provides:
+      </p>
+      <ul>
+        <li>ACC laser current driver with Kelvin sense (R5 = 0.25&nbsp;Ω, INA826 readback G=12).</li>
+        <li>Bipolar TEC H-bridge (IRF9540N + IRLB8721) with sense resistor R7 = 0.1&nbsp;Ω and INA826 G=20.</li>
+        <li>NTC thermistor readback via 10&nbsp;kΩ divider into Teensy ADC.</li>
+        <li>Optional dither injection from an AD9833 DDS into the laser error amplifier summing node.</li>
+      </ul>
+
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Laser type</span><span class="spec-val">DFB 1550 nm</span></div>
+        <div class="spec-item"><span class="spec-label">Laser Iop</span><span class="spec-val">500 mA typ / 600 mA max</span></div>
+        <div class="spec-item"><span class="spec-label">TEC current</span><span class="spec-val">−1.5 A to +2.5 A</span></div>
+        <div class="spec-item"><span class="spec-label">TEC Vmax</span><span class="spec-val">±3.8 V</span></div>
+        <div class="spec-item"><span class="spec-label">NTC</span><span class="spec-val">10 kΩ @25°C, β=3950</span></div>
+        <div class="spec-item"><span class="spec-label">ADC sampling</span><span class="spec-val">100 kS/s lock-in</span></div>
+      </div>
+    </section>
+
+    <!-- 02 Block Diagram -->
+    <section class="section" id="block-diagram">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Top-Level Block Diagram</h2>
+      </div>
+
+      <p>
+        The main sheet instantiates sub-sheets for “Mains to ±18V”, “±15V”, “5Vref”, “3p3V”, “±6V TEC”,
+        “5V Laser”, “Laser Drivers”, “TEC H-Bridges”, “Readback”, “Laser Control”, “Clock”, “Teensy”,
+        and “LaserPackage”. The SVG below is a simplified, editable block diagram.
+      </p>
+
+      <div class="svg-wrap">
+        <!-- Simple editable SVG block diagram -->
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .blk { fill:#181c22; stroke:#2a3340; stroke-width:1.2; }
+            .blk-text { fill:#c8d4e0; font-family:'IBM Plex Sans',sans-serif; font-size:11px; }
+            .blk-title { fill:#00d4ff; font-weight:600; font-size:12px; }
+            .arrow { stroke:#4a5a6a; stroke-width:1.4; marker-end:url(#arrowhead); }
+          </style>
+          <defs>
+            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#4a5a6a"/>
+            </marker>
+          </defs>
+
+          <!-- PSU -->
+          <rect class="blk" x="20" y="40" width="150" height="80" rx="4"/>
+          <text class="blk-title" x="30" y="60">Mains &amp; PSU</text>
+          <text class="blk-text" x="30" y="78">Mains → XFMR →</text>
+          <text class="blk-text" x="30" y="94">Bridge + CRC</text>
+          <text class="blk-text" x="30" y="110">±24V raw</text>
+
+          <!-- Tracking & rails -->
+          <rect class="blk" x="210" y="20" width="170" height="100" rx="4"/>
+          <text class="blk-title" x="220" y="40">Tracking &amp; Rails</text>
+          <text class="blk-text" x="220" y="58">TPS7A39 ±16.5V</text>
+          <text class="blk-text" x="220" y="74">LT3045 +15V</text>
+          <text class="blk-text" x="220" y="90">LT3094 −15V</text>
+          <text class="blk-text" x="220" y="106">LM78xx / LT304x</text>
+
+          <!-- Laser control -->
+          <rect class="blk" x="410" y="20" width="180" height="100" rx="4"/>
+          <text class="blk-title" x="420" y="40">Laser Control</text>
+          <text class="blk-text" x="420" y="58">AD5064 16-bit DAC</text>
+          <text class="blk-text" x="420" y="74">AD9833 DDS dither</text>
+          <text class="blk-text" x="420" y="90">Teensy SPI / GPIO</text>
+
+          <!-- Laser & TEC drivers -->
+          <rect class="blk" x="620" y="20" width="250" height="100" rx="4"/>
+          <text class="blk-title" x="630" y="40">Laser &amp; TEC Drivers</text>
+          <text class="blk-text" x="630" y="58">2× ACC laser (OPA192 + FET)</text>
+          <text class="blk-text" x="630" y="74">2× TEC H-bridge (IRF9540N/IRLB8721)</text>
+          <text class="blk-text" x="630" y="90">Butterfly connectors J_BTF1–3</text>
+
+          <!-- Readback -->
+          <rect class="blk" x="410" y="140" width="180" height="90" rx="4"/>
+          <text class="blk-title" x="420" y="160">Readback &amp; Lock-in</text>
+          <text class="blk-text" x="420" y="178">INA826 current sense</text>
+          <text class="blk-text" x="420" y="194">OPA380 TIA + OPA2134 AAF</text>
+
+          <!-- Teensy -->
+          <rect class="blk" x="210" y="140" width="170" height="90" rx="4"/>
+          <text class="blk-title" x="220" y="160">Teensy 4.1</text>
+          <text class="blk-text" x="220" y="178">SPI to DAC &amp; DDS</text>
+          <text class="blk-text" x="220" y="194">ADC lock-in @100 kS/s</text>
+
+          <!-- Arrows -->
+          <line class="arrow" x1="170" y1="80" x2="210" y2="70"/>
+          <line class="arrow" x1="380" y1="70" x2="410" y2="70"/>
+          <line class="arrow" x1="590" y1="70" x2="620" y2="70"/>
+          <line class="arrow" x1="500" y1="120" x2="500" y2="140"/>
+          <line class="arrow" x1="295" y1="120" x2="295" y2="140"/>
+          <line class="arrow" x1="620" y1="170" x2="590" y2="170"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 03 Signal Flow -->
+    <section class="section" id="signal-flow">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Signal Flow Charts</h2>
+      </div>
+
+      <h3>Laser Channel Signal Flow (per channel)</h3>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 900 140" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .box { fill:#181c22; stroke:#2a3340; stroke-width:1.1; }
+            .txt { fill:#c8d4e0; font-family:'IBM Plex Sans',sans-serif; font-size:11px; }
+            .arrow { stroke:#4a5a6a; stroke-width:1.4; marker-end:url(#ah2); }
+          </style>
+          <defs>
+            <marker id="ah2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#4a5a6a"/>
+            </marker>
+          </defs>
+
+          <rect class="box" x="20" y="30" width="120" height="60" rx="4"/>
+          <text class="txt" x="30" y="52">AD5064 VOUTA/B</text>
+          <text class="txt" x="30" y="68">0–5 V set-point</text>
+
+          <rect class="box" x="170" y="30" width="120" height="60" rx="4"/>
+          <text class="txt" x="180" y="52">Scaler R1/R2</text>
+          <text class="txt" x="180" y="68">→ 0–250 mV</text>
+
+          <rect class="box" x="320" y="30" width="140" height="60" rx="4"/>
+          <text class="txt" x="330" y="52">OPA192 / LT1028</text>
+          <text class="txt" x="330" y="68">Error amplifier</text>
+
+          <rect class="box" x="490" y="30" width="120" height="60" rx="4"/>
+          <text class="txt" x="500" y="52">IRLML6344</text>
+          <text class="txt" x="500" y="68">Pass FET</text>
+
+          <rect class="box" x="640" y="30" width="120" height="60" rx="4"/>
+          <text class="txt" x="650" y="52">R5 0.25 Ω</text>
+          <text class="txt" x="650" y="68">Kelvin sense</text>
+
+          <rect class="box" x="790" y="30" width="90" height="60" rx="4"/>
+          <text class="txt" x="800" y="52">Laser</text>
+          <text class="txt" x="800" y="68">CHIP+/−</text>
+
+          <line class="arrow" x1="140" y1="60" x2="170" y2="60"/>
+          <line class="arrow" x1="290" y1="60" x2="320" y2="60"/>
+          <line class="arrow" x1="460" y1="60" x2="490" y2="60"/>
+          <line class="arrow" x1="610" y1="60" x2="640" y2="60"/>
+          <line class="arrow" x1="760" y1="60" x2="790" y2="60"/>
+
+          <!-- feedback -->
+          <line class="arrow" x1="700" y1="90" x2="390" y2="90"/>
+          <text class="txt" x="430" y="108">V_sense = I_laser × 0.25 Ω</text>
+        </svg>
+      </div>
+
+      <h3>TEC Channel Signal Flow (per channel)</h3>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .box { fill:#181c22; stroke:#2a3340; stroke-width:1.1; }
+            .txt { fill:#c8d4e0; font-family:'IBM Plex Sans',sans-serif; font-size:11px; }
+            .arrow { stroke:#4a5a6a; stroke-width:1.4; marker-end:url(#ah3); }
+          </style>
+          <defs>
+            <marker id="ah3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#4a5a6a"/>
+            </marker>
+          </defs>
+
+          <rect class="box" x="20" y="30" width="130" height="60" rx="4"/>
+          <text class="txt" x="30" y="52">AD5064 VOUTC/D</text>
+          <text class="txt" x="30" y="68">0–5 V</text>
+
+          <rect class="box" x="180" y="30" width="130" height="60" rx="4"/>
+          <text class="txt" x="190" y="52">TEC_VZERO</text>
+          <text class="txt" x="190" y="68">1.875 V (R19/R20)</text>
+
+          <rect class="box" x="340" y="30" width="140" height="60" rx="4"/>
+          <text class="txt" x="350" y="52">Scaler R9/R16</text>
+          <text class="txt" x="350" y="68">±250 mV vs VZERO</text>
+
+          <rect class="box" x="510" y="30" width="140" height="60" rx="4"/>
+          <text class="txt" x="520" y="52">OPA192 / LT1028</text>
+          <text class="txt" x="520" y="68">TEC error amp</text>
+
+          <rect class="box" x="680" y="20" width="180" height="80" rx="4"/>
+          <text class="txt" x="690" y="42">H-Bridge</text>
+          <text class="txt" x="690" y="58">Q3/Q5 P-ch, Q4/Q6 N-ch</text>
+          <text class="txt" x="690" y="74">TEC element</text>
+
+          <rect class="box" x="680" y="110" width="120" height="40" rx="4"/>
+          <text class="txt" x="690" y="132">R7 0.1 Ω sense</text>
+
+          <line class="arrow" x1="150" y1="60" x2="180" y2="60"/>
+          <line class="arrow" x1="310" y1="60" x2="340" y2="60"/>
+          <line class="arrow" x1="480" y1="60" x2="510" y2="60"/>
+          <line class="arrow" x1="650" y1="60" x2="680" y2="60"/>
+          <line class="arrow" x1="770" y1="100" x2="770" y2="110"/>
+          <line class="arrow" x1="740" y1="130" x2="580" y2="130"/>
+          <text class="txt" x="520" y="126">V_sense = I_TEC × 0.1 Ω</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 04 Power Distribution -->
+    <section class="section" id="power-distribution">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Power Distribution</h2>
+      </div>
+
+      <p>
+        The power tree is described in the top-level comments as:
+        “Rail2: LM7807→LT3042→LTC6655-5 | Rail3: LM7805→RC→LT3045 | Rail4/5: ±LM780x→LT3045/94”.
+        The following SVG summarizes the distribution from mains to all low-noise rails.
+      </p>
+
+      <div class="svg-wrap">
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .box { fill:#181c22; stroke:#2a3340; stroke-width:1.1; }
+            .txt { fill:#c8d4e0; font-family:'IBM Plex Sans',sans-serif; font-size:11px; }
+            .arrow { stroke:#4a5a6a; stroke-width:1.4; marker-end:url(#ah4); }
+          </style>
+          <defs>
+            <marker id="ah4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#4a5a6a"/>
+            </marker>
+          </defs>
+
+          <!-- Mains to ±24 -->
+          <rect class="box" x="20" y="30" width="150" height="70" rx="4"/>
+          <text class="txt" x="30" y="52">Mains → XFMR</text>
+          <text class="txt" x="30" y="68">Bridge + CRC</text>
+          <text class="txt" x="30" y="84">±24V raw</text>
+
+          <!-- TPS7A39 -->
+          <rect class="box" x="210" y="20" width="160" height="90" rx="4"/>
+          <text class="txt" x="220" y="42">TPS7A39</text>
+          <text class="txt" x="220" y="58">±16.5V tracked</text>
+          <text class="txt" x="220" y="74">NR/SS soft-start</text>
+
+          <!-- LT3045/3094 -->
+          <rect class="box" x="400" y="20" width="160" height="90" rx="4"/>
+          <text class="txt" x="410" y="42">LT3045 +15V</text>
+          <text class="txt" x="410" y="58">LT3094 −15V</text>
+          <text class="txt" x="410" y="74">Analog rails</text>
+
+          <!-- Rail2 -->
+          <rect class="box" x="210" y="130" width="160" height="90" rx="4"/>
+          <text class="txt" x="220" y="152">Rail2 (DAC)</text>
+          <text class="txt" x="220" y="168">LM7807 → LT3042</text>
+          <text class="txt" x="220" y="184">→ LTC6655-5</text>
+
+          <!-- Rail3 -->
+          <rect class="box" x="400" y="130" width="160" height="90" rx="4"/>
+          <text class="txt" x="410" y="152">Rail3 (MCU)</text>
+          <text class="txt" x="410" y="168">LM7805 → RC</text>
+          <text class="txt" x="410" y="184">→ LT3045 3.3V</text>
+
+          <!-- Rail4/5 -->
+          <rect class="box" x="590" y="130" width="220" height="90" rx="4"/>
+          <text class="txt" x="600" y="152">Rail4/5 (TEC)</text>
+          <text class="txt" x="600" y="168">LM7808 / LM7908</text>
+          <text class="txt" x="600" y="184">→ LT3045 / LT3094 ±6V control</text>
+
+          <!-- Arrows -->
+          <line class="arrow" x1="170" y1="65" x2="210" y2="65"/>
+          <line class="arrow" x1="370" y1="65" x2="400" y2="65"/>
+          <line class="arrow" x1="480" y1="110" x2="480" y2="130"/>
+          <line class="arrow" x1="290" y1="110" x2="290" y2="130"/>
+          <line class="arrow" x1="480" y1="110" x2="480" y2="130"/>
+          <line class="arrow" x1="480" y1="110" x2="700" y2="130"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 05 Rails -->
+    <section class="section" id="rails">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2>Supply Rails Summary</h2>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Rail</th><th>Nominal</th><th>Source</th><th>Loads</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">Rail1</td>
+              <td>±15 V</td>
+              <td>TPS7A39 → LT3045 / LT3094</td>
+              <td>LT1028 / OPA192, INA826, OPA380, OPA2134</td>
+              <td class="dim">Low-noise analog rails for laser/TEC loops and readback.</td>
+            </tr>
+            <tr>
+              <td class="mono">Rail2</td>
+              <td>5.0 V</td>
+              <td>LM7807 → LT3042 → LTC6655-5</td>
+              <td>AD5064 Vref &amp; VDD, 74AHCT125</td>
+              <td class="dim">Precision reference path; RC filtering between ref and DAC.</td>
+            </tr>
+            <tr>
+              <td class="mono">Rail3</td>
+              <td>3.3 V</td>
+              <td>LM7805 → RC → LT3045</td>
+              <td>Teensy 4.1, AD9833, CDCE913, logic</td>
+              <td class="dim">MCU and digital domain; RC filter reduces LM7805 noise.</td>
+            </tr>
+            <tr>
+              <td class="mono">Rail4</td>
+              <td>+8 V / +6 V</td>
+              <td>LM7808 → LT3045</td>
+              <td>TEC H-bridge high-side, TEC control op-amps</td>
+              <td class="dim">+8 V directly to FETs; +6 V for control circuitry.</td>
+            </tr>
+            <tr>
+              <td class="mono">Rail5</td>
+              <td>−8 V / −6 V</td>
+              <td>LM7908 → LT3094</td>
+              <td>TEC H-bridge low-side, TEC control op-amps</td>
+              <td class="dim">Symmetric to Rail4; tracking via TPS7A39 upstream.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 Tracking -->
+    <section class="section" id="tracking">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2>±15 V Tracking Implementation</h2>
+      </div>
+
+      <p>
+        The “±15V.kicad_sch” sheet uses a TPS7A39 dual LDO to generate ±16.5&nbsp;V from the ±24&nbsp;V
+        rectified rails, followed by LT3045/LT3094 to produce ±15&nbsp;V. The comment notes:
+        “RAIL 1: +/-15V direct to LT1028 op-amps”.
+      </p>
+
+      <div class="callout info">
+        <strong>Key idea:</strong> both positive and negative outputs share the same internal reference.
+        Matching feedback ratios on FBP and FBN guarantee that +V and −V track in magnitude during
+        startup, shutdown, and load transients.
+      </div>
+
+      <h3>Feedback Ratios</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Output</th><th>Target</th><th>R_top</th><th>R_bottom</th><th>Gain</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">OUTP</td><td>+16.5 V</td><td>≈127 kΩ</td><td>10 kΩ</td><td>1 + 12.75 ≈ 13.75</td></tr>
+            <tr><td class="mono">OUTN</td><td>−16.5 V</td><td>≈127 kΩ</td><td>10 kΩ</td><td>1 + 12.75 ≈ 13.75</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 07 Laser Drivers -->
+    <section class="section" id="laser-driver">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2>Laser Drivers (ACC)</h2>
+      </div>
+
+      <p>
+        The “DFBLaser.kicad_sch” sheet implements two independent ACC channels using OPA192/LT1028
+        error amplifiers, IRLML6344 pass FETs, and Kelvin sense resistors. The sheet notes:
+        “LASER DRIVER — Two Independent ACC Channels for Thorlabs DFB1550LP | OPA192 Error Amp + IRLML6344 Pass FET + Kelvin Sense”.
+      </p>
+
+      <h3>Channel Parameters</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Item</th><th>Value</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">I_max</td><td>100 mA (Thorlabs DFB1550LP) or 600 mA (ML20550)</td><td class="dim">Set by R5 and DAC scaling.</td></tr>
+            <tr><td class="mono">Sense resistor</td><td>R5 = 0.25 Ω</td><td class="dim">Kelvin connections to error amp and INA826.</td></tr>
+            <tr><td class="mono">DAC FS</td><td>5.0 V</td><td class="dim">From LTC6655-5 via LT3042.</td></tr>
+            <tr><td class="mono">Resolution</td><td>≈15 µA/LSB</td><td class="dim">For 600 mA full-scale.</td></tr>
+            <tr><td class="mono">Protection</td><td>BAT54 + 47 Ω series</td><td class="dim">Vr_max = 2 V; “NEVER reverse bias”.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <strong>Ground series resistors:</strong> the “LaserPackage.kicad_sch” sheet notes
+        “ALL PINS: 47R series protection resistors between connector pads and board traces”.
+        For ground pins, it is generally better to connect the package ground directly to AGND
+        and place any series resistance only in signal or supply lines, not in the main return path.
+      </div>
+    </section>
+
+    <!-- 08 TEC Driver -->
+    <section class="section" id="tec-driver">
+      <div class="section-head">
+        <span class="section-num">08</span>
+        <h2>TEC H-Bridge Drivers</h2>
+      </div>
+
+      <p>
+        The “TEC Control.kicad_sch” sheet implements bipolar TEC control using an OPA192 error amp,
+        IRF9540N P-channel high-side FETs, IRLB8721 N-channel low-side FETs, and a 0.1&nbsp;Ω Kelvin
+        sense resistor. The top-level notes:
+        “TEC bipolar H-bridge: -1.5A to +2.5A, ±3.8V max”.
+      </p>
+
+      <h3>Control Mapping</h3>
+      <p>
+        TEC current is mapped from DAC code via the virtual zero reference:
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>DAC code</th><th>V_DAC</th><th>V_error (vs VZERO)</th><th>I_TEC</th><th>Mode</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">0</td><td>0 V</td><td>−1.875 V</td><td>+2.5 A</td><td class="ok">Cooling max</td></tr>
+            <tr><td class="mono">24576</td><td>1.875 V</td><td>0 V</td><td>0 A</td><td class="dim">Zero current</td></tr>
+            <tr><td class="mono">65535</td><td>5.0 V</td><td>+3.125 V</td><td>−1.5 A</td><td class="ok">Heating max</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 09 Readback -->
+    <section class="section" id="readback">
+      <div class="section-head">
+        <span class="section-num">09</span>
+        <h2>Readback &amp; Lock-in Signal Path</h2>
+      </div>
+
+      <p>
+        The “Readback.kicad_sch” sheet is annotated:
+        “READBACK + LOCK-IN SIGNAL PATH | 4x INA826 InAmp | NTC dividers | OPA380 TIA | OPA2134 AAF”.
+        Two external photodiode channels feed OPA380 TIAs, followed by 2-pole 30&nbsp;kHz Butterworth
+        anti-alias filters (OPA2134) into Teensy ADC1/ADC2 at 100&nbsp;kS/s for digital lock-in.
+      </p>
+
+      <h3>Photodiode TIA &amp; AAF</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Stage</th><th>Component</th><th>Values</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">TIA</td><td>OPA380</td><td>Rf = 2.7 kΩ, Cf = 2.2 pF</td><td class="dim">“OPA380 TIA: Rf=2.7k Bw=1.3MHz Vmax=3.0V@1.1mA”.</td></tr>
+            <tr><td class="mono">AAF</td><td>OPA2134</td><td>R = 5.6 kΩ, C = 1 nF</td><td class="dim">2-pole 30 kHz Butterworth, NP0 capacitors.</td></tr>
+            <tr><td class="mono">ADC</td><td>Teensy ADC1/2</td><td>100 kS/s</td><td class="dim">DMA-based lock-in demodulation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10 DAC & Dither -->
+    <section class="section" id="dac-control">
+      <div class="section-head">
+        <span class="section-num">10</span>
+        <h2>DAC, Level Shifting &amp; Dither Injection</h2>
+      </div>
+
+      <p>
+        The “Laser Control.kicad_sch” sheet describes:
+        “Teensy 3.3V | 74AHCT125 3.3V -> 5V level shift | AD5064 — Quad 16-bit DAC | Ext Vref=5V from LTC6655-5 | VDD=5V from LT3042 U_DAC”.
+        Dither is generated by an AD9833 DDS and AC-coupled into the laser error amplifier summing node.
+      </p>
+
+      <h3>DAC Channel Assignment</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>DAC channel</th><th>Function</th><th>Range</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">VOUTA</td><td>Laser 1 DC</td><td>0–5 V</td><td class="dim">ACC set-point.</td></tr>
+            <tr><td class="mono">VOUTB</td><td>Laser 2 DC</td><td>0–5 V</td><td class="dim">ACC set-point.</td></tr>
+            <tr><td class="mono">VOUTC</td><td>TEC 1</td><td>0–5 V</td><td class="dim">Mapped around TEC_VZERO.</td></tr>
+            <tr><td class="mono">VOUTD</td><td>TEC 2</td><td>0–5 V</td><td class="dim">Mapped around TEC_VZERO.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Dither Injection</h3>
+      <p>
+        The sheet notes:
+        “DITHER INJECTION — AC couple + series R sets dither amplitude at laser error amp IN+ summing node”.
+        Calculation comment:
+        “V_AD9833=0.6Vpk, R_dith=383k, R2=1k -> V_sum=0.6*1k/(383k+1k)=1.56mV”.
+      </p>
+      <div class="callout info">
+        <strong>Lock-in design target:</strong> “Dither amplitude: 0.32mA peak -> 96MHz FM excursion -> 0.1x HWHM of Q=1e5 ring resonator at 1550nm”.
+      </div>
+    </section>
+
+    <!-- 11 Clocking -->
+    <section class="section" id="clocking">
+      <div class="section-head">
+        <span class="section-num">11</span>
+        <h2>Clocking &amp; Reference Oscillators</h2>
+      </div>
+
+      <p>
+        The “Clock.kicad_sch” sheet uses an Abracon ASE-10.000MHZ-LC-T XO and a CDCE913 clock
+        synthesizer to generate multiple clocks. The AD9833 DDS shares a 25&nbsp;MHz crystal
+        (“Shared 25MHz crystal Y_DDS. SPI Mode 2 (CPOL=1 CPHA=0). 3.3V — no level shifting needed.”).
+      </p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Device</th><th>Frequency</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">ASE-10.000MHZ-LC-T</td><td>10 MHz</td><td class="dim">XO for CDCE913.</td></tr>
+            <tr><td class="mono">CDCE913</td><td>Programmable</td><td class="dim">Generates MCU / DDS clocks as needed.</td></tr>
+            <tr><td class="mono">AD9833</td><td>2.000 kHz / 3.100 kHz</td><td class="dim">Dither tones; FREQ registers 0x00056B85 and 0x00086C6C.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 12 Butterfly Pinout -->
+    <section class="section" id="butterfly">
+      <div class="section-head">
+        <span class="section-num">12</span>
+        <h2>Butterfly Connector Pinout</h2>
+      </div>
+
+      <p>
+        The “LaserPackage.kicad_sch” and “Butterfly Connectors” sheet annotate:
+        “CONFIRMED PINS: P1=TEC+ P2=NTC_A P5=NTC_GND P10=CHIP+ P11=CHIP- P13=GND P14=TEC-”
+        and “UNCONFIRMED/NC: P3 P4 P6 P7 P8 P9 P12 — verify MPD pinout”.
+      </p>
+
+      <h3>Pinout Table (J_BTF1 / J_BTF2 / J_BTF3)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Pin</th><th>Signal</th><th>Direction</th><th>Status</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="pin-confirmed"><td class="mono">1</td><td>TEC+</td><td>Power</td><td class="ok">Confirmed</td><td class="dim">High side of TEC.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">2</td><td>NTC_A</td><td>Analog</td><td class="ok">Confirmed</td><td class="dim">Thermistor top node.</td></tr>
+            <tr class="pin-nc"><td class="mono">3</td><td>NC / MPD?</td><td>—</td><td class="warn">Unconfirmed</td><td class="dim">MPD anode per DFB1550LP datasheet; verify.</td></tr>
+            <tr class="pin-nc"><td class="mono">4</td><td>NC / MPD?</td><td>—</td><td class="warn">Unconfirmed</td><td class="dim">MPD cathode; verify before use.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">5</td><td>NTC_GND</td><td>Analog</td><td class="ok">Confirmed</td><td class="dim">Thermistor bottom to AGND.</td></tr>
+            <tr class="pin-nc"><td class="mono">6</td><td>NC</td><td>—</td><td class="dim">NC</td><td class="dim">Leave unconnected.</td></tr>
+            <tr class="pin-nc"><td class="mono">7</td><td>NC</td><td>—</td><td class="dim">NC</td><td class="dim">Leave unconnected.</td></tr>
+            <tr class="pin-nc"><td class="mono">8</td><td>NC</td><td>—</td><td class="dim">NC</td><td class="dim">Leave unconnected.</td></tr>
+            <tr class="pin-nc"><td class="mono">9</td><td>NC</td><td>—</td><td class="dim">NC</td><td class="dim">Leave unconnected.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">10</td><td>CHIP+</td><td>Laser</td><td class="ok">Confirmed</td><td class="dim">Laser anode.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">11</td><td>CHIP−</td><td>Laser</td><td class="ok">Confirmed</td><td class="dim">Laser cathode.</td></tr>
+            <tr class="pin-nc"><td class="mono">12</td><td>NC</td><td>—</td><td class="dim">NC</td><td class="dim">Leave unconnected.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">13</td><td>GND</td><td>Power</td><td class="ok">Confirmed</td><td class="dim">Chassis / case ground.</td></tr>
+            <tr class="pin-confirmed"><td class="mono">14</td><td>TEC−</td><td>Power</td><td class="ok">Confirmed</td><td class="dim">Low side of TEC.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <strong>MPD pins:</strong> P3/P4 are reserved for the monitor photodiode (MPD) on some DFB modules.
+        The documentation explicitly says “verify MPD pinout” — do not connect until confirmed against
+        the exact laser datasheet.
+      </div>
+    </section>
+
+    <!-- 13 Design Rationale -->
+    <section class="section" id="design-rationale">
+      <div class="section-head">
+        <span class="section-num">13</span>
+        <h2>Design Rationale</h2>
+      </div>
+
+      <h3>Why Linear TEC &amp; Laser Drivers?</h3>
+      <ul>
+        <li>Switching noise from PWM TEC drivers couples into the laser cavity via temperature and supply rails; linear H-bridges avoid this.</li>
+        <li>Linear ACC drivers with Kelvin sense provide predictable, low-noise current with minimal EMI, critical for lock-in detection around a high-Q ring resonator.</li>
+      </ul>
+
+      <h3>Why TPS7A39 + LT304x?</h3>
+      <ul>
+        <li>TPS7A39 guarantees matched positive and negative rails using a single internal reference and matched feedback ratios.</li>
+        <li>LT3045/LT3094 add ultra-low noise and PSRR, isolating analog loops from rectifier ripple and digital activity.</li>
+      </ul>
+
+      <h3>Why External 5 V Reference?</h3>
+      <ul>
+        <li>LTC6655-5 offers 0.25&nbsp;ppm/°C drift and very low noise, improving DAC linearity and long-term stability.</li>
+        <li>Separating DAC Vref from digital 5&nbsp;V (LM7805) avoids coupling MCU noise into the laser and TEC set-points.</li>
+      </ul>
+
+      <h3>Why 47 Ω Series Protection on Butterfly Pins?</h3>
+      <ul>
+        <li>Limits inrush and fault currents into delicate laser and TEC structures during hot-plug or miswiring.</li>
+        <li>Provides modest damping for any cable inductance between board and package.</li>
+        <li>For ground pins, consider replacing with direct connections to AGND to avoid ground bounce; keep 47&nbsp;Ω on signal and supply pins.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>Dual Channel CW Laser + TEC Driver — Documentation HTML</span>
+      <span>Designed for easy editing: add sections, tables, and SVGs as needed.</span>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
