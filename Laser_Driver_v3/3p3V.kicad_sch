@@ -446,7 +446,7 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U7"
+			(property "Reference" "U6"
 				(at 0 6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -456,7 +456,7 @@
 					)
 				)
 			)
-			(property "Value" "LM7805 5V"
+			(property "Value" "MC7805CTG"
 				(at 0.254 4.826 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -539,7 +539,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at 0 -6.35 90)
 					(length 2.54)
 					(name "GND"
@@ -607,7 +607,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Package_SO:MSOP-16_3x5mm_P0.65mm"
+			(property "Footprint" "Package_SO:Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm_ThermalVias"
 				(at -80 22 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -733,7 +733,7 @@
 						)
 					)
 				)
-				(pin input line
+				(pin passive line
 					(at -6.35 -6.35 0)
 					(length 2.54)
 					(name "ILIM"
@@ -787,7 +787,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at 6.35 -1.27 180)
 					(length 2.54)
 					(name "GND"
@@ -805,7 +805,7 @@
 						)
 					)
 				)
-				(pin input line
+				(pin power_in line
 					(at 6.35 1.27 180)
 					(length 2.54)
 					(name "OUTS"
@@ -853,8 +853,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -3.81 3.175 0)
+			(property "Reference" "U5"
+				(at 0 6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -863,15 +863,14 @@
 					)
 				)
 			)
-			(property "Value" "LM7812_TO220"
-				(at 0 3.175 0)
+			(property "Value" "MC7812CTG"
+				(at 0 3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
@@ -962,7 +961,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at 0 -7.62 90)
 					(length 2.54)
 					(name "GND"
@@ -1112,24 +1111,6 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 0 -7.62 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 				(pin input line
 					(at -7.62 0 0)
 					(length 2.54)
@@ -1178,6 +1159,26 @@
 						)
 					)
 					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "LP5907MFX-1.8_1_1"
+				(pin passive line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2363,7 +2364,7 @@
 			)
 		)
 	)
-	(global_label "+18V"
+	(global_label "+22V"
 		(shape output)
 		(at 54.61 55.88 180)
 		(fields_autoplaced yes)
@@ -3442,7 +3443,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x1.80mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at -56.65 34.77 0)
 			(hide yes)
 			(show_name no)

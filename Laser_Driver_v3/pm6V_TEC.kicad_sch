@@ -1430,8 +1430,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "D"
-				(at 7.62 7.62 0)
+			(property "Reference" "D7"
+				(at -6.096 7.62 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -1441,7 +1441,7 @@
 				)
 			)
 			(property "Value" "KBPC1501W"
-				(at 7.62 5.08 0)
+				(at -11.684 3.556 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -1462,7 +1462,7 @@
 				)
 			)
 			(property "Datasheet" "https://www.diodemodule.com/bridge-rectifier/kbpc/kbpc1501t.pdf"
-				(at 22.86 0 0)
+				(at -0.254 -18.542 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1473,7 +1473,7 @@
 				)
 			)
 			(property "Description" "Single-Phase Bridge Rectifier, 70V Vrms, 15A If, KBPC-W(WS)"
-				(at 0 0 0)
+				(at 1.27 16.256 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -3152,121 +3152,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "power:PWR_FLAG"
-			(power global)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "#FLG"
-				(at 0 1.905 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "PWR_FLAG"
-				(at 0 3.81 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Special symbol for telling ERC where power comes from"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "flag power"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "PWR_FLAG_0_0"
-				(pin power_out line
-					(at 0 0 90)
-					(length 0)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "PWR_FLAG_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 	)
 	(text "LM4040: cathode to GND, anode toward base node"
 		(exclude_from_sim no)
@@ -3465,22 +3350,10 @@
 		(uuid "3f59efce-a7bb-49d7-a61d-0801816b7663")
 	)
 	(junction
-		(at 236.22 137.16)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "43e10a44-4a17-455f-821f-f5ac01169bc5")
-	)
-	(junction
 		(at 236.22 116.84)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "44bb7947-dadc-43d2-9916-abf4f82612db")
-	)
-	(junction
-		(at 134.62 171.45)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "54c69849-89cb-4945-8dac-ae5fe536557b")
 	)
 	(junction
 		(at 128.27 41.91)
@@ -3549,6 +3422,12 @@
 		(uuid "76b59667-1c97-428a-a1d3-aaf652e3578a")
 	)
 	(junction
+		(at 109.22 171.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7c79b39c-1f49-4bb2-bfe7-b6e1f7d64a4a")
+	)
+	(junction
 		(at 78.74 140.97)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3559,12 +3438,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "84f40e62-ecf4-466e-b374-c0391dc7d747")
-	)
-	(junction
-		(at 261.62 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "85a6d276-3f3f-4c67-bf06-703c57630178")
 	)
 	(junction
 		(at 170.18 25.4)
@@ -3693,12 +3566,6 @@
 		(uuid "d7076210-2e9b-416f-9b65-b8b8c1bd5ae4")
 	)
 	(junction
-		(at 264.16 116.84)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d7d39632-4a30-4516-87dc-679e8d51daf4")
-	)
-	(junction
 		(at 218.44 116.84)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3735,12 +3602,6 @@
 		(uuid "f2756e95-6fff-414f-aef9-989deb3043b6")
 	)
 	(junction
-		(at 236.22 142.24)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f4aab483-4262-4169-a730-6a7276378134")
-	)
-	(junction
 		(at 156.21 25.4)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3764,6 +3625,38 @@
 		(color 0 0 0 0)
 		(uuid "fd2e107b-3af6-4505-8acf-314ff57b8859")
 	)
+	(no_connect
+		(at 190.5 154.94)
+		(uuid "04101bec-6d11-45c9-9fd9-25a9cf89e048")
+	)
+	(no_connect
+		(at 201.93 144.78)
+		(uuid "10c11d24-f820-41f7-b575-0f5ba96e5365")
+	)
+	(no_connect
+		(at 190.5 149.86)
+		(uuid "4bf4643d-3560-42f2-9628-d3430d2654f2")
+	)
+	(no_connect
+		(at 201.93 149.86)
+		(uuid "5fb15489-b830-4e13-92e3-b0404ca7bf7b")
+	)
+	(no_connect
+		(at 210.82 109.22)
+		(uuid "857a7c59-bf8f-4d82-be31-0b7412e2c4ff")
+	)
+	(no_connect
+		(at 220.98 100.33)
+		(uuid "96601de2-7732-42da-8f20-159ca4ffab9f")
+	)
+	(no_connect
+		(at 220.98 105.41)
+		(uuid "aa3aaf16-2133-40ff-93bc-28cb8d8a61e9")
+	)
+	(no_connect
+		(at 210.82 114.3)
+		(uuid "cedd6659-448d-43ab-a9a2-008d56094072")
+	)
 	(wire
 		(pts
 			(xy 187.96 157.48) (xy 199.39 157.48)
@@ -3783,6 +3676,16 @@
 			(type default)
 		)
 		(uuid "014b7f33-105d-4138-8ab4-eb44cee02a25")
+	)
+	(wire
+		(pts
+			(xy 248.92 128.27) (xy 271.78 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0183d151-d05e-4521-88c5-483dbbba5847")
 	)
 	(wire
 		(pts
@@ -3833,16 +3736,6 @@
 			(type default)
 		)
 		(uuid "0694a322-ca33-4267-82d2-dba3f5c982f6")
-	)
-	(wire
-		(pts
-			(xy 261.62 157.48) (xy 261.62 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08736de2-59a5-4b68-9800-3eb118e1e3fc")
 	)
 	(wire
 		(pts
@@ -3906,7 +3799,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 157.48) (xy 261.62 157.48)
+			(xy 248.92 157.48) (xy 266.7 157.48)
 		)
 		(stroke
 			(width 0)
@@ -3953,16 +3846,6 @@
 			(type default)
 		)
 		(uuid "155b32f0-b996-44ed-b7da-2eabb13cfe11")
-	)
-	(wire
-		(pts
-			(xy 236.22 137.16) (xy 236.22 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1845ac18-e644-4f41-aaab-691969f62f33")
 	)
 	(wire
 		(pts
@@ -4046,7 +3929,7 @@
 	)
 	(wire
 		(pts
-			(xy 125.73 171.45) (xy 92.71 171.45)
+			(xy 125.73 171.45) (xy 109.22 171.45)
 		)
 		(stroke
 			(width 0)
@@ -4186,6 +4069,16 @@
 	)
 	(wire
 		(pts
+			(xy 111.76 177.8) (xy 109.22 177.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3bc5279e-dd59-41d9-9e5f-ad182440fb1f")
+	)
+	(wire
+		(pts
 			(xy 138.43 64.77) (xy 138.43 55.88)
 		)
 		(stroke
@@ -4243,16 +4136,6 @@
 			(type default)
 		)
 		(uuid "41b45f85-61dd-42c3-bf83-e18b3ed4a003")
-	)
-	(wire
-		(pts
-			(xy 134.62 171.45) (xy 146.05 171.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "41fdb9f0-3306-41cc-92da-798ec97e1b97")
 	)
 	(wire
 		(pts
@@ -4473,16 +4356,6 @@
 			(type default)
 		)
 		(uuid "5f90c049-4736-4c50-a2c1-9a03b82fb992")
-	)
-	(wire
-		(pts
-			(xy 248.92 128.27) (xy 273.05 128.27)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "64cfc1f9-5a1b-4c12-bb6c-634305f76e9f")
 	)
 	(wire
 		(pts
@@ -5026,6 +4899,16 @@
 	)
 	(wire
 		(pts
+			(xy 109.22 177.8) (xy 109.22 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bdb46c85-cfd5-43af-b4cc-4e2d9788ed52")
+	)
+	(wire
+		(pts
 			(xy 45.72 41.91) (xy 45.72 33.02)
 		)
 		(stroke
@@ -5166,7 +5049,7 @@
 	)
 	(wire
 		(pts
-			(xy 125.73 171.45) (xy 134.62 171.45)
+			(xy 125.73 171.45) (xy 146.05 171.45)
 		)
 		(stroke
 			(width 0)
@@ -5276,16 +5159,6 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 157.48) (xy 266.7 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e4f21adc-3ef3-4f6e-b55c-99c79dceddb6")
-	)
-	(wire
-		(pts
 			(xy 156.21 109.22) (xy 156.21 110.49)
 		)
 		(stroke
@@ -5373,6 +5246,16 @@
 			(type default)
 		)
 		(uuid "eee4d93b-190a-4243-8761-e2aedada5a79")
+	)
+	(wire
+		(pts
+			(xy 109.22 171.45) (xy 92.71 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f1bc305b-d476-45a2-8983-5f710cb09e37")
 	)
 	(wire
 		(pts
@@ -5497,6 +5380,54 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+	)
+	(global_label "DGND"
+		(shape passive)
+		(at 271.78 128.27 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c2fe36e1-794f-42c4-8d13-271646947821")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 278.7944 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "DGND"
+		(shape passive)
+		(at 111.76 177.8 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ed8dd643-2904-43c5-87d2-733a6b8e9536")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 118.7744 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -6656,84 +6587,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 134.62 171.45 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "33a006ff-decf-4850-8dca-b3798191503d")
-		(property "Reference" "#PWR013"
-			(at 134.62 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 134.62 176.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 134.62 171.45 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 134.62 171.45 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 134.62 171.45 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "4d893695-0616-4415-a2f9-18624729bf5f")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
-					(reference "#PWR013")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_name "R_5")
 		(lib_id "Device:R")
 		(at 127 55.88 90)
@@ -6972,85 +6825,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C45")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 261.62 154.94 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5632b623-1d74-4c56-9e05-df709921d820")
-		(property "Reference" "#FLG07"
-			(at 261.62 153.035 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 261.62 149.86 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 261.62 154.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 261.62 154.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 261.62 154.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "342696bc-529b-46bc-8ae8-076bd86f50ac")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
-					(reference "#FLG07")
 					(unit 1)
 				)
 			)
@@ -7971,85 +7745,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 264.16 116.84 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "806b65d2-6bec-43ca-b702-c5eec25cedf1")
-		(property "Reference" "#FLG08"
-			(at 264.16 114.935 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 264.16 111.76 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 264.16 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 264.16 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 264.16 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "7719a96b-5727-40ae-b9b7-843512a4acc0")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
-					(reference "#FLG08")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 236.22 139.7 0)
 		(unit 1)
@@ -8170,7 +7865,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.diodemodule.com/bridge-rectifier/kbpc/kbpc1501t.pdf"
-			(at 68.58 49.53 0)
+			(at 45.466 68.072 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8181,7 +7876,7 @@
 			)
 		)
 		(property "Description" "Single-Phase Bridge Rectifier, 70V Vrms, 15A If, KBPC-W(WS)"
-			(at 45.72 49.53 0)
+			(at 46.99 33.274 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9380,84 +9075,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 273.05 128.27 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e619678d-00ac-4ccd-90e1-2e6d80be412d")
-		(property "Reference" "#PWR014"
-			(at 273.05 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 273.05 133.35 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 273.05 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 273.05 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 273.05 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "78a4f17b-781b-4df3-8b49-4dafa9b767fe")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
-					(reference "#PWR014")
 					(unit 1)
 				)
 			)

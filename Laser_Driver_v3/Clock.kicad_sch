@@ -14,26 +14,24 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "Y"
-				(at -20.32 10.16 0)
+			(property "Reference" "Y1"
+				(at 0 12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
 			(property "Value" "ASE-10.000MHZ-LC-T"
-				(at -20.32 -10.16 0)
+				(at 0 10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
 			(property "Footprint" "ASE-10.000MHZ-LC-T:XTAL_ASE-10.000MHZ-LC-T"
@@ -245,24 +243,6 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 25.4 -5.08 180)
-					(length 5.08)
-					(name "GND/CASE"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
 				(pin output line
 					(at 25.4 0 180)
 					(length 5.08)
@@ -300,6 +280,26 @@
 					)
 				)
 			)
+			(symbol "ASE-10.000MHZ-LC-T_1_0"
+				(pin passive line
+					(at 25.4 -5.08 180)
+					(length 5.08)
+					(name "GND/CASE"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+			)
 			(embedded_fonts no)
 		)
 		(symbol "CDCE913PWG4:CDCE913PWG4"
@@ -311,7 +311,7 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U32"
+			(property "Reference" "U36"
 				(at 0 20.32 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -535,24 +535,6 @@
 					)
 				)
 				(pin power_in line
-					(at -17.78 -2.54 0)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
 					(at -17.78 -6.35 0)
 					(length 5.08)
 					(name "VDDOUT"
@@ -680,6 +662,24 @@
 				)
 			)
 			(symbol "CDCE913PWG4_1_0"
+				(pin passive line
+					(at -17.78 -2.54 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
 				(pin power_in line
 					(at -17.78 -10.16 0)
 					(length 5.08)
@@ -698,7 +698,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at 17.78 -2.54 180)
 					(length 5.08)
 					(name "GND"
@@ -728,26 +728,24 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -1.27 6.35 0)
+			(property "Reference" "U34"
+				(at 12.7 6.4202 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Value" "LMV7219M5"
-				(at -1.27 3.81 0)
+				(at 12.7 3.8802 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
@@ -820,24 +818,6 @@
 					)
 				)
 				(pin power_in line
-					(at -2.54 -7.62 90)
-					(length 3.81)
-					(name "V-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
 					(at -2.54 7.62 270)
 					(length 3.81)
 					(name "V+"
@@ -868,6 +848,24 @@
 						)
 					)
 					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -2.54 -7.62 90)
+					(length 3.81)
+					(name "V-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1669,30 +1667,28 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -12.7 13.7 0)
+			(property "Reference" "U35"
+				(at 0 17.78 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
-			(property "Value" "SN74LVC1G3157DCKR"
-				(at -12.7 -16.7 0)
+			(property "Value" "SN74LVC1G3157DBVR"
+				(at 0 15.24 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
-			(property "Footprint" "SN74LVC1G3157DCKR:SOT65P210X110-6N"
-				(at 0 0 0)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6_Handsoldering"
+				(at -0.508 -18.796 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1715,7 +1711,7 @@
 				)
 			)
 			(property "Description" "5-V, 2:1 (SPDT), 1-channel general-purpose analog switch"
-				(at 0 0 0)
+				(at -1.524 -21.336 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1727,7 +1723,7 @@
 				)
 			)
 			(property "MF" "Texas Instruments"
-				(at 0 0 0)
+				(at -0.508 -10.414 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1739,7 +1735,7 @@
 				)
 			)
 			(property "Package" "SOT-SC70-6 Texas Instruments"
-				(at 0 0 0)
+				(at 1.778 21.082 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1763,7 +1759,7 @@
 				)
 			)
 			(property "SnapEDA_Link" "https://www.snapeda.com/parts/SN74LVC1G3157DCKR/Texas+Instruments/view-part/?ref=snap"
-				(at 0 0 0)
+				(at 0.254 -25.908 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1775,7 +1771,7 @@
 				)
 			)
 			(property "MP" "SN74LVC1G3157DCKR"
-				(at 0 0 0)
+				(at 0 7.62 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1787,7 +1783,7 @@
 				)
 			)
 			(property "Availability" "In Stock"
-				(at 0 0 0)
+				(at -19.05 -15.748 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1799,7 +1795,7 @@
 				)
 			)
 			(property "Check_prices" "https://www.snapeda.com/parts/SN74LVC1G3157DCKR/Texas+Instruments/view-part/?ref=eda"
-				(at 0 0 0)
+				(at 0.254 -23.368 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -1833,24 +1829,6 @@
 						)
 					)
 					(number "1"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -7.62 180)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "2"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -1923,6 +1901,26 @@
 						)
 					)
 					(number "6"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+			)
+			(symbol "SN74LVC1G3157DCKR_1_0"
+				(pin passive line
+					(at 17.78 -7.62 180)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -5240,7 +5238,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6_Handsoldering"
-			(at 152.4 68.58 0)
+			(at 151.892 87.376 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5263,7 +5261,7 @@
 			)
 		)
 		(property "Description" "5-V, 2:1 (SPDT), 1-channel general-purpose analog switch"
-			(at 152.4 68.58 0)
+			(at 150.876 89.916 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5275,7 +5273,7 @@
 			)
 		)
 		(property "MF" "Texas Instruments"
-			(at 152.4 68.58 0)
+			(at 151.892 78.994 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5287,7 +5285,7 @@
 			)
 		)
 		(property "Package" "SOT-SC70-6 Texas Instruments"
-			(at 152.4 68.58 0)
+			(at 154.178 47.498 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5311,7 +5309,7 @@
 			)
 		)
 		(property "SnapEDA_Link" "https://www.snapeda.com/parts/SN74LVC1G3157DCKR/Texas+Instruments/view-part/?ref=snap"
-			(at 152.4 68.58 0)
+			(at 152.654 94.488 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5323,7 +5321,7 @@
 			)
 		)
 		(property "MP" "SN74LVC1G3157DCKR"
-			(at 152.4 68.58 0)
+			(at 152.4 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5335,7 +5333,7 @@
 			)
 		)
 		(property "Availability" "In Stock"
-			(at 152.4 68.58 0)
+			(at 133.35 84.328 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5347,7 +5345,7 @@
 			)
 		)
 		(property "Check_prices" "https://www.snapeda.com/parts/SN74LVC1G3157DCKR/Texas+Instruments/view-part/?ref=eda"
-			(at 152.4 68.58 0)
+			(at 152.654 91.948 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

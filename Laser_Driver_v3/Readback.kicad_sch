@@ -525,7 +525,7 @@
 						)
 					)
 				)
-				(pin input line
+				(pin passive line
 					(at -7.62 3.81 0)
 					(length 2.54)
 					(name "-INA"
@@ -561,7 +561,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at -7.62 -3.81 0)
 					(length 2.54)
 					(name "V-"
@@ -597,7 +597,7 @@
 						)
 					)
 				)
-				(pin input line
+				(pin passive line
 					(at 11.43 0 180)
 					(length 2.54)
 					(name "-INB"
@@ -663,8 +663,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U_TIA2"
-				(at -7.366 4.826 0)
+			(property "Reference" "U_TIA5"
+				(at 3.302 -3.302 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -674,7 +674,7 @@
 				)
 			)
 			(property "Value" "OPA380AIDR MPD"
-				(at -7.112 6.35 0)
+				(at 7.112 2.794 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -766,7 +766,7 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin passive line
 					(at 0 -6.35 90)
 					(length 2.54)
 					(name "V-"
@@ -1292,6 +1292,851 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "OPA380_1"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U_TIA1"
+				(at 3.302 -3.302 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Value" "OPA380AIDR MPD"
+				(at 7.112 2.794 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "OPA380_1_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "OPA380_1_1_1"
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "OPA380_2"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U_TIA2"
+				(at 3.302 -3.302 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Value" "OPA380AIDR MPD"
+				(at 7.112 2.794 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "OPA380_2_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "OPA380_2_1_1"
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "OPA380_3"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U_TIA3"
+				(at 3.302 -3.302 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Value" "OPA380AIDR MPD"
+				(at 7.112 2.794 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "OPA380_3_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "OPA380_3_1_1"
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "OPA380_4"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U_TIA6"
+				(at 3.302 -3.302 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Value" "OPA380AIDR MPD"
+				(at 7.112 2.794 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "OPA380_4_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "OPA380_4_1_1"
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "OPA380_5"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U_TIA4"
+				(at 3.302 -3.302 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Value" "OPA380AIDR MPD"
+				(at 7.112 2.794 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1 1)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -200 258 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "OPA380_5_0_1"
+				(polyline
+					(pts
+						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "OPA380_5_1_1"
+				(pin input line
+					(at -6.35 -1.27 0)
+					(length 2.54)
+					(name "IN-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -6.35 1.27 0)
+					(length 2.54)
+					(name "IN+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 90)
+					(length 2.54)
+					(name "V-"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 0 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 6.35 270)
+					(length 2.54)
+					(name "V+"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "IMPORTANT: This is the LOCK-IN signal path. Uses external InGaAs PD at ring resonator transmission output."
 		(exclude_from_sim no)
@@ -1454,12 +2299,6 @@
 		(uuid "010b06a6-2f39-4f7c-8a26-9be2c19c2224")
 	)
 	(junction
-		(at 201.93 50.8)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0538bfda-4d71-42ef-bccb-214033f46458")
-	)
-	(junction
 		(at 260.35 130.81)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1506,12 +2345,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2f966052-2da8-40fd-984c-7f4e68c1efb0")
-	)
-	(junction
-		(at 201.93 81.28)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "335d00b5-8812-4609-a103-1c6839682d01")
 	)
 	(junction
 		(at 41.91 171.45)
@@ -1725,7 +2558,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 50.8) (xy 201.93 50.8)
+			(xy 190.5 50.8) (xy 229.87 50.8)
 		)
 		(stroke
 			(width 0)
@@ -1935,16 +2768,6 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 48.26) (xy 201.93 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2acb2fba-a89d-40d1-9f75-60983303542b")
-	)
-	(wire
-		(pts
 			(xy 241.3 132.08) (xy 247.65 132.08)
 		)
 		(stroke
@@ -2015,16 +2838,6 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 78.74) (xy 204.47 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "306feb51-56e8-48a3-bae2-e8a9e42462e0")
-	)
-	(wire
-		(pts
 			(xy 45.72 45.72) (xy 39.37 45.72)
 		)
 		(stroke
@@ -2072,16 +2885,6 @@
 			(type default)
 		)
 		(uuid "37b941eb-da06-4f8d-9922-0be2d636bdcc")
-	)
-	(wire
-		(pts
-			(xy 201.93 78.74) (xy 201.93 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "37db4323-f238-440e-872f-726df755b47e")
 	)
 	(wire
 		(pts
@@ -3105,16 +3908,6 @@
 	)
 	(wire
 		(pts
-			(xy 201.93 81.28) (xy 229.87 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bd40318c-29da-448d-83b0-fd4b83d8e18f")
-	)
-	(wire
-		(pts
 			(xy 213.36 119.38) (xy 209.55 119.38)
 		)
 		(stroke
@@ -3222,16 +4015,6 @@
 			(type default)
 		)
 		(uuid "ca13dc35-3b68-4c11-ac0e-a20308f0e2fc")
-	)
-	(wire
-		(pts
-			(xy 201.93 50.8) (xy 229.87 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cd3b707f-af65-480c-80a2-3c963b1f040d")
 	)
 	(wire
 		(pts
@@ -3635,7 +4418,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 81.28) (xy 201.93 81.28)
+			(xy 190.5 81.28) (xy 229.87 81.28)
 		)
 		(stroke
 			(width 0)
@@ -4383,30 +5166,6 @@
 			)
 		)
 	)
-	(global_label "NTC1_MON"
-		(shape input)
-		(at 201.93 48.26 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8196f4b2-dc63-4417-b6c2-3488fb7904ff")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 201.93 48.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
 	(global_label "LAS1_IMON"
 		(shape input)
 		(at 72.39 41.91 0)
@@ -4432,7 +5191,7 @@
 		)
 	)
 	(global_label "NTC1_A"
-		(shape input)
+		(shape passive)
 		(at 184.15 50.8 180)
 		(fields_autoplaced yes)
 		(effects
@@ -4443,7 +5202,7 @@
 		)
 		(uuid "997b3d41-b7df-460f-a65b-2f81a1fbdf88")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 184.15 50.8 0)
+			(at 175.4423 50.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4719,30 +5478,6 @@
 			)
 		)
 	)
-	(global_label "NTC2_MON"
-		(shape input)
-		(at 204.47 78.74 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c6f1e382-1d99-45eb-b061-767672ba442e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 204.47 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
 	(global_label "TEC2_SENSE_N"
 		(shape output)
 		(at 111.76 68.58 180)
@@ -4912,7 +5647,7 @@
 		)
 	)
 	(global_label "NTC2_A"
-		(shape input)
+		(shape passive)
 		(at 184.15 81.28 180)
 		(fields_autoplaced yes)
 		(effects
@@ -4923,7 +5658,7 @@
 		)
 		(uuid "f0b6206d-4246-4bdd-b26a-43f3bc9ed2cc")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 184.15 81.28 0)
+			(at 175.4423 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5203,6 +5938,7 @@
 		)
 	)
 	(symbol
+		(lib_name "OPA380_4")
 		(lib_id "Amplifier_Operational:OPA380")
 		(at 254 130.81 0)
 		(mirror x)
@@ -6206,6 +6942,7 @@
 		)
 	)
 	(symbol
+		(lib_name "OPA380_1")
 		(lib_id "Amplifier_Operational:OPA380")
 		(at 58.42 182.88 0)
 		(mirror x)
@@ -7340,6 +8077,7 @@
 		)
 	)
 	(symbol
+		(lib_name "OPA380_3")
 		(lib_id "Amplifier_Operational:OPA380")
 		(at 207.01 132.08 0)
 		(mirror x)
@@ -7595,6 +8333,7 @@
 		)
 	)
 	(symbol
+		(lib_name "OPA380_2")
 		(lib_id "Amplifier_Operational:OPA380")
 		(at 59.69 143.51 0)
 		(mirror x)
@@ -7840,6 +8579,7 @@
 		)
 	)
 	(symbol
+		(lib_name "OPA380_5")
 		(lib_id "Amplifier_Operational:OPA380")
 		(at 236.22 49.53 0)
 		(mirror x)
