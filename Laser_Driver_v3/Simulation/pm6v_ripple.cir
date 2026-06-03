@@ -1,0 +1,60 @@
+* laser_driver_v3  pm6V_TEC  --  +6 V rail output-ripple sim (60 Hz mains)
+* Reference-pinned cap-multiplier follower; pass device = MJL21193/4 CFP
+* modeled as a high-beta composite (ripple is set by reference filtering,
+* not by which high-beta pairing is used).
+
+* ---- +/-9Vac CT secondary -> full-wave into the + reservoir (120 Hz) ----
+Va  sa 0  SIN(0 12.73 60 0 0)
+Vb  sb 0  SIN(0 12.73 60 0 180)
+Rsa sa a1 0.15
+Rsb sb a2 0.15
+Dpa a1 raw DBR
+Dpb a2 raw DBR
+* raw + reservoir: 3 x 3300uF = 9900uF, small bank ESR, 1k bleed
+Craw raw 0 9900u ic=11.2
+Rblraw raw 0 47k
+
+* ---- LM4040-6.2 reference biased from raw via R26; cap-mult on base ----
+R26  raw  vref 4.7k
+Xref vref 0   LM4040_62
+R20  vref base 15
+C47  base 0   2200u ic=6.2
+
+* ---- pass device: MJL21193/4 pair modeled as one super-beta NPN follower
+*      (one Vbe; composite beta ~ few thousand -> Ib ~ 1 mA) ----
+Qo  raw vref vout QSUPER
+* output cap + ESR into ~3 A load
+C51 vout vesr 1000u ic=6.0
+Resr vesr 0  0.030
+Rload vout 0 2.0
+R34  vout 0 1k
+
+.model DBR D(IS=2e-7 RS=0.015 N=1.7 BV=600)
+.model QDRV NPN(IS=1e-13 BF=120 VAF=100 RB=2 RC=0.1 RE=0.05 TF=15n CJE=200p CJC=80p)
+.model QSUPER NPN(IS=2e-12 BF=3000 VAF=150 RB=0.2 RC=0.01 RE=0.006 IKF=25 CJE=2n CJC=600p TF=20n)
+.model QMJL21193 PNP(IS=2e-12 BF=60 VAF=120 RB=0.3 RC=0.015 RE=0.008
++ IKF=20 ISE=1e-10 NE=2 CJE=2n CJC=600p TF=20n)
+.model QMJL21194 NPN(IS=2e-12 BF=60 VAF=120 RB=0.3 RC=0.015 RE=0.008
++ IKF=20 ISE=1e-10 NE=2 CJE=2n CJC=600p TF=20n)
+.subckt LM4040_62 k a
+Bsh k a I = 2m*(exp((v(k,a)-6.2)/0.02)-1)
+Rl  k a 10meg
+.ends
+
+.tran 20u 130m 65m uic
+.ic v(base)=6.2 v(vout)=5.5 v(raw)=11.2 v(vref)=6.2
+
+.control
+run
+meas tran vout_max MAX v(vout) from=84m to=130m
+meas tran vout_min MIN v(vout) from=84m to=130m
+meas tran raw_max  MAX v(raw)  from=84m to=130m
+meas tran raw_min  MIN v(raw)  from=84m to=130m
+meas tran vavg     AVG v(vout) from=84m to=130m
+let vout_pp = vout_max - vout_min
+let raw_pp  = raw_max - raw_min
+let rejdB = 20*log10(raw_pp/vout_pp)
+print vavg vout_pp raw_pp rejdB
+wrdata /home/claude/pm6v_ripple.dat v(raw) v(vout) v(vref)
+.endc
+.end

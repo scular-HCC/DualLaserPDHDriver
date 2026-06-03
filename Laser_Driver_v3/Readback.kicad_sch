@@ -1348,7 +1348,7 @@
 		)
 		(uuid "50ed1be8-1674-408e-a9dd-1b8e8cb10558")
 	)
-	(text "INA826 gains: Laser G=106 (Rg=487, Vmax=3.0V@600mA)  TEC G=7.2 (Rg=8.06k, Vmax=3.0V@2.5A)"
+	(text "INA826 gains: Laser G=103.7 (Rg=487, Vmax=2.59V@100mA)  TEC G=7.2 (Rg=8.06k, Vmax=3.0V@2.5A)"
 		(exclude_from_sim no)
 		(at 14.478 17.272 0)
 		(effects
@@ -5617,7 +5617,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "47a96b60-c890-4705-b2c1-8ec3e5585a1e")
-		(property "Reference" "R90"
+		(property "Reference" "R92"
 			(at 56.642 171.45 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5679,7 +5679,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R90")
+					(reference "R92")
 					(unit 1)
 				)
 			)
@@ -6305,7 +6305,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "82652d26-ef07-4b4b-950e-e8959b262e01")
-		(property "Reference" "R93"
+		(property "Reference" "R95"
 			(at 115.57 75.692 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6367,7 +6367,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R93")
+					(reference "R95")
 					(unit 1)
 				)
 			)
@@ -6778,7 +6778,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "90ced25e-a365-4acd-8c8f-e898bdbbfdd9")
-		(property "Reference" "R89"
+		(property "Reference" "R91"
 			(at 39.37 71.882 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6840,7 +6840,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R89")
+					(reference "R91")
 					(unit 1)
 				)
 			)
@@ -7438,7 +7438,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b768a2ff-5e05-4766-b526-2e1c92f53528")
-		(property "Reference" "R91"
+		(property "Reference" "R93"
 			(at 57.912 132.08 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7500,7 +7500,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R91")
+					(reference "R93")
 					(unit 1)
 				)
 			)
@@ -8018,7 +8018,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "da36c03f-1947-42d8-b027-f2c33eb29474")
-		(property "Reference" "R92"
+		(property "Reference" "R94"
 			(at 114.3 43.942 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8080,7 +8080,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R92")
+					(reference "R94")
 					(unit 1)
 				)
 			)
@@ -8343,7 +8343,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fae55f01-95f2-4f8e-bb53-551ea9cff3e0")
-		(property "Reference" "R88"
+		(property "Reference" "R90"
 			(at 39.37 43.942 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8405,7 +8405,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "R88")
+					(reference "R90")
 					(unit 1)
 				)
 			)

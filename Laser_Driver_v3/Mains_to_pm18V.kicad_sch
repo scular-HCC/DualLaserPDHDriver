@@ -5611,46 +5611,6 @@
 		)
 		(uuid "ff178a88-6720-496b-8327-cb6aed6cbb5a")
 	)
-	(label "-23V"
-		(at 118.11 82.55 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "433a18d6-8564-43b4-8766-61e72ea19c1c")
-	)
-	(label "-18Vac"
-		(at 99.06 78.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8c9a9a91-b618-4560-93af-e10f58d5e1f1")
-	)
-	(label "+23V"
-		(at 123.19 52.07 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b56f2b49-a60a-4b4f-9c96-3577d395cdcb")
-	)
-	(label "+18Vac"
-		(at 106.68 53.34 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c3744dd3-e6c4-47bf-bfe9-57539aa85934")
-	)
 	(label "-18VNF"
 		(at 167.64 82.55 0)
 		(effects
@@ -6717,7 +6677,7 @@
 				)
 			)
 		)
-		(property "Value" "Talema 62064"
+		(property "Value" "Talema 62063"
 			(at 78.74 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7367,7 +7327,7 @@
 		(dnp no)
 		(uuid "94d276d9-c555-4ce8-aeea-8dd77877976f")
 		(property "Reference" "F1"
-			(at 49.784 55.118 90)
+			(at 49.784 56.134 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7377,7 +7337,7 @@
 			)
 		)
 		(property "Value" "1A SlowBlow"
-			(at 49.53 56.642 90)
+			(at 49.53 60.706 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8413,10 +8373,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "dc268c16-4800-4159-885a-ab909f47729b")
 		(property "Reference" "TH1"
-			(at 60.0075 52.07 90)
+			(at 59.436 56.134 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8426,7 +8385,7 @@
 			)
 		)
 		(property "Value" "Ametherm SL22 10005"
-			(at 60.0075 54.61 90)
+			(at 65.024 54.356 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

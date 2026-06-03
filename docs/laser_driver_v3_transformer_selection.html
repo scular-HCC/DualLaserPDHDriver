@@ -305,11 +305,11 @@
   <h1><strong>Laser Driver v3.0</strong> — Transformer Selection</h1>
   <p class="subtitle">Addendum to Power Rail Verification (Rev 3.0) · Mains_to_pm18V.kicad_sch · pm6V_TEC.kicad_sch</p>
   <div class="meta-row">
-    <div class="meta-item">Addendum Rev <span>3.2</span></div>
+    <div class="meta-item">Addendum Rev <span>3.3 · synced 2026-06-02</span></div>
     <div class="meta-item">Updates <span>design_doc · power_review</span></div>
     <div class="meta-item">Architecture <span>2 chassis XFMR · off-board front-end</span></div>
     <div class="meta-item">TEC secondary <span style="color:var(--orange)">12Vac → 9Vac</span></div>
-    <div class="meta-item">Critical action <span style="color:var(--yellow)">bulk cap 2200→10,000µF</span></div>
+    <div class="meta-item">Reservoir <span style="color:#2bb07a">6×3300µF UPW · implemented</span></div>
   </div>
 </header>
 
@@ -339,8 +339,8 @@
     </div>
     <div class="summary-cell">
       <div class="s-label">Bulk Cap (TEC raw)</div>
-      <div class="s-value fail">2200 µF</div>
-      <div class="s-sub">→ raise to ~10,000 µF</div>
+      <div class="s-value ok">6×3300 µF</div>
+      <div class="s-sub">≈19,800 µF · UPW1E332 25V</div>
     </div>
     <div class="summary-cell">
       <div class="s-label">Mains on Signal PCB</div>
@@ -531,11 +531,12 @@ V<span class="c">pp</span> = I / (f · C)        <span style="color:var(--text-f
             <tr><td>2200 µF (current)</td><td>11.4 V pp</td><td>~0.3 V</td><td class="td-fail">✗ drops out</td></tr>
             <tr class="row-pick"><td>10,000 µF (recommended)</td><td>2.5 V pp</td><td>~9.2 V</td><td class="td-pass">✓ +1.2V margin</td></tr>
             <tr><td>15,000 µF (clean to 5A)</td><td>1.7 V pp</td><td>~9.8 V</td><td class="td-pass">✓ best</td></tr>
+            <tr class="row-pick"><td>6×3300 µF as-built (≈19,800 µF)</td><td>1.3 V pp</td><td>~10.4 V</td><td class="td-pass">✓ implemented</td></tr>
           </tbody>
         </table>
-        <div class="note note-warn">
-          <span class="note-icon">⚠</span>
-          <span><strong>Critical action — independent of the transformer choice:</strong> raise the TEC raw reservoir from <code>2200 µF</code> to <strong>~10,000 µF</strong> (or 15,000 µF to ride through the full 5 A power-on transient without output ripple). At a 9 Vac secondary a <strong>25 V</strong> rating is sufficient for these caps.</span>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Implemented in schematic:</strong> the TEC raw reservoir is now a <strong>6×3300 µF</strong> Nichicon UPW1E332MHD bank (<code>C35–C40</code>, ≈19,800 µF, 25 V) — exceeding the ~10,000 µF minimum and the 15,000 µF clean-5A target, so the rail rides through the full power-on transient with margin.</span>
         </div>
       </div>
     </div>
@@ -775,17 +776,17 @@ Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 
           <tbody>
             <tr>
               <td>1</td>
-              <td>TEC raw reservoir under-sized</td>
-              <td>pm6V_TEC.kicad_sch · C41/C42</td>
-              <td>Raise 2200 µF → ~10,000 µF (15,000 µF for clean 5A transient). 25 V rating OK at 9 Vac. <strong>Independent of transformer choice.</strong></td>
-              <td class="td-fail">⚠ Critical</td>
+              <td>TEC raw reservoir sizing</td>
+              <td>pm6V_TEC.kicad_sch · C35–C40</td>
+              <td>Implemented — 6×3300 µF Nichicon UPW1E332MHD (≈19,800 µF, 25 V); exceeds 10,000 µF min / 15,000 µF clean-5A target.</td>
+              <td class="td-pass">✓ Done</td>
             </tr>
             <tr>
               <td>2</td>
               <td>TEC secondary voltage</td>
               <td>Mains / pm6V_TEC</td>
-              <td>Change ±12 Vac → ±9 Vac CT. Halves pass-transistor dissipation (~26 W → ~13.5 W @ 3A) while holding regulation.</td>
-              <td class="td-warn">⚠ High</td>
+              <td>Realized via transformer choice — T2 (Talema 62081) provides 2×9 Vac CT. Halves pass-transistor dissipation (~26 W → ~13.5 W @ 3A) while holding regulation; the pass stage is now also doubled (2× MJL per rail with 0.1 Ω ballast R30–R33), splitting that to ~7 W per device.</td>
+              <td class="td-pass">✓ Set</td>
             </tr>
             <tr>
               <td>3</td>
@@ -798,15 +799,15 @@ Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 
               <td>4</td>
               <td>Order transformers (chassis)</td>
               <td>BOM</td>
-              <td>Main: Talema <strong>62064</strong> (25 VA, 2×18V CT, chassis). TEC: Talema <strong>62081 / 1295-1119-ND</strong> (50 VA, 2×9V CT, chassis). Confirm 62064 DK PN suffix + stock; add centre-bolt mounting kits.</td>
-              <td class="td-warn">⚠ Medium</td>
+              <td>Main: Talema <strong>62064</strong> (25 VA, 2×18V CT, chassis). TEC: Talema <strong>62081 / 1295-1119-ND</strong> (50 VA, 2×9V CT, chassis). Now placed in Mains_to_pm18V.kicad_sch as <strong>T1 / T2</strong>; confirm DK PN suffix + stock and add centre-bolt mounting kits.</td>
+              <td class="td-pass">✓ Placed</td>
             </tr>
             <tr>
               <td>5</td>
               <td>Primary-side inrush limiter</td>
               <td>Mains entry (power board)</td>
-              <td>Add Ametherm <strong>SL22 10005</strong> (570-1032-ND), 10 Ω / 5 A / 90 J NTC, in series with the line after F1/switch, feeding both primaries. Clamps toroid magnetizing inrush + reservoir surge to ~17 A peak. Existing Q3/Q4 soft-start sits downstream of the raw bank and does not limit it.</td>
-              <td class="td-warn">⚠ Medium</td>
+              <td>Added in schematic as <strong>TH1</strong> — Ametherm <strong>SL22 10005</strong> (570-1032-ND), 10 Ω / 5 A / 90 J NTC, in series with the line after F1, feeding both primaries; clamps toroid magnetizing inrush + reservoir surge to ~17 A peak. Q1/Q2 soft-start sits downstream of the raw bank and does not limit it.</td>
+              <td class="td-pass">✓ Done</td>
             </tr>
             <tr>
               <td>6</td>

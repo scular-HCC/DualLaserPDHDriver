@@ -477,6 +477,22 @@
       <div class="spec-item"><span class="spec-label">MCU</span><span class="spec-val">Teensy 4.1 (600 MHz ARM)</span></div>
       <div class="spec-item"><span class="spec-label">DAC</span><span class="spec-val">AD5064 quad 16-bit SPI</span></div>
     </div>
+
+    <div class="callout warn">
+      <strong>&#9888; Schematic sync (2026-06-02) &mdash; this Rev 4.0 reference predates the current schematic set.</strong>
+      The items below diverge from the as-drawn schematics. Part identities and reference designators are stated from the schematic; the dependent <em>derived</em> figures (DAC/TEC current transfer ratios, the &plusmn;15&nbsp;V power budget) are <strong>not</strong> recomputed here because they follow from the new parts and need a design pass.
+      <ul style="margin:10px 0 0 18px; padding:0; line-height:1.6;">
+        <li><strong>Laser / TEC error amplifier:</strong> no LT1028 is present. Laser channels use <strong>OPA192IDR</strong> (SOIC-8) at U23/U24; the TEC loop uses OPA192IDR at U18&ndash;U20 with <strong>OPA551U</strong> output drivers at U21/U22.</li>
+        <li><strong>Reference designators:</strong> the placeholders U3A&ndash;U3D, R1/R2/R5, Q1, D3, C2 map on the schematic to U23/U24 (laser), R66/R71 + R67/R72 (scaler), R79/R80 (0.25&nbsp;&Omega; sense), Q17/Q18 (IRLML6344), D22/D23 (BAT54), C66/C67 (100&nbsp;pF NP0).</li>
+        <li><strong>Laser DAC scaler:</strong> schematic is <strong>200&nbsp;k&Omega; / 1&nbsp;k&Omega;</strong> (R66/R67), not 19&nbsp;k&Omega; / 1&nbsp;k&Omega;. The &times;0.05 ratio and &ldquo;250&nbsp;mV at 1&nbsp;A&rdquo; mapping in &sect;02 need recomputing.</li>
+        <li><strong>TEC scaler:</strong> schematic is <strong>4.99&nbsp;k&Omega; top / 20&nbsp;k&Omega; bottom</strong> (R40/R44, R43/R45), not 33&nbsp;k&Omega;. Recompute the TEC current transfer.</li>
+        <li><strong>&plusmn;15&nbsp;V analog rail:</strong> built as <strong>&plusmn;14.3&nbsp;V</strong> &mdash; LT3042 (U10, +14.3&nbsp;V) / LT3094 (U11, &minus;14.3&nbsp;V), set by R14/R15 = 12.7&nbsp;k and R18/R19 = 143&nbsp;k &mdash; not LT3045 at &plusmn;15.0&nbsp;V.</li>
+        <li><strong>Front-end:</strong> 18&nbsp;Vac &rarr; <strong>GBU4M</strong> THT bridge (D1) &rarr; 2200&nbsp;&micro;F / 1000&nbsp;&micro;F <strong>50&nbsp;V</strong> bulk &rarr; TPS7A39 (U9). Soft-start MOSFETs are <strong>IRF540N / IRF9540N</strong> (Q1/Q2), and an <strong>Ametherm SL22</strong> inrush thermistor (TH1) was added. The &plusmn;24&nbsp;V raw / &plusmn;16.5&nbsp;V figures in &sect;05 reflect the prior assumption.</li>
+        <li><strong>Power budget:</strong> the v4 table is computed from LT1028 quiescent current (7.6&nbsp;mA each). OPA192 draws ~1&nbsp;mA and OPA551 up to ~8&nbsp;mA, so the &plusmn;15&nbsp;V load lines must be recomputed.</li>
+        <li><strong>Laser device:</strong> the schematic socket labels and the layout / power-review / transformer documents all reference <strong>DFB1550LP</strong>; this sheet still names the Mitsubishi ML20550KK14Z600L. Confirm the intended part and reconcile the spec table above.</li>
+        <li><strong>&plusmn;6&nbsp;V TEC pass stage:</strong> the cap-multiplier emitter-follower is now <strong>two MJL TO-264 devices in parallel per rail</strong>, each with its own 0.1&nbsp;&Omega; emitter ballast, doubling per-rail capacity. MJL part values were corrected to match symbol polarity (21193 = PNP, 21194 = NPN) and the project was reannotated to clear duplicate references.</li>
+      </ul>
+    </div>
   </div>
 
   <!-- ══ 02 LASER CHANNEL ══ -->

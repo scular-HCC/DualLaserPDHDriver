@@ -1509,7 +1509,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "RAIL 1: +/-15V (14.5V for safe operation of the OPA551) direct to opa192 op-amps"
+	(text "RAIL 1: +/-15V (Rset =143k ohm give 14.3V for safe operation of the OPA551) direct to opa192 op-amps"
 		(exclude_from_sim no)
 		(at 54.864 49.022 0)
 		(effects

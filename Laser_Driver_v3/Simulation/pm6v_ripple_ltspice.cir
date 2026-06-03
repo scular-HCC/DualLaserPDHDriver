@@ -1,0 +1,55 @@
+* laser_driver_v3  pm6V_TEC  --  +6 V rail output-ripple sim (LTspice)
+* Reference-pinned cap-multiplier follower (MJL21193/4 pair modeled as
+* one super-beta NPN). Physics validated in ngspice; syntax for LTspice.
+* Open in LTspice (File > Open), then Run. Pick V(vout), V(raw), V(vref)
+* in the waveform viewer. Numeric results: View > SPICE Error Log (Ctrl-L).
+
+* ---- +/-9Vac CT secondary -> full-wave into the + reservoir (120 Hz) ----
+Va  sa 0  SINE(0 12.73 60 0 0 0)
+Vb  sb 0  SINE(0 12.73 60 0 0 180)
+Rsa sa a1 0.15
+Rsb sb a2 0.15
+Dpa a1 raw DBR
+Dpb a2 raw DBR
+
+* ---- raw + reservoir: 3 x 3300uF = 9900uF, with bleed ----
+Craw raw 0 9900u ic=11.2
+Rblraw raw 0 47k
+
+* ---- LM4040-6.2 reference (biased from raw via R26); cap-mult on base ----
+R26  raw  vref 4.7k
+Xref vref 0   LM4040_62
+R20  vref base 15
+C47  base 0   2200u ic=6.2
+
+* ---- pass device: MJL21193/4 pair as one super-beta NPN follower ----
+Qo  raw vref vout QSUPER
+
+* ---- output cap C51 + ESR into ~3 A load, plus bleed ----
+C51 vout vesr 1000u ic=6.0
+Resr vesr 0  0.030
+Rload vout 0 2.0
+R34  vout 0 1k
+
+* ===================== device models =====================
+.model DBR D(IS=2e-7 RS=0.015 N=1.7 BV=600)
+.model QSUPER NPN(IS=2e-12 BF=3000 VAF=150 RB=0.2 RC=0.01 RE=0.006 IKF=25 CJE=2n CJC=600p TF=20n)
+
+* LM4040-6.2 as an ideal-ish 6.2 V shunt (sharp soft knee)
+.subckt LM4040_62 k a
+B1 k a I=2m*(exp((V(k,a)-6.2)/0.02)-1)
+Rl k a 10meg
+.ends
+
+* ===================== analysis =====================
+* Big caps -> start from .ic near steady state, run a few 60 Hz cycles.
+.ic V(base)=6.2 V(vout)=5.5 V(raw)=11.2 V(vref)=6.2
+.tran 0 130m 65m 20u uic
+
+* ripple / rejection measurements (results land in the SPICE Error Log)
+.meas TRAN vout_avg AVG V(vout) FROM 84m TO 130m
+.meas TRAN vout_pp  PP  V(vout) FROM 84m TO 130m
+.meas TRAN raw_pp   PP  V(raw)  FROM 84m TO 130m
+.meas TRAN raw_min  MIN V(raw)  FROM 84m TO 130m
+.meas TRAN rej_dB   PARAM 20*log10(raw_pp/vout_pp)
+.end

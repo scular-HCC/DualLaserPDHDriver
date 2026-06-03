@@ -310,7 +310,7 @@
     <div class="meta-item">Date <span>2025-05-22</span></div>
     <div class="meta-item">MCU <span>Teensy 4.1</span></div>
     <div class="meta-item">Rails checked <span>8</span></div>
-    <div class="meta-item">Duplicate refs <span style="color:var(--green)">0 (cleared)</span></div>
+    <div class="meta-item">Duplicate refs <span style="color:var(--green)">0 (reannotated)</span></div>
   </div>
 </header>
 
@@ -319,9 +319,9 @@
   <!-- Summary scorecard -->
   <div class="summary-grid">
     <div class="summary-cell">
-      <div class="s-label">+18V Bridge (ABS10)</div>
-      <div class="s-value ok">58%</div>
-      <div class="s-sub">462 mA / 800 mA</div>
+      <div class="s-label">+18V Bridge (GBU4M)</div>
+      <div class="s-value ok">12%</div>
+      <div class="s-sub">462 mA / 4 A</div>
     </div>
     <div class="summary-cell">
       <div class="s-label">±14.3V Rail</div>
@@ -341,12 +341,12 @@
     <div class="summary-cell">
       <div class="s-label">Laser ADC Utilisation</div>
       <div class="s-value ok">79%</div>
-      <div class="s-sub">G=103.7, R74/R75=487Ω</div>
+      <div class="s-sub">G=103.7, R90/R91=487Ω</div>
     </div>
     <div class="summary-cell">
       <div class="s-label">±6V TEC Worst-Case</div>
-      <div class="s-value warn">5.0 A</div>
-      <div class="s-sub">3A cap-mult limit / rail</div>
+      <div class="s-value ok">5.0 A</div>
+      <div class="s-sub">2× MJL/rail + 0.1Ω ballast · ~6A cap</div>
     </div>
   </div>
 
@@ -362,16 +362,16 @@
       <div class="rail-card-header" onclick="toggle(this)">
         <span class="rail-badge badge-green">+18V / −18V</span>
         <span class="rail-name">Bridge Rectifier, Soft-Start, Bulk Filter</span>
-        <span class="rail-summary">ABS10 · 462 mA / 800 mA</span>
+        <span class="rail-summary">GBU4M · 462 mA / 4 A</span>
         <span class="chevron">▶</span>
       </div>
       <div class="rail-body">
         <div class="chain">
           <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">Transformer</div><div class="cn-volt">120VAC</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">ABS10 Bridge</div><div class="cn-volt">±18V DC</div></div>
+          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">GBU4M Bridge</div><div class="cn-volt">±18V DC</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">Q1/Q2</div><div class="cn-part">Soft-start</div><div class="cn-volt">IRF530/9530</div></div>
+          <div class="chain-node"><div class="cn-ref">Q1/Q2</div><div class="cn-part">Soft-start</div><div class="cn-volt">IRF540N/9540N</div></div>
           <div class="chain-arrow">→</div>
           <div class="chain-node"><div class="cn-ref">C3–C6</div><div class="cn-part">Bulk caps</div><div class="cn-volt">2×2200µF</div></div>
         </div>
@@ -405,16 +405,16 @@
         <table style="margin-top:14px">
           <thead><tr><th>Component</th><th>Value</th><th>Rating</th><th>Result</th></tr></thead>
           <tbody>
-            <tr><td>D1 ABS10 bridge</td><td>462 mA</td><td>800 mA avg</td><td class="td-pass">✓ 58%</td></tr>
+            <tr><td>D1 GBU4M bridge</td><td>462 mA</td><td>4 A avg</td><td class="td-pass">✓ 12%</td></tr>
             <tr><td>F1 fuse (primary)</td><td>~69 mA AC</td><td>1 A SlowBlow</td><td class="td-pass">✓ 7%</td></tr>
-            <tr><td>Q1 IRF530 soft-start</td><td>inrush limit</td><td>100V 14A</td><td class="td-pass">✓</td></tr>
-            <tr><td>Q2 IRF9530 soft-start</td><td>inrush limit</td><td>-100V 12A</td><td class="td-pass">✓</td></tr>
+            <tr><td>Q1 IRF540N soft-start</td><td>inrush limit</td><td>100V 33A</td><td class="td-pass">✓</td></tr>
+            <tr><td>Q2 IRF9540N soft-start</td><td>inrush limit</td><td>-100V 23A</td><td class="td-pass">✓</td></tr>
             <tr><td>D2/D3 1N4742A zeners</td><td>12V gate bias</td><td>1W each</td><td class="td-pass">✓ &lt;60mW</td></tr>
           </tbody>
         </table>
         <div class="note note-info">
           <span class="note-icon">ℹ</span>
-          <span>ABS10 PCB thermal: ensure adequate copper pour/pad area around D1. ABS10 derates above 50°C ambient. At 462 mA / 58% capacity, junction temperature rise is manageable at room temperature with a minimum 2 cm² copper pour on each AC terminal pad.</span>
+          <span>GBU4M is a through-hole GBU-case bridge rated 4 A average forward current — at 462 mA (~12% of rating) self-heating is minimal and no special copper pour is required beyond standard THT pad annular rings. Ensure the AC-input and DC-output leads are sized for the bulk-cap charging surge and leave clearance for the package body.</span>
         </div>
       </div>
     </div>
@@ -489,7 +489,7 @@
           <div class="chain-arrow">→</div>
           <div class="chain-node"><div class="cn-ref">U16/U17</div><div class="cn-part">LT3045EDD ×2</div><div class="cn-volt">5V out</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">Q15/Q16</div><div class="cn-part">IRLML6344</div><div class="cn-volt">Laser ch1/2</div></div>
+          <div class="chain-node"><div class="cn-ref">Q17/Q18</div><div class="cn-part">IRLML6344</div><div class="cn-volt">Laser ch1/2</div></div>
         </div>
         <table>
           <thead><tr><th>Component</th><th>Drop</th><th>Current</th><th>Dissipation</th><th>Limit</th><th>Result</th></tr></thead>
@@ -497,8 +497,8 @@
             <tr><td>U14 LM7812 TO-220</td><td>18V→12V = 6V</td><td>213 mA</td><td>1.28 W</td><td>~15 W w/ heatsink</td><td class="td-pass">✓</td></tr>
             <tr><td>U15 LM7808 TO-220</td><td>12V→8V = 4V</td><td>213 mA</td><td>0.85 W</td><td>~15 W w/ heatsink</td><td class="td-pass">✓</td></tr>
             <tr><td>U16/U17 LT3045EDD ×2</td><td>8V→5V = 3V</td><td>103 mA each</td><td>308 mW each</td><td>500 mA / 1 W each</td><td class="td-pass">✓</td></tr>
-            <tr><td>Q15/Q16 IRLML6344 SOT-23</td><td>Vds = 1.975V</td><td>100 mA each</td><td>197.5 mW</td><td>θja=167°C/W</td><td class="td-pass">✓ Tj≈58°C</td></tr>
-            <tr><td>R35/R36 20mΩ share resistors</td><td>—</td><td>—</td><td>—</td><td>LT3045 parallel share</td><td class="td-pass">✓</td></tr>
+            <tr><td>Q17/Q18 IRLML6344 SOT-23</td><td>Vds = 1.975V</td><td>100 mA each</td><td>197.5 mW</td><td>θja=167°C/W</td><td class="td-pass">✓ Tj≈58°C</td></tr>
+            <tr><td>R38/R39 20mΩ share resistors</td><td>—</td><td>—</td><td>—</td><td>LT3045 parallel share</td><td class="td-pass">✓</td></tr>
           </tbody>
         </table>
         <div class="note note-ok">
@@ -621,7 +621,7 @@
           <tbody>
             <tr>
               <td>Laser (×2 ch)</td>
-              <td>R74/R75 = 487Ω</td>
+              <td>R90/R91 = 487Ω</td>
               <td>103.7</td>
               <td>100mA × 0.25Ω = 25mV</td>
               <td>2.59V above Vref</td>
@@ -629,7 +629,7 @@
             </tr>
             <tr>
               <td>TEC (×2 ch)</td>
-              <td>R78/R79 = 8.06kΩ</td>
+              <td>R94/R95 = 8.06kΩ</td>
               <td>7.20</td>
               <td>±0.15–0.25V bipolar</td>
               <td>2.88V swing</td>
@@ -657,7 +657,7 @@
       <div class="rail-card-header" onclick="toggle(this)">
         <span class="rail-badge badge-yellow">⚠ Check Cap-Mult</span>
         <span class="rail-name">Cap multiplier ±6V_TEC + H-bridge (IRF9540N / IRLB8721)</span>
-        <span class="rail-summary">3A per rail vs 5A worst-case</span>
+        <span class="rail-summary">≥6A per rail (2× MJL ∥) vs 5A worst-case</span>
         <span class="chevron">▶</span>
       </div>
       <div class="rail-body">
@@ -665,20 +665,20 @@
           <thead><tr><th>Component</th><th>Spec</th><th>Worst-case demand</th><th>Result</th></tr></thead>
           <tbody>
             <tr><td>D7 KBPC1501W bridge</td><td>15A / 100V</td><td>5A</td><td class="td-pass">✓ 33%</td></tr>
-            <tr><td>Q5 MJL21193 NPN (+6V)</td><td>16A / 200W cap-mult</td><td>2×2.5A = 5A peak</td><td class="td-warn">⚠ 3A rated</td></tr>
-            <tr><td>Q6 MJL21194 PNP (−6V)</td><td>16A / 200W cap-mult</td><td>2×1.5A = 3A peak</td><td class="td-warn">⚠ at limit</td></tr>
-            <tr><td>Q7–Q14 IRF9540N/IRLB8721</td><td>±100V / 23A–62A</td><td>2.5A max each</td><td class="td-pass">✓ linear region</td></tr>
+            <tr><td>+6V pass pair — 2× MJL TO-264 ∥</td><td>16A/200W each · 0.1Ω ballast</td><td>5A peak → 2.5A/device</td><td class="td-pass">✓ shared</td></tr>
+            <tr><td>−6V pass pair — 2× MJL TO-264 ∥</td><td>16A/200W each · 0.1Ω ballast</td><td>3A peak → 1.5A/device</td><td class="td-pass">✓ shared</td></tr>
+            <tr><td>H-bridge FETs IRF9540N/IRLB8721 (TEC_Control)</td><td>±100V / 23A–62A</td><td>2.5A max each</td><td class="td-pass">✓ linear region</td></tr>
             <tr><td>D14–D21 BZX384-C15</td><td>15V gate clamps</td><td>±9V effective VGS</td><td class="td-pass">✓ gate protected</td></tr>
             <tr><td>U21/U22 OPA551U</td><td>±15V abs max</td><td>±14.30V supply</td><td class="td-pass">✓ 0.41V margin</td></tr>
           </tbody>
         </table>
-        <div class="note note-warn">
-          <span class="note-icon">⚠</span>
-          <span><strong>Cap multiplier current limit:</strong> Each cap multiplier transistor is rated for approximately 3A continuous. With both TEC channels simultaneously at maximum cooling (2×2.5A = 5.0A from the +6V_TEC rail), there is a 2A deficit. Mitigate by: (a) firmware current limit preventing simultaneous max cooling, or (b) adding a parallel MJL21193 on the +6V rail emitter-follower stage.</span>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Cap-multiplier capacity — resolved in hardware:</strong> each rail's emitter-follower is now two MJL TO-264 devices in parallel (one pair per rail, Q5/Q6 and Q7/Q8), each with its own <code>0.1 Ω</code> emitter ballast (R30–R33) for current sharing. Per-rail capacity rises to ≥6 A and per-device dissipation roughly halves, covering the 5.0 A two-channel-cooling worst case. A firmware current limit is still advisable as defense-in-depth.</span>
         </div>
         <div class="note note-ok">
           <span class="note-icon">✓</span>
-          <span>Q6 part value conflict resolved — now consistently <code>Q_PNP_MJL21194</code> throughout <code>_-6V_TEC.kicad_sch</code>.</span>
+          <span><strong>Resolved:</strong> the MJL part values were corrected to match symbol polarity (21193 = PNP on the −6V rail, 21194 = NPN on the +6V rail), and all references were reannotated across the project to clear duplicate designators.</span>
         </div>
       </div>
     </div>
@@ -748,9 +748,9 @@
             <tr>
               <td>2</td>
               <td>±6V_TEC cap-multiplier 5A demand</td>
-              <td>_-6V_TEC.kicad_sch Q5</td>
-              <td>Add firmware limit: prevent both TEC channels from simultaneously exceeding 1.5A cooling each (total ≤3A from +6V_TEC rail), OR add parallel MJL21193 on +6V_TEC emitter-follower stage.</td>
-              <td class="td-warn">⚠ Medium</td>
+              <td>pm6V_TEC.kicad_sch · Q5–Q8</td>
+              <td>Resolved in hardware — each rail's emitter-follower is now 2× MJL in parallel with 0.1 Ω ballast (R30–R33), ≥6 A/rail. Firmware current limit retained as defense-in-depth.</td>
+              <td class="td-pass">✓ Done</td>
             </tr>
           </tbody>
         </table>

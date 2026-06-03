@@ -503,7 +503,7 @@
   <text x="526" y="44" text-anchor="middle" fill="#2bb07a" font-size="10" font-weight="600">+5V LASER CHAIN</text>
   <text x="526" y="57" text-anchor="middle" fill="#8b949e" font-size="9">U14 LM7812  U15 LM7808</text>
   <text x="526" y="69" text-anchor="middle" fill="#8b949e" font-size="9">U16/U17 LT3045×2</text>
-  <text x="526" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C49–C57  R34–R37  D12/D13</text>
+  <text x="526" y="81" text-anchor="middle" fill="#8b949e" font-size="9">C49–C57  R36–R39  D12/D13</text>
   <text x="526" y="94" text-anchor="middle" fill="#2bb07a" font-size="8">19 components</text>
 
   <!-- 3V3 block -->
@@ -520,15 +520,15 @@
   <!-- Rectifier/soft-start -->
   <rect x="8" y="145" width="134" height="70" rx="4" fill="#7a4a10" fill-opacity="0.5" stroke="#e8921a" stroke-width="0.8"/>
   <text x="75" y="162" text-anchor="middle" fill="#e8921a" font-size="9" font-weight="600">RECTIFIER / SOFT-START</text>
-  <text x="75" y="174" text-anchor="middle" fill="#8b949e" font-size="8">D1 ABS10 bridge</text>
-  <text x="75" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q1/Q2 IRF530/IRF9530</text>
-  <text x="75" y="196" text-anchor="middle" fill="#8b949e" font-size="8">F1 fuse · T1 xfmr header</text>
+  <text x="75" y="174" text-anchor="middle" fill="#8b949e" font-size="8">D1 GBU4M bridge</text>
+  <text x="75" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q1/Q2 IRF540N/IRF9540N</text>
+  <text x="75" y="196" text-anchor="middle" fill="#8b949e" font-size="8">F1 · TH1 inrush · T1/T2 xfmr</text>
   <text x="75" y="208" text-anchor="middle" fill="#e8921a" font-size="8">8 components</text>
   <!-- Bulk caps -->
   <rect x="8" y="224" width="134" height="80" rx="4" fill="#7a4a10" fill-opacity="0.5" stroke="#e8921a" stroke-width="0.8"/>
   <text x="75" y="242" text-anchor="middle" fill="#e8921a" font-size="9" font-weight="600">±18V BULK CAPS</text>
-  <text x="75" y="255" text-anchor="middle" fill="#8b949e" font-size="8">C3/C4  2×2200 µF</text>
-  <text x="75" y="267" text-anchor="middle" fill="#8b949e" font-size="8">C5/C6  2×1000 µF</text>
+  <text x="75" y="255" text-anchor="middle" fill="#8b949e" font-size="8">C3/C4  2×2200 µF 50V</text>
+  <text x="75" y="267" text-anchor="middle" fill="#8b949e" font-size="8">C5/C6  2×1000 µF 50V</text>
   <text x="75" y="279" text-anchor="middle" fill="#8b949e" font-size="8">D2/D3 zeners</text>
   <text x="75" y="291" text-anchor="middle" fill="#8b949e" font-size="8">C1/C2/C7/C8  R1–R9</text>
   <text x="75" y="297" text-anchor="middle" fill="#e8921a" font-size="8">17 components</text>
@@ -543,8 +543,8 @@
   <rect x="158" y="145" width="164" height="80" rx="4" fill="#7a2e18" fill-opacity="0.5" stroke="#e05a2a" stroke-width="0.8"/>
   <text x="240" y="163" text-anchor="middle" fill="#e05a2a" font-size="9" font-weight="600">RECTIFIER / CTRL</text>
   <text x="240" y="175" text-anchor="middle" fill="#8b949e" font-size="8">D7 KBPC1501W bridge</text>
-  <text x="240" y="186" text-anchor="middle" fill="#8b949e" font-size="8">Q3/Q4 IRF530/IRF9530</text>
-  <text x="240" y="197" text-anchor="middle" fill="#8b949e" font-size="8">Q5/Q6 MJL21193/94 TO-264</text>
+  <text x="240" y="186" text-anchor="middle" fill="#8b949e" font-size="8">Q3/Q4 IRF540N/IRF9540N</text>
+  <text x="240" y="197" text-anchor="middle" fill="#8b949e" font-size="8">Q5–Q8 2× MJL/rail ∥</text>
   <text x="240" y="208" text-anchor="middle" fill="#8b949e" font-size="8">U12/U13 LM4040  D8–D11</text>
   <text x="240" y="218" text-anchor="middle" fill="#e05a2a" font-size="8">11 components</text>
 
@@ -554,7 +554,7 @@
   <text x="240" y="276" text-anchor="middle" fill="#8b949e" font-size="8">C41/C42  2×2200 µF</text>
   <text x="240" y="287" text-anchor="middle" fill="#8b949e" font-size="8">C43–C46  4×1000 µF</text>
   <text x="240" y="298" text-anchor="middle" fill="#8b949e" font-size="8">C37–C40/C47/C48 bypass</text>
-  <text x="240" y="309" text-anchor="middle" fill="#8b949e" font-size="8">R20–R33 bias/bleed</text>
+  <text x="240" y="309" text-anchor="middle" fill="#8b949e" font-size="8">R20–R35 bias/bleed</text>
   <text x="240" y="344" text-anchor="middle" fill="#e05a2a" font-size="8">28 components</text>
 
   <!-- ══ ZONE D — Laser/TEC ctrl ══ -->
@@ -565,8 +565,8 @@
   <text x="448" y="150" text-anchor="middle" fill="#2d7dd2" font-size="9" font-weight="600">DUAL LASER DRIVERS + DAC/DDS</text>
   <text x="448" y="163" text-anchor="middle" fill="#8b949e" font-size="8">U23/U24 OPA192  U30 74AHCT125</text>
   <text x="448" y="174" text-anchor="middle" fill="#8b949e" font-size="8">U31/U33 AD9833 DDS  U32 AD5064 DAC</text>
-  <text x="448" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q15/Q16 IRLML6344  D22/D23 BAT54</text>
-  <text x="448" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R64–R73 (scalers/sense/gate)</text>
+  <text x="448" y="185" text-anchor="middle" fill="#8b949e" font-size="8">Q17/Q18 IRLML6344  D22/D23 BAT54</text>
+  <text x="448" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R66–R80 (scalers/sense/gate)</text>
   <text x="448" y="207" text-anchor="middle" fill="#8b949e" font-size="8">R_P1–R_P7 butterfly pin prot.</text>
   <text x="448" y="234" text-anchor="middle" fill="#2d7dd2" font-size="8">~50 components</text>
 
@@ -576,7 +576,7 @@
   <text x="644" y="163" text-anchor="middle" fill="#8b949e" font-size="8">U18–U20 OPA192</text>
   <text x="644" y="174" text-anchor="middle" fill="#8b949e" font-size="8">U21/U22 OPA551U</text>
   <text x="644" y="185" text-anchor="middle" fill="#8b949e" font-size="8">D14–D21 BZX384</text>
-  <text x="644" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R38–R63 bias/Kelvin</text>
+  <text x="644" y="196" text-anchor="middle" fill="#8b949e" font-size="8">R40–R65 bias/Kelvin</text>
   <text x="644" y="207" text-anchor="middle" fill="#8b949e" font-size="8">C58/C59 bypass</text>
   <text x="644" y="220" text-anchor="middle" fill="#2d7dd2" font-size="8">30 components</text>
 
@@ -596,16 +596,16 @@
 
   <!-- Two H-bridge channels side by side -->
   <rect x="338" y="392" width="250" height="80" rx="4" fill="#6b2318" fill-opacity="0.5" stroke="#c94020" stroke-width="0.8"/>
-  <text x="463" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 1  (Q7–Q10)</text>
-  <text x="463" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q7/Q9 IRLB8721 N-ch</text>
-  <text x="463" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q8/Q10 IRF9540N P-ch</text>
+  <text x="463" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 1  (Q9–Q12)</text>
+  <text x="463" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q9/Q11 IRLB8721 N-ch</text>
+  <text x="463" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q10/Q12 IRF9540N P-ch</text>
   <text x="463" y="445" text-anchor="middle" fill="#8b949e" font-size="8">4× TO-220 Vertical</text>
   <text x="463" y="463" text-anchor="middle" fill="#c94020" font-size="8">4 MOSFETs</text>
 
   <rect x="596" y="392" width="250" height="80" rx="4" fill="#6b2318" fill-opacity="0.5" stroke="#c94020" stroke-width="0.8"/>
-  <text x="721" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 2  (Q11–Q14)</text>
-  <text x="721" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q11/Q13 IRLB8721 N-ch</text>
-  <text x="721" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q12/Q14 IRF9540N P-ch</text>
+  <text x="721" y="410" text-anchor="middle" fill="#c94020" font-size="9" font-weight="600">CHANNEL 2  (Q13–Q16)</text>
+  <text x="721" y="423" text-anchor="middle" fill="#8b949e" font-size="8">Q13/Q15 IRLB8721 N-ch</text>
+  <text x="721" y="434" text-anchor="middle" fill="#8b949e" font-size="8">Q14/Q16 IRF9540N P-ch</text>
   <text x="721" y="445" text-anchor="middle" fill="#8b949e" font-size="8">4× TO-220 Vertical</text>
   <text x="721" y="463" text-anchor="middle" fill="#c94020" font-size="8">4 MOSFETs</text>
 
@@ -637,7 +637,7 @@
   <!-- J_BTF2 -->
   <rect x="860" y="234" width="32" height="90" rx="3" fill="#5c1f45" fill-opacity="0.7" stroke="#c4407a" stroke-width="1"/>
   <text x="876" y="260" text-anchor="middle" fill="#c4407a" font-size="8" font-weight="600" transform="rotate(-90,876,260)">J_BTF2 · DFB1550LP #2</text>
-  <text x="876" y="300" text-anchor="middle" fill="#8b949e" font-size="7" transform="rotate(-90,876,300)">2×7  2.54mm  R90–R96</text>
+  <text x="876" y="300" text-anchor="middle" fill="#8b949e" font-size="7" transform="rotate(-90,876,300)">2×7  2.54mm  prot R68–R89</text>
 
   <!-- Power connectors (top edge) -->
   <rect x="8"   y="0" width="40" height="8" rx="2" fill="#5c1f45" stroke="#c4407a" stroke-width="0.8"/>
@@ -688,7 +688,7 @@
         <span>25 total</span><span class="label-smd">14 SMD</span><span class="label-tht">11 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Left column (X = 0–50 mm, Y = 35–200 mm). AC mains path: F1 fuse, T1 transformer header, D1 ABS10 bridge rectifier. Soft-start: Q1 IRF530 N-ch + Q2 IRF9530 P-ch gate control with D2/D3 zener clamps. C3/C4 2×2200 µF and C5/C6 2×1000 µF large THT electrolytic caps for ±18 V rails.</div>
+    <div class="zone-desc">Left column (X = 0–50 mm, Y = 35–200 mm). AC mains path: F1 fuse, TH1 Ametherm SL22 inrush thermistor, T1/T2 transformer connections, D1 GBU4M through-hole bridge rectifier. Soft-start: Q1 IRF540N N-ch + Q2 IRF9540N P-ch gate control with D2/D3 zener clamps. C3/C4 2×2200 µF 50V and C5/C6 2×1000 µF 50V large THT electrolytic caps for ±18 V rails.</div>
     <div class="zone-refs">Key parts: D1 · Q1/Q2 · F1 · T1 · C3–C6</div>
   </div>
 
@@ -702,8 +702,8 @@
         <span>39 total</span><span class="label-smd">24 SMD</span><span class="label-tht">15 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Second column (X = 50–110 mm, Y = 35–200 mm). D7 KBPC1501W through-hole bridge rectifier. Q3/Q4 control gate MOSFETs. Q5/Q6 MJL21193/21194 TO-264 bipolar power transistors. U12/U13 LM4040 shunt references. C35–C48: 12 large bulk electrolytic caps (up to 2200 µF). Bias, bleed, and filter resistors R20–R33.</div>
-    <div class="zone-refs">Key parts: D7 · Q3–Q6 · U12/U13 · C35–C48 (12 caps)</div>
+    <div class="zone-desc">Second column (X = 50–110 mm, Y = 35–200 mm). D7 KBPC1501W through-hole bridge rectifier. Q3/Q4 IRF540N/IRF9540N control gate MOSFETs. Q5–Q8 paralleled MJL TO-264 cap-multiplier pass transistors (two per rail, each with a 0.1 Ω emitter ballast R30–R33). U12/U13 LM4040DBZ-6.2 shunt references. C35–C40: 6× 3300 µF Nichicon UPW reservoir bank (≈19,800 µF); C41–C52 additional 1000–2200 µF bulk/output caps. Bias, bleed, ballast, and filter resistors R20–R35.</div>
+    <div class="zone-refs">Key parts: D7 · Q3–Q8 · U12/U13 · C35–C48 (12 caps)</div>
   </div>
 
   <div class="zone-card" style="border-left-color:#2d7dd2">
@@ -716,8 +716,8 @@
         <span>80 total</span><span class="label-smd">80 SMD</span><span class="label-tht">0 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Centre block (X = 110–210 mm, Y = 35–120 mm). Fully SMD. Dual-channel laser drivers: U23/U24 OPA192, U30 74AHCT125 level shifter, U31/U33 AD9833 DDS dither injection, U32 AD5064 16-bit DAC. Gate FETs Q15/Q16, BAT54 clamps, Kelvin sense Rs, inrush limiters. TEC H-bridge control: U18–U20 OPA192, U21/U22 OPA551U drivers, BZX384 gate clamps, precision voltage dividers.</div>
-    <div class="zone-refs">Key ICs: U18–U24 · U30–U33 · Q15/Q16</div>
+    <div class="zone-desc">Centre block (X = 110–210 mm, Y = 35–120 mm). Fully SMD. Dual-channel laser drivers: U23/U24 OPA192, U30 74AHCT125 level shifter, U31/U33 AD9833 DDS dither injection, U32 AD5064 16-bit DAC. Gate FETs Q17/Q18, BAT54 clamps, Kelvin sense Rs, inrush limiters. TEC H-bridge control: U18–U20 OPA192, U21/U22 OPA551U drivers, BZX384 gate clamps, precision voltage dividers.</div>
+    <div class="zone-refs">Key ICs: U18–U24 · U30–U33 · Q17/Q18</div>
   </div>
 
   <div class="zone-card" style="border-left-color:#7b6ad4">
@@ -744,8 +744,8 @@
         <span>8 total</span><span class="label-smd">0 SMD</span><span class="label-tht">8 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Lower centre (X = 110–210 mm, Y = 120–200 mm). All 8 TO-220 vertical power MOSFETs for dual-channel TEC H-bridge. Channel 1: Q7 (IRLB8721), Q8 (IRF9540N), Q9 (IRLB8721), Q10 (IRF9540N). Channel 2: Q11/Q12/Q13/Q14 same arrangement. N-ch and P-ch MOSFETs interleaved for complementary switching. Positioned close to J8 TEC output connector for short high-current loops.</div>
-    <div class="zone-refs">Q7–Q14 · All TO-220-3 Vertical · rated ≥ 2A TEC</div>
+    <div class="zone-desc">Lower centre (X = 110–210 mm, Y = 120–200 mm). All 8 TO-220 vertical power MOSFETs for dual-channel TEC H-bridge. Channel 1: Q9 (IRLB8721), Q10 (IRF9540N), Q11 (IRLB8721), Q12 (IRF9540N). Channel 2: Q13/Q14/Q15/Q16 same arrangement. N-ch and P-ch MOSFETs interleaved for complementary switching. Positioned close to J8 TEC output connector for short high-current loops.</div>
+    <div class="zone-refs">Q9–Q16 · All TO-220-3 Vertical · rated ≥ 2A TEC</div>
   </div>
 
   <div class="zone-card" style="border-left-color:#4c9e1f">
@@ -758,7 +758,7 @@
         <span>21 total</span><span class="label-smd">19 SMD</span><span class="label-tht">2 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Lower right (X = 210–285 mm, Y = 120–200 mm). A1 Teensy 4.1 MCU module (600 MHz ARM Cortex-M7, 35×18 mm). 10 MHz clock distribution chain: Y1 ASE oscillator module, U34 LMV7219M5 comparator, U35 SN74LVC1G3157 analog mux, U36 CDCE913 PLL/clock fanout. J3 BNC horizontal for external 10 MHz clock injection. Supporting decoupling and termination resistors R80–R89, C68–C71.</div>
+    <div class="zone-desc">Lower right (X = 210–285 mm, Y = 120–200 mm). A1 Teensy 4.1 MCU module (600 MHz ARM Cortex-M7, 35×18 mm). 10 MHz clock distribution chain: Y1 ASE oscillator module, U34 LMV7219M5 comparator, U35 SN74LVC1G3157 analog mux, U36 CDCE913 PLL/clock fanout. J3 BNC horizontal for external 10 MHz clock injection. Supporting decoupling and termination resistors R96–R105, C68–C71.</div>
     <div class="zone-refs">A1 Teensy 4.1 · U34–U36 · Y1 · J3 BNC</div>
   </div>
 
@@ -772,8 +772,8 @@
         <span>10 total</span><span class="label-smd">8 SMD</span><span class="label-tht">2 THT</span>
       </div>
     </div>
-    <div class="zone-desc">Right edge strip (X = 285–300 mm). J_BTF1 and J_BTF2: 2× 2×7 2.54 mm vertical pin-header sockets for DFB1550LP butterfly laser packages. R_P1–R_P7 (Zone D): 7× 47Ω SMD series protection for J_BTF1 confirmed pins (P1/P2/P5/P10/P11/P13/P14). R90–R96: 7× 47Ω series protection for J_BTF2. All confirmed butterfly signal pins have 47Ω in-series protection. Laser reverse-bias protection: BAT54 clamps (Vr_max = 2V).</div>
-    <div class="zone-refs">J_BTF1 · J_BTF2 · 14× 47Ω prot. (R_P1–P7, R90–R96)</div>
+    <div class="zone-desc">Right edge strip (X = 285–300 mm). J_BTF1 and J_BTF2: 2× 2×7 2.54 mm vertical pin-header sockets for DFB1550LP butterfly laser packages. R68/R69/R70/R73/R74/R75/R76: 7× 47Ω SMD series protection for J_BTF1 (pins P1/P2/P5/P10/P11/P13/P14). R81/R82/R83/R86/R87/R88/R89: 7× 47Ω series protection for J_BTF2. All confirmed butterfly signal pins have 47Ω in-series protection. Laser reverse-bias protection: BAT54 clamps (Vr_max = 2V).</div>
+    <div class="zone-refs">J_BTF1 · J_BTF2 · 14× 47Ω prot. (R68–R76 / R81–R89)</div>
   </div>
 
 </div><!-- zones-grid -->
@@ -855,12 +855,12 @@
   <tr><td class="mono">D_SOD-323</td><td><span class="label-smd">SMD</span></td><td class="num">8</td><td class="mono" style="color:var(--muted)">BZX384-C15 gate clamps (TEC FETs)</td></tr>
   <tr><td class="mono">DFN-10-1EP_3x3mm_P0.5mm</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">LT3042/LT3045/LT3094/LT3094 LDOs</td></tr>
   <tr><td class="mono">SOIC-5-6_4.4x3.6mm_P1.27mm</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">OPA192 precision op-amps (SOT-23-6)</td></tr>
-  <tr><td class="mono">R_Shunt_Vishay_WSKW0612</td><td><span class="label-smd">SMD</span></td><td class="num">6</td><td class="mono" style="color:var(--muted)">Kelvin 4-terminal current sense Rs</td></tr>
+  <tr><td class="mono">R_Shunt_Vishay_WSKW0612</td><td><span class="label-smd">SMD</span></td><td class="num">10</td><td class="mono" style="color:var(--muted)">Kelvin sense (laser/TEC) + ±6V pass-stage ballast (R30–R33)</td></tr>
   <tr><td class="mono">SOT-23 (3-pin)</td><td><span class="label-smd">SMD</span></td><td class="num">5</td><td class="mono" style="color:var(--muted)">IRLML6344 gate FETs, LM4040 refs</td></tr>
   <tr><td class="mono">SOIC-14_3.9x8.7mm</td><td><span class="label-smd">SMD</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">74AHCT125 quad level-shifter, CDCE913</td></tr>
   <tr><td class="mono">TSSOP-16_4.4x5mm_P0.65mm</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">AD5064 16-bit quad DAC</td></tr>
   <tr><td class="mono">MSOP-10_3x3mm_P0.5mm</td><td><span class="label-smd">SMD</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">AD9833 DDS (dither injection)</td></tr>
-  <tr><td class="mono">TO-264-3_Vertical</td><td><span class="label-tht">THT</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">MJL21193/MJL21194 power transistors</td></tr>
+  <tr><td class="mono">TO-264-3_Vertical</td><td><span class="label-tht">THT</span></td><td class="num">4</td><td class="mono" style="color:var(--muted)">MJL21193/MJL21194 cap-mult pass (2× parallel per rail)</td></tr>
   <tr><td class="mono">Texas_S-PVSON-N10</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">TPS7A39 dual LDO (±15V)</td></tr>
   <tr><td class="mono">ASE-10.000MHZ-LC-T (oscillator)</td><td><span class="label-smd">SMD</span></td><td class="num">1</td><td class="mono" style="color:var(--muted)">10 MHz TCXO clock source</td></tr>
   <tr><td class="mono">PinHeader 2×7 (14-pin)</td><td><span class="label-tht">THT</span></td><td class="num">2</td><td class="mono" style="color:var(--muted)">J_BTF1/J_BTF2 butterfly laser sockets</td></tr>
@@ -894,7 +894,7 @@
   <tr><td>Board thickness</td><td class="mono">1.6 mm</td><td>Standard FR4</td></tr>
   <tr><td>Pad-to-mask clearance</td><td class="mono">0.1 mm</td><td>Defined in board setup</td></tr>
   <tr><td>Solder mask</td><td class="mono">Front + back (tented vias)</td><td>No via-in-pad on standard vias</td></tr>
-  <tr><td>Total components</td><td class="mono">298</td><td>All from 13 schematic sheets; old-PCB example refs excluded</td></tr>
+  <tr><td>Total components</td><td class="mono">298</td><td>Placed PCB rev 3.1; schematic BOM now 304 after the doubled ±6V pass stage (+2 TO-264, +4 ballast) — PCB not yet re-placed</td></tr>
   <tr><td>SMD components</td><td class="mono">244 (81.9%)</td><td>Reflow soldering — standard SMD assembly</td></tr>
   <tr><td>THT components</td><td class="mono">54 (18.1%)</td><td>Wave or hand solder — TO-220/TO-264, bulk caps, connectors</td></tr>
   <tr><td>DFB connectors</td><td class="mono">2 × (2×7, 2.54 mm)</td><td>J_BTF1 (DFBLaser sheet) + J_BTF2 (LaserPackage sheet)</td></tr>
@@ -992,8 +992,8 @@
       <span class="net-pill" style="color:#c94020">Net-(J_BTF2-TEC+)</span>
       <span class="net-pill" style="color:#c94020">Net-(J_BTF1-TEC-)</span>
       <span class="net-pill" style="color:#c94020">Net-(J_BTF2-TEC-)</span>
-      <span class="net-pill" style="color:#c94020">Net-(Q7-S)</span>
-      <span class="net-pill" style="color:#c94020">Net-(Q10-D)</span>
+      <span class="net-pill" style="color:#c94020">Net-(Q9-S)</span>
+      <span class="net-pill" style="color:#c94020">Net-(Q12-D)</span>
     </div>
   </div>
 
@@ -1262,14 +1262,14 @@
       Kelvin 4-terminal current sense
     </div>
     <div class="rule-body">
-      R59, R62 (TEC 0.1 Ω) and R70, R71 (laser 0.25 Ω) use Kelvin footprints.
+      R61, R64 (TEC 0.1 Ω) and R79, R80 (laser 0.25 Ω) use Kelvin footprints.
       The force and sense tracks must be completely independent, joining only at the resistor pads:
       <ul>
         <li>Force tracks: <code>TEC_Power</code> (2.5 mm) through the resistor body</li>
         <li>Sense tracks: <code>Sensitive</code> (0.2 mm) connected exactly at the pad</li>
         <li>Route sense pair as a differential pair with &lt; 0.2 mm spacing between them</li>
         <li>Never tee the sense track off the force track — this introduces the resistance of the force copper into the sense reading</li>
-        <li>Keep sense tracks away from H-bridge switching edges (Q7–Q14 gates)</li>
+        <li>Keep sense tracks away from H-bridge switching edges (Q9–Q16 gates)</li>
       </ul>
       <div class="kelvin-wrap">
         <svg width="480" height="80" viewBox="0 0 480 80" xmlns="http://www.w3.org/2000/svg" style="font-family:'IBM Plex Mono',monospace;">
@@ -1353,7 +1353,7 @@
       <ul>
         <li>Route anode and cathode as a <strong>differential pair</strong> at 0.4 mm, 0.2 mm pair spacing (Laser_Drive class)</li>
         <li>BAT54 clamps (D22, D23) must be placed within 3 mm of the butterfly connector pins — trace between clamp and pin must use Laser_Drive width</li>
-        <li>The 47 Ω protection resistors (R_P1–R_P7, R90–R96) limit ESD inrush — their traces to the connector pads must be <strong>Laser_Drive or narrower</strong>, not Power</li>
+        <li>The 47 Ω protection resistors (DFBLaser R68–R89 block) limit ESD inrush — their traces to the connector pads must be <strong>Laser_Drive or narrower</strong>, not Power</li>
         <li>Never route a laser track across an H-bridge switching net — inductive kick coupling can reverse-bias the laser junction</li>
         <li>Silkscreen label polarity (A/K) adjacent to J_BTF1 and J_BTF2</li>
       </ul>
@@ -1554,7 +1554,7 @@
     <td class="mono">3 A</td>
     <td class="mono" style="color:#3fb950">3 in parallel</td>
     <td class="mono">1.0 A each</td>
-    <td style="font-size:12px;color:var(--muted)">Q7–Q14 H-bridge to J_BTF TEC pins — highest current on the board</td>
+    <td style="font-size:12px;color:var(--muted)">Q9–Q16 H-bridge to J_BTF TEC pins — highest current on the board</td>
   </tr>
   <tr>
     <td class="mono" style="color:#e8921a">HV_Rail</td>
