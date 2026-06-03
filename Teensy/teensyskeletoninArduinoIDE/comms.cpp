@@ -62,6 +62,9 @@ void comms_json_status(Print& out,
     if (isnan(disp.ch[i].tec_temp_c)) out.print(F("null"));
     else out.print(disp.ch[i].tec_temp_c, 2);
     out.print(F(",\"ima\":"));   out.print(disp.ch[i].laser_i_ma, 2);
+    out.print(F(",\"teci\":"));  out.print(disp.ch[i].tec_i_a, 3);
+    out.print(F(",\"tlim\":"));  out.print(disp.ch[i].tec_lim_fac, 3);
+    out.print(F(",\"hbf\":"));   out.print(disp.hbridge_fault[i] ? 1 : 0);
     out.print(F(",\"setp\":")); out.print(disp.ch[i].setpoint_pct, 2);
     out.print(F(",\"scan\":")); out.print(disp.ch[i].scan_phase, 3);
     out.print(F(",\"peak\":")); out.print(disp.ch[i].peak_phase, 3);
@@ -94,7 +97,10 @@ void comms_process(const String& line, Print& out,
       out.print(F("  rms="));    out.print(disp.ch[i].err_rms, 5);
       out.print(F("  temp="));   out.print(disp.ch[i].tec_temp_c, 1);
       out.print(F("°C  I="));    out.print(disp.ch[i].laser_i_ma, 1);
-      out.print(F("mA  setp=")); out.print(disp.ch[i].setpoint_pct, 1);
+      out.print(F("mA  TEC="));  out.print(disp.ch[i].tec_i_a, 3);
+      out.print(F("A(lim="));    out.print(disp.ch[i].tec_lim_fac, 2);
+      out.print(F(")  setp=")); out.print(disp.ch[i].setpoint_pct, 1);
+      if (disp.hbridge_fault[i]) out.print(F("  *** H-BRIDGE FAULT ***"));
       out.print(F("%  relk="));  out.print(ch[i].relock_attempts);
       out.println();
       out.print(F("  PID kp="));  out.print(pid[i].kp, 4);
@@ -178,7 +184,9 @@ void comms_process(const String& line, Print& out,
     out.print(F(" NTC1="));  out.print(analogRead(PIN_NTC1_MON));
     out.print(F(" NTC2="));  out.print(analogRead(PIN_NTC2_MON));
     out.print(F(" LAS1="));  out.print(analogRead(PIN_LAS1_IMON));
-    out.print(F(" LAS2="));  out.println(analogRead(PIN_LAS2_IMON));
+    out.print(F(" LAS2="));  out.print(analogRead(PIN_LAS2_IMON));
+    out.print(F(" TEC1="));  out.print(analogRead(PIN_TEC1_IMON));
+    out.print(F(" TEC2="));  out.println(analogRead(PIN_TEC2_IMON));
     return;
   }
 

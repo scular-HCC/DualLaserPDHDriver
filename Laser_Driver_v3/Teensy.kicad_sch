@@ -1503,16 +1503,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "***Add code for HBrdige Fault"
-		(exclude_from_sim no)
-		(at 116.078 61.214 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "1c125ac8-2501-4721-89b3-040e80830911")
-	)
 	(text "***Need to look more into the display connections.\nSeems to work with 3.3 V, but document says 3.5-5V???\n"
 		(exclude_from_sim no)
 		(at 136.652 94.488 0)

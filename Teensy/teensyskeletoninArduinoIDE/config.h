@@ -89,10 +89,34 @@
 #define LASER_IMON_MA_PER_LSB  0.0806f
 
 // ============================================================
+// TEC current monitor scaling
+// Hardware: INA826 (G=7.2, Rg=8.06k), shunt R=0.1Ω
+//   V_IMON = TEC_IMON_OFFSET_V + TEC_IMON_V_PER_A * I_amps
+//   At 0 A  → ~1.20 V  (INA826 REF pin)
+//   At 2.5 A → ~3.00 V  (Vmax from schematic annotation)
+// DAC zero-current code from TEC_VZERO=1.875V annotation:
+//   code 24576 = 0 A, code 0 = +2.5 A cooling, code 65535 = -1.5 A heating
+// ============================================================
+#define TEC_IMON_OFFSET_V    1.20f   // V_IMON at 0 A
+#define TEC_IMON_V_PER_A     0.72f   // INA826 gain × shunt = 7.2 × 0.1
+#define TEC_ILIMIT_A         2.5f    // software current limit (amps)
+#define TEC_DAC_ZERO_CODE    24576u  // DAC code for 0 A TEC current
+#define TEC_ILIMIT_STEP      0.05f   // limit-factor reduction per tick when over-current
+#define TEC_ILIMIT_RESTORE   0.005f  // limit-factor restoration per tick when under-current
+
+// ============================================================
 // Dither / clock
 // ============================================================
 #define DITHER_FREQ_HZ    10000.0f
 #define REFCLK_HZ         25000000.0f
+
+// ============================================================
+// H-Bridge fault inputs (OPA551 Flag pin — open-drain active-low)
+// Pulled HIGH internally; LOW = fault asserted.
+// Pins 31/32 are free GPIO on Teensy 4.1, interrupt-capable, not CAN-in-use.
+// ============================================================
+#define PIN_HBRIDGE_FAULT1   31
+#define PIN_HBRIDGE_FAULT2   32
 
 // ============================================================
 // Control / display timing

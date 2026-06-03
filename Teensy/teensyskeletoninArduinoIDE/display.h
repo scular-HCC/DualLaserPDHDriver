@@ -11,6 +11,8 @@ struct DispChannel {
   float peak_phase;    // 0..1 — saved peak position (set on ACQUIRE entry)
   float tec_temp_c;    // NTC temperature (°C), NAN if unavailable
   float laser_i_ma;    // laser current monitor (mA)
+  float tec_i_a;       // TEC current (A), positive = cooling
+  float tec_lim_fac;   // software current-limit factor (1.0 = unrestricted)
   float setpoint_pct;  // DAC setpoint 0..100 %
   float err_rms;       // RMS of PDH error signal (normalised 0..1)
   float lock_qual;     // 0..1 servo health (0=unlocked, →1=tight lock)
@@ -21,6 +23,7 @@ struct DispModel {
   float      refclk_mhz;
   LockState  state[2];
   DispChannel ch[2];
+  bool       hbridge_fault[2];  // true = OPA551 Flag asserted (active-low input LOW)
 };
 
 void display_init(Adafruit_ILI9341 &tft);

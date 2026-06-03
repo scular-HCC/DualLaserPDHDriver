@@ -369,7 +369,8 @@ static void draw_channel(Adafruit_ILI9341 &tft,
                           int16_t cy,
                           int16_t ch_idx,
                           LockState state,
-                          const DispChannel &d) {
+                          const DispChannel &d,
+                          bool hbridge_fault) {
   uint16_t accent  = (ch_idx == 0) ? COL_CH1      : COL_CH2;
   uint16_t fill    = (ch_idx == 0) ? COL_CH1_FILL : COL_CH2_FILL;
   uint16_t sc      = state_color(state);
@@ -501,7 +502,18 @@ static void draw_channel(Adafruit_ILI9341 &tft,
   draw_stat_cell(tft, STATS_X,               cy + ROW1_OFF, "SETPOINT", s3, "%",  true,  accent);
   draw_stat_cell(tft, STATS_X + CELL_W + CELL_GAP, cy + ROW1_OFF, "ERR RMS",  s4, "",   false, accent);
 
-  draw_health_bar(tft, STATS_X, cy + HLTH_OFF, d.lock_qual, sc);
+  if (hbridge_fault) {
+    // Replace health bar with a red fault banner
+    uint16_t fbg = color_dim(COL_ST_FAULT, 40);
+    tft.fillRect(STATS_X, cy + HLTH_OFF, STATS_W, HEALTH_H, fbg);
+    tft.drawRect(STATS_X, cy + HLTH_OFF, STATS_W, HEALTH_H, COL_ST_FAULT);
+    tft.setTextColor(COL_ST_FAULT);
+    tft.setTextSize(1);
+    tft.setCursor(STATS_X + 16, cy + HLTH_OFF + 3);
+    tft.print("!! H-BRIDGE FAULT !!");
+  } else {
+    draw_health_bar(tft, STATS_X, cy + HLTH_OFF, d.lock_qual, sc);
+  }
 }
 
 // ============================================================
@@ -528,6 +540,6 @@ void display_update(Adafruit_ILI9341 &tft, const DispModel &m) {
   disp_frame++;
 
   draw_topbar(tft, m.pll_lock, m.refclk_mhz);
-  draw_channel(tft, CH1_Y, 0, m.state[0], m.ch[0]);
-  draw_channel(tft, CH2_Y, 1, m.state[1], m.ch[1]);
+  draw_channel(tft, CH1_Y, 0, m.state[0], m.ch[0], m.hbridge_fault[0]);
+  draw_channel(tft, CH2_Y, 1, m.state[1], m.ch[1], m.hbridge_fault[1]);
 }

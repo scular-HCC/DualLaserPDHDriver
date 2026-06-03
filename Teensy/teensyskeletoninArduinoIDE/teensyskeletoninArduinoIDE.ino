@@ -69,8 +69,38 @@ static float    s_rms_sum[2] = {0.0f, 0.0f};
 static int      s_rms_cnt[2] = {0, 0};
 static float    s_rms_val[2] = {0.5f, 0.5f};
 
+// TEC current monitoring and software current limit
+static float    s_tec_i[2]       = {0.0f, 0.0f};
+static uint16_t s_tec_dac[2]     = {DAC_MID_CODE, DAC_MID_CODE}; // desired setpoint
+static float    s_tec_lim_fac[2] = {1.0f, 1.0f};                 // 1.0 = no limiting
+
 static inline float adc_to_error(int raw) {
   return (raw - ADC_MID) / (float)ADC_MID;
+}
+
+static inline float adc_to_tec_amps(int raw) {
+  float v = raw * (ADC_REF_V / ADC_MAX);
+  return (v - TEC_IMON_OFFSET_V) / TEC_IMON_V_PER_A;
+}
+
+// Smoothly clamp the TEC setpoint DAC when current exceeds TEC_ILIMIT_A.
+// s_tec_dac[i] holds the desired setpoint; this function derives the
+// limited output and writes it to DAC channel 2+i each control tick.
+static void tec_limit_step(int i) {
+  if (s_tec_i[i] > TEC_ILIMIT_A) {
+    s_tec_lim_fac[i] -= TEC_ILIMIT_STEP;
+    if (s_tec_lim_fac[i] < 0.0f) s_tec_lim_fac[i] = 0.0f;
+  } else {
+    s_tec_lim_fac[i] += TEC_ILIMIT_RESTORE;
+    if (s_tec_lim_fac[i] > 1.0f) s_tec_lim_fac[i] = 1.0f;
+  }
+  // Scale the excursion from zero-current code by the limit factor.
+  // This preserves the direction (cooling or heating) while clamping magnitude.
+  int32_t zero  = (int32_t)TEC_DAC_ZERO_CODE;
+  int32_t raw   = (int32_t)s_tec_dac[i];
+  int32_t delta = (int32_t)((raw - zero) * s_tec_lim_fac[i]);
+  int32_t out   = constrain(zero + delta, 0, 65535);
+  ad5064_write_channel(2 + i, (uint16_t)out);
 }
 
 static float ntc_to_celsius(int raw) {
@@ -98,6 +128,8 @@ static void update_disp_model() {
 
     disp.ch[i].tec_temp_c   = s_tec_temp[i];
     disp.ch[i].laser_i_ma   = s_laser_i[i];
+    disp.ch[i].tec_i_a      = s_tec_i[i];
+    disp.ch[i].tec_lim_fac  = s_tec_lim_fac[i];
     disp.ch[i].setpoint_pct = s_dac[i] * 100.0f / 65535.0f;
     disp.ch[i].err_rms      = s_rms_val[i];
 
@@ -192,6 +224,10 @@ void setup() {
   for (uint8_t p : out_pins) pinMode(p, OUTPUT);
   pinMode(PIN_FREQ_TEST, INPUT);
 
+  // H-bridge fault inputs: OPA551 Flag is open-drain active-low
+  pinMode(PIN_HBRIDGE_FAULT1, INPUT_PULLUP);
+  pinMode(PIN_HBRIDGE_FAULT2, INPUT_PULLUP);
+
   digitalWrite(PIN_AD9833_1_CS,  HIGH);
   digitalWrite(PIN_AD9833_2_CS,  HIGH);
   digitalWrite(PIN_AD5064_CS,    HIGH);
@@ -276,6 +312,22 @@ void loop() {
     s_laser_i[1]  = analogRead(PIN_LAS2_IMON) * LASER_IMON_MA_PER_LSB;
     s_tec_temp[0] = ntc_to_celsius(analogRead(PIN_NTC1_MON));
     s_tec_temp[1] = ntc_to_celsius(analogRead(PIN_NTC2_MON));
+    s_tec_i[0]    = adc_to_tec_amps(analogRead(PIN_TEC1_IMON));
+    s_tec_i[1]    = adc_to_tec_amps(analogRead(PIN_TEC2_IMON));
+    tec_limit_step(0);
+    tec_limit_step(1);
+
+    // H-bridge fault: OPA551 Flag is open-drain active-low → LOW = fault
+    bool fault0 = (digitalRead(PIN_HBRIDGE_FAULT1) == LOW);
+    bool fault1 = (digitalRead(PIN_HBRIDGE_FAULT2) == LOW);
+    if (fault0 != disp.hbridge_fault[0]) {
+      disp.hbridge_fault[0] = fault0;
+      Serial.print(F("CH1 H-BRIDGE FAULT: ")); Serial.println(fault0 ? F("ASSERTED") : F("cleared"));
+    }
+    if (fault1 != disp.hbridge_fault[1]) {
+      disp.hbridge_fault[1] = fault1;
+      Serial.print(F("CH2 H-BRIDGE FAULT: ")); Serial.println(fault1 ? F("ASSERTED") : F("cleared"));
+    }
     control_step(0, s_err[0], dt);
     control_step(1, s_err[1], dt);
   }
@@ -302,7 +354,9 @@ void loop() {
         Serial.print(F(" T="));  Serial.print(disp.ch[i].tec_temp_c, 1);
       }
       Serial.print(F(" I="));   Serial.print(disp.ch[i].laser_i_ma, 1);
-      Serial.println(F(" mA"));
+      Serial.print(F(" mA"));
+      if (disp.hbridge_fault[i]) Serial.print(F(" *** H-BRIDGE FAULT ***"));
+      Serial.println();
     }
     Serial.print(F("IP: ")); Serial.println(network_ip());
   }
