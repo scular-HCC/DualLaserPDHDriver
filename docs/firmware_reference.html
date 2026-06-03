@@ -462,6 +462,9 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <li><a href="#cmd-dither">dither</a></li>
     <li><a href="#cmd-status">s / status</a></li>
     <li><a href="#cmd-d">d</a></li>
+    <li><span class="nav-section">Protection</span></li>
+    <li><a href="#tec-current-limit">TEC Current Limit</a></li>
+    <li><a href="#hbridge-fault">H-Bridge Fault</a></li>
     <li><a href="#cmd-r">r</a></li>
     <li><a href="#cmd-help">help</a></li>
     <li><span class="nav-section">Network Config</span></li>
@@ -526,11 +529,13 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <tbody>
     <tr><td><span class="file-tag">CDCE913</span></td><td>I²C (0x65)</td><td class="file-desc">PLL clock synthesiser — 10 MHz input → 25 MHz reference for both AD9833 chips. EEPROM image is version-stamped and re-programmed automatically on first boot if stale.</td></tr>
     <tr><td><span class="file-tag">AD9833 ×2</span></td><td>SPI</td><td class="file-desc">Direct Digital Synthesis oscillators generating the PDH dither sine. CH1 on CS pin 2, CH2 on CS pin 3. Default frequency: 10 kHz.</td></tr>
-    <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 reserved for TEC setpoints.</td></tr>
+    <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 = TEC current setpoints (code 24576 = 0 A, code 0 = +2.5 A cooling, code 65535 = −1.5 A heating). Software current-limit logic writes these channels every 1 kHz tick.</td></tr>
     <tr><td><span class="file-tag">ILI9341</span></td><td>SPI (CS 15, DC 14)</td><td class="file-desc">2.8″ 320×240 colour TFT, landscape orientation. Read-only instrument display at 10 Hz.</td></tr>
     <tr><td><span class="file-tag">Teensy 4.1 ETH</span></td><td>Built-in PHY</td><td class="file-desc">10/100 Ethernet via QNEthernet library. DHCP with static fallback 192.168.1.200. mDNS hostname: <code>dual-pdh.local</code>.</td></tr>
     <tr><td><span class="file-tag">NTC ×2</span></td><td>Analog A8/A9</td><td class="file-desc">Thermistors on TEC stages. Beta-equation conversion to °C (R₂₅ = 10 kΩ, β = 3950).</td></tr>
     <tr><td><span class="file-tag">PDH error ×2</span></td><td>Analog A0/A1</td><td class="file-desc">Demodulated PDH error signals. 12-bit ADC, normalised to −1…+1 around midscale.</td></tr>
+    <tr><td><span class="file-tag">TEC IMON ×2</span></td><td>Analog A1 / A7</td><td class="file-desc">TEC current monitors. INA826 instrumentation amplifier (G=7.2, R<sub>shunt</sub>=0.1 Ω): V<sub>IMON</sub> = 1.20 V + 0.72 V/A × I. At 2.5 A → 3.0 V. Read every 1 kHz tick; software limit backs off the TEC DAC setpoint when exceeded.</td></tr>
+    <tr><td><span class="file-tag">H-Bridge Fault ×2</span></td><td>Digital D31 / D32</td><td class="file-desc">OPA551 Flag pins (open-drain active-low). Pulled HIGH internally via <code>INPUT_PULLUP</code>. LOW = overcurrent or thermal fault on the TEC H-bridge amplifier. Edge changes print immediately to serial; fault state shown on TFT and JSON.</td></tr>
   </tbody>
 </table>
 </section>
@@ -719,10 +724,12 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Single header included by every other module. Contains three categories of defines:</p>
 <ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
   <li><strong style="color:var(--ink)">Pin mapping</strong> — all Teensy 4.1 pin numbers matched to the schematic net names (I²C, SPI, DDS CS/RESET, DAC CS/LDAC/CLR, TFT, analog inputs).</li>
-  <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code.</li>
+  <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code. TEC IMON constants: <code>TEC_IMON_OFFSET_V</code> (1.20 V at 0 A), <code>TEC_IMON_V_PER_A</code> (0.72 V/A = INA826 G×R<sub>shunt</sub>), <code>TEC_DAC_ZERO_CODE</code> (24576 = 0 A).</li>
+  <li><strong style="color:var(--ink)">Protection thresholds</strong> — <code>TEC_ILIMIT_A</code> (2.5 A), <code>TEC_ILIMIT_STEP</code> (0.05 — 5 % back-off per 1 ms tick when over-current), <code>TEC_ILIMIT_RESTORE</code> (0.005 — 0.5 % recovery per tick).</li>
+  <li><strong style="color:var(--ink)">Fault pins</strong> — <code>PIN_HBRIDGE_FAULT1</code> (D31), <code>PIN_HBRIDGE_FAULT2</code> (D32). Open-drain active-low; configured <code>INPUT_PULLUP</code> in <code>setup()</code>.</li>
   <li><strong style="color:var(--ink)">Timing</strong> — <code>CONTROL_PERIOD_US</code> (1000 µs = 1 kHz), <code>DISPLAY_PERIOD_MS</code> (100 ms = 10 Hz), <code>SCAN_PERIOD_MS</code> (5000 ms sweep animation), <code>DEBUG_PERIOD_MS</code> (1000 ms).</li>
 </ul>
-<div class="callout warn"><strong>Calibration note:</strong> <code>LASER_IMON_MA_PER_LSB</code> defaults to 0.0806 mA/LSB (~330 mA full-scale on 12-bit ADC). Adjust this value and the NTC coefficients to match your actual hardware.</div>
+<div class="callout warn"><strong>Calibration note:</strong> <code>LASER_IMON_MA_PER_LSB</code> defaults to 0.0806 mA/LSB (~330 mA full-scale). Adjust it and the NTC coefficients for your hardware. For TEC current, verify <code>TEC_IMON_OFFSET_V</code> matches the actual INA826 REF pin voltage — measure V<sub>IMON</sub> at zero TEC current and set this constant accordingly.</div>
 </section>
 
 <section id="cdce913"><h3>cdce913.h / .cpp — PLL Clock</h3>
@@ -734,7 +741,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 </section>
 
 <section id="ad5064"><h3>ad5064.h / .cpp — Setpoint DAC</h3>
-<p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 are currently midscale-initialised and reserved for TEC setpoints.</p>
+<p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 drive the TEC current setpoints and are written every 1 kHz tick by <code>tec_limit_step()</code>. The zero-current code (24576) is defined by <code>TEC_DAC_ZERO_CODE</code>; the limit function scales the excursion from this code by the live <code>s_tec_lim_fac[]</code> factor.</p>
 </section>
 
 <section id="pid"><h3>pid.h / .cpp — PID Controller</h3>
@@ -755,12 +762,14 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Reads a <code>DispModel</code> struct (filled by the main loop at 10 Hz) and renders the full 320×240 display. Each of the six lock states maps to a distinct trace style:</p>
 <ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
   <li><strong style="color:var(--idle)">IDLE</strong> — dashed flat baseline.</li>
-  <li><strong style="color:var(--sweep)">SEARCH</strong> — filled Lorentzian transmission peak + moving scan-marker line. Peak position is fixed; scan phase advances over <code>SCAN_PERIOD_MS</code>.</li>
+  <li><strong style="color:var(--sweep)">SEARCH</strong> — filled Lorentzian transmission peak + moving scan-marker line.</li>
   <li><strong style="color:var(--acq)">ACQUIRE</strong> — transmission curve + overlaid dispersive PDH S-curve + setpoint dot at peak.</li>
   <li><strong style="color:var(--lock)">LOCKED</strong> — tight noise trace; amplitude driven by live <code>err_rms</code>.</li>
   <li><strong style="color:var(--hold)">HOLD</strong> — wider noise trace (amplitude 10× locked).</li>
   <li><strong style="color:var(--fault)">RELOCK</strong> — railing/diverging random-walk trace in fault red.</li>
 </ul>
+<p><strong>H-bridge fault banner:</strong> when <code>DispModel::hbridge_fault[i]</code> is true, the SERVO health bar at the bottom of the channel panel is replaced by a red <strong style="color:var(--fault)">!! H-BRIDGE FAULT !!</strong> banner. The banner clears automatically as soon as the OPA551 Flag pin de-asserts.</p>
+<p><strong>TEC current fields added to <code>DispChannel</code>:</strong> <code>tec_i_a</code> (measured current in amps) and <code>tec_lim_fac</code> (current-limit scale factor, 1.0 = unrestricted). Both are populated every 10 Hz display tick and included in the JSON telemetry.</p>
 </section>
 
 <section id="comms"><h3>comms.h / .cpp — Command Processor</h3>
@@ -791,9 +800,9 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Loop priorities (highest to lowest):</p>
 <ol style="color:var(--dim);padding-left:20px;margin-bottom:14px">
   <li><strong style="color:var(--ink)">USB serial input</strong> — polled every loop iteration via <code>Serial.available()</code>. Lines are buffered until <code>\n</code> or <code>\r</code>, then dispatched to <code>comms_process()</code>.</li>
-  <li><strong style="color:var(--ink)">1 kHz control loop</strong> — gated by <code>elapsedMicros loopTimer</code>. Reads ADC, runs both channel state machines and PID steps, accumulates RMS.</li>
-  <li><strong style="color:var(--ink)">10 Hz display + network tick</strong> — gated by <code>millis()</code> delta. Updates <code>DispModel</code>, calls <code>display_update()</code>, then calls <code>network_poll()</code>. Placed after the display update so Ethernet servicing cannot delay a control tick.</li>
-  <li><strong style="color:var(--ink)">1 Hz debug print</strong> — per-channel state, error, RMS, temperature, and laser current to serial.</li>
+  <li><strong style="color:var(--ink)">1 kHz control loop</strong> — gated by <code>elapsedMicros loopTimer</code>. Reads ADC (including TEC IMON), runs <code>tec_limit_step()</code> for both channels, reads H-bridge fault pins with edge-triggered serial logging, runs both PDH state machines and PID steps, accumulates RMS.</li>
+  <li><strong style="color:var(--ink)">10 Hz display + network tick</strong> — gated by <code>millis()</code> delta. Updates <code>DispModel</code> (including <code>tec_i_a</code>, <code>tec_lim_fac</code>, <code>hbridge_fault[]</code>), calls <code>display_update()</code>, then calls <code>network_poll()</code>.</li>
+  <li><strong style="color:var(--ink)">1 Hz debug print</strong> — per-channel state, RMS, temperature, laser current, TEC current, and <code>*** H-BRIDGE FAULT ***</code> suffix if fault is active.</li>
 </ol>
 </section>
 
@@ -898,6 +907,9 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <tr><td><strong>ERR RMS</strong></td><td>√(Σ err²/N) over last display interval</td><td><code>0.0034</code></td></tr>
   </tbody>
 </table>
+
+<h3>H-Bridge Fault Banner</h3>
+<p>When the OPA551 Flag pin asserts (D31 or D32 pulled LOW), the SERVO health bar at the bottom of the affected channel panel is replaced by a solid red <strong style="color:var(--fault)">!! H-BRIDGE FAULT !!</strong> banner. The banner clears as soon as the pin returns HIGH. The fault is also printed immediately to serial and included in the JSON status as <code>"hbf":1</code>.</p>
 </section>
 
 <!-- ─────────────── WEB DASHBOARD ─────────────── -->
@@ -1015,6 +1027,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     {
       "n": 1, "st": "LOCKED",
       "rms": 0.00312, "temp": 24.52, "ima": 138.2,
+      "teci": 1.843, "tlim": 1.000, "hbf": 0,
       "setp": 52.30, "scan": 0.000, "peak": 0.614,
       "qual": 0.844, "relk": 0,
       "kp": 0.08000, "ki": 0.50000, "kd": 0.00000,
@@ -1023,6 +1036,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     {
       "n": 2, "st": "SEARCH",
       "rms": 0.42100, "temp": 23.87, "ima": 138.0,
+      "teci": 0.021, "tlim": 1.000, "hbf": 0,
       "setp": 50.00, "scan": 0.347, "peak": 0.600,
       "qual": 0.000, "relk": 0,
       "kp": 0.08000, "ki": 0.50000, "kd": 0.00000,
@@ -1030,7 +1044,98 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     }
   ]
 }</span></pre>
+<div class="callout note"><strong>New JSON fields:</strong> <code>teci</code> — TEC current in amps (float, negative = heating direction). <code>tlim</code> — software current-limit factor (1.000 = unrestricted, lower values indicate limiting is active). <code>hbf</code> — H-bridge fault flag (0 = normal, 1 = OPA551 Flag pin asserted).</div>
 </section>
+
+<hr class="section-rule">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--                     PROTECTION                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="tec-current-limit">TEC Software Current Limit</h2>
+<p>
+  A software current limiter runs inside the 1 kHz control loop for each TEC channel independently.
+  It reads the <strong>TEC IMON</strong> ADC pin (A1 for CH1, A7 for CH2), converts to amps via the
+  INA826 scaling constants, and smoothly backs off the TEC DAC setpoint if the measured current
+  exceeds <code>TEC_ILIMIT_A</code> (default 2.5 A).
+</p>
+
+<h3>How it works</h3>
+<p>
+  A per-channel <em>limit factor</em> <code>s_tec_lim_fac[i]</code> (range 0.0–1.0, normally 1.0)
+  scales the excursion of the TEC DAC setpoint away from the zero-current code:
+</p>
+<pre class="terminal"><span class="info">actual_output = TEC_DAC_ZERO_CODE + (desired − TEC_DAC_ZERO_CODE) × lim_fac</span></pre>
+<p>Each 1 ms tick:</p>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li>If <code>I &gt; 2.5 A</code> → subtract <code>TEC_ILIMIT_STEP</code> (0.05) from <code>lim_fac</code> — reaches zero in ~20 ms.</li>
+  <li>If <code>I ≤ 2.5 A</code> → add <code>TEC_ILIMIT_RESTORE</code> (0.005) to <code>lim_fac</code> — fully recovers in ~200 ms.</li>
+</ul>
+<p>
+  The limit acts symmetrically on both cooling (setpoint below zero-current code) and heating
+  (setpoint above). It does not interfere with the PDH laser control loop — only the TEC DAC
+  channels (2 and 3) are written by this function.
+</p>
+
+<h3>Scaling constants (<code>config.h</code>)</h3>
+<table class="file-table">
+  <thead><tr><th>Constant</th><th>Default</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>TEC_IMON_OFFSET_V</code></td><td>1.20 V</td><td>INA826 output at 0 A (REF pin voltage). Measure at zero TEC current and adjust if needed.</td></tr>
+    <tr><td><code>TEC_IMON_V_PER_A</code></td><td>0.72 V/A</td><td>INA826 gain (7.2) × shunt (0.1 Ω). At 2.5 A → 3.00 V output.</td></tr>
+    <tr><td><code>TEC_DAC_ZERO_CODE</code></td><td>24576</td><td>AD5064 code for 0 A TEC current (from TEC_VZERO = 1.875 V schematic annotation).</td></tr>
+    <tr><td><code>TEC_ILIMIT_A</code></td><td>2.5 A</td><td>Current trip point. Increase with caution — the TEC and H-bridge have hard thermal limits.</td></tr>
+    <tr><td><code>TEC_ILIMIT_STEP</code></td><td>0.05</td><td>Fractional reduction per 1 ms tick when over-current. 0.05 = 20 ms to full clamp.</td></tr>
+    <tr><td><code>TEC_ILIMIT_RESTORE</code></td><td>0.005</td><td>Fractional recovery per 1 ms tick when under-limit. 0.005 = 200 ms to full restore.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout warn">
+  <strong>Calibration required:</strong> measure V<sub>IMON</sub> at zero TEC drive and set
+  <code>TEC_IMON_OFFSET_V</code> accordingly. An incorrect offset will cause the limiter to
+  trip at the wrong current or not trip at all. Use the <code>d</code> command to read the raw
+  TEC ADC count and verify the conversion: <code>I = (raw × 3.3/4095 − offset) / 0.72</code>.
+</div>
+
+<hr class="section-rule">
+
+<h2 id="hbridge-fault">H-Bridge Fault Detection</h2>
+<p>
+  The <strong>OPA551</strong> linear H-bridge amplifiers include a built-in fault flag (pin 8,
+  open-drain active-low) that asserts when the amplifier hits its internal current or thermal limit.
+  Each channel's flag is wired to a dedicated Teensy digital input:
+</p>
+<table class="file-table">
+  <thead><tr><th>Channel</th><th>Pin</th><th>Signal name</th><th>Active state</th></tr></thead>
+  <tbody>
+    <tr><td>CH1 TEC</td><td><code>D31</code></td><td><code>HBridgeFault1</code></td><td>LOW = fault</td></tr>
+    <tr><td>CH2 TEC</td><td><code>D32</code></td><td><code>HBridgeFault2</code></td><td>LOW = fault</td></tr>
+  </tbody>
+</table>
+<p>
+  Both pins are configured <code>INPUT_PULLUP</code> in <code>setup()</code>, so they read HIGH
+  normally and transition LOW when the OPA551 flag is asserted. The firmware detects
+  <strong>edge changes</strong> — it only prints to serial when the state changes, not every tick —
+  to avoid flooding the console during a sustained fault.
+</p>
+
+<h3>Fault indication</h3>
+<ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
+  <li><strong style="color:var(--ink)">TFT display</strong> — the SERVO health bar at the bottom of the affected channel panel is replaced by a red <strong style="color:var(--fault)">!! H-BRIDGE FAULT !!</strong> banner for as long as the pin is asserted.</li>
+  <li><strong style="color:var(--ink)">Serial (immediate)</strong> — <code>CH1 H-BRIDGE FAULT: ASSERTED</code> / <code>cleared</code> printed on every state change.</li>
+  <li><strong style="color:var(--ink)">1 Hz debug print</strong> — <code>*** H-BRIDGE FAULT ***</code> appended to the channel line while fault is active.</li>
+  <li><strong style="color:var(--ink)"><code>status</code> command</strong> — <code>*** H-BRIDGE FAULT ***</code> appended to the affected channel line.</li>
+  <li><strong style="color:var(--ink)">JSON API</strong> — <code>"hbf": 1</code> in the channel object (0 = normal).</li>
+  <li><strong style="color:var(--ink)">Web dashboard</strong> — fault banner replaces the servo health bar in the channel card.</li>
+</ul>
+
+<div class="callout warn">
+  <strong>The fault flag does not automatically stop the PDH lock loop.</strong> The OPA551 is
+  protecting itself; the Teensy continues running the servo. If the fault persists, issue
+  <code>stop1</code> / <code>stop2</code> to park the channel and investigate the TEC load and
+  power supply before resuming. Common causes: TEC short circuit, excessive thermal load, or
+  supply voltage outside the ±6 V TEC rail spec.
+</div>
 
 <hr class="section-rule">
 
@@ -1290,17 +1395,25 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <div class="cmd-examples">
     <div class="ex-label">Status when CH1 is locked and CH2 is searching</div>
     <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
-<span class="val">CH1 LOCKED  rms=0.00312  temp=24.5°C  I=138.2mA  setp=52.3%  relk=0</span>
+<span class="val">CH1 LOCKED  rms=0.00312  temp=24.5°C  I=138.2mA  TEC=0.831A(lim=1.00)  setp=52.3%  relk=0</span>
 <span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
-<span class="val">CH2 SEARCH  rms=0.41800  temp=23.9°C  I=138.0mA  setp=50.0%  relk=0</span>
+<span class="val">CH2 SEARCH  rms=0.41800  temp=23.9°C  I=138.0mA  TEC=0.021A(lim=1.00)  setp=50.0%  relk=0</span>
 <span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
 <span class="info">dither=10000 Hz</span></pre>
 
-    <div class="ex-label">Status after several relocks on CH2</div>
+    <div class="ex-label">Status with TEC current limiting active on CH1</div>
     <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
-<span class="val">CH1 LOCKED  rms=0.00298  temp=24.5°C  I=138.3mA  setp=52.4%  relk=0</span>
+<span class="warn">CH1 LOCKED  rms=0.00341  temp=26.1°C  I=138.4mA  TEC=2.503A(lim=0.84)  setp=52.3%  relk=0</span>
 <span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
-<span class="warn">CH2 RELOCK  rms=0.54200  temp=24.1°C  I=138.0mA  setp=50.0%  relk=3</span>
+<span class="val">CH2 LOCKED  rms=0.00298  temp=24.5°C  I=138.3mA  TEC=1.120A(lim=1.00)  setp=52.4%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="info">dither=10000 Hz</span></pre>
+
+    <div class="ex-label">Status with H-bridge fault on CH2</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">s</span>
+<span class="val">CH1 LOCKED  rms=0.00312  temp=24.5°C  I=138.2mA  TEC=0.831A(lim=1.00)  setp=52.3%  relk=0</span>
+<span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
+<span class="err">CH2 LOCKED  rms=0.00341  temp=25.3°C  I=138.1mA  TEC=1.240A(lim=1.00)  setp=51.8%  relk=0  *** H-BRIDGE FAULT ***</span>
 <span class="info">  PID kp=0.0800 ki=0.5000 kd=0.0000  thr lock=0.0200 acq=0.1000</span>
 <span class="info">dither=10000 Hz</span></pre>
   </div>
@@ -1322,7 +1435,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <div class="cmd-examples">
     <div class="ex-label">Raw ADC dump — both channels active</div>
     <pre class="terminal"><span class="prompt">&gt; </span><span class="in">d</span>
-<span class="val">LOCK1=2064 LOCK2=2031 NTC1=1820 NTC2=1834 LAS1=1712 LAS2=1709</span></pre>
+<span class="val">LOCK1=2064 LOCK2=2031 NTC1=1820 NTC2=1834 LAS1=1712 LAS2=1709 TEC1=2234 TEC2=1490</span></pre>
 
     <div class="ex-label">Interpreting the values</div>
     <pre class="terminal"><span class="info">LOCK1=2064  → PDH error CH1: (2064-2047)/2047 = +0.0083 (near zero, locked)
@@ -1330,7 +1443,9 @@ LOCK2=2031  → PDH error CH2: (2031-2047)/2047 = -0.0078 (near zero, locked)
 NTC1 =1820  → NTC voltage ratio → ~24.5 °C (via beta equation)
 NTC2 =1834  → ~24.2 °C
 LAS1 =1712  → 1712 × 0.0806 = 138.0 mA
-LAS2 =1709  → 1709 × 0.0806 = 137.8 mA</span></pre>
+LAS2 =1709  → 1709 × 0.0806 = 137.8 mA
+TEC1 =2234  → V = 2234 × 3.3/4095 = 1.800 V → I = (1.800−1.20)/0.72 = 0.83 A cooling
+TEC2 =1490  → V = 1490 × 3.3/4095 = 1.200 V → I ≈ 0.00 A (near zero current)</span></pre>
   </div>
 </div>
 

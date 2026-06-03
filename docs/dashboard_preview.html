@@ -66,6 +66,16 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);min-height:100vh
 .srv-t{flex:1;height:5px;background:#0a1019;border-radius:3px;overflow:hidden}
 .srv-f{height:100%;border-radius:3px;transition:width .25s}
 .srv-p{font-family:var(--m);font-size:9px}
+/* ---- h-bridge fault banner ---- */
+.hbf{background:color-mix(in srgb,var(--fa) 14%,var(--p2));border:1px solid color-mix(in srgb,var(--fa) 55%,transparent);border-radius:3px;padding:4px 7px;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;animation:hbf-pulse 1s ease-in-out infinite}
+@keyframes hbf-pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.hbf-txt{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--fa);text-transform:uppercase;font-family:var(--m)}
+/* ---- tec current bar ---- */
+.tec-bar{background:var(--p2);border:1px solid var(--rule);border-radius:3px;padding:4px 7px;display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.tec-bar-l{font-size:9px;letter-spacing:.6px;color:var(--mu);text-transform:uppercase;white-space:nowrap}
+.tec-bar-t{flex:1;height:5px;background:#0a1019;border-radius:3px;overflow:hidden}
+.tec-bar-f{height:100%;border-radius:3px;transition:width .25s}
+.tec-bar-v{font-family:var(--m);font-size:9px;white-space:nowrap}
 /* ---- channel buttons ---- */
 .btns{display:flex;gap:5px;flex-wrap:wrap}
 .btn{appearance:none;border:1px solid var(--rule);background:var(--p2);color:var(--ink);font-family:var(--f);font-size:11px;font-weight:600;padding:5px 9px;border-radius:6px;cursor:pointer;transition:.12s;white-space:nowrap}
@@ -117,6 +127,21 @@ details.settings[open] summary::before{content:"▾  "}
 
 <script>
 const _origFetch = window.fetch;
+window.__MOCK__ = {
+  t: 12345, pll: 1, refclk: 25.000, dither: 10000,
+  ip: '192.168.1.200', demo: 0,
+  net: { dhcp: 1, sip: '192.168.1.200', sub: '255.255.255.0', gw: '192.168.1.1', host: 'dual-pdh' },
+  ch: [
+    { n:1, st:'LOCKED',  rms:0.00312, temp:24.52, ima:138.2,
+      teci:1.843, tlim:1.000, hbf:0,
+      setp:52.3,  scan:0.000, peak:0.614, qual:0.844, relk:0,
+      kp:0.08, ki:0.5, kd:0.0, lthr:0.02, athr:0.10 },
+    { n:2, st:'SEARCH',  rms:0.42100, temp:23.87, ima:138.0,
+      teci:0.021, tlim:1.000, hbf:0,
+      setp:50.0,  scan:0.347, peak:0.600, qual:0.000, relk:0,
+      kp:0.08, ki:0.5, kd:0.0, lthr:0.02, athr:0.10 }
+  ]
+};
 window.fetch = async (url, opts) => {
   if(typeof url==='string' && url.includes('/api/status'))
     return { ok:true, json: async()=>JSON.parse(JSON.stringify(window.__MOCK__||{})) };
@@ -269,6 +294,39 @@ function makeSVG(st,scan,peak,accent,sc,rms){
 
 function ff(v,d){return(v==null||isNaN(v))?'---':v.toFixed(d);}
 
+// ---- TEC current bar ----
+function tecBarHTML(c, acc) {
+  const i = (c.teci != null && !isNaN(c.teci)) ? c.teci : null;
+  const lim = (c.tlim != null && !isNaN(c.tlim)) ? c.tlim : 1;
+  const limiting = lim < 0.999;
+  // bar: 0–2.5 A full scale; clamp display at 100%
+  const pct = i != null ? Math.min(Math.abs(i) / 2.5 * 100, 100).toFixed(0) : 0;
+  const barCol = limiting ? 'var(--fa)' : (i != null && i < 0 ? 'var(--ho)' : acc);
+  const label = i != null ? (i >= 0 ? ff(i,3)+' A' : ff(i,3)+' A ▾') : '--- A';
+  const limTxt = limiting ? `<span style="font-family:var(--m);font-size:9px;color:var(--fa);margin-left:4px">LIM ${(lim*100).toFixed(0)}%</span>` : '';
+  return `<div class="tec-bar">
+    <span class="tec-bar-l">TEC I</span>
+    <div class="tec-bar-t"><div class="tec-bar-f" style="width:${pct}%;background:${barCol}"></div></div>
+    <span class="tec-bar-v" style="color:${barCol}">${label}</span>${limTxt}
+  </div>`;
+}
+
+// ---- servo bar ----
+function servoHTML(c, sc) {
+  return `<div class="srv">
+    <span class="srv-l">SERVO</span>
+    <div class="srv-t"><div class="srv-f" style="width:${(c.qual*100).toFixed(0)}%;background:${sc}"></div></div>
+    <span class="srv-p" style="color:${sc}">${(c.qual*100).toFixed(0)}%</span>
+  </div>`;
+}
+
+// ---- H-bridge fault banner ----
+function hbfHTML() {
+  return `<div class="hbf">
+    <span class="hbf-txt">⚠ H-Bridge Fault</span>
+  </div>`;
+}
+
 // ---- channel render ----
 function renderCh(c){
   const el=document.getElementById('ch'+c.n);
@@ -301,11 +359,8 @@ function renderCh(c){
     <div class="stat hl" style="color:${acc}"><div class="k">SETPOINT</div><div class="v">${ff(c.setp,1)}<span class="u"> %</span></div></div>
     <div class="stat"><div class="k">ERR RMS</div><div class="v" style="font-size:13px">${ff(c.rms,5)}</div></div>
   </div>
-  <div class="srv">
-    <span class="srv-l">SERVO</span>
-    <div class="srv-t"><div class="srv-f" style="width:${(c.qual*100).toFixed(0)}%;background:${sc}"></div></div>
-    <span class="srv-p" style="color:${sc}">${(c.qual*100).toFixed(0)}%</span>
-  </div>
+  ${tecBarHTML(c,acc)}
+  ${c.hbf ? hbfHTML() : servoHTML(c,sc)}
   <div class="btns">
     <button class="btn pri" style="--ac:${acc}" onclick="cmd('lock${c.n}')">↻ Sweep+Lock</button>
     <button class="btn" onclick="cmd('hold${c.n}')">⏸ Hold</button>
