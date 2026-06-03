@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Driver v3.0 — Transformer Selection</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --text:      #e6edf3;
+    --text-dim:  #8b949e;
+    --text-faint:#484f58;
+    --green:     #3fb950;
+    --yellow:    #d29922;
+    --red:       #f85149;
+    --blue:      #58a6ff;
+    --cyan:      #39d353;
+    --purple:    #a371f7;
+    --orange:    #ffa657;
+    --accent:    #1f6feb;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 60%, #0d2137 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(31,111,235,0.04) 60px, rgba(31,111,235,0.04) 61px
+    ),
+    repeating-linear-gradient(
+      0deg, transparent, transparent 60px,
+      rgba(31,111,235,0.04) 60px, rgba(31,111,235,0.04) 61px
+    );
+    pointer-events: none;
+  }
+  .header-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--blue);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .header-chip::before { content: '◉'; font-size: 9px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  h1 {
+    font-size: 28px; font-weight: 300; letter-spacing: -0.5px;
+    color: var(--text); margin-bottom: 8px;
+  }
+  h1 strong { font-weight: 600; color: var(--blue); }
+  .subtitle {
+    color: var(--text-dim); font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .meta-row { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-item {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--text-dim);
+  }
+  .meta-item span { color: var(--text); }
+
+  /* ── Layout ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 48px 64px; }
+
+  /* ── Summary bar ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .summary-cell {
+    background: var(--bg2);
+    padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .summary-cell .s-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-faint);
+  }
+  .summary-cell .s-value {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.5px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .summary-cell .s-sub {
+    font-size: 11px; color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .ok   { color: var(--green); }
+  .warn { color: var(--yellow); }
+  .fail { color: var(--red); }
+
+  /* ── Section titles ── */
+  .section { margin-bottom: 36px; }
+  .section-hdr {
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px; margin-bottom: 20px;
+  }
+  .section-hdr .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    background: rgba(31,111,235,0.12);
+    border: 1px solid rgba(31,111,235,0.3);
+    border-radius: 4px;
+    padding: 2px 8px;
+    min-width: 32px; text-align: center;
+  }
+  h2 { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; color: var(--text); }
+  .section-file {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-faint);
+  }
+
+  /* ── Rail card ── */
+  .rail-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .rail-card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .rail-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    padding: 3px 10px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .badge-green  { background: rgba(63,185,80,0.15);  color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+  .badge-yellow { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+  .badge-red    { background: rgba(248,81,73,0.15);  color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+  .badge-blue   { background: rgba(88,166,255,0.12); color: var(--blue);   border: 1px solid rgba(88,166,255,0.25); }
+
+  .rail-name { font-weight: 600; font-size: 14px; }
+  .rail-summary { margin-left: auto; font-size: 12px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+  .chevron { color: var(--text-faint); font-size: 10px; transition: transform 0.2s; }
+  .rail-card.open .chevron { transform: rotate(90deg); }
+
+  .rail-body { display: none; padding: 16px; }
+  .rail-card.open .rail-body { display: block; }
+
+  /* ── Chain diagram ── */
+  .chain {
+    display: flex; align-items: center; gap: 0;
+    flex-wrap: wrap; margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+  .chain-node {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 12px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 2px;
+  }
+  .chain-node .cn-ref  { font-size: 10px; color: var(--blue); font-weight: 600; }
+  .chain-node .cn-part { font-size: 11px; color: var(--text); }
+  .chain-node .cn-volt { font-size: 13px; font-weight: 600; color: var(--orange); }
+  .chain-arrow { color: var(--text-faint); padding: 0 4px; font-size: 12px; }
+
+  /* ── Component table ── */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    margin-bottom: 12px;
+  }
+  thead th {
+    text-align: left; padding: 8px 10px;
+    background: var(--bg3); color: var(--text-faint);
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border); font-weight: 600;
+  }
+  tbody tr { border-bottom: 1px solid rgba(48,54,61,0.5); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 7px 10px; vertical-align: middle; }
+  tbody td:first-child { color: var(--blue); }
+  .td-pass { color: var(--green); font-weight: 600; }
+  .td-warn { color: var(--yellow); font-weight: 600; }
+  .td-fail { color: var(--red); font-weight: 600; }
+  .row-pick td { background: rgba(63,185,80,0.06); }
+
+  /* ── Note / warning boxes ── */
+  .note {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 12px; margin-top: 10px; line-height: 1.5;
+  }
+  .note-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .note.note-ok     { background: rgba(63,185,80,0.08);  border: 1px solid rgba(63,185,80,0.2);  }
+  .note.note-warn   { background: rgba(210,153,34,0.08); border: 1px solid rgba(210,153,34,0.2); }
+  .note.note-info   { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); }
+
+  /* ── Calc / equation block ── */
+  .calc {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; line-height: 1.9;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px; margin: 12px 0;
+    color: var(--text-dim);
+    overflow-x: auto;
+  }
+  .calc b   { color: var(--text); font-weight: 600; }
+  .calc .r  { color: var(--orange); font-weight: 600; }
+  .calc .g  { color: var(--green);  font-weight: 600; }
+  .calc .c  { color: var(--blue); }
+
+  /* ── Spec grid ── */
+  .spec-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin: 14px 0;
+  }
+  .spec-item {
+    background: var(--bg2); padding: 10px 16px;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  }
+  .spec-item .spec-label { font-size: 12px; color: var(--text-dim); }
+  .spec-item .spec-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; color: var(--orange); font-weight: 600; text-align: right;
+  }
+
+  /* ── Verdict highlight ── */
+  .verdict {
+    background: linear-gradient(135deg, rgba(63,185,80,0.10), rgba(31,111,235,0.06));
+    border: 1px solid rgba(63,185,80,0.3);
+    border-radius: 8px; padding: 16px 18px; margin: 14px 0;
+  }
+  .verdict .v-title {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--green); font-weight: 600; margin-bottom: 6px;
+  }
+  .verdict .v-body { font-size: 13px; color: var(--text); }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: rgba(88,166,255,0.1);
+    color: var(--blue); border-radius: 3px;
+    padding: 1px 5px; font-size: 12px;
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-faint);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-chip">Supply Front-End · Transformer Selection</div>
+  <h1><strong>Laser Driver v3.0</strong> — Transformer Selection</h1>
+  <p class="subtitle">Addendum to Power Rail Verification (Rev 3.0) · Mains_to_pm18V.kicad_sch · pm6V_TEC.kicad_sch</p>
+  <div class="meta-row">
+    <div class="meta-item">Addendum Rev <span>3.2</span></div>
+    <div class="meta-item">Updates <span>design_doc · power_review</span></div>
+    <div class="meta-item">Architecture <span>2 chassis XFMR · off-board front-end</span></div>
+    <div class="meta-item">TEC secondary <span style="color:var(--orange)">12Vac → 9Vac</span></div>
+    <div class="meta-item">Critical action <span style="color:var(--yellow)">bulk cap 2200→10,000µF</span></div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- Summary scorecard -->
+  <div class="summary-grid">
+    <div class="summary-cell">
+      <div class="s-label">Front-End Location</div>
+      <div class="s-value ok">OFF-BOARD</div>
+      <div class="s-sub">chassis mains-entry zone</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">Main Transformer</div>
+      <div class="s-value" style="color:var(--blue)">62064</div>
+      <div class="s-sub">25VA · 2×18V CT · chassis</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">TEC Transformer</div>
+      <div class="s-value" style="color:var(--orange)">62081</div>
+      <div class="s-sub">50VA · 2×9V CT · chassis</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">Cap-Mult Dropout</div>
+      <div class="s-value warn">~2.0 V</div>
+      <div class="s-sub">@3A · ~2.5V @5A peak</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">Bulk Cap (TEC raw)</div>
+      <div class="s-value fail">2200 µF</div>
+      <div class="s-sub">→ raise to ~10,000 µF</div>
+    </div>
+    <div class="summary-cell">
+      <div class="s-label">Mains on Signal PCB</div>
+      <div class="s-value ok">NONE</div>
+      <div class="s-sub">secondary-only connectors</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 1: Architecture ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">01</div>
+      <h2>Two-Transformer Architecture — Why the TEC Rail Is Separate</h2>
+      <div class="section-file">pm6V_TEC.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-blue">Architecture</span>
+        <span class="rail-name">±12Vac net feeds only the TEC supply — a second secondary/transformer</span>
+        <span class="rail-summary">+12Vac / −12Vac dangling net</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:12px">The global labels <code>+12Vac</code> / <code>−12Vac</code> appear <strong>only</strong> in <code>pm6V_TEC.kicad_sch</code> with no counterpart on the mains sheet — a dangling net. The ±6V TEC H-bridge supply was always intended to run from its own winding, distinct from the 18Vac winding that feeds the ±15V precision rails. Three reasons make this the correct topology:</p>
+        <table>
+          <thead><tr><th>Reason</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Bidirectional load</td><td>The TEC drive is a bipolar linear H-bridge needing symmetric ± rails; a dedicated CT winding is the natural fit.</td></tr>
+            <tr><td>Noise isolation</td><td>TEC current is high-ripple; its own rectifier + reservoir keeps that noise off the ±15V/±18V rails feeding the precision analog front-end.</td></tr>
+            <tr><td>Dropout / dissipation</td><td>Regulating ±6V down from the 18Vac winding (~±24V raw) would waste enormous power in the linear pass devices. A lower, dedicated secondary keeps dissipation sane.</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>No single catalog toroid does both.</strong> Every stock toroidal on DigiKey has <em>identical</em> dual secondaries (configurable parallel/series), not a mixed 18V + 12V output. A combined 18V/12V part would be custom-wound. <strong>Two separate transformers is the right call</strong> — and both are now mounted off the signal board (see Section 08).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: Main 18V transformer ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">02</div>
+      <h2>Main ±18V Transformer</h2>
+      <div class="section-file">Mains_to_pm18V.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">Chassis · 62064</span>
+        <span class="rail-name">18 Vac CT chassis toroid → ±18V bridge → ±15V + all logic/analog rails</span>
+        <span class="rail-summary">~0.5 A · 25 VA</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">62064 chassis</div><div class="cn-volt">2×18 Vac</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">J_18</div><div class="cn-part">Sec. connector</div><div class="cn-volt">18-0-18</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">Bridge</div><div class="cn-volt">±18V raw</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">pm15V</div><div class="cn-part">TPS7A39</div><div class="cn-volt">±15V</div></div>
+        </div>
+        <p style="margin-bottom:8px">Per the power verification report the +18V draw is ~462 mA (58% of an 800 mA bridge budget), so this transformer is modest — but it is now <strong>chassis-mounted</strong> so its primary stays in the mains-entry zone (Section 08). The ±15V op-amp rails on <code>DFBLaser</code>, <code>Readback</code> and <code>TEC_Control</code> belong here and should <strong>not</strong> move to the 9V transformer — that would cross the precision/power boundary deliberately separated in Section 01.</p>
+        <div class="spec-grid">
+          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Talema 62064</span></div>
+          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">1295-series (confirm suffix)</span></div>
+          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal · chassis, centre-bolt</span></div>
+          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 18 Vac (wired 18-0-18 CT)</span></div>
+          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">25 VA · 0.69 A series</span></div>
+          <div class="spec-item"><span class="spec-label">Primary</span><span class="spec-val">115 / 230 Vac dual</span></div>
+        </div>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>62064 is the chassis-mount sibling of the through-hole 70064K. Verify exact DigiKey PN suffix and stock at order time. Flying leads exit to a secondary-only connector on the board.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: TEC requirements ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">03</div>
+      <h2>TEC Supply Requirements &amp; Voltage Decision</h2>
+      <div class="section-file">TEC_Control.kicad_sch · pm6V_TEC.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">±6V Confirmed</span>
+        <span class="rail-name">Keep ±6V rails — reject the "increase to 9–12V" schematic note</span>
+        <span class="rail-summary">TEC Vmax 4.7V</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <table>
+          <thead><tr><th>Parameter</th><th>Value</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>TEC channels</td><td>2 (TEC1, TEC2)</td><td>TEC_Control.kicad_sch</td></tr>
+            <tr><td>Cooling current (FS)</td><td>+2.5 A / channel</td><td>DAC scaler, R7</td></tr>
+            <tr><td>Heating current (max)</td><td>−1.5 A / channel</td><td>DAC scaler</td></tr>
+            <tr><td>TEC voltage — normal max</td><td>4.0 V</td><td class="td-pass">TEC spec</td></tr>
+            <tr><td>TEC voltage — absolute max</td><td>4.7 V</td><td class="td-pass">TEC spec</td></tr>
+            <tr><td>H-bridge rails</td><td>±6 V</td><td>pm6V_TEC.kicad_sch</td></tr>
+          </tbody>
+        </table>
+        <div class="verdict">
+          <div class="v-title">Decision · H-bridge supply voltage</div>
+          <div class="v-body">With a TEC that maxes at <strong>4.7 V</strong>, the ±6 V rails already give ~1.3 V of headroom for the linear pass devices. Raising the supply to 9–12 V (as the schematic note speculated) would only dump more power into the pass transistors as heat for zero benefit. <strong>Keep ±6 V; strike the "increase to 9–12V" note.</strong> If anything the AC secondary should come <em>down</em> — see Section 06.</div>
+        </div>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Duty cycle clarified:</strong> Both channels at full 2.5 A cooling simultaneously occurs only as a brief power-on transient (~1–2 s), never sustained. Sustained load is the steady-state hold current (~1–2 A) plus occasional cooldown ramps (~3 A). This sets the thermal sizing at ~3 A with a short 5 A peak — not 5 A continuous.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: Dropout calc ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">04</div>
+      <h2>Cap-Multiplier Dropout — from the MJL21193/21194 Datasheet</h2>
+      <div class="section-file">onsemi MJL21193/D Rev 8</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-yellow">Dropout ≈ 2.0 V</span>
+        <span class="rail-name">Emitter-follower headroom = V<sub>BE</sub> + I<sub>B</sub>·R<sub>base</sub></span>
+        <span class="rail-summary">V_CE(sat) non-binding</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:10px">The pass stage is an emitter follower: the output sits one V<sub>BE</sub> below the clamped base reference, and the device must stay out of saturation (V<sub>CE</sub> &gt; V<sub>CE(sat)</sub>). The binding term is the base drive, not saturation. Values read from the datasheet curves at V<sub>CE</sub> = 5 V (not the 8 A spec point):</p>
+        <table>
+          <thead><tr><th>I_C</th><th>V_BE(on) — Fig 11/12</th><th>V_CE(sat) — Fig 9/10</th><th>hFE (est.)</th><th>I_B</th></tr></thead>
+          <tbody>
+            <tr><td>3 A (sustained worst)</td><td>~0.90 V</td><td>~0.15–0.20 V</td><td>~60–70</td><td>~45 mA</td></tr>
+            <tr><td>5 A (power-on peak)</td><td>~1.00 V</td><td>~0.30 V</td><td>~50</td><td>~100 mA</td></tr>
+          </tbody>
+        </table>
+        <div class="calc">
+<b>dropout</b> = V<span class="c">BE</span> + I<span class="c">B</span>·R<span class="c">base</span>   <span style="color:var(--text-faint)">(R_base ≈ 15 Ω, V_CE(sat) check passes since V_BE &gt; V_CE(sat))</span><br>
+@ 3 A:  0.90 + (0.045 × 15) = 0.90 + 0.68  = <span class="r">~1.6–2.0 V</span><br>
+@ 5 A:  1.00 + (0.100 × 15) = 1.00 + 1.50  = <span class="r">~2.5 V</span>
+        </div>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>The MJL21193/21194 pair is rated 16 A / 200 W with R<sub>θJC</sub> = 0.7 °C/W — vastly over-spec'd for 3–5 A. Saturation and SOA are non-issues at these currents; the curves don't bend upward until ~8–10 A. The transistors are <strong>not</strong> the limiting factor.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: Bulk cap ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">05</div>
+      <h2>Bulk Capacitor — The Binding Constraint</h2>
+      <div class="section-file">pm6V_TEC.kicad_sch · C41 / C42</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-red">⚠ Under-sized</span>
+        <span class="rail-name">2200 µF reservoir → ~11 V pp ripple at 3 A → trough collapses</span>
+        <span class="rail-summary">raise to ~10,000 µF</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:10px">The cap multiplier keeps regulating only while the raw rail's <em>ripple trough</em> stays above V<sub>out</sub> + dropout = 6 + 2 = <strong>8 V</strong>. Ripple on the reservoir is V<sub>pp</sub> = I / (f·C), f = 120 Hz. With the present <code>C41/C42 = 2200 µF</code> the trough falls far below 8 V — the supply cannot deliver 3 A cleanly at any sane secondary voltage.</p>
+        <div class="calc">
+V<span class="c">pp</span> = I / (f · C)        <span style="color:var(--text-faint)">f = 120 Hz (full-wave)</span><br>
+2200 µF @ 3A:  3 / (120 × 0.0022) = <span class="r">11.4 V pp</span>  → trough collapses <span class="fail">✗</span><br>
+4700 µF @ 3A:  3 / (120 × 0.0047) = <span class="r">5.3 V pp</span>  → still marginal<br>
+<b>10,000 µF @ 3A: 3 / (120 × 0.010) = <span class="g">2.5 V pp</span>  → trough OK ✓</b><br>
+10,000 µF @ 5A: 5 / (120 × 0.010) = <span class="r">4.2 V pp</span>  → brief power-on dip<br>
+15,000 µF @ 5A: 5 / (120 × 0.015) = <span class="g">2.8 V pp</span>  → clean even at 5A ✓
+        </div>
+        <table>
+          <thead><tr><th>Reservoir (per rail)</th><th>Ripple @3A</th><th>Trough @9Vac (peak 11.7V)</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>2200 µF (current)</td><td>11.4 V pp</td><td>~0.3 V</td><td class="td-fail">✗ drops out</td></tr>
+            <tr class="row-pick"><td>10,000 µF (recommended)</td><td>2.5 V pp</td><td>~9.2 V</td><td class="td-pass">✓ +1.2V margin</td></tr>
+            <tr><td>15,000 µF (clean to 5A)</td><td>1.7 V pp</td><td>~9.8 V</td><td class="td-pass">✓ best</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>Critical action — independent of the transformer choice:</strong> raise the TEC raw reservoir from <code>2200 µF</code> to <strong>~10,000 µF</strong> (or 15,000 µF to ride through the full 5 A power-on transient without output ripple). At a 9 Vac secondary a <strong>25 V</strong> rating is sufficient for these caps.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: Secondary voltage ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">06</div>
+      <h2>Secondary Voltage — 9 Vac</h2>
+      <div class="section-file">pm6V_TEC.kicad_sch</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">9 Vac (was 12)</span>
+        <span class="rail-name">Halves pass-transistor dissipation while holding regulation</span>
+        <span class="rail-summary">13.5 W vs 26 W @ 3A</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:10px">With the reservoir fixed at ~10,000 µF, the only remaining freedom is the secondary voltage. Lower secondary → less linear drop → less heat, bounded below by the need to keep the trough ≥ 8 V. The headroom budget gives the minimum:</p>
+        <div class="calc">
+V<span class="c">sec</span> ≥ (V<span class="c">out</span> + V<span class="c">drop</span> + V<span class="c">diode</span> + V<span class="c">ripple,pp</span>) / √2<br>
+       = (6 + 2 + 1 + 2.5) / 1.414 = <span class="g">~8.1 V rms</span>  → <b>9 Vac</b> (nearest standard, with margin)<br>
+<span style="color:var(--text-faint)">7.5 Vac gets too tight once the 5 A transient is included; do not go lower.</span>
+        </div>
+        <table>
+          <thead><tr><th>Secondary</th><th>Peak raw</th><th>Avg raw @3A</th><th>Pass diss. @3A</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>12 Vac (original)</td><td>~16.0 V</td><td>~14.7 V</td><td>~26 W</td><td class="td-warn">hot + needs big cap anyway</td></tr>
+            <tr class="row-pick"><td>9 Vac (recommended)</td><td>~11.7 V</td><td>~10.5 V</td><td>~13.5 W</td><td class="td-pass">✓ balanced</td></tr>
+            <tr><td>7.5 Vac</td><td>~9.6 V</td><td>~8.5 V</td><td>~7.5 W</td><td class="td-warn">too tight at 5A peak</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span>At steady-state hold (~1 A) the pass dissipation at 9 Vac is only ~5 W. The 13.5 W figure is the ~3 A cooldown case; the 5 A peak (~22 W) lasts a second or two. With R<sub>θJC</sub> = 0.7 °C/W the MJL pair on a modest chassis heatsink handles this comfortably.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: Part selection ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">07</div>
+      <h2>TEC Transformer — Sizing &amp; Part Selection (Chassis)</h2>
+      <div class="section-file">DigiKey · Talema 700xxK series</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-blue">Chassis · 62081</span>
+        <span class="rail-name">50 VA, 2×9V CT toroid — chassis-mounted, secondary to board</span>
+        <span class="rail-summary">2.78 A/winding</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <div class="calc">
+I<span class="c">sec,rms</span> ≈ 1.7 × I<span class="c">DC</span>  = 1.7 × 3 A = <span class="r">~5.1 A</span>  <span style="color:var(--text-faint)">(cap-input full-wave form factor)</span><br>
+Sustained load (hold ~1–2 A) well under 2.78 A/winding; 5 A peak is a ~1–2 s power-on transient<br>
+Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy</span>
+        </div>
+        <p style="margin-bottom:10px">A 50 VA toroid (~0.5 kg) is too heavy to hang on PCB pins, so it is <strong>chassis-mounted</strong> (Section 08). The two 9 V windings wire in series with the centre point grounded → ±9 Vac CT, which <code>pm6V_TEC</code> rectifies to ±raw. Sustained load is the steady-state hold (~1–2 A) with brief 3–5 A excursions; mounted to the chassis the 50 VA / 2.78 A-per-winding rating covers this with margin and tolerates the short peaks.</p>
+        <div class="spec-grid">
+          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Talema 62081</span></div>
+          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">1295-1119-ND</span></div>
+          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal · chassis, centre-bolt</span></div>
+          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 9 Vac (wired CT)</span></div>
+          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">50 VA · 2.78 A series/winding</span></div>
+          <div class="spec-item"><span class="spec-label">Primary / isolation</span><span class="spec-val">115/230 Vac · 4000 Vrms</span></div>
+        </div>
+        <table>
+          <thead><tr><th>Part (status)</th><th>VA</th><th>Secondary</th><th>Mount</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr class="row-pick"><td>Talema 62081 (1295-1119-ND)</td><td>50 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-pass">✓ selected</td></tr>
+            <tr><td>Talema 70081K (1295-1062-ND)</td><td>50 VA</td><td>2×9 Vac CT</td><td>Through-hole</td><td class="td-warn">board-mount alt (heavy)</td></tr>
+            <tr><td>Talema 62082 / next size</td><td>80 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-warn">more peak margin</td></tr>
+          </tbody>
+        </table>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>62081 is the chassis-mount sibling of the 70081K through-hole part. If extra margin against the 5 A power-on peak is wanted on paper, step up to the 80 VA member of the same chassis family. Confirm stock/PN at order time.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: Off-board front-end ── -->
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">08</div>
+      <h2>Off-Board Power Front-End &amp; Mains-Entry Zone</h2>
+      <div class="section-file">Chassis · power board</div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">Zero mains on signal PCB</span>
+        <span class="rail-name">Both transformers chassis-mounted · secondary-only connectors to board</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:12px">Both toroids are mounted to the chassis, not the signal board. The deciding factor is <strong>not</strong> size but mains isolation: confining all primary/hazardous wiring to a single chassis power-entry zone keeps mains voltage entirely off the precision analog PCB.</p>
+
+        <div class="chain">
+          <div class="chain-node"><div class="cn-ref">AC IN</div><div class="cn-part">IEC + fuse + switch</div><div class="cn-volt">mains</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">62064 chassis</div><div class="cn-volt">2×18V</div></div>
+          <div class="chain-node" style="margin-left:8px"><div class="cn-ref">T2</div><div class="cn-part">62081 chassis</div><div class="cn-volt">2×9V</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">J_SEC</div><div class="cn-part">Sec. connectors</div><div class="cn-volt">LV only</div></div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-node"><div class="cn-ref">PCB</div><div class="cn-part">Bridges + rails</div><div class="cn-volt">DC</div></div>
+        </div>
+
+        <table>
+          <thead><tr><th>Aspect</th><th>Implementation</th></tr></thead>
+          <tbody>
+            <tr><td>Transformer mount</td><td>Both centre-bolt to chassis floor; dished steel washers + neoprene pads (single-bolt kit — must not form a shorted turn).</td></tr>
+            <tr><td>Mains-entry zone</td><td>IEC inlet, primary fuse, power switch, and both primaries grouped at the chassis entry — away from µV-level TIA / reference nodes.</td></tr>
+            <tr><td>Primary wiring</td><td>Stays off-board entirely. No mains traces on the signal PCB.</td></tr>
+            <tr><td>Secondary feed — main</td><td>18-0-18 CT via 3-pos connector (terminal block or locking header), ≥3 A.</td></tr>
+            <tr><td>Secondary feed — TEC</td><td>9-0-9 CT via 3-pos connector, ≥6 A (Molex Mini-Fit Jr. or ≥6 A screw terminal).</td></tr>
+            <tr><td>Optional power board</td><td>Bridges + bulk caps + MJL cap-multiplier pass transistors (which need a chassis heatsink anyway) on a small chassis-mounted board; only regulated/clean DC crosses to the main PCB.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Benefits:</strong> (1) all hazardous mains confined to one zone — simpler creepage/clearance and safety story; (2) neither heavy toroid loads PCB solder joints; (3) 50/60 Hz magnetics and primary loops kept away from precision analog; (4) both transformers shed heat to the chassis, so ratings sit comfortably.</span>
+        </div>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span><strong>Tradeoff:</strong> two low-voltage secondary harnesses/connectors instead of board-mounted pins. Chassis toroids sometimes ship the centre-bolt mounting kit separately — confirm or add a Talema mounting kit to the cart.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-green">Inrush · SL22 10005</span>
+        <span class="rail-name">Primary-side NTC limiter — one device, both transformers</span>
+        <span class="rail-summary">10 Ω · 90 J · 570-1032-ND</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:10px">Inrush limiting goes on the <strong>primary (mains) side</strong>, not the DC side. Two reasons specific to this supply: (1) the dominant surge is the <strong>toroid magnetizing inrush</strong> (10–20× rated at a zero-crossing switch-on), which only a primary-side limiter can address; (2) a fixed series resistor on the DC raw rail would carry continuous load current and eat the ±6 V dropout headroom. A DC-side resistor must in any case sit <em>before</em> the bank to limit it at all — but the primary NTC is the better location.</p>
+        <div class="calc">
+I<span class="c">prim</span> = 75 VA / 120 V = <span class="g">0.62 A</span> steady<br>
+Peak line = 120 × √2 = <span class="r">170 V</span><br>
+Inrush clamp @ 10 Ω cold = 170 / 10 = <span class="g">~17 A peak</span>  → safe for 1 A slow-blow (brief I²t) + switch<br>
+Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 J part</b>
+        </div>
+        <div class="spec-grid">
+          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Ametherm SL22 10005</span></div>
+          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">570-1032-ND</span></div>
+          <div class="spec-item"><span class="spec-label">Cold resistance</span><span class="spec-val">10 Ω (25 °C)</span></div>
+          <div class="spec-item"><span class="spec-label">Steady current / energy</span><span class="spec-val">5 A max · 90 J</span></div>
+          <div class="spec-item"><span class="spec-label">Voltage</span><span class="spec-val">120 / 240 VAC</span></div>
+          <div class="spec-item"><span class="spec-label">Body</span><span class="spec-val">22 mm disc · +152 °C at I_max</span></div>
+        </div>
+        <p style="margin-bottom:6px">Placement: series with the <strong>line (hot) conductor, after fuse F1 and the switch</strong>, feeding <em>both</em> primaries (shared mains node). One device covers both transformers — which is why the larger 22 mm / 90 J part is used rather than one sized for a single small transformer.</p>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>Low-current caveat:</strong> at 0.62 A you're only ~12% of the 5 A rating, so the NTC won't self-heat to its minimum — it settles at a few ohms (~1–2 V drop, ~1 W continuous, runs warm). Negligible on a 120 V primary and on the secondary headroom. For <em>zero</em> steady penalty, the alternative is a relay-bypassed resistor (resistor limits the surge for a few hundred ms, then a relay shorts it out). The NTC is simpler and is the recommended choice here.</span>
+        </div>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>Note: the existing MOSFET soft-start (Q3/Q4) sits <em>downstream</em> of the raw bank, so it does not limit the bank's charge surge — the primary NTC is what protects against that. If a DC-side soft-start is preferred instead, reposition it so the raw bank charges through it.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-blue">Interface · MSTB 2,5</span>
+        <span class="rail-name">Power-board → main-board connector (pluggable screw, 5.08 mm)</span>
+        <span class="rail-summary">2 blocks · split grounds</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <p style="margin-bottom:10px">H-bridge stays on the main board, so ±6 V_TEC crosses the interface at up to 5 A. Two separate pluggable screw blocks split the clean rails from the high-current TEC rails and keep the two ground returns separate. Different position counts (3 vs 6) also prevent cross-mating.</p>
+
+        <table>
+          <thead><tr><th>Block</th><th>Pos</th><th>Net</th><th>Current</th></tr></thead>
+          <tbody>
+            <tr><td>A — clean</td><td>1</td><td>+18 V raw</td><td>~0.5 A</td></tr>
+            <tr><td>A</td><td>2</td><td>GND_PWR (±18 V return)</td><td>~1 A</td></tr>
+            <tr><td>A</td><td>3</td><td>−18 V raw</td><td>~0.5 A</td></tr>
+            <tr class="row-pick"><td>B — TEC</td><td>1–2</td><td>+6 V_TEC (paralleled)</td><td>up to 5 A</td></tr>
+            <tr class="row-pick"><td>B</td><td>3–4</td><td>GND_TEC (return, paralleled)</td><td>up to 5 A</td></tr>
+            <tr class="row-pick"><td>B</td><td>5–6</td><td>−6 V_TEC (paralleled)</td><td>up to 3 A</td></tr>
+          </tbody>
+        </table>
+
+        <div class="spec-grid">
+          <div class="spec-item"><span class="spec-label">System</span><span class="spec-val">Phoenix COMBICON MSTB 2,5 · 5.08 mm</span></div>
+          <div class="spec-item"><span class="spec-label">Rating</span><span class="spec-val">12 A IEC · 320 V · 24–12 AWG</span></div>
+          <div class="spec-item"><span class="spec-label">Block A header / plug</span><span class="spec-val">MSTB 2,5/3-G-5,08 / 3-STF-5,08</span></div>
+          <div class="spec-item"><span class="spec-label">Block B header / plug</span><span class="spec-val">MSTB 2,5/6-G-5,08 / 6-STF-5,08</span></div>
+          <div class="spec-item"><span class="spec-label">Plug variant</span><span class="spec-val">-STF (screw-flange lock)</span></div>
+          <div class="spec-item"><span class="spec-label">Budget alt.</span><span class="spec-val">On-Shore ED series (compatible)</span></div>
+        </div>
+
+        <p style="margin-bottom:6px"><strong>Wire / drop:</strong> ±6 V_TEC and its return use single 12 AWG or 2× 16 AWG across the paralleled pins; keep the harness short so the 5 A round-trip drop stays well under the ~1.3 V H-bridge headroom (target tens of mV). The 12 A/position rating is huge margin — the parallel pins are for low resistance, not capacity.</p>
+        <div class="note note-ok">
+          <span class="note-icon">✓</span>
+          <span><strong>Ground discipline:</strong> carry two separate returns — GND_PWR (Block A) and GND_TEC (Block B) — and join them only at a single star point on the power board / chassis stud. The switching TEC return must not share copper with the ±18 V/analog reference. This is the reason for two blocks rather than one 9-position part.</span>
+        </div>
+        <div class="note note-warn">
+          <span class="note-icon">⚠</span>
+          <span><strong>Verify on the main board:</strong> with the H-bridge and its OPA551 error amp now on the main board fed by two arriving grounds, confirm the TEC current-sense and error-amp ground reference the TEC return (GND_TEC) appropriately, not the analog reference.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Action summary ── -->
+  <hr>
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-num">—</div>
+      <h2>Action Summary — Transformer Front-End</h2>
+    </div>
+
+    <div class="rail-card open">
+      <div class="rail-card-header" onclick="toggle(this)">
+        <span class="rail-badge badge-yellow">7 Items</span>
+        <span class="rail-name">Changes for the supply front-end</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="rail-body">
+        <table>
+          <thead><tr><th>#</th><th>Item</th><th>Location</th><th>Action</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>TEC raw reservoir under-sized</td>
+              <td>pm6V_TEC.kicad_sch · C41/C42</td>
+              <td>Raise 2200 µF → ~10,000 µF (15,000 µF for clean 5A transient). 25 V rating OK at 9 Vac. <strong>Independent of transformer choice.</strong></td>
+              <td class="td-fail">⚠ Critical</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>TEC secondary voltage</td>
+              <td>Mains / pm6V_TEC</td>
+              <td>Change ±12 Vac → ±9 Vac CT. Halves pass-transistor dissipation (~26 W → ~13.5 W @ 3A) while holding regulation.</td>
+              <td class="td-warn">⚠ High</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Move front-end off the signal board</td>
+              <td>Chassis / layout</td>
+              <td>Chassis-mount both transformers; group IEC inlet + fuse + switch + both primaries in one mains-entry zone. Bring only LV secondaries onto the board via 3-pos connectors. Remove all mains traces from the signal PCB.</td>
+              <td class="td-warn">⚠ High</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Order transformers (chassis)</td>
+              <td>BOM</td>
+              <td>Main: Talema <strong>62064</strong> (25 VA, 2×18V CT, chassis). TEC: Talema <strong>62081 / 1295-1119-ND</strong> (50 VA, 2×9V CT, chassis). Confirm 62064 DK PN suffix + stock; add centre-bolt mounting kits.</td>
+              <td class="td-warn">⚠ Medium</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Primary-side inrush limiter</td>
+              <td>Mains entry (power board)</td>
+              <td>Add Ametherm <strong>SL22 10005</strong> (570-1032-ND), 10 Ω / 5 A / 90 J NTC, in series with the line after F1/switch, feeding both primaries. Clamps toroid magnetizing inrush + reservoir surge to ~17 A peak. Existing Q3/Q4 soft-start sits downstream of the raw bank and does not limit it.</td>
+              <td class="td-warn">⚠ Medium</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Board-to-board connector</td>
+              <td>Power board ↔ main board</td>
+              <td>Two pluggable screw blocks (Phoenix MSTB 2,5 / 5.08 mm): 3-pos for ±18 V + GND_PWR, 6-pos for ±6 V_TEC + GND_TEC with paralleled pins. -STF screw-flange plugs. Two separate ground returns joined only at the power-board star point.</td>
+              <td class="td-warn">⚠ Medium</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Strike "increase to 9–12V" note</td>
+              <td>TEC_Control.kicad_sch</td>
+              <td>TEC Vmax = 4.7 V makes a higher H-bridge rail pure waste heat. Keep ±6 V; remove the speculative note.</td>
+              <td class="td-pass">✓ Resolved</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note note-info">
+          <span class="note-icon">ℹ</span>
+          <span>This supersedes the prior Power Review interpretation that read the ±6V_TEC worst case as a sustained 5 A. With the duty cycle clarified (5 A only at power-on), the secondary lowered to 9 Vac, and both transformers moved off-board to the chassis, the front-end is now a clean mains-isolated power section feeding only DC to the main PCB.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer class="footer">
+  <span>Laser Driver v3.0 · Transformer Selection · Addendum Rev 3.2 · off-board front-end · updates design_doc + power_review</span>
+  <span>Lab R&amp;D · Dual CW DFB1550LP + Bipolar TEC</span>
+</footer>
+
+<script>
+  function toggle(hdr) { hdr.parentElement.classList.toggle('open'); }
+</script>
+</body>
+</html>

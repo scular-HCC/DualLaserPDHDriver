@@ -14406,7 +14406,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f4b94f10-0977-4061-a1a3-7a0fcd8224c8")
-		(property "Reference" "U38"
+		(property "Reference" "U37"
 			(at 131.6833 107.95 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14506,7 +14506,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/20b1c7a7-d05f-4e99-ab1a-7c26c0a8ad66"
-					(reference "U38")
+					(reference "U37")
 					(unit 1)
 				)
 			)
