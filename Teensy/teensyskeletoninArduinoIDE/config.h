@@ -94,13 +94,18 @@
 //   V_IMON = TEC_IMON_OFFSET_V + TEC_IMON_V_PER_A * I_amps
 //   At 0 A  → ~1.20 V  (INA826 REF pin)
 //   At 2.5 A → ~3.00 V  (Vmax from schematic annotation)
-// DAC zero-current code from TEC_VZERO=1.875V annotation:
-//   code 24576 = 0 A, code 0 = +2.5 A cooling, code 65535 = -1.5 A heating
+// DAC zero-current code for the VOUTC≈1.20V virtual-zero (AD5064 5V ref):
+//   code 15728 = 0 A  (1.20 / 5.0 × 65535 ≈ 15728)
+// The +2.5 A (cooling) / -1.5 A (heating) endpoint codes are NOT asserted
+// here: they depend on the R44/R45 and R40/R43 scaler around the 1.20 V
+// virtual zero and must be calibrated in firmware against measured TEC
+// current (see adc_to_tec_amps / IMON readback). Regenerate the
+// current↔code table for VZERO=1.20V; the old table assumed VZERO=1.875V.
 // ============================================================
 #define TEC_IMON_OFFSET_V    1.20f   // V_IMON at 0 A
 #define TEC_IMON_V_PER_A     0.72f   // INA826 gain × shunt = 7.2 × 0.1
 #define TEC_ILIMIT_A         2.5f    // software current limit (amps)
-#define TEC_DAC_ZERO_CODE    24576u  // DAC code for 0 A TEC current
+#define TEC_DAC_ZERO_CODE    15728u  // DAC code for 0 A TEC current (VOUTC≈1.20V, 5V ref)
 #define TEC_ILIMIT_STEP      0.05f   // limit-factor reduction per tick when over-current
 #define TEC_ILIMIT_RESTORE   0.005f  // limit-factor restoration per tick when under-current
 

@@ -1,0 +1,316 @@
+.title KiCad schematic
+.model __D4 D
+.model __D6 D
+.model __D5 D
+.model __D10 D
+.model __D11 D
+.model __D13 D
+.model __D12 D
+F1 __F1
+R1 Earth Net-_R1-Pad2_ 1k
+J1 __J1
+R2 Net-_D1-+_ /Mains_to_+-18V/+22VNF 15
+R6 /Mains_to_+-18V/+22VNF Net-_D3-K_ 100k
+R7 /Mains_to_+-18V/-22VNF Net-_D2-A_ 100k
+D3 __D3
+D2 __D2
+C4 -6V_TEC /Mains_to_+-18V/-22VNF 2200uF 50V
+C3 /Mains_to_+-18V/+22VNF -6V_TEC 2200uF 50V
+TH1 __TH1
+T1 __T1
+T2 __T2
+R8 /Mains_to_+-18V/+22VNF +22V 4.75
+R9 /Mains_to_+-18V/-22VNF -22V 4.75, 2+W
+C7 +22V -6V_TEC 2.2u
+C8 -6V_TEC -22V 2.2u
+C6 -6V_TEC -22V 1000uF 50V
+C5 +22V -6V_TEC 1000uF 50V
+R5 Net-_D2-A_ -6V_TEC 1Meg
+C2 Net-_D2-A_ -6V_TEC 470n
+D1 __D1
+Q1 __Q1
+R3 Net-_D1--_ /Mains_to_+-18V/-22VNF 15
+R4 Net-_D3-K_ /Mains_to_+-18V/+22VNF 1Meg
+C1 Net-_D3-K_ -6V_TEC 470n
+Q2 __Q2
+U2 __U2
+R10 Net-_U2-SET_ -6V_TEC 54.9k 0.1%
+C12 Net-_U2-SET_ -6V_TEC 4.7uF X7R
+C14 Net-_U2-OUT_ -6V_TEC 100n
+C15 5Vref -6V_TEC 10u
+U3 __U3
+C13 Net-_U2-OUT_ -6V_TEC 4.7u
+D4 Net-_D4-A_ +22V __D4
+C11 Net-_D4-A_ -6V_TEC 4.7u
+U1 __U1
+C10 Net-_D4-A_ -6V_TEC 100n
+C9 +22V -6V_TEC 100n
+R11 Net-_U3-VOUTF_ 5Vref 1k
+U4 __U4
+C16 5Vref -6V_TEC 10uF 16V Polymer
+U8 __U8
+C23 -6V_TEC 3V3 1u
+C24 -6V_TEC 1V8 1u
+C19 Net-_U7-EN/UV_ -6V_TEC 47uF RC
+C20 Net-_U7-EN/UV_ -6V_TEC 4.7uF RC
+C17 +22V -6V_TEC 100n
+U5 __U5
+C21 Net-_U7-SET_ -6V_TEC 4.7nF NP0
+C22 3V3 -6V_TEC 10uF X5R or X7R
+U7 __U7
+R13 Net-_U7-SET_ -6V_TEC 33k 0.1%
+R12 Net-_D6-A_ Net-_U7-EN/UV_ 4.7
+C18 Net-_D5-A_ -6V_TEC 100n
+D6 Net-_D6-A_ Net-_D5-A_ __D6
+D5 Net-_D5-A_ +22V __D5
+U6 __U6
+R16 Net-_U9-FBN_ -6V_TEC 1k
+R15 Net-_U9-OUTN_ Net-_U9-FBN_ 12.7k 0.1%
+R17 Net-_U9-FBP_ -6V_TEC 1k
+C31 Net-_U10-SET_ -6V_TEC 4.7uF X7R
+C32 Net-_U11-SET_ -6V_TEC 4.7uF X7R
+R19 Net-_U11-SET_ -6V_TEC 143k 0.1%
+C33 +15V -6V_TEC 10u
+C34 -6V_TEC -15V 10u
+R18 Net-_U10-SET_ -6V_TEC 143k 0.1%
+C28 Net-_U10-EN/UV_ -6V_TEC 10u
+U10 __U10
+C29 Net-_U11-ENUV_ -6V_TEC 10u
+C30 Net-_U11-ENUV_ -6V_TEC 10u
+U11 __U11
+U9 __U9
+C25 +22V -6V_TEC 10u
+R14 Net-_U10-EN/UV_ Net-_U9-FBP_ 12.7k 0.1%
+C26 -22V -6V_TEC 10u
+C27 -6V_TEC Net-_U9-NR/SS_ 100n
+C50 Net-_C43-Pad2_ Net-_C50-Pad2_ 1000uF 25V
+C49 Net-_C49-Pad1_ Net-_C43-Pad2_ 1000uF 25V
+R28 Net-_D9-A_ Net-_C49-Pad1_ 4.75
+R29 Net-_D8-K_ Net-_C50-Pad2_ 4.75R 2W
+C47 Net-_D9-A_ Net-_C43-Pad2_ 2200uF 35V
+C48 Net-_C43-Pad2_ Net-_D8-K_ 2200uF 35V
+R21 Net-_D7--_ Net-_D8-K_ 15
+C43 Net-_D9-K_ Net-_C43-Pad2_ 470n
+R20 Net-_D7-+_ Net-_D9-A_ 15
+D9 __D9
+R24 Net-_D9-A_ Net-_D9-K_ 100k
+R22 Net-_D9-K_ Net-_D9-A_ 1Meg
+Q3 __Q3
+D8 __D8
+Q4 __Q4
+C44 Net-_D8-A_ -6V_TEC 470n
+R25 Net-_D8-K_ Net-_D8-A_ 100k
+R23 Net-_D8-A_ -6V_TEC 1Meg
+R35 -6V_TEC -6V_TEC 1k bleed resistor
+R31 __R31
+Q6 __Q6
+C52 -6V_TEC -6V_TEC 1000 uF C_out-
+C54 -6V_TEC -6V_TEC 2.2u
+R27 Net-_D7--_ Net-_U13-K_ 10k Bias
+Q5 __Q5
+D10 Net-_D10-A_ Net-_D10-K_ __D10
+R26 Net-_D10-K_ -6V_TEC 10k Bias
+U12 __U12
+C45 Net-_D7-+_ -6V_TEC 2.2u
+C41 Net-_D7-+_ -6V_TEC 1000uF 25V
+C42 Net-_D7--_ -6V_TEC 1000uF 25V
+R30 __R30
+R34 +6V_TEC -6V_TEC 1k bleed resistor
+C53 +6V_TEC -6V_TEC 2.2u
+Q8 __Q8
+R33 __R33
+R32 __R32
+Q7 __Q7
+C51 +6V_TEC -6V_TEC 1000 uF C_out+
+C37 Net-_D7-+_ -6V_TEC 3300uF (UPW1E332MHD)
+C40 Net-_D7--_ -6V_TEC 3300uF (UPW1E332MHD)
+C39 Net-_D7--_ -6V_TEC 3300uF (UPW1E332MHD)
+C36 Net-_D7-+_ -6V_TEC 3300uF (UPW1E332MHD)
+C35 Net-_D7-+_ -6V_TEC 3300uF (UPW1E332MHD)
+C38 Net-_D7--_ -6V_TEC 3300uF (UPW1E332MHD)
+C46 Net-_D7--_ -6V_TEC 2.2u
+U13 __U13
+D11 -6V_TEC Net-_D11-K_ __D11
+D7 __D7
+R37 Net-_U16-SET_ -6V_TEC 49.9k 0.1%
+C60 Net-_U16-EN/UV_ -6V_TEC 100u
+C61 Net-_U16-SET_ -6V_TEC 4.7uF X7R
+C59 Net-_D13-A_ -6V_TEC 100n
+R36 Net-_D13-A_ Net-_U16-EN/UV_ 1R RC
+D13 Net-_D13-A_ Net-_D12-A_ __D13
+C57 Net-_D12-A_ -6V_TEC 4.7u
+U15 __U15
+C58 Net-_D12-A_ -6V_TEC 0.33u
+R39 Net-_U17-OUTS_ 5VLaser 20m PCB Trace
+C63 Net-_U17-OUTS_ -6V_TEC 10u
+C62 Net-_U16-OUTS_ -6V_TEC 10u
+R38 Net-_U16-OUTS_ 5VLaser 20m PCB Trace
+C56 +22V -6V_TEC 100n
+U14 __U14
+D12 Net-_D12-A_ +22V __D12
+C55 +22V -6V_TEC 4.7u
+U16 __U16
+U17 __U17
+R65 __R65
+D18 __D18
+Q13 __Q13
+R64 __R64
+D19 __D19
+Q14 __Q14
+R61 __R61
+Q9 __Q9
+R62 Net-_Q11-S_ Net-_R62-Pad2_ 0
+R63 __R63
+D21 __D21
+Q15 __Q15
+Q11 __Q11
+Q16 __Q16
+Q12 __Q12
+D20 __D20
+D16 __D16
+U18 __U18
+R48 Net-_U20-OUT_ Net-_U22-+_ 10
+R41 5Vref Net-_U18-IN+_ 3.16k
+R45 Net-_U20-IN+_ TEC_VZERO 20k 0.1% TEC_scaler_bot
+R49 3V3 Net-_U22-Flag_ 10k
+R55 Net-_U22-Flag_ HBridgeFault1 1k
+C65 Net-_U22-Flag_ -6V_TEC 100n
+R59 Net-_U22--_ Net-_D20-K_ 47
+U22 __U22
+R44 VOUTC Net-_U20-IN+_ 4.99k 0.1% TEC_scaler_top
+R58 Net-_U22--_ Net-_D16-K_ 47
+D17 __D17
+R56 Net-_U22--_ Net-_D21-A_ 47
+R57 Net-_U22--_ Net-_D17-A_ 47
+U20 __U20
+U19 __U19
+R47 3V3 Net-_U21-Flag_ 10k
+C64 Net-_U21-Flag_ -6V_TEC 100n
+R50 Net-_U21-Flag_ HBridgeFault2 1k
+R51 Net-_U21--_ Net-_D18-A_ 47
+R53 Net-_U21--_ Net-_D15-K_ 47
+R52 Net-_U21--_ Net-_D14-A_ 47
+R54 Net-_U21--_ Net-_D15-A_ 47
+R46 Net-_U19-OUT_ Net-_U21-+_ 10
+U21 __U21
+R40 VOUTD Net-_U19-IN+_ 4.99k 0.1% TEC_scaler_top
+R43 Net-_U19-IN+_ Net-_U18-IN+_ 20k 0.1% TEC_scaler_bot
+R42 Net-_U18-IN+_ -6V_TEC 1k
+D15 __D15
+R60 Net-_Q10-D_ Net-_R60-Pad2_ 0
+Q10 __Q10
+D14 __D14
+C70 +5V_LASER -6V_TEC 100nF X7R
+D22 __D22
+R77 Net-_U23-OUT_ Net-_Q17-G_ 10k gate
+Q17 __Q17
+C68 +5V_LASER -6V_TEC 100uF 10V
+R84 +5V_LASER LASER1_A 4R7 inrush limit
+R71 VOUTB Net-_U24-IN+_ 200k 0.1% scaler_top
+R72 DITH2_SUM Net-_U24-IN+_ 1k 0.1% scaler_bot
+Q18 __Q18
+R85 +5V_LASER LASER2_A 4R7 inrush limit
+C69 +5V_LASER -6V_TEC 100uF 10V
+R80 __R80
+C71 +5V_LASER -6V_TEC 100nF X7R
+U23 __U23
+R66 VOUTA Net-_U23-IN+_ 200k 0.1% scaler_top
+R67 DITH1_SUM Net-_U23-IN+_ 1k 0.1% scaler_bot
+R79 __R79
+C66 LAS1_SENSE_P Net-_U23-OUT_ 100pF NP0
+U24 __U24
+R78 Net-_U24-OUT_ Net-_Q18-G_ 10k gate
+C67 LAS2_SENSE_P Net-_U24-OUT_ 100pF NP0
+D23 __D23
+R88 Net-_J_BTF2-GND_ -6V_TEC 47R prot
+J_BTF2 __J_BTF2
+R86 Net-_J_BTF2-CHIP+_ BTF2_LASER 47R prot
+R87 Net-_J_BTF2-CHIP-_ BTF2_LASER_K 47R prot
+R70 -6V_TEC Net-_J_BTF1-NTC_GND_ 47R prot
+R69 NTC1_A Net-_J_BTF1-NTC_A_ 47R prot
+R76 Net-_J_BTF1-TEC-_ TEC1_BTF_N 47R prot
+R89 Net-_J_BTF2-TEC-_ TEC2_BTF_N 47R prot
+R68 TEC1_BTF_P Net-_J_BTF1-TEC+_ 47R prot
+J_BTF1 __J_BTF1
+R81 TEC2_BTF_P Net-_J_BTF2-TEC+_ 47R prot
+R82 NTC2_A Net-_J_BTF2-NTC_A_ 47R prot
+R74 Net-_J_BTF1-CHIP-_ BTF1_LASER_K 47R prot
+R83 -6V_TEC Net-_J_BTF2-NTC_GND_ 47R prot
+R75 Net-_J_BTF1-GND_ -6V_TEC 47R prot
+R73 Net-_J_BTF1-CHIP+_ BTF1_LASER 47R prot
+U26 __U26
+R91 Net-_R91-Pad1_ Net-_R91-Pad2_ 487
+U29 __U29
+C_aaf1a1 Net-_U29-+INB_ -6V_TEC 1nF NP0 AAF C1
+C_aaf1b1 Net-_C_aaf1b1-Pad1_ -6V_TEC 1nF NP0 AAF C2
+R_aaf1b1 Net-_C_aaf1b1-Pad1_ Net-_U29-+INB_ 5.6k AAF R2
+U_TIA1 __U_TIA1
+R_aaf1a1 Net-_U_TIA1-OUT_ Net-_C_aaf1b1-Pad1_ 5.6k AAF R1
+J2 __J2
+C_ef1 Net-_J2A-In1_ Net-_U_TIA1-OUT_ 5pF Cf ExtPD NP0
+R92 Net-_J2A-In1_ Net-_U_TIA1-OUT_ 2.7k Rf ExtPD
+U27 __U27
+R90 Net-_R90-Pad1_ Net-_R90-Pad2_ 487
+U25 __U25
+R94 Net-_R94-Pad1_ Net-_R94-Pad2_ 8.06k
+U28 __U28
+R95 Net-_R95-Pad1_ Net-_R95-Pad2_ 8.06k
+J3 __J3
+C_ef2 Net-_J3A-In1_ Net-_U_TIA2-OUT_ 5pF Cf ExtPD NP0
+R93 Net-_J3A-In1_ Net-_U_TIA2-OUT_ 2.7k Rf ExtPD
+R_aaf1b2 Net-_C_aaf1b2-Pad1_ Net-_U29-+INA_ 5.6k AAF R2
+U_TIA2 __U_TIA2
+R_aaf1a2 Net-_U_TIA2-OUT_ Net-_C_aaf1b2-Pad1_ 5.6k AAF R1
+C_aaf1a2 Net-_U29-+INA_ -6V_TEC 1nF NP0 AAF C1
+C_aaf1b2 Net-_C_aaf1b2-Pad1_ -6V_TEC 1nF NP0 AAF C2
+U_TIA4 __U_TIA4
+C_f3 PD2_MON Net-_U_TIA5-IN-_ 2.2pF Cf TIA
+R_f3 Net-_U_TIA5-IN-_ PD2_MON 10k Rf TIA
+U_TIA5 __U_TIA5
+C_f2 PD1_MON Net-_U_TIA4-IN-_ 2.2pF Cf TIA
+R_bias1 MPD1_K Net-_U_TIA4-IN-_ 100k PD bias
+R_f2 Net-_U_TIA4-IN-_ PD1_MON 10k Rf TIA
+C_f1 Net-_U_TIA3-IN-_ MPD1_MON 2.2pF Cf
+C_f4 Net-_U_TIA6-IN-_ MPD2_MON 2.2pF Cf
+R_f1 Net-_U_TIA3-IN-_ MPD1_MON 10k Rf
+U_TIA3 __U_TIA3
+R_f4 Net-_U_TIA6-IN-_ MPD2_MON 10k Rf
+U_TIA6 __U_TIA6
+R_NTC1 3V3 NTC1_A 10k 0.1% NTC1 pullup
+C_NTC2 NTC2_A -6V_TEC 100nF ADC filter
+C_NTC1 NTC1_A -6V_TEC 100nF ADC filter
+R_NTC2 3V3 NTC2_A 10k 0.1% NTC1 pullup
+R_bias2 MPD2_K Net-_U_TIA5-IN-_ 100k PD bias
+U32 __U32
+C73 DGND Net-_U33-CAP/2.5V_ 100n
+C_d2 Net-_U33-VOUT_ Net-_C_d2-_-Pad2_ 470nF X7R AC-couple L2
+R_d2 Net-_C_d2-_-Pad2_ DITH2_SUM 383k 1%
+U33 __U33
+U31 __U31
+C72 DGND Net-_U31-CAP/2.5V_ 100n
+C_d1 Net-_U31-VOUT_ Net-_C_d1-_-Pad2_ 470nF X7R AC-couple L1
+R_d1 Net-_C_d1-_-Pad2_ DITH1_SUM 383k 1%
+U30 __U30
+U34 __U34
+U35 __U35
+R102 Net-_D24-A_ Net-_U35-S_ 2Meg
+C74 DGND 3V3 0.1u
+Y1 __Y1
+R100 Net-_C76-Pad2_ Net-_D24-K-Pad1_ 1k
+D24 __D24
+C76 Net-_J4A-In1_ Net-_C76-Pad2_ 10n
+C77 DGND Net-_D24-A_ 10n
+R101 Net-_D24-A_ DGND 100k
+J4 __J4
+R99 Net-_C75-Pad2_ Net-_U35-B2_ 1k
+C75 Net-_J4A-In1_ Net-_C75-Pad2_ 10n
+R96 DGND Net-_J4A-In1_ 50
+R98 Net-_U34--_ DGND 27k
+R97 3V3 Net-_U34--_ 1Meg
+R103 1V8 Net-_U36-S0_ 1k
+U36 __U36
+R105 MCU_SCL 3V3 4.7k
+R104 MCU_SDA 3V3 4.7k
+A1 __A1
+U37 __U37
+.end

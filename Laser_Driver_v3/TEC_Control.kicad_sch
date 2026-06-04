@@ -2083,7 +2083,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Q3-Q6 (TEC1) and Q7-Q10 (TEC2): IRF9540N P-ch high-side + IRLB8721 N-ch low-side  —  off-board TO-220 on chassis heatsink"
+	(text "TEC1=Q11/Q12/Q15/Q16, TEC2=Q9/Q10/Q13/Q14: IRLB8721 N-ch high-side + IRF9540N P-ch low-side  —  off-board TO-220 on chassis heatsink"
 		(exclude_from_sim no)
 		(at 16.764 18.352 0)
 		(effects
@@ -2104,7 +2104,7 @@
 		)
 		(uuid "273e3fd8-4ebc-4764-8daa-193f6b20f31c")
 	)
-	(text "TEC CHANNEL 2  —  Error amp: U3D  |  H-bridge: Q7/Q8 + Q9/Q10  via J8b"
+	(text "TEC CHANNEL 2  —  Error amp: U19/U21  |  H-bridge: Q9/Q10 + Q13/Q14  via J8b"
 		(exclude_from_sim no)
 		(at 46.99 103.886 0)
 		(effects
@@ -2115,7 +2115,7 @@
 		)
 		(uuid "47a697a5-c663-4b35-84aa-796bf2160d07")
 	)
-	(text "R9/R16 scaler: DAC 0-5V -> 250mV at R7 -> 2.5A FS  |  Bottom of R16 to TEC_VZERO (not AGND)"
+	(text "R44/R45 scaler: DAC 0-5V -> 250mV at R65 -> 2.5A FS  |  Bottom of R45 to TEC_VZERO (not AGND)"
 		(exclude_from_sim no)
 		(at 25.4 39.116 0)
 		(effects
@@ -2126,7 +2126,7 @@
 		)
 		(uuid "4a461460-1da7-44e9-99b3-340a5de63d8c")
 	)
-	(text "TEC_VZERO=1.875V: DAC code 24576=0A | code 0=+2.5A cooling | code 65535=-1.5A heating"
+	(text "TEC_VZERO=1.20V (U18 buffer): 0A at VOUTC=1.20V (code ~15728) | +2.5A cool / -1.5A heat endpoints via R44/R45 scaler - calibrate in FW"
 		(exclude_from_sim no)
 		(at 16.764 20.828 0)
 		(effects
@@ -2137,7 +2137,7 @@
 		)
 		(uuid "6ac4f82f-e8b0-41fa-ac03-dd46db679b37")
 	)
-	(text "R9/R16 scaler: DAC 0-5V -> 250mV at R7b -> 2.5A FS  |  Bottom of R16 to TEC_VZERO (not AGND)"
+	(text "R40/R43 scaler: DAC 0-5V -> 250mV at R64 -> 2.5A FS  |  Bottom of R43 to TEC_VZERO (not AGND)"
 		(exclude_from_sim no)
 		(at 46.228 107.95 0)
 		(effects
@@ -2168,7 +2168,7 @@
 		)
 		(uuid "83fcf21c-2d88-4243-9d29-3fb558d28810")
 	)
-	(text "TEC CHANNEL 1  —  Error amp: U3B  |  H-bridge: Q3/Q4 + Q5/Q6  via J8a"
+	(text "TEC CHANNEL 1  —  Error amp: U20/U22  |  H-bridge: Q11/Q12 + Q15/Q16  via J8a"
 		(exclude_from_sim no)
 		(at 16.51 35.052 0)
 		(effects

@@ -71,7 +71,7 @@ static float    s_rms_val[2] = {0.5f, 0.5f};
 
 // TEC current monitoring and software current limit
 static float    s_tec_i[2]       = {0.0f, 0.0f};
-static uint16_t s_tec_dac[2]     = {DAC_MID_CODE, DAC_MID_CODE}; // desired setpoint
+static uint16_t s_tec_dac[2]     = {TEC_DAC_ZERO_CODE, TEC_DAC_ZERO_CODE}; // desired setpoint (default 0 A)
 static float    s_tec_lim_fac[2] = {1.0f, 1.0f};                 // 1.0 = no limiting
 
 static inline float adc_to_error(int raw) {

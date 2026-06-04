@@ -9,7 +9,7 @@
 		(date "2025-05-22")
 		(rev "3.0")
 		(company "Stefan Cular")
-		(comment 1 "1550nm 70mW DFB butterfly | Bipolar TEC H-bridge -1.5A/+2.5A | AD5064 16-bit DAC")
+		(comment 1 "1550nm 20mW DFB butterfly | Bipolar TEC H-bridge -1.5A/+2.5A | AD5064 16-bit DAC")
 		(comment 2 "Rail2: LM7807->LT3042->LTC6655-5 | Rail3: LM7805->RC->LT3045 | Rail4/5: ±LM780x->LT3045/94")
 		(comment 3 "Readback: INA826 laser+TEC current, NTC thermistor divider, OPA380 MPD TIA")
 	)
@@ -24,7 +24,7 @@
 		)
 		(uuid "4b0a0f47-200c-43ce-bd3a-46b9d54d0e3e")
 	)
-	(text "KEY DESIGN PARAMETERS (v3.0):\nLaser: DFB1550LP 1550nm 20mW DFB butterfly\n  Iop=60mA typ, 100mA max, Vf=3.0V, Vr_max=xV\n  Sense: R5=0.25R, INA826 G=12 (Rg=4.53k), Vout_max=3.0V @ 600mA\nTEC bipolar H-bridge: -2.0A to +2.0A, ±4.0V max\n  Virtual zero: TEC_VZERO=1.875V (R19=12.7k/R20=9.31k from 5V_DAC)\n  DAC code 24576 = 0A TEC | 0 = +2.5A cool | 65535 = -1.5A heat\n  Sense: R7=0.1R, INA826 G=20 (Rg=2.61k), Vout_max=3.0V @ 2.5A\n  H-bridge: Q3/Q5=IRF9540N P-ch, Q4/Q6=IRLB8721 N-ch, TO-220 offboard\n  Control supply: +6V/-6V from LT3045/LT3094 (0.8uV rms each)\n  H-bridge power: +8V/-8V directly from LM7808/LM7908\nNTC: 10k @ 25C, beta=3950K, divider 10k->3V3, spans 1.18-2.06V\nMPD TIA: OPA380, Rf=10k, Cf=2.2pF, Vout=Ipd*10k (3V @ 300uA)\nButterfly pinout confirmed: P1=TEC+ P2=NTC_A P5=NTC_GND\n  P10=CHIP+ P11=CHIP- P13=GND P14=TEC- | P3/4/6/7/8/9/12=NC pend YBP"
+	(text "KEY DESIGN PARAMETERS (v3.0):\nLaser: DFB1550LP 1550nm 20mW DFB butterfly\n  Iop=60mA typ, 100mA max, Vf=3.0V, Vr_max=xV\n  Sense: R79/R80=0.25R, INA826 (U25/U26) G=102 (Rg=487), Vout=2.56V @ 100mA\nTEC bipolar H-bridge: -1.5A (heat) to +2.5A (cool), ±4.0V max\n  Virtual zero: TEC_VZERO=1.20V (U18 buffer, R41=3.16k/R42=1k from 5Vref)\n  DAC 0A: VOUTC=1.20V (code ~15728); range set by R44/R45 scaler about VZERO - calibrate in FW\n  Sense: R65=0.1R, INA826 (U27/U28) G=7.1 (Rg=8.06k), spans ~0.13-2.98V over -1.5..+2.5A\n  H-bridge: Q9/Q11/Q13/Q15=IRLB8721 N-ch high-side, Q10/Q12/Q14/Q16=IRF9540N P-ch low-side, TO-220 offboard\n  Control supply ±6V_TEC: cap-mult (Q3/Q4) + BJT pass Q7/Q8=MJL21194, Q5/Q6=MJL21193, MMBT2222/2907 driver, LM4040-6.2 ref (U12/U13)\n  H-bridge power: ±6V_TEC (from stage above)\nNTC: 10k @ 25C, beta=3950K, divider 10k->3V3, spans 1.18-2.06V\nMPD TIA: OPA380, Rf=10k, Cf=2.2pF, Vout=Ipd*10k (3V @ 300uA)\nButterfly pinout confirmed: P1=TEC+ P2=NTC_A P5=NTC_GND\n  P10=CHIP+ P11=CHIP- P13=GND P14=TEC- | P3/4/6/7/8/9/12=NC pend YBP"
 		(exclude_from_sim no)
 		(at 201.676 145.034 0)
 		(effects

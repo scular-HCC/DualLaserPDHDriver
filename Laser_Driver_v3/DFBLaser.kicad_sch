@@ -1386,7 +1386,7 @@
 		)
 		(uuid "0493e101-c75d-484d-9a5f-59ce721e75bf")
 	)
-	(text "DAC set-point: VOUTA  |  Dither: DITH1_SUM -> 383k/470nF injection"
+	(text "DAC set-point: VOUTB  |  Dither: DITH2_SUM -> 383k/470nF injection"
 		(exclude_from_sim no)
 		(at 19.214 138.432 0)
 		(effects
@@ -1441,7 +1441,7 @@
 		)
 		(uuid "2d9bdbe2-8fc8-4ee5-83d6-1a9284eb3ac8")
 	)
-	(text "LASER CHANNEL 2  —  U31A / Q2"
+	(text "LASER CHANNEL 2  —  U24 / Q18"
 		(exclude_from_sim no)
 		(at 19.468 135.956 0)
 		(effects
@@ -1474,7 +1474,7 @@
 		)
 		(uuid "65ced6e0-688f-4194-8057-f2974e10f70a")
 	)
-	(text "Full scale: DAC FS=5V -> scaler /200 -> 25mV at R6 -> OPA192 IN-  = 100mA output"
+	(text "Full scale: DAC FS=5V -> scaler /200 -> 25mV at R80 -> OPA192 IN-  = 100mA output"
 		(exclude_from_sim no)
 		(at 19.304 140.462 0)
 		(effects
@@ -1496,7 +1496,7 @@
 		)
 		(uuid "aca6f35b-6a66-4039-96df-b7b9e8672d4d")
 	)
-	(text "Full scale: DAC FS=5V -> scaler /200 -> 25mV at R6 -> OPA912 IN-  = 100mA output"
+	(text "Full scale: DAC FS=5V -> scaler /200 -> 25mV at R79 -> OPA192 IN-  = 100mA output"
 		(exclude_from_sim no)
 		(at 16.764 82.042 0)
 		(effects
@@ -1518,7 +1518,7 @@
 		)
 		(uuid "c9c6a60e-d193-412f-a209-81b0610be3cd")
 	)
-	(text "LASER CHANNEL 1  —  U30 / Q1"
+	(text "LASER CHANNEL 1  —  U23 / Q17"
 		(exclude_from_sim no)
 		(at 16.928 77.536 0)
 		(effects

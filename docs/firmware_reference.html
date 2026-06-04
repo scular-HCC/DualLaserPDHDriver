@@ -529,7 +529,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <tbody>
     <tr><td><span class="file-tag">CDCE913</span></td><td>I²C (0x65)</td><td class="file-desc">PLL clock synthesiser — 10 MHz input → 25 MHz reference for both AD9833 chips. EEPROM image is version-stamped and re-programmed automatically on first boot if stale.</td></tr>
     <tr><td><span class="file-tag">AD9833 ×2</span></td><td>SPI</td><td class="file-desc">Direct Digital Synthesis oscillators generating the PDH dither sine. CH1 on CS pin 2, CH2 on CS pin 3. Default frequency: 10 kHz.</td></tr>
-    <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 = TEC current setpoints (code 24576 = 0 A, code 0 = +2.5 A cooling, code 65535 = −1.5 A heating). Software current-limit logic writes these channels every 1 kHz tick.</td></tr>
+    <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 = TEC current setpoints (code 15728 = 0 A at VOUTC ≈ 1.20 V virtual zero; +2.5 A cooling / −1.5 A heating endpoint codes are calibrated in firmware against measured IMON, as they depend on the R44/R45 and R40/R43 scaler). Software current-limit logic writes these channels every 1 kHz tick.</td></tr>
     <tr><td><span class="file-tag">ILI9341</span></td><td>SPI (CS 15, DC 14)</td><td class="file-desc">2.8″ 320×240 colour TFT, landscape orientation. Read-only instrument display at 10 Hz.</td></tr>
     <tr><td><span class="file-tag">Teensy 4.1 ETH</span></td><td>Built-in PHY</td><td class="file-desc">10/100 Ethernet via QNEthernet library. DHCP with static fallback 192.168.1.200. mDNS hostname: <code>dual-pdh.local</code>.</td></tr>
     <tr><td><span class="file-tag">NTC ×2</span></td><td>Analog A8/A9</td><td class="file-desc">Thermistors on TEC stages. Beta-equation conversion to °C (R₂₅ = 10 kΩ, β = 3950).</td></tr>
@@ -724,7 +724,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Single header included by every other module. Contains three categories of defines:</p>
 <ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
   <li><strong style="color:var(--ink)">Pin mapping</strong> — all Teensy 4.1 pin numbers matched to the schematic net names (I²C, SPI, DDS CS/RESET, DAC CS/LDAC/CLR, TFT, analog inputs).</li>
-  <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code. TEC IMON constants: <code>TEC_IMON_OFFSET_V</code> (1.20 V at 0 A), <code>TEC_IMON_V_PER_A</code> (0.72 V/A = INA826 G×R<sub>shunt</sub>), <code>TEC_DAC_ZERO_CODE</code> (24576 = 0 A).</li>
+  <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code. TEC IMON constants: <code>TEC_IMON_OFFSET_V</code> (1.20 V at 0 A), <code>TEC_IMON_V_PER_A</code> (0.72 V/A = INA826 G×R<sub>shunt</sub>), <code>TEC_DAC_ZERO_CODE</code> (15728 = 0 A at VOUTC ≈ 1.20 V).</li>
   <li><strong style="color:var(--ink)">Protection thresholds</strong> — <code>TEC_ILIMIT_A</code> (2.5 A), <code>TEC_ILIMIT_STEP</code> (0.05 — 5 % back-off per 1 ms tick when over-current), <code>TEC_ILIMIT_RESTORE</code> (0.005 — 0.5 % recovery per tick).</li>
   <li><strong style="color:var(--ink)">Fault pins</strong> — <code>PIN_HBRIDGE_FAULT1</code> (D31), <code>PIN_HBRIDGE_FAULT2</code> (D32). Open-drain active-low; configured <code>INPUT_PULLUP</code> in <code>setup()</code>.</li>
   <li><strong style="color:var(--ink)">Timing</strong> — <code>CONTROL_PERIOD_US</code> (1000 µs = 1 kHz), <code>DISPLAY_PERIOD_MS</code> (100 ms = 10 Hz), <code>SCAN_PERIOD_MS</code> (5000 ms sweep animation), <code>DEBUG_PERIOD_MS</code> (1000 ms).</li>
@@ -741,7 +741,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 </section>
 
 <section id="ad5064"><h3>ad5064.h / .cpp — Setpoint DAC</h3>
-<p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 drive the TEC current setpoints and are written every 1 kHz tick by <code>tec_limit_step()</code>. The zero-current code (24576) is defined by <code>TEC_DAC_ZERO_CODE</code>; the limit function scales the excursion from this code by the live <code>s_tec_lim_fac[]</code> factor.</p>
+<p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 drive the TEC current setpoints and are written every 1 kHz tick by <code>tec_limit_step()</code>. The zero-current code (15728, VOUTC ≈ 1.20 V) is defined by <code>TEC_DAC_ZERO_CODE</code>; the limit function scales the excursion from this code by the live <code>s_tec_lim_fac[]</code> factor.</p>
 </section>
 
 <section id="pid"><h3>pid.h / .cpp — PID Controller</h3>
@@ -1083,7 +1083,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <tbody>
     <tr><td><code>TEC_IMON_OFFSET_V</code></td><td>1.20 V</td><td>INA826 output at 0 A (REF pin voltage). Measure at zero TEC current and adjust if needed.</td></tr>
     <tr><td><code>TEC_IMON_V_PER_A</code></td><td>0.72 V/A</td><td>INA826 gain (7.2) × shunt (0.1 Ω). At 2.5 A → 3.00 V output.</td></tr>
-    <tr><td><code>TEC_DAC_ZERO_CODE</code></td><td>24576</td><td>AD5064 code for 0 A TEC current (from TEC_VZERO = 1.875 V schematic annotation).</td></tr>
+    <tr><td><code>TEC_DAC_ZERO_CODE</code></td><td>15728</td><td>AD5064 code for 0 A TEC current (VOUTC ≈ 1.20 V virtual zero, 5 V ref: 1.20/5.0 × 65535 ≈ 15728). Supersedes the old VZERO = 1.875 V value (24576).</td></tr>
     <tr><td><code>TEC_ILIMIT_A</code></td><td>2.5 A</td><td>Current trip point. Increase with caution — the TEC and H-bridge have hard thermal limits.</td></tr>
     <tr><td><code>TEC_ILIMIT_STEP</code></td><td>0.05</td><td>Fractional reduction per 1 ms tick when over-current. 0.05 = 20 ms to full clamp.</td></tr>
     <tr><td><code>TEC_ILIMIT_RESTORE</code></td><td>0.005</td><td>Fractional recovery per 1 ms tick when under-limit. 0.005 = 200 ms to full restore.</td></tr>

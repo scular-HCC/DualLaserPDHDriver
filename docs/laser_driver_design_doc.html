@@ -562,7 +562,7 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
     <p>Four-quadrant linear H-bridge providing −1.5 A (heating) to +2.5 A (cooling) through the butterfly package internal Peltier element. Linear topology chosen specifically to avoid switching noise coupling into laser temperature through shared thermal mass.</p>
 
     <div class="callout info">
-      <strong>Virtual ground:</strong> The AD5064 DAC outputs 0–5V unipolar. A precision resistor divider (R19 = 12.7 kΩ, R20 = 9.31 kΩ) from the 5V_DAC rail creates a TEC_VZERO reference at 1.875V. DAC code 24576 = 0A TEC current. Codes below = heating, codes above = cooling.
+      <strong>Virtual ground:</strong> The AD5064 DAC outputs 0–5V unipolar. A unity-gain buffer (U18) drives the TEC_VZERO reference at 1.20V (derived from the 5Vref rail). DAC code 15728 = 0A TEC current (VOUTC ≈ 1.20V; 1.20/5.0 × 65535 ≈ 15728). Codes below = heating, codes above = cooling. The +2.5A cooling / −1.5A heating endpoint codes depend on the per-channel scaler (R44/R45, R40/R43) around this 1.20V zero and are calibrated in firmware against measured IMON.
     </div>
 
     <h3>H-Bridge Topology</h3>
@@ -593,10 +593,9 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
         <tr><td class="mono">Q3, Q5</td><td>—</td><td>IRF9540N</td><td class="dim">P-ch TO-220, −100V/−23A, high-side H-bridge</td></tr>
         <tr><td class="mono">Q4, Q6</td><td>—</td><td>IRLB8721PBF</td><td class="dim">N-ch TO-220, 30V/62A, low-side H-bridge</td></tr>
         <tr><td class="mono">R7</td><td>0.1 Ω 1W Kelvin</td><td>WSL2512R1000FEA</td><td class="dim">TEC sense — 4-terminal Kelvin connection</td></tr>
-        <tr><td class="mono">R9</td><td>33 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler top — maps 5V DAC to 250mV at 2.5A</td></tr>
-        <tr><td class="mono">R16</td><td>1 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler bottom, ties to TEC_VZERO not AGND</td></tr>
-        <tr><td class="mono">R19</td><td>12.7 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Virtual GND divider high</td></tr>
-        <tr><td class="mono">R20</td><td>9.31 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Virtual GND divider low → TEC_VZERO = 1.875V</td></tr>
+        <tr><td class="mono">R44 / R40</td><td>4.99 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler top (CH C / CH D) — maps 0–5V DAC to 250mV at sense → 2.5A FS</td></tr>
+        <tr><td class="mono">R45 / R43</td><td>20 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler bottom (CH C / CH D), ties to TEC_VZERO not AGND</td></tr>
+        <tr><td class="mono">U18</td><td>—</td><td>op-amp buffer</td><td class="dim">TEC_VZERO virtual-ground buffer → 1.20V (from 5Vref rail)</td></tr>
       </tbody>
     </table>
     </div>

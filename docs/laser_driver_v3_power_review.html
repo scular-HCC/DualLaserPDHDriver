@@ -639,7 +639,7 @@
         </table>
         <div class="note note-warn">
           <span class="note-icon">⚠</span>
-          <span><strong>TEC INA826 Vref — verify before commissioning.</strong> With G=7.20 and R_sense=0.1Ω, the bipolar swing fits in 3.3V. However, the optimal REF pin voltage is <code>~1.08V</code> (maps −1.5A → 0.15V, +2.5A → 2.88V on ADC). If the REF pin connects to TEC_VZERO (1.875V), the +2.5A output will be 3.675V — exceeding the Teensy ADC range. Confirm the REF pin connection and whether OPA2141 (U29) provides post-scaling.</span>
+          <span><strong>TEC INA826 Vref — verify before commissioning.</strong> With G=7.20 and R_sense=0.1Ω, the bipolar swing fits in 3.3V. The REF pin connects to TEC_VZERO, now buffered to <code>1.20V</code> by U18 (was 1.875V). At 0.72 V/A this maps −1.5A → 0.12V and +2.5A → 3.00V on the ADC — within the 3.3V Teensy range, resolving the earlier 1.875V overrange concern. Firmware <code>TEC_IMON_OFFSET_V</code> is set to 1.20V to match. Confirm the REF pin connection at commissioning.</span>
         </div>
       </div>
     </div>
@@ -742,8 +742,8 @@
               <td>1</td>
               <td>TEC INA826 REF pin voltage</td>
               <td>Readback.kicad_sch U27/U28</td>
-              <td>Verify REF pin connects to ~1.08V reference, NOT TEC_VZERO (1.875V). If REF=TEC_VZERO, +2.5A output = 3.675V, clipping Teensy ADC. Confirm OPA2141 (U29) post-scales if Vref is higher.</td>
-              <td class="td-warn">⚠ High</td>
+              <td>REF pin connects to TEC_VZERO, now 1.20V (U18 buffer, was 1.875V). At 0.72 V/A: −1.5A → 0.12V, +2.5A → 3.00V — within the 3.3V ADC range. Confirm REF = 1.20V at commissioning; matches firmware TEC_IMON_OFFSET_V.</td>
+              <td class="td-pass">✓ Resolved</td>
             </tr>
             <tr>
               <td>2</td>
