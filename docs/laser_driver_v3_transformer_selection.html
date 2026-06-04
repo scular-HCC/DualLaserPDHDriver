@@ -324,13 +324,13 @@
     </div>
     <div class="summary-cell">
       <div class="s-label">Main Transformer</div>
-      <div class="s-value" style="color:var(--blue)">62064</div>
-      <div class="s-sub">25VA · 2×18V CT · chassis</div>
+      <div class="s-value" style="color:var(--blue)">VPT30-1670</div>
+      <div class="s-sub">Triad · 50VA · 2×15V CT (30VCT@1.67A)</div>
     </div>
     <div class="summary-cell">
       <div class="s-label">TEC Transformer</div>
-      <div class="s-value" style="color:var(--orange)">62081</div>
-      <div class="s-sub">50VA · 2×9V CT · chassis</div>
+      <div class="s-value" style="color:var(--orange)">VPT18-8800</div>
+      <div class="s-sub">Triad · 160VA · 2×9V CT (18VCT@8.8A)</div>
     </div>
     <div class="summary-cell">
       <div class="s-label">Cap-Mult Dropout</div>
@@ -360,12 +360,12 @@
     <div class="rail-card open">
       <div class="rail-card-header" onclick="toggle(this)">
         <span class="rail-badge badge-blue">Architecture</span>
-        <span class="rail-name">±12Vac net feeds only the TEC supply — a second secondary/transformer</span>
-        <span class="rail-summary">+12Vac / −12Vac dangling net</span>
+        <span class="rail-name">±9Vac winding (T2) feeds the TEC supply — dedicated secondary</span>
+        <span class="rail-summary">±9Vac from T2 — connected (was a dangling ±12Vac net)</span>
         <span class="chevron">▶</span>
       </div>
       <div class="rail-body">
-        <p style="margin-bottom:12px">The global labels <code>+12Vac</code> / <code>−12Vac</code> appear <strong>only</strong> in <code>pm6V_TEC.kicad_sch</code> with no counterpart on the mains sheet — a dangling net. The ±6V TEC H-bridge supply was always intended to run from its own winding, distinct from the 18Vac winding that feeds the ±15V precision rails. Three reasons make this the correct topology:</p>
+        <p style="margin-bottom:12px"><strong>As built:</strong> the ±6V TEC H-bridge supply runs from its own dedicated winding — transformer <strong>T2</strong> (the dedicated TEC secondary, 2×9 Vac CT) supplies <code>±9Vac</code> (Black/Yellow taps) into the KBPC1501W bridge (D7) on <code>pm6V_TEC.kicad_sch</code>, with the <code>+9Vac</code>/<code>−9Vac</code> global labels now connected on both the mains and TEC sheets. (Earlier revisions carried placeholder <code>+12Vac</code>/<code>−12Vac</code> labels with no mains-side counterpart — a dangling net — now resolved.) Keeping this separate from the 18Vac winding that feeds the ±15V precision rails is correct for three reasons:</p>
         <table>
           <thead><tr><th>Reason</th><th>Detail</th></tr></thead>
           <tbody>
@@ -392,33 +392,33 @@
 
     <div class="rail-card open">
       <div class="rail-card-header" onclick="toggle(this)">
-        <span class="rail-badge badge-green">Chassis · 62064</span>
-        <span class="rail-name">18 Vac CT chassis toroid → ±18V bridge → ±15V + all logic/analog rails</span>
-        <span class="rail-summary">~0.5 A · 25 VA</span>
+        <span class="rail-badge badge-green">Triad · VPT30-1670</span>
+        <span class="rail-name">15 Vac CT toroid → ±~20V bridge → ±15V + all logic/analog rails</span>
+        <span class="rail-summary">~0.5 A load · 50 VA</span>
         <span class="chevron">▶</span>
       </div>
       <div class="rail-body">
         <div class="chain">
-          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">62064 chassis</div><div class="cn-volt">2×18 Vac</div></div>
+          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">VPT30-1670</div><div class="cn-volt">2×15 Vac</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">J_18</div><div class="cn-part">Sec. connector</div><div class="cn-volt">18-0-18</div></div>
+          <div class="chain-node"><div class="cn-ref">J_15</div><div class="cn-part">Sec. connector</div><div class="cn-volt">15-0-15</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">Bridge</div><div class="cn-volt">±18V raw</div></div>
+          <div class="chain-node"><div class="cn-ref">D1</div><div class="cn-part">Bridge</div><div class="cn-volt">±~20V raw</div></div>
           <div class="chain-arrow">→</div>
           <div class="chain-node"><div class="cn-ref">pm15V</div><div class="cn-part">TPS7A39</div><div class="cn-volt">±15V</div></div>
         </div>
-        <p style="margin-bottom:8px">Per the power verification report the +18V draw is ~462 mA (58% of an 800 mA bridge budget), so this transformer is modest — but it is now <strong>chassis-mounted</strong> so its primary stays in the mains-entry zone (Section 08). The ±15V op-amp rails on <code>DFBLaser</code>, <code>Readback</code> and <code>TEC_Control</code> belong here and should <strong>not</strong> move to the 9V transformer — that would cross the precision/power boundary deliberately separated in Section 01.</p>
+        <p style="margin-bottom:8px">Per the power verification report the +22V raw draw is ~462 mA, so at 1.67 A series rating the VPT30-1670 runs at ~30% of capacity — but it is now <strong>chassis-mounted</strong> so its primary stays in the mains-entry zone (Section 08). The ±15V op-amp rails on <code>DFBLaser</code>, <code>Readback</code> and <code>TEC_Control</code> belong here and should <strong>not</strong> move to the 9V transformer — that would cross the precision/power boundary deliberately separated in Section 01.</p>
         <div class="spec-grid">
-          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Talema 62064</span></div>
-          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">1295-series (confirm suffix)</span></div>
-          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal · chassis, centre-bolt</span></div>
-          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 18 Vac (wired 18-0-18 CT)</span></div>
-          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">25 VA · 0.69 A series</span></div>
+          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Triad VPT30-1670</span></div>
+          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">2090071</span></div>
+          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal World Series · centre-bolt, flying leads</span></div>
+          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 15 Vac (wired 15-0-15 CT, 30VCT)</span></div>
+          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">50 VA · 30VCT@1.67A (15V@3.34A)</span></div>
           <div class="spec-item"><span class="spec-label">Primary</span><span class="spec-val">115 / 230 Vac dual</span></div>
         </div>
         <div class="note note-info">
           <span class="note-icon">ℹ</span>
-          <span>62064 is the chassis-mount sibling of the through-hole 70064K. Verify exact DigiKey PN suffix and stock at order time. Flying leads exit to a secondary-only connector on the board.</span>
+          <span>Triad World Series toroid (VPT30-1670). At ~0.5 A actual load the 50 VA / 1.67 A series rating is generous. Flying leads exit to a secondary-only connector on the board.</span>
         </div>
       </div>
     </div>
@@ -585,42 +585,41 @@ V<span class="c">sec</span> ≥ (V<span class="c">out</span> + V<span class="c">
     <div class="section-hdr">
       <div class="section-num">07</div>
       <h2>TEC Transformer — Sizing &amp; Part Selection (Chassis)</h2>
-      <div class="section-file">DigiKey · Talema 700xxK series</div>
+      <div class="section-file">Triad Magnetics · VPT World Series</div>
     </div>
 
     <div class="rail-card open">
       <div class="rail-card-header" onclick="toggle(this)">
-        <span class="rail-badge badge-blue">Chassis · 62081</span>
-        <span class="rail-name">50 VA, 2×9V CT toroid — chassis-mounted, secondary to board</span>
-        <span class="rail-summary">2.78 A/winding</span>
+        <span class="rail-badge badge-blue">Triad · VPT18-8800</span>
+        <span class="rail-name">160 VA, 2×9V CT toroid (18VCT@8.8A) — chassis-mounted, secondary to board</span>
+        <span class="rail-summary">8.8 A CT series</span>
         <span class="chevron">▶</span>
       </div>
       <div class="rail-body">
         <div class="calc">
 I<span class="c">sec,rms</span> ≈ 1.7 × I<span class="c">DC</span>  = 1.7 × 3 A = <span class="r">~5.1 A</span>  <span style="color:var(--text-faint)">(cap-input full-wave form factor)</span><br>
-Sustained load (hold ~1–2 A) well under 2.78 A/winding; 5 A peak is a ~1–2 s power-on transient<br>
-Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy</span>
+Sustained load (hold ~1–2 A) far under the 8.8 A CT series rating; 5 A peak is a ~1–2 s power-on transient<br>
+Chassis mount sheds heat to enclosure → <span class="g">160 VA rating — large margin</span>
         </div>
-        <p style="margin-bottom:10px">A 50 VA toroid (~0.5 kg) is too heavy to hang on PCB pins, so it is <strong>chassis-mounted</strong> (Section 08). The two 9 V windings wire in series with the centre point grounded → ±9 Vac CT, which <code>pm6V_TEC</code> rectifies to ±raw. Sustained load is the steady-state hold (~1–2 A) with brief 3–5 A excursions; mounted to the chassis the 50 VA / 2.78 A-per-winding rating covers this with margin and tolerates the short peaks.</p>
+        <p style="margin-bottom:10px">A 160 VA toroid (~1.5 kg) is far too heavy to hang on PCB pins, so it is <strong>chassis-mounted</strong> (Section 08). The two 9 V windings wire in series with the centre point grounded → ±9 Vac CT, which <code>pm6V_TEC</code> rectifies to ±raw. Sustained load is the steady-state hold (~1–2 A) with brief 3–5 A excursions; the 160 VA / 8.8 A-CT rating covers this with enormous margin and easily tolerates the short peaks — the VPT18-8800 is considerably over-spec'd for this load.</p>
         <div class="spec-grid">
-          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Talema 62081</span></div>
-          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">1295-1119-ND</span></div>
-          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal · chassis, centre-bolt</span></div>
-          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 9 Vac (wired CT)</span></div>
-          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">50 VA · 2.78 A series/winding</span></div>
-          <div class="spec-item"><span class="spec-label">Primary / isolation</span><span class="spec-val">115/230 Vac · 4000 Vrms</span></div>
+          <div class="spec-item"><span class="spec-label">Manufacturer PN</span><span class="spec-val">Triad VPT18-8800</span></div>
+          <div class="spec-item"><span class="spec-label">DigiKey PN</span><span class="spec-val">2090082</span></div>
+          <div class="spec-item"><span class="spec-label">Type / Mount</span><span class="spec-val">Toroidal World Series · centre-bolt</span></div>
+          <div class="spec-item"><span class="spec-label">Secondary</span><span class="spec-val">2 × 9 Vac (18 Vac CT)</span></div>
+          <div class="spec-item"><span class="spec-label">Power / current</span><span class="spec-val">160 VA · 18VCT@8.8A (9V@17.6A ∥)</span></div>
+          <div class="spec-item"><span class="spec-label">Primary</span><span class="spec-val">115 / 230 Vac dual</span></div>
         </div>
         <table>
           <thead><tr><th>Part (status)</th><th>VA</th><th>Secondary</th><th>Mount</th><th>Note</th></tr></thead>
           <tbody>
-            <tr class="row-pick"><td>Talema 62081 (1295-1119-ND)</td><td>50 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-pass">✓ selected</td></tr>
-            <tr><td>Talema 70081K (1295-1062-ND)</td><td>50 VA</td><td>2×9 Vac CT</td><td>Through-hole</td><td class="td-warn">board-mount alt (heavy)</td></tr>
-            <tr><td>Talema 62082 / next size</td><td>80 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-warn">more peak margin</td></tr>
+            <tr class="row-pick"><td>Triad VPT18-8800 (DK 2090082)</td><td>160 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-pass">✓ on schematic</td></tr>
+            <tr><td>Lower-VA 2×9 Vac VPT member</td><td>~50–80 VA</td><td>2×9 Vac CT</td><td>Chassis</td><td class="td-warn">would also suffice — 160 VA is generous</td></tr>
           </tbody>
         </table>
         <div class="note note-info">
           <span class="note-icon">ℹ</span>
-          <span>62081 is the chassis-mount sibling of the 70081K through-hole part. If extra margin against the 5 A power-on peak is wanted on paper, step up to the 80 VA member of the same chassis family. Confirm stock/PN at order time.</span>
+          <span>The VPT18-8800 (160 VA, 8.8 A CT) is well over the ~50 VA the TEC actually needs — abundant margin against the 5 A power-on peak. A lower-VA 2×9 Vac VPT-series member would also work if board space, weight, or cost matter. Confirm stock/PN at order time.</span>
         </div>
       </div>
     </div>
@@ -646,8 +645,8 @@ Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy
         <div class="chain">
           <div class="chain-node"><div class="cn-ref">AC IN</div><div class="cn-part">IEC + fuse + switch</div><div class="cn-volt">mains</div></div>
           <div class="chain-arrow">→</div>
-          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">62064 chassis</div><div class="cn-volt">2×18V</div></div>
-          <div class="chain-node" style="margin-left:8px"><div class="cn-ref">T2</div><div class="cn-part">62081 chassis</div><div class="cn-volt">2×9V</div></div>
+          <div class="chain-node"><div class="cn-ref">T1</div><div class="cn-part">VPT30-1670</div><div class="cn-volt">2×15V</div></div>
+          <div class="chain-node" style="margin-left:8px"><div class="cn-ref">T2</div><div class="cn-part">VPT18-8800</div><div class="cn-volt">2×9V</div></div>
           <div class="chain-arrow">→</div>
           <div class="chain-node"><div class="cn-ref">J_SEC</div><div class="cn-part">Sec. connectors</div><div class="cn-volt">LV only</div></div>
           <div class="chain-arrow">→</div>
@@ -660,7 +659,7 @@ Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy
             <tr><td>Transformer mount</td><td>Both centre-bolt to chassis floor; dished steel washers + neoprene pads (single-bolt kit — must not form a shorted turn).</td></tr>
             <tr><td>Mains-entry zone</td><td>IEC inlet, primary fuse, power switch, and both primaries grouped at the chassis entry — away from µV-level TIA / reference nodes.</td></tr>
             <tr><td>Primary wiring</td><td>Stays off-board entirely. No mains traces on the signal PCB.</td></tr>
-            <tr><td>Secondary feed — main</td><td>18-0-18 CT via 3-pos connector (terminal block or locking header), ≥3 A.</td></tr>
+            <tr><td>Secondary feed — main</td><td>15-0-15 CT via 3-pos connector (terminal block or locking header), ≥3 A.</td></tr>
             <tr><td>Secondary feed — TEC</td><td>9-0-9 CT via 3-pos connector, ≥6 A (Molex Mini-Fit Jr. or ≥6 A screw terminal).</td></tr>
             <tr><td>Optional power board</td><td>Bridges + bulk caps + MJL cap-multiplier pass transistors (which need a chassis heatsink anyway) on a small chassis-mounted board; only regulated/clean DC crosses to the main PCB.</td></tr>
           </tbody>
@@ -672,7 +671,7 @@ Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy
         </div>
         <div class="note note-info">
           <span class="note-icon">ℹ</span>
-          <span><strong>Tradeoff:</strong> two low-voltage secondary harnesses/connectors instead of board-mounted pins. Chassis toroids sometimes ship the centre-bolt mounting kit separately — confirm or add a Talema mounting kit to the cart.</span>
+          <span><strong>Tradeoff:</strong> two low-voltage secondary harnesses/connectors instead of board-mounted pins. Chassis toroids sometimes ship the centre-bolt mounting kit separately — confirm or add the Triad mounting hardware to the cart.</span>
         </div>
       </div>
     </div>
@@ -687,7 +686,7 @@ Chassis mount sheds heat to enclosure → <span class="g">50 VA rating sits easy
       <div class="rail-body">
         <p style="margin-bottom:10px">Inrush limiting goes on the <strong>primary (mains) side</strong>, not the DC side. Two reasons specific to this supply: (1) the dominant surge is the <strong>toroid magnetizing inrush</strong> (10–20× rated at a zero-crossing switch-on), which only a primary-side limiter can address; (2) a fixed series resistor on the DC raw rail would carry continuous load current and eat the ±6 V dropout headroom. A DC-side resistor must in any case sit <em>before</em> the bank to limit it at all — but the primary NTC is the better location.</p>
         <div class="calc">
-I<span class="c">prim</span> = 75 VA / 120 V = <span class="g">0.62 A</span> steady<br>
+I<span class="c">prim</span> ≈ 75 W / 120 V = <span class="g">~0.62 A</span> steady  <span style="color:var(--text-faint)">(worst-case actual load, not the 50+160 VA rating sum)</span><br>
 Peak line = 120 × √2 = <span class="r">170 V</span><br>
 Inrush clamp @ 10 Ω cold = 170 / 10 = <span class="g">~17 A peak</span>  → safe for 1 A slow-blow (brief I²t) + switch<br>
 Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 J part</b>
@@ -785,7 +784,7 @@ Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 
               <td>2</td>
               <td>TEC secondary voltage</td>
               <td>Mains / pm6V_TEC</td>
-              <td>Realized via transformer choice — T2 (Talema 62081) provides 2×9 Vac CT. Halves pass-transistor dissipation (~26 W → ~13.5 W @ 3A) while holding regulation; the pass stage is now also doubled (2× MJL per rail with 0.1 Ω ballast R30–R33), splitting that to ~7 W per device.</td>
+              <td>Realized via transformer choice — T2 (Triad VPT18-8800) provides 2×9 Vac CT. Halves pass-transistor dissipation (~26 W → ~13.5 W @ 3A) while holding regulation; the pass stage is now also doubled (2× MJL per rail with 0.1 Ω ballast R30–R33), splitting that to ~7 W per device.</td>
               <td class="td-pass">✓ Set</td>
             </tr>
             <tr>
@@ -799,7 +798,7 @@ Reservoir reflected ~26,000 µF + 2 toroids → need high-energy disc → <b>90 
               <td>4</td>
               <td>Order transformers (chassis)</td>
               <td>BOM</td>
-              <td>Main: Talema <strong>62064</strong> (25 VA, 2×18V CT, chassis). TEC: Talema <strong>62081 / 1295-1119-ND</strong> (50 VA, 2×9V CT, chassis). Now placed in Mains_to_pm18V.kicad_sch as <strong>T1 / T2</strong>; confirm DK PN suffix + stock and add centre-bolt mounting kits.</td>
+              <td>Main: Triad <strong>VPT30-1670</strong> (DK 2090071, 50 VA, 2×15V CT, chassis). TEC: Triad <strong>VPT18-8800</strong> (DK 2090082, 160 VA, 2×9V CT, chassis). Placed in Mains_to_pm18V.kicad_sch as <strong>T1 / T2</strong>; confirm stock and add centre-bolt mounting kits.</td>
               <td class="td-pass">✓ Placed</td>
             </tr>
             <tr>

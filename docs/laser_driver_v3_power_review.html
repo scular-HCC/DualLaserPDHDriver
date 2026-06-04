@@ -388,8 +388,8 @@
         </div>
         <div class="util-bar-wrap">
           <div class="util-label">±15V (TPS7A39)</div>
-          <div class="util-track"><div class="util-fill" style="width:6.1%;background:var(--green)"></div></div>
-          <div class="util-pct ok">49 mA</div>
+          <div class="util-track"><div class="util-fill" style="width:3.8%;background:var(--green)"></div></div>
+          <div class="util-pct ok">~30 mA</div>
         </div>
         <div class="util-bar-wrap">
           <div class="util-label">5Vref / DAC chain</div>
@@ -453,7 +453,7 @@
         <table>
           <thead><tr><th>Load</th><th>Current</th><th>Regulator limit</th><th>Utilisation</th></tr></thead>
           <tbody>
-            <tr><td>All ±15V op-amps (OPA192×6, INA826×4, OPA380×6, OPA551U×2, OPA2141)</td><td>~39 mA / ~27 mA</td><td>200 mA</td><td class="td-pass">19% / 13% ✓</td></tr>
+            <tr><td>All ±15V amps (OPA192×6 @1mA, OPA551U×2 @8mA, INA826×4 @0.2mA) — OPA380 TIAs are on 3V3, OPA2134 AAF on 5V_DAC, not ±15V</td><td>~30 mA / ~23 mA</td><td>200 mA</td><td class="td-pass">15% / 11% ✓</td></tr>
           </tbody>
         </table>
         <div class="note note-ok">

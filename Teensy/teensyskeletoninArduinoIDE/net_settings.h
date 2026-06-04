@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
+#include "config.h"   // for DEMO_MODE_DEFAULT
 
 // ============================================================
 // Network settings — persisted in Teensy EEPROM emulation.

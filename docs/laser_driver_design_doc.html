@@ -468,7 +468,7 @@
       <div class="spec-item"><span class="spec-label">Wavelength</span><span class="spec-val">1550 nm DFB</span></div>
       <div class="spec-item"><span class="spec-label">Package</span><span class="spec-val">14-pin butterfly</span></div>
       <div class="spec-item"><span class="spec-label">Optical output</span><span class="spec-val">~70 mW</span></div>
-      <div class="spec-item"><span class="spec-label">Laser I_op</span><span class="spec-val">500 mA typ / 600 mA max</span></div>
+      <div class="spec-item"><span class="spec-label">Laser I_op</span><span class="spec-val">60 mA typ / 100 mA max</span></div>
       <div class="spec-item"><span class="spec-label">Laser V_f</span><span class="spec-val">~2 V at I_op</span></div>
       <div class="spec-item"><span class="spec-label">TEC I_max cool</span><span class="spec-val">+2.5 A</span></div>
       <div class="spec-item"><span class="spec-label">TEC I_max heat</span><span class="spec-val">−1.5 A</span></div>
@@ -488,7 +488,7 @@
         <li><strong>TEC scaler:</strong> schematic is <strong>4.99&nbsp;k&Omega; top / 20&nbsp;k&Omega; bottom</strong> (R40/R44, R43/R45), not 33&nbsp;k&Omega;. Recompute the TEC current transfer.</li>
         <li><strong>&plusmn;15&nbsp;V analog rail:</strong> built as <strong>&plusmn;14.3&nbsp;V</strong> &mdash; LT3042 (U10, +14.3&nbsp;V) / LT3094 (U11, &minus;14.3&nbsp;V), set by R14/R15 = 12.7&nbsp;k and R18/R19 = 143&nbsp;k &mdash; not LT3045 at &plusmn;15.0&nbsp;V.</li>
         <li><strong>Front-end:</strong> 18&nbsp;Vac &rarr; <strong>GBU4M</strong> THT bridge (D1) &rarr; 2200&nbsp;&micro;F / 1000&nbsp;&micro;F <strong>50&nbsp;V</strong> bulk &rarr; TPS7A39 (U9). Soft-start MOSFETs are <strong>IRF540N / IRF9540N</strong> (Q1/Q2), and an <strong>Ametherm SL22</strong> inrush thermistor (TH1) was added. The &plusmn;24&nbsp;V raw / &plusmn;16.5&nbsp;V figures in &sect;05 reflect the prior assumption.</li>
-        <li><strong>Power budget:</strong> the v4 table is computed from LT1028 quiescent current (7.6&nbsp;mA each). OPA192 draws ~1&nbsp;mA and OPA551 up to ~8&nbsp;mA, so the &plusmn;15&nbsp;V load lines must be recomputed.</li>
+        <li><strong>Power budget:</strong> the &plusmn;15&nbsp;V load was recomputed for the as-built amps — 6&times; OPA192 @ ~1&nbsp;mA, 2&times; OPA551 @ ~8&nbsp;mA, 4&times; INA826 @ ~0.2&nbsp;mA &rarr; <strong>&asymp; 23&nbsp;mA typ per rail</strong> (~30&nbsp;mA max), far below the old LT1028-based 150&nbsp;mA figure. The OPA380 TIAs run from 3V3 and the OPA2134 AAF from 5V_DAC, so they are <strong>not</strong> &plusmn;15&nbsp;V loads. See the Current Budget table in &sect;06.</li>
         <li><strong>Laser device:</strong> the schematic socket labels and the layout / power-review / transformer documents all reference <strong>DFB1550LP</strong>; this sheet still names the Mitsubishi ML20550KK14Z600L. Confirm the intended part and reconcile the spec table above.</li>
         <li><strong>&plusmn;6&nbsp;V TEC pass stage:</strong> the cap-multiplier emitter-follower is now <strong>two MJL TO-264 devices in parallel per rail</strong>, each with its own 0.1&nbsp;&Omega; emitter ballast, doubling per-rail capacity. MJL part values were corrected to match symbol polarity (21193 = PNP, 21194 = NPN) and the project was reannotated to clear duplicate references.</li>
       </ul>
@@ -502,21 +502,21 @@
       <h2>Laser Channel — ACC Driver</h2>
     </div>
 
-    <p>Low-side N-channel MOSFET current source with LT1028 error amplifier in a closed feedback loop. The DAC set-point drives the op-amp non-inverting input through a precision resistor scaler; the sense voltage across R5 feeds back to the inverting input. The loop regulates current regardless of laser diode forward voltage variation.</p>
+    <p>Low-side N-channel MOSFET current sink with an <strong>OPA192</strong> error amplifier in a closed feedback loop. The DAC set-point drives the op-amp non-inverting input through a precision resistor scaler (with PDH dither summed in via DITH1/DITH2); the sense voltage across <strong>R79</strong> feeds back to the inverting input. The loop regulates current regardless of laser diode forward voltage variation.</p>
 
     <h3>Signal Path</h3>
     <div class="rail-chain">
       <div class="rail-node"><span class="part">AD5064 VOUTA</span><span class="volt">0–5 V</span><span class="note">Ch A set-point</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">R1/R2 scaler</span><span class="volt">×0.05</span><span class="note">19k / 1k</span></div>
+      <div class="rail-node"><span class="part">R66/R67 scaler</span><span class="volt">÷201</span><span class="note">200k / 1k</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LT1028 IN+</span><span class="volt">0–250 mV</span><span class="note">error amp</span></div>
+      <div class="rail-node"><span class="part">OPA192 IN+</span><span class="volt">0–25 mV</span><span class="note">error amp</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">IRLML6344</span><span class="volt">SOT-23</span><span class="note">pass element</span></div>
+      <div class="rail-node"><span class="part">IRLML6344 (Q17)</span><span class="volt">SOT-23</span><span class="note">pass element</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">R5 sense</span><span class="volt">0.25 Ω</span><span class="note">Kelvin 4-term</span></div>
+      <div class="rail-node"><span class="part">R79 sense</span><span class="volt">0.25 Ω</span><span class="note">Kelvin 4-term</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LT1028 IN−</span><span class="volt">feedback</span><span class="note">closes loop</span></div>
+      <div class="rail-node"><span class="part">OPA192 IN−</span><span class="volt">feedback</span><span class="note">closes loop</span></div>
     </div>
 
     <h3>Component Values</h3>
@@ -524,12 +524,12 @@
     <table>
       <thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td class="mono">U3A</td><td>—</td><td>LT1028ACN8</td><td class="dim">0.85 nV/√Hz, ±15V supply, DIP-8</td></tr>
-        <tr><td class="mono">Q1</td><td>—</td><td>IRLML6344TRPBF</td><td class="dim">Replaces discontinued IRLML2502 · SOT-23 · 30V/5A · Vgs(th)=1.1V max</td></tr>
-        <tr><td class="mono">R1</td><td>19 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler top — maps 5V DAC to 250mV at 1A</td></tr>
-        <tr><td class="mono">R2</td><td>1 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler bottom</td></tr>
-        <tr><td class="mono">R3</td><td>10 kΩ</td><td>0402</td><td class="dim">Gate series resistor</td></tr>
-        <tr><td class="mono">R5</td><td>0.25 Ω 1W Kelvin</td><td>WSL2512R2500FEA</td><td class="dim">4-terminal — K pads to signal traces only</td></tr>
+        <tr><td class="mono">U23 / U24</td><td>—</td><td>OPA192IDR</td><td class="dim">Precision e-trim op-amp, ±15V supply, SOIC-8 (CH1 / CH2)</td></tr>
+        <tr><td class="mono">Q17 / Q18</td><td>—</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23 · 30V/5A · Vgs(th)=1.1V max (CH1 / CH2)</td></tr>
+        <tr><td class="mono">R66 / R71</td><td>200 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler top — maps 5V DAC to 25mV at 100mA (÷201)</td></tr>
+        <tr><td class="mono">R67 / R72</td><td>1 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">Scaler bottom (PDH dither sums in here via DITH1/DITH2)</td></tr>
+        <tr><td class="mono">R77 / R78</td><td>10 kΩ</td><td>0402</td><td class="dim">Gate series resistor</td></tr>
+        <tr><td class="mono">R79 / R80</td><td>0.25 Ω 1W Kelvin</td><td>WSL2512R2500FEA</td><td class="dim">4-terminal — K pads to signal traces only</td></tr>
         <tr><td class="mono">D3</td><td>BAT54</td><td>SOD-123</td><td class="dim">Reverse protection — Vr_max = 2V on laser</td></tr>
         <tr><td class="mono">C2</td><td>100 pF NP0</td><td>0402</td><td class="dim">Gate stability cap</td></tr>
       </tbody>
@@ -541,12 +541,12 @@
     </div>
 
     <h3>Full-Scale Calculation</h3>
-    <div class="code-block"><span class="cm">// Laser channel — full scale at 600mA</span>
+    <div class="code-block"><span class="cm">// Laser channel — full scale at 100mA</span>
 V_DAC_FS  = 5.000 V  (from LTC6655-5 reference)
-V_sense   = I × R5  = 0.600 × 0.25 = <span class="num">150 mV</span>
-V_scaler  = V_sense / (R2/(R1+R2)) = 150mV / (1k/20k) = <span class="num">3.00 V</span>
-DAC code  = 3.00 / 5.000 × 65536 = <span class="num">39322</span>  (0x9999)
-Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span></div>
+V_sense   = I × R79 = 0.100 × 0.25 = <span class="num">25 mV</span>
+Setpoint  = V_DAC × R67/(R66+R67) = 5.0 × 1k/201k = <span class="num">24.9 mV</span>  (≈ /201)
+→ loop forces I·R79 = setpoint → <span class="num">100 mA</span> at full scale
+Resolution = 5.000V / 65536 / 201 / 0.25 = <span class="num">1.5 µA/LSB</span></div>
 
     <h3>Soft-Start</h3>
     <p>Implemented in Teensy firmware — ramp DAC code 0 → set-point over 5 ms at startup and after any fault condition. Never write a non-zero code without first confirming PGOOD high from the TPS7A39.</p>
@@ -566,22 +566,21 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
     </div>
 
     <h3>H-Bridge Topology</h3>
-    <div class="code-block">          +8V_TEC (from LM7808 directly — not via LT3045)
+    <div class="code-block">          +6V_TEC (cap-multiplier + paralleled-BJT pass stage, off ±9Vac winding)
                │
-         Q3 (IRF9540N)  ──── Q5 (IRF9540N)
-         P-ch high-side       P-ch high-side
+         Q11 / Q15 (IRLB8721)  N-ch HIGH-side   (TEC1; TEC2 = Q9/Q13)
+         gate driven above +6V rail by ±15V op-amp follower
                │                   │
             TEC+  ─────────────  TEC−
                │                   │
-         Q4 (IRLB8721) ──── Q6 (IRLB8721)
-         N-ch low-side        N-ch low-side
+         Q12 / Q16 (IRF9540N)  P-ch LOW-side    (TEC1; TEC2 = Q10/Q14)
                │
-          R7 0.1Ω (Kelvin sense)
+          R65 0.1Ω (Kelvin sense; TEC2 = R64)
                │
-          −8V_TEC (from LM7908 directly)</div>
+          −6V_TEC</div>
 
     <div class="callout warn">
-      <strong>⚠ Off-board FETs:</strong> Q3–Q6 mount on chassis heatsink via J8 flying lead (4-wire: +6V_TEC, −6V_TEC, TEC_SENSE_P, TEC_SENSE_N). Maximum FET dissipation at 2.5A: (8V − 3.8V) × 2.5A / 2 = 5.25W per device. Thermal resistance to chassis must be ≤ 10°C/W.
+      <strong>⚠ Off-board FETs:</strong> Q9–Q16 mount on chassis heatsink via J8 flying lead (TEC1 = J8a, TEC2 = J8b; 4-wire each: +6V_TEC, −6V_TEC, TEC_SENSE_P, TEC_SENSE_N). The linear bridge dissipates (rail span − V_TEC) × I across the two conducting FETs — see laser_driver_v3_power_review.html for the worst-case thermal budget. Thermal resistance to chassis must be ≤ 10°C/W.
     </div>
 
     <h3>Key Values</h3>
@@ -589,10 +588,10 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
     <table>
       <thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td class="mono">U3B</td><td>—</td><td>LT1028ACN8</td><td class="dim">TEC error amp, ±6V supply from LT3045/LT3094</td></tr>
-        <tr><td class="mono">Q3, Q5</td><td>—</td><td>IRF9540N</td><td class="dim">P-ch TO-220, −100V/−23A, high-side H-bridge</td></tr>
-        <tr><td class="mono">Q4, Q6</td><td>—</td><td>IRLB8721PBF</td><td class="dim">N-ch TO-220, 30V/62A, low-side H-bridge</td></tr>
-        <tr><td class="mono">R7</td><td>0.1 Ω 1W Kelvin</td><td>WSL2512R1000FEA</td><td class="dim">TEC sense — 4-terminal Kelvin connection</td></tr>
+        <tr><td class="mono">U20/U22 · U19/U21</td><td>—</td><td>OPA192 + OPA551</td><td class="dim">TEC error amp (OPA192) + power buffer (OPA551), CH1/CH2; on ±15V. ±6V_TEC from cap-mult/BJT stage</td></tr>
+        <tr><td class="mono">Q9/Q11/Q13/Q15</td><td>—</td><td>IRLB8721PBF</td><td class="dim">N-ch TO-220, 30V/62A, <strong>high-side</strong> H-bridge (gate driven above rail by ±15V amp)</td></tr>
+        <tr><td class="mono">Q10/Q12/Q14/Q16</td><td>—</td><td>IRF9540N</td><td class="dim">P-ch TO-220, −100V/−23A, <strong>low-side</strong> H-bridge</td></tr>
+        <tr><td class="mono">R65 / R64</td><td>0.1 Ω 1W Kelvin</td><td>WSL2512R1000FEA</td><td class="dim">TEC sense (CH1 / CH2) — 4-terminal Kelvin connection</td></tr>
         <tr><td class="mono">R44 / R40</td><td>4.99 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler top (CH C / CH D) — maps 0–5V DAC to 250mV at sense → 2.5A FS</td></tr>
         <tr><td class="mono">R45 / R43</td><td>20 kΩ 0.1%</td><td>Vishay TNPW</td><td class="dim">TEC scaler bottom (CH C / CH D), ties to TEC_VZERO not AGND</td></tr>
         <tr><td class="mono">U18</td><td>—</td><td>op-amp buffer</td><td class="dim">TEC_VZERO virtual-ground buffer → 1.20V (from 5Vref rail)</td></tr>
@@ -612,10 +611,10 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
 
     <h3>Transformer</h3>
     <div class="spec-grid">
-      <div class="spec-item"><span class="spec-label">Secondary voltage</span><span class="spec-val">18-0-18V CT</span></div>
-      <div class="spec-item"><span class="spec-label">VA rating</span><span class="spec-val">≥ 15 VA</span></div>
-      <div class="spec-item"><span class="spec-label">Peak rectified</span><span class="spec-val">±24V (18×√2 − 1.4V)</span></div>
-      <div class="spec-item"><span class="spec-label">Ripple frequency</span><span class="spec-val">100 Hz (50Hz mains)</span></div>
+      <div class="spec-item"><span class="spec-label">Secondary voltage</span><span class="spec-val">15-0-15V CT (Triad VPT30-1670)</span></div>
+      <div class="spec-item"><span class="spec-label">VA rating</span><span class="spec-val">50 VA (30VCT@1.67A)</span></div>
+      <div class="spec-item"><span class="spec-label">Peak rectified</span><span class="spec-val">±~21V (15×√2 − drops); rail labeled +22V</span></div>
+      <div class="spec-item"><span class="spec-label">Ripple frequency</span><span class="spec-val">120 Hz (60Hz mains)</span></div>
     </div>
 
     <h3>CRC π-Filter Values</h3>
@@ -624,12 +623,12 @@ Resolution = 5.000V / 65536 / 20 / 0.25 = <span class="num">15.3 µA/LSB</span><
       <thead><tr><th>Ref</th><th>Rail</th><th>Value</th><th>Rating</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td class="mono">D1–D4</td><td class="dim">both</td><td>Bridge</td><td>3A 100V</td><td class="dim">1N5401 ×4 or W04G module — 3A for capacitor charge peaks</td></tr>
-        <tr><td class="mono">C1+</td><td class="dim">+24V</td><td>2200 µF</td><td>35V</td><td class="dim">Panasonic FC — 0.73V ripple at 160mA load</td></tr>
-        <tr><td class="mono">C1−</td><td class="dim">−24V</td><td>1000 µF</td><td>35V</td><td class="dim">0.27V ripple at 27mA load</td></tr>
-        <tr><td class="mono">R_filt+</td><td class="dim">+24V</td><td>4.7 Ω 5W</td><td>wirewound</td><td class="dim">72Hz RC corner with C2+ · 0.75V DC drop at 160mA</td></tr>
-        <tr><td class="mono">R_filt−</td><td class="dim">−24V</td><td>10 Ω 2W</td><td>wirewound</td><td class="dim">34Hz RC corner with C2− · 0.27V drop at 27mA</td></tr>
-        <tr><td class="mono">C2+</td><td class="dim">+24V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INP · also input cap</td></tr>
-        <tr><td class="mono">C2−</td><td class="dim">−24V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INN · also input cap</td></tr>
+        <tr><td class="mono">C1+</td><td class="dim">+22V</td><td>2200 µF</td><td>35V</td><td class="dim">Panasonic FC — 0.73V ripple at 160mA load</td></tr>
+        <tr><td class="mono">C1−</td><td class="dim">−22V</td><td>1000 µF</td><td>35V</td><td class="dim">0.27V ripple at 27mA load</td></tr>
+        <tr><td class="mono">R_filt+</td><td class="dim">+22V</td><td>4.7 Ω 5W</td><td>wirewound</td><td class="dim">72Hz RC corner with C2+ · 0.75V DC drop at 160mA</td></tr>
+        <tr><td class="mono">R_filt−</td><td class="dim">−22V</td><td>10 Ω 2W</td><td>wirewound</td><td class="dim">34Hz RC corner with C2− · 0.27V drop at 27mA</td></tr>
+        <tr><td class="mono">C2+</td><td class="dim">+22V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INP · also input cap</td></tr>
+        <tr><td class="mono">C2−</td><td class="dim">−22V</td><td>470 µF</td><td>35V</td><td class="dim">Local bypass at TPS7A39 INN · also input cap</td></tr>
       </tbody>
     </table>
     </div>
@@ -664,11 +663,11 @@ VOUTN = −Vref × (1 + R1N/R2N) = −Vref × 12.9  <span class="cm">// negative
     <table>
       <thead><tr><th>Pin</th><th>Name</th><th>Connection</th><th>Component</th></tr></thead>
       <tbody>
-        <tr><td class="mono">1</td><td>INP</td><td class="dim">+24V raw DC</td><td class="dim">C_INP 10µF X7R to GND · place close</td></tr>
+        <tr><td class="mono">1</td><td>INP</td><td class="dim">+22V raw DC</td><td class="dim">C_INP 10µF X7R to GND · place close</td></tr>
         <tr><td class="mono">2</td><td>EN</td><td class="dim">Teensy GPIO 3.3V</td><td class="dim">Logic high=on · or tie to INP for always-on</td></tr>
         <tr><td class="mono">3</td><td>NR/SS</td><td class="dim">CSS to GND</td><td class="dim">100nF → 60ms ramp (t = CSS × 1.2V / 2µA)</td></tr>
         <tr><td class="mono">4</td><td>GND</td><td class="dim">AGND + thermal pad</td><td class="dim">Multiple vias to AGND plane</td></tr>
-        <tr><td class="mono">5</td><td>INN</td><td class="dim">−24V raw DC</td><td class="dim">C_INN 10µF X7R to GND · place close</td></tr>
+        <tr><td class="mono">5</td><td>INN</td><td class="dim">−22V raw DC</td><td class="dim">C_INN 10µF X7R to GND · place close</td></tr>
         <tr><td class="mono">6</td><td>OUTN</td><td class="dim">→ LT3094 IN pins</td><td class="dim">C_OUTN 10µF X7R to GND · = −16.5V node</td></tr>
         <tr><td class="mono">7</td><td>FBN</td><td class="dim">R1N/R2N divider</td><td class="dim">R1N 119kΩ to OUTN · R2N 10kΩ to GND</td></tr>
         <tr><td class="mono">8</td><td>BUF</td><td class="dim">NC</td><td class="dim">Leave unconnected or 10nF to GND</td></tr>
@@ -696,9 +695,9 @@ Same ratio for negative: R1N = 127kΩ → VOUTN = −16.44V  ✓</div>
       <h2>Supply Rails — Five Regulated Rails</h2>
     </div>
 
-    <h3>Rail 1 — ±15V Analog (LT1028 supplies)</h3>
+    <h3>Rail 1 — ±15V Analog (op-amp / in-amp supplies)</h3>
     <div class="rail-chain">
-      <div class="rail-node"><span class="part">±24V raw</span><span class="volt">from CRC</span><span class="note">±24V</span></div>
+      <div class="rail-node"><span class="part">±22V raw</span><span class="volt">from CRC</span><span class="note">±22V</span></div>
       <div class="rail-arrow">→</div>
       <div class="rail-node"><span class="part">TPS7A39</span><span class="volt">±16.5V</span><span class="note">tracked · 150mA</span></div>
       <div class="rail-arrow">→</div>
@@ -736,40 +735,42 @@ Same ratio for negative: R1N = 127kΩ → VOUTN = −16.44V  ✓</div>
       <div class="rail-node"><span class="part">Teensy J6</span><span class="volt">3.3V</span><span class="note">~100mA typ</span></div>
     </div>
 
-    <h3>Rails 4/5 — ±8V/±6V TEC</h3>
+    <h3>Rails 4/5 — ±6V_TEC (cap-multiplier + paralleled-BJT pass)</h3>
     <div class="rail-chain">
-      <div class="rail-node"><span class="part">+15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-node"><span class="part">T2 +9Vac</span><span class="volt">~12.7Vpk</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LM7808</span><span class="volt">+8V</span><span class="note">H-bridge power</span></div>
+      <div class="rail-node"><span class="part">bridge + cap-mult Q3</span><span class="volt">~+10.5V</span><span class="note">filtered raw</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LT3045</span><span class="volt">+6V</span><span class="note">LT1028 TEC supply</span></div>
+      <div class="rail-node"><span class="part">BJT pass Q7/Q8 (MJL21194)</span><span class="volt">+6.0V</span><span class="note">LM4040-6.2 · MMBT2222 driver</span></div>
     </div>
     <div class="rail-chain" style="margin-top:4px">
-      <div class="rail-node"><span class="part">−15V</span><span class="volt">rail 1</span></div>
+      <div class="rail-node"><span class="part">T2 −9Vac</span><span class="volt">~−12.7Vpk</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LM7908</span><span class="volt">−8V</span><span class="note">H-bridge power</span></div>
+      <div class="rail-node"><span class="part">bridge + cap-mult Q4</span><span class="volt">~−10.5V</span><span class="note">filtered raw</span></div>
       <div class="rail-arrow">→</div>
-      <div class="rail-node"><span class="part">LT3094</span><span class="volt">−6V</span><span class="note">LT1028 TEC supply</span></div>
+      <div class="rail-node"><span class="part">BJT pass Q5/Q6 (MJL21193)</span><span class="volt">−6.0V</span><span class="note">LM4040-6.2 · MMBT2907 driver</span></div>
     </div>
 
-    
+
     <div class="callout info">
-      <strong>v4 power budget update:</strong> Adding two more LT1028 op-amps (U3C + U3D) adds
-      2 × 7.6mA = 15.2mA to the ±15V rails. The ±8V TEC rails now drive two H-bridges
-      simultaneously (up to 5A total). Two independent +5V_LASER supplies (J5a, J5b) replace
-      the single J5 — each must be rated ≥ 3.5A for full simultaneous operation.
+      <strong>As-built ±6V_TEC supply:</strong> the TEC rails are <strong>not</strong> derived from +15V→LM7808→LT3045. Each rail is a cap-multiplier (Q3/Q4, IRF540/IRF9540) feeding a paralleled-BJT emitter-follower pass stage off a dedicated ±9Vac winding (T2, Triad VPT18-8800): Q7/Q8 = MJL21194 on +6V, Q5/Q6 = MJL21193 on −6V, each with a 0.1Ω ballast (R30–R33). The reference is an LM4040-6.2 (U12/U13) with a small NPN/PNP driver (Q19/Q20 = MMBT2222/2907) and two 1N4148 Vbe-comp diodes per rail. This <strong>is</strong> the H-bridge power rail. Output ≈ ±6.0–6.4V (load-dependent), temperature-stable to ≤±30mV over 0–75°C (LTspice-verified). The H-bridge error amps are OPA192 (U19/U20) + OPA551 (U21/U22) on ±15V. See laser_driver_v3_power_review.html for the full rail-by-rail budget.
     </div>
     <h3>Current Budget</h3>
     <div class="tbl-wrap">
     <table>
       <thead><tr><th>Rail</th><th>Typical</th><th>Peak</th><th>Dominant load</th></tr></thead>
       <tbody>
-        <tr><td>+15V input</td><td>150 mA</td><td class="warn">173 mA</td><td class="dim">Teensy chain + 4× LT1028 (4 × 7.6mA)</td></tr>
-        <tr><td>−15V input</td><td>40 mA</td><td>42 mA</td><td class="dim">4× LT1028 V− rails (4 × 7.6mA) + LT3094</td></tr>
-        <tr><td>+5V_LASER Ch1 (J5a)</td><td>~700 mA</td><td class="warn">~3.5 A</td><td class="dim">Laser1 600mA + TEC1 2.5A</td></tr>
-        <tr><td>+5V_LASER Ch2 (J5b)</td><td>~700 mA</td><td class="warn">~3.5 A</td><td class="dim">Laser2 600mA + TEC2 2.5A — independent supply</td></tr>
+        <tr><td>+15V rail (±14.3V)</td><td>~23 mA</td><td>~30 mA</td><td class="dim">analog amps only: 6× OPA192 + 2× OPA551 + 4× INA826 (breakdown below)</td></tr>
+        <tr><td>−15V rail (±14.3V)</td><td>~23 mA</td><td>~30 mA</td><td class="dim">same dual-supply amps</td></tr>
+        <tr><td>+22V raw</td><td>~462 mA</td><td class="warn">~0.5 A</td><td class="dim">feeds LM78xx chains → 5Vref / +5V_LASER / 3.3V-Teensy, plus the ±15V regulators</td></tr>
+        <tr><td>+5V_LASER</td><td>~120 mA</td><td>~220 mA</td><td class="dim">Laser1 + Laser2, 100mA max each (TEC is on ±6V_TEC, not this rail)</td></tr>
+        <tr><td>±6V_TEC</td><td>—</td><td class="warn">~2.5 A/rail</td><td class="dim">H-bridge power — cap-mult + 2× MJL/rail (≥6A/rail capacity)</td></tr>
       </tbody>
     </table>
+    </div>
+
+    <div class="callout info">
+      <strong>±15V op-amp budget — recomputed for as-built parts:</strong> 6× OPA192 @ 1.0 mA = 6.0 mA · 2× OPA551 @ 8 mA = 16.0 mA · 4× INA826 @ 0.2 mA = 0.8 mA → <strong>≈ 22.8 mA typ (~30 mA max) per rail</strong>, plus brief OPA551 gate-charge transients during TEC slews. The OPA380 TIAs (U_TIA1–6) run from <code>3V3</code> and the OPA2134 AAF (U29) from <code>5V_DAC</code> — neither loads the ±15V rails. At ~23 mA the LT3042 (U10) / LT3094 (U11) sit at ≈12–15% of their current rating. This supersedes the old LT1028-based estimate (which also wrongly attributed the Teensy/logic chain to +15V — those run from +22V raw).
     </div>
   </div>
 
@@ -882,17 +883,17 @@ dac_write(<span class="num">0x2</span>, tec_code);     <span class="cm">// TEC  
       <tbody>
         <tr>
           <td>LAS_IMON</td>
-          <td class="mono">INA826 U_RB1</td>
-          <td class="dim">G = 12× (Rg = 4.53kΩ)</td>
-          <td class="dim">250mV at 600mA · R5 sense</td>
-          <td class="ok">3.0V</td>
+          <td class="mono">INA826 U25/U26</td>
+          <td class="dim">G ≈ 102 (Rg = 487Ω)</td>
+          <td class="dim">25mV at 100mA · R79/R80 sense (Ref = GND)</td>
+          <td class="ok">2.56V</td>
         </tr>
         <tr>
           <td>TEC_IMON</td>
-          <td class="mono">INA826 U_RB2</td>
-          <td class="dim">G = 20× (Rg = 2.61kΩ)</td>
-          <td class="dim">250mV at 2.5A · R7 sense</td>
-          <td class="ok">3.0V</td>
+          <td class="mono">INA826 U27/U28</td>
+          <td class="dim">G ≈ 7.1 (Rg = 8.06kΩ)</td>
+          <td class="dim">250mV at 2.5A · R65/R64 sense (Ref = TEC_VZERO 1.20V)</td>
+          <td class="ok">0.12–3.0V</td>
         </tr>
         <tr>
           <td>NTC_MON</td>
@@ -914,8 +915,8 @@ dac_write(<span class="num">0x2</span>, tec_code);     <span class="cm">// TEC  
 
     <h3>INA826 Gain Formula</h3>
     <div class="code-block">G = 1 + (49.4kΩ / Rg)
-<span class="cm">// Laser:  G = 1 + 49.4k/4.53k = 11.9×   Rg = 4.53kΩ 0.1%</span>
-<span class="cm">// TEC:    G = 1 + 49.4k/2.61k = 19.9×   Rg = 2.61kΩ 0.1%</span>
+<span class="cm">// Laser:  G = 1 + 49.4k/487  = 102×    Rg = 487Ω  (Ref = GND)</span>
+<span class="cm">// TEC:    G = 1 + 49.4k/8.06k = 7.13×   Rg = 8.06kΩ (Ref = TEC_VZERO 1.20V)</span>
 
 Vout_max (laser) = 0.250V × 11.9 = <span class="num">2.97V</span>  ← fits 0–3.3V ADC ✓
 Vout_max (TEC)   = 0.250V × 19.9 = <span class="num">2.99V</span>  ← fits 0–3.3V ADC ✓</div>
@@ -1012,28 +1013,28 @@ Vout_max (TEC)   = 0.250V × 19.9 = <span class="num">2.99V</span>  ← fits 0�
         <tr><td class="mono">U_DAC</td><td>LT3042EDD</td><td class="dim">DFN-10</td><td class="dim">5.5V → 5.0V AD5064 VDD supply</td></tr>
         <tr><td class="mono">U7</td><td>LM7805</td><td class="dim">TO-220</td><td class="dim">+15V → 5V coarse (Rail 3) · heatsink</td></tr>
         <tr><td class="mono">U8</td><td>LT3045EDD</td><td class="dim">DFN-10</td><td class="dim">5V → 3.3V Teensy supply · 2µV rms</td></tr>
-        <tr><td class="mono">U10</td><td>LM7808</td><td class="dim">TO-220</td><td class="dim">+15V → +8V TEC H-bridge power</td></tr>
-        <tr><td class="mono">U11</td><td>LT3045EDD</td><td class="dim">DFN-10</td><td class="dim">+8V → +6V TEC control supply</td></tr>
-        <tr><td class="mono">U12</td><td>LM7908</td><td class="dim">TO-220</td><td class="dim">−15V → −8V TEC H-bridge power</td></tr>
-        <tr><td class="mono">U13</td><td>LT3094EDD</td><td class="dim">DFN-10</td><td class="dim">−8V → −6V TEC control supply</td></tr>
+        <tr><td class="mono">Q3 / Q4</td><td>IRF540N / IRF9540N</td><td class="dim">TO-220</td><td class="dim">±6V_TEC cap-multiplier pass (off ±9Vac winding T2)</td></tr>
+        <tr><td class="mono">Q7,Q8 / Q5,Q6</td><td>MJL21194 / MJL21193</td><td class="dim">TO-264</td><td class="dim">±6V_TEC paralleled-BJT pass (NPN +6V / PNP −6V) · 0.1Ω ballast R30–R33</td></tr>
+        <tr><td class="mono">Q19 / Q20</td><td>MMBT2222 / MMBT2907</td><td class="dim">SOT-23</td><td class="dim">±6V_TEC reference drivers (NPN / PNP)</td></tr>
+        <tr><td class="mono">U12 / U13</td><td>LM4040DBZ-6.2</td><td class="dim">SOT-23</td><td class="dim">±6V_TEC 6.2V shunt refs (+ 2× 1N4148 Vbe-comp each: D10/D11/D_CP1/D_CP2)</td></tr>
         <tr><td class="mono">U2</td><td>AD5064BRUZ</td><td class="dim">TSSOP-16</td><td class="dim">Quad 16-bit DAC · ext Vref · SPI</td></tr>
-        <tr><td class="mono">U3A/B</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">Ultra-low noise op-amps (laser + TEC)</td></tr>
+        <tr><td class="mono">U23 · U20/U22</td><td>OPA192 · OPA192/OPA551</td><td class="dim">SOIC-8</td><td class="dim">Laser1 ACC error amp (OPA192) · TEC1 error+power amps (OPA192+OPA551)</td></tr>
         <tr><td class="mono">U9</td><td>74AHCT125</td><td class="dim">SOIC-14</td><td class="dim">3.3V→5V SPI level shifter</td></tr>
-        <tr><td class="mono">U_RB1/2</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Current readback in-amps (laser + TEC)</td></tr>
+        <tr><td class="mono">U25–U28</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Current readback in-amps — laser U25/U26 (G≈102), TEC U27/U28 (G≈7.1)</td></tr>
         <tr><td class="mono">U_TIA</td><td>OPA380AIDR</td><td class="dim">SOIC-8</td><td class="dim">Monitor PD transimpedance amp</td></tr>
-        <tr><td class="mono">Q1</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser pass element · active production</td></tr>
-        <tr><td class="mono">Q3,Q5</td><td>IRF9540N</td><td class="dim">TO-220</td><td class="dim">P-ch H-bridge high-side · off-board</td></tr>
-        <tr><td class="mono">Q4,Q6</td><td>IRLB8721PBF</td><td class="dim">TO-220</td><td class="dim">N-ch H-bridge low-side · off-board</td></tr>
-        <tr><td class="mono">R5</td><td>0.25Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R2500FEA · laser sense</td></tr>
-        <tr><td class="mono">R7</td><td>0.1Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R1000FEA · TEC sense</td></tr>
+        <tr><td class="mono">Q17</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser 1 pass element (ACC sink)</td></tr>
+        <tr><td class="mono">Q11/Q15</td><td>IRLB8721PBF</td><td class="dim">TO-220</td><td class="dim">TEC1 N-ch H-bridge high-side · off-board (J8a)</td></tr>
+        <tr><td class="mono">Q12/Q16</td><td>IRF9540N</td><td class="dim">TO-220</td><td class="dim">TEC1 P-ch H-bridge low-side · off-board (J8a)</td></tr>
+        <tr><td class="mono">R79/R80</td><td>0.25Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R2500FEA · laser sense (CH1/CH2)</td></tr>
+        <tr><td class="mono">R65/R64</td><td>0.1Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R1000FEA · TEC sense (CH1/CH2)</td></tr>
         
-        <tr><td class="mono">U3C</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">Laser 2 error amp — identical to U3A</td></tr>
-        <tr><td class="mono">U3D</td><td>LT1028ACN8</td><td class="dim">DIP-8</td><td class="dim">TEC 2 error amp — identical to U3B</td></tr>
-        <tr><td class="mono">U_RB3</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Laser 2 current readback G=12 (Rg3=4.53kΩ)</td></tr>
-        <tr><td class="mono">U_RB4</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">TEC 2 current readback G=20 (Rg4=2.61kΩ)</td></tr>
-        <tr><td class="mono">U_TIA2</td><td>OPA380AIDR</td><td class="dim">SOIC-8</td><td class="dim">Laser 2 monitor PD TIA — identical to U_TIA1</td></tr>
-        <tr><td class="mono">Q1b</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser 2 pass element — identical to Q1</td></tr>
-        <tr><td class="mono">Q7–Q10</td><td>IRF9540N + IRLB8721 ×2</td><td class="dim">TO-220 ×4</td><td class="dim">TEC 2 H-bridge — off-board via J8b</td></tr>
+        <tr><td class="mono">U24</td><td>OPA192</td><td class="dim">SOIC-8</td><td class="dim">Laser 2 ACC error amp — identical to U23</td></tr>
+        <tr><td class="mono">U19/U21</td><td>OPA192 / OPA551</td><td class="dim">SOIC-8</td><td class="dim">TEC 2 error amp (OPA192) + power buffer (OPA551)</td></tr>
+        <tr><td class="mono">U25/U26</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">Laser 1/2 current readback · G≈102 (Rg=487Ω)</td></tr>
+        <tr><td class="mono">U27/U28</td><td>INA826AIDR</td><td class="dim">SOIC-8</td><td class="dim">TEC 1/2 current readback · G≈7.1 (Rg=8.06kΩ)</td></tr>
+        <tr><td class="mono">U_TIA1–6</td><td>OPA380AIDR</td><td class="dim">SOIC-8</td><td class="dim">MPD / external-PD transimpedance amps</td></tr>
+        <tr><td class="mono">Q18</td><td>IRLML6344TRPBF</td><td class="dim">SOT-23</td><td class="dim">Laser 2 pass element — identical to Q17</td></tr>
+        <tr><td class="mono">Q9/Q13 · Q10/Q14</td><td>IRLB8721 · IRF9540N</td><td class="dim">TO-220 ×4</td><td class="dim">TEC2 H-bridge — N-ch high-side (Q9/Q13) + P-ch low-side (Q10/Q14) · off-board (J8b)</td></tr>
         <tr><td class="mono">R5b</td><td>0.25Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R2500FEA — Laser 2 sense</td></tr>
         <tr><td class="mono">R7b</td><td>0.1Ω 1W Kelvin</td><td class="dim">2512</td><td class="dim">WSL2512R1000FEA — TEC 2 sense</td></tr>
         <tr><td class="mono">D3b</td><td>BAT54</td><td class="dim">SOD-123</td><td class="dim">Laser 2 reverse protection — identical to D3</td></tr>
