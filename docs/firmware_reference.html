@@ -420,12 +420,13 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <nav>
   <div class="nav-logo">
     <div class="title">Dual-PDH Controller</div>
-    <div class="sub">Firmware Reference v1.0</div>
+    <div class="sub">Firmware Reference v2.0 — RF lock</div>
   </div>
   <ul>
     <li><span class="nav-section">Overview</span></li>
     <li><a href="#overview">Introduction</a></li>
     <li><a href="#hardware">Hardware Summary</a></li>
+    <li><a href="#pinout">Teensy Pinout</a></li>
     <li><a href="#interfaces">Control Interfaces</a></li>
 
     <li><span class="nav-section">Firmware</span></li>
@@ -457,9 +458,12 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <li><a href="#cmd-hold">hold1 / hold2</a></li>
     <li><a href="#cmd-break">break1 / break2</a></li>
     <li><a href="#cmd-reset">reset1 / reset2</a></li>
-    <li><a href="#cmd-p">p1 / p2</a></li>
+    <li><a href="#cmd-omega">omega1 / omega2</a></li>
+    <li><a href="#cmd-phase">phase1 / phase2</a></li>
+    <li><a href="#cmd-cal">cal1 / cal2</a></li>
     <li><a href="#cmd-thresh">thresh1 / thresh2</a></li>
-    <li><a href="#cmd-dither">dither</a></li>
+    <li><a href="#cmd-p">p1 / p2 (legacy)</a></li>
+    <li><a href="#cmd-dither">dither (legacy)</a></li>
     <li><a href="#cmd-status">s / status</a></li>
     <li><a href="#cmd-d">d</a></li>
     <li><span class="nav-section">Protection</span></li>
@@ -489,18 +493,29 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
   <span>Arduino / Teensyduino</span>
   <span>ILI9341 320×240 TFT</span>
   <span>QNEthernet</span>
-  <span>Revision 1.0 · 2026-05-30</span>
+  <span>Revision 2.0 · 2026-06-04 · RF analog-derivative lock</span>
 </div>
 
 <section id="overview">
 <h2>Introduction</h2>
+
+<div class="callout" style="border:1px solid #f5a52455;border-left:3px solid var(--ch2);background:color-mix(in srgb,var(--ch2) 8%,var(--panel2));padding:14px 18px;margin:0 0 22px;border-radius:4px">
+  <strong style="color:var(--ch2)">Rev 2.0 — RF analog-derivative lock.</strong>
+  The kHz digital dither lock is replaced by a <strong>~1–3 MHz analog derivative lock</strong>: the
+  lock-in demod (AD831 mixer) and the PI servo are now <strong>analog hardware</strong>. The Teensy
+  is a <strong>supervisor</strong> — it programs the DDS (drive + phase-set reference, dual-Ω,
+  phase-coherent), sweeps to acquire, hands the loop to the analog PI via the <code>LOCKn_EN</code>
+  integrator hold/run line, auto-calibrates the demod phase, and monitors the post-mix baseband
+  error. New ports and commands are documented below. See the
+  <a href="laser_driver_v3_rf_modulation_design.html">RF Modulation Design Spec</a> for the hardware.
+</div>
+
 <p>
   The Dual-PDH Controller runs on a <strong>Teensy 4.1</strong> and implements two simultaneous
-  Pound–Drever–Hall (PDH) frequency locks for 1550 nm and 1560 nm DFB lasers.
-  Each channel follows an automated <strong>sweep-to-lock</strong> sequence: a coarse
-  TEC/temperature scan locates the cavity resonance, followed by a fine laser-current
-  scan that walks onto the transmission peak, then the PDH servo engages and
-  holds the lock.
+  frequency locks for the 1550 nm DFB lasers. Each channel follows an automated
+  <strong>sweep-to-lock</strong> sequence: the supervisor sweeps the DC current setpoint to drag the
+  laser across resonance, captures the discriminator zero-crossing, then <strong>releases the analog
+  PI integrator</strong> so the analog servo holds the lock.
 </p>
 <p>
   The <strong>320×240 ILI9341 TFT</strong> is read-only — it shows live state, sweep traces,
@@ -510,12 +525,13 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 
 <div class="tag-row">
   <span class="tag hw">CDCE913 25 MHz clock</span>
-  <span class="tag hw">Dual AD9833 DDS dither</span>
+  <span class="tag hw">Quad AD9833 DDS (2 drive + 2 ref)</span>
+  <span class="tag hw">AD831 analog demod</span>
+  <span class="tag hw">Analog PI + ADG419 hold</span>
   <span class="tag hw">AD5064 16-bit DAC</span>
   <span class="tag hw">ILI9341 TFT</span>
   <span class="tag hw">Built-in Ethernet PHY</span>
-  <span class="tag sw">1 kHz control loop</span>
-  <span class="tag sw">10 Hz display refresh</span>
+  <span class="tag sw">1 kHz supervisor loop</span>
   <span class="tag net">HTTP port 80</span>
   <span class="tag net">Telnet port 23</span>
 </div>
@@ -527,17 +543,70 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <table class="file-table">
   <thead><tr><th>Component</th><th>Interface</th><th>Role</th></tr></thead>
   <tbody>
-    <tr><td><span class="file-tag">CDCE913</span></td><td>I²C (0x65)</td><td class="file-desc">PLL clock synthesiser — 10 MHz input → 25 MHz reference for both AD9833 chips. EEPROM image is version-stamped and re-programmed automatically on first boot if stale.</td></tr>
-    <tr><td><span class="file-tag">AD9833 ×2</span></td><td>SPI</td><td class="file-desc">Direct Digital Synthesis oscillators generating the PDH dither sine. CH1 on CS pin 2, CH2 on CS pin 3. Default frequency: 10 kHz.</td></tr>
+    <tr><td><span class="file-tag">CDCE913</span></td><td>I²C (0x65)</td><td class="file-desc">PLL clock synthesiser — 10 MHz input → 25 MHz reference (MCLK) for <strong>all four</strong> AD9833 chips. <strong>Rev 2.0:</strong> fan the 25 MHz out to 4 DDS MCLK inputs (was 2); the shared clock is what makes each channel's drive+reference phase-coherent. EEPROM image is version-stamped and auto-reprogrammed on first boot if stale.</td></tr>
+    <tr><td><span class="file-tag">AD9833 ×4</span></td><td>SPI0</td><td class="file-desc"><strong>Rev 2.0.</strong> Two <strong>DRIVE</strong> DDS (modulate laser current at Ω: CH1 CS=D2, CH2 CS=D3) + two <strong>REFERENCE</strong> DDS (phase-set demod LO: CH1 CS=D6 → <code>LO1_REF</code>, CH2 CS=D8 → <code>LO2_REF</code>). Ω ≈ 2.0 / 2.5 MHz (dual-Ω). Demod phase set via the reference PHASE0 register. All share SPI0 + the 25 MHz MCLK.</td></tr>
+    <tr><td><span class="file-tag">AD831 ×2</span></td><td>Analog</td><td class="file-desc"><strong>Rev 2.0.</strong> Analog synchronous demodulators (one per channel). RF from the wideband TIA, LO from the reference DDS; post-mix 2-pole LPF → baseband error. Replaces the firmware digital lock-in.</td></tr>
+    <tr><td><span class="file-tag">Analog PI + ADG419 ×2</span></td><td>Analog + D33/D34</td><td class="file-desc"><strong>Rev 2.0.</strong> Analog PI loop filter closes the lock; output sums into the OPA192 IN+ (<code>DITHn_SUM</code>). An ADG419 SPST switch across the integrator cap is the hold/reset, driven by Teensy <code>LOCK1_EN</code> (D33) / <code>LOCK2_EN</code> (D34): HOLD while acquiring, RUN when locked.</td></tr>
     <tr><td><span class="file-tag">AD5064</span></td><td>SPI</td><td class="file-desc">Quad 16-bit DAC. Channel 0 = CH1 laser current setpoint, channel 1 = CH2 laser current setpoint. Channels 2–3 = TEC current setpoints (code 15728 = 0 A at VOUTC ≈ 1.20 V virtual zero; +2.5 A cooling / −1.5 A heating endpoint codes are calibrated in firmware against measured IMON, as they depend on the R44/R45 and R40/R43 scaler). Software current-limit logic writes these channels every 1 kHz tick.</td></tr>
     <tr><td><span class="file-tag">ILI9341</span></td><td>SPI (CS 15, DC 14)</td><td class="file-desc">2.8″ 320×240 colour TFT, landscape orientation. Read-only instrument display at 10 Hz.</td></tr>
     <tr><td><span class="file-tag">Teensy 4.1 ETH</span></td><td>Built-in PHY</td><td class="file-desc">10/100 Ethernet via QNEthernet library. DHCP with static fallback 192.168.1.200. mDNS hostname: <code>dual-pdh.local</code>.</td></tr>
     <tr><td><span class="file-tag">NTC ×2</span></td><td>Analog A8/A9</td><td class="file-desc">Thermistors on TEC stages. Beta-equation conversion to °C (R₂₅ = 10 kΩ, β = 3950).</td></tr>
-    <tr><td><span class="file-tag">PDH error ×2</span></td><td>Analog A0/A1</td><td class="file-desc">Demodulated PDH error signals. 12-bit ADC, normalised to −1…+1 around midscale.</td></tr>
+    <tr><td><span class="file-tag">Baseband error ×2</span></td><td>Analog A10/A11</td><td class="file-desc"><strong>Rev 2.0.</strong> Post-mix baseband demod error (<code>ERR1</code>/<code>ERR2</code>) from the analog AD831+LPF, on <code>LOCK1_IN</code> (A10) / <code>LOCK2_IN</code> (A11). 12-bit ADC, normalised to −1…+1 around midscale. The supervisor monitors these for capture/loss and demod-phase calibration; the AAF + digital lock-in are demoted to logging.</td></tr>
     <tr><td><span class="file-tag">TEC IMON ×2</span></td><td>Analog A1 / A7</td><td class="file-desc">TEC current monitors. INA826 instrumentation amplifier (G=7.2, R<sub>shunt</sub>=0.1 Ω): V<sub>IMON</sub> = 1.20 V + 0.72 V/A × I. At 2.5 A → 3.0 V. Read every 1 kHz tick; software limit backs off the TEC DAC setpoint when exceeded.</td></tr>
     <tr><td><span class="file-tag">H-Bridge Fault ×2</span></td><td>Digital D31 / D32</td><td class="file-desc">OPA551 Flag pins (open-drain active-low). Pulled HIGH internally via <code>INPUT_PULLUP</code>. LOW = overcurrent or thermal fault on the TEC H-bridge amplifier. Edge changes print immediately to serial; fault state shown on TFT and JSON.</td></tr>
   </tbody>
 </table>
+</section>
+
+<!-- ─────────────── PINOUT ─────────────── -->
+<section id="pinout">
+<h2>Teensy 4.1 Pinout</h2>
+<p>
+  Authoritative map from <code>config.h</code> (Rev 2.0). <strong>Bold = new/changed</strong> for the
+  RF analog-derivative lock. Wire the new signals into the schematics by the listed net name.
+</p>
+
+<h3>New &amp; changed — RF lock</h3>
+<table class="file-table">
+  <thead><tr><th>Pin</th><th>Dir</th><th><code>config.h</code></th><th>Net</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><strong>D6</strong></td><td>out</td><td><code>PIN_AD9833_3_CS</code></td><td><code>DDS3_FSYNC</code></td><td class="file-desc"><strong>NEW</strong> — chip-select, CH1 <em>reference</em> DDS (demod LO → <code>LO1_REF</code>).</td></tr>
+    <tr><td><strong>D8</strong></td><td>out</td><td><code>PIN_AD9833_4_CS</code></td><td><code>DDS4_FSYNC</code></td><td class="file-desc"><strong>NEW</strong> — chip-select, CH2 <em>reference</em> DDS (demod LO → <code>LO2_REF</code>).</td></tr>
+    <tr><td><strong>D33</strong></td><td>out</td><td><code>PIN_LOCK1_EN</code></td><td><code>LOCK1_EN</code></td><td class="file-desc"><strong>NEW</strong> — CH1 analog-integrator hold/run (ADG419 across C<sub>i</sub>). HIGH = RUN, LOW = HOLD/RESET.</td></tr>
+    <tr><td><strong>D34</strong></td><td>out</td><td><code>PIN_LOCK2_EN</code></td><td><code>LOCK2_EN</code></td><td class="file-desc"><strong>NEW</strong> — CH2 analog-integrator hold/run.</td></tr>
+    <tr><td><strong>D2</strong></td><td>out</td><td><code>PIN_AD9833_1_CS</code></td><td><code>DDS1_FSYNC</code></td><td class="file-desc"><strong>CHANGED ROLE</strong> — CH1 <em>drive</em> DDS, now at Ω (MHz) instead of 10 kHz dither.</td></tr>
+    <tr><td><strong>D3</strong></td><td>out</td><td><code>PIN_AD9833_2_CS</code></td><td><code>DDS2_FSYNC</code></td><td class="file-desc"><strong>CHANGED ROLE</strong> — CH2 <em>drive</em> DDS at Ω.</td></tr>
+    <tr><td><strong>A10 (D24)</strong></td><td>in (ADC)</td><td><code>PIN_LOCK1_IN</code></td><td><code>ERR1</code></td><td class="file-desc"><strong>CHANGED ROLE</strong> — CH1 post-mix baseband error monitor (was digital-lockin input).</td></tr>
+    <tr><td><strong>A11 (D25)</strong></td><td>in (ADC)</td><td><code>PIN_LOCK2_IN</code></td><td><code>ERR2</code></td><td class="file-desc"><strong>CHANGED ROLE</strong> — CH2 baseband error monitor.</td></tr>
+    <tr><td>A14 (D38) <em>opt</em></td><td>in (ADC)</td><td><code>PIN_LAS1_CORR_MON</code></td><td><code>CORR1</code></td><td class="file-desc"><strong>OPTIONAL</strong> — analog-PI output tap for slow integrator centering (anti-windup). Commented out by default.</td></tr>
+    <tr><td>A16 (D40) <em>opt</em></td><td>in (ADC)</td><td><code>PIN_LAS2_CORR_MON</code></td><td><code>CORR2</code></td><td class="file-desc"><strong>OPTIONAL</strong> — CH2 analog-PI output tap.</td></tr>
+  </tbody>
+</table>
+<div class="callout" style="border:1px solid var(--rule);border-left:3px solid var(--sweep);background:var(--panel2);padding:12px 16px;margin:14px 0;border-radius:4px">
+  The reference DDS (D6/D8) <strong>share SPI0 SCK/MOSI</strong> (D13/D11 → nets <code>DDS_SCLK</code>/<code>DDS_SDATA</code>) and the
+  <strong>25 MHz MCLK</strong> (net <code>MCLK_REF</code>) with the drive DDS. They need <strong>no RESET GPIO</strong> — the
+  firmware uses the software RESET bit. Phase coherence comes from the shared MCLK + synchronized release.
+</div>
+
+<h3>Unchanged — buses &amp; existing peripherals</h3>
+<table class="file-table">
+  <thead><tr><th>Pin(s)</th><th><code>config.h</code></th><th>Net / role</th></tr></thead>
+  <tbody>
+    <tr><td>D11 / D12 / D13</td><td><code>PIN_MOSI/MISO/SCK</code></td><td>SPI0 signal-path bus — 4 AD9833 + AD5064 (per-chip CS)</td></tr>
+    <tr><td>D10</td><td><code>PIN_AD5064_CS</code></td><td>AD5064 DAC chip-select (hardware CS0)</td></tr>
+    <tr><td>D7</td><td><code>PIN_AD5064_CLR</code></td><td>AD5064 async clear (held HIGH)</td></tr>
+    <tr><td>D4 / D5</td><td><code>PIN_AD9833_1/2_RESET</code></td><td>Drive-DDS reset GPIO (DDS1/2 only)</td></tr>
+    <tr><td>D18 / D19</td><td><code>PIN_SDA/SCL</code></td><td>I²C0 — CDCE913 clock gen</td></tr>
+    <tr><td>D9</td><td><code>PIN_FREQ_TEST</code></td><td>FreqCount 25 MHz self-test (fixed pin)</td></tr>
+    <tr><td>D26/27/28/29/30</td><td><code>PIN_TFT_*</code></td><td>SPI1 — ILI9341 TFT (MOSI/SCK/CS/DC/RST)</td></tr>
+    <tr><td>D31 / D32</td><td><code>PIN_HBRIDGE_FAULT1/2</code></td><td>OPA551 fault inputs (open-drain, <code>INPUT_PULLUP</code>)</td></tr>
+    <tr><td>A0–A3, A6–A9</td><td><code>PIN_NTC/TEC/LAS/MPD_*</code></td><td>NTC temps, TEC IMON, laser IMON, MPD monitors</td></tr>
+  </tbody>
+</table>
+<p class="file-desc" style="margin-top:10px">
+  Free GPIO used (D6, D8, D33, D34, opt A14/A16) avoid the SPI0/SPI1, I²C, TFT, fault, and existing
+  analog assignments. Serial1 (D0/D1) is left free.
+</p>
 </section>
 
 <!-- ─────────────── INTERFACES ─────────────── -->
@@ -622,8 +691,8 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
       <td><span class="file-tag pair">ad9833.h / .cpp</span></td>
       <td>SPI driver</td>
       <td>
-        <div class="file-role">AD9833 DDS — dither oscillators</div>
-        <div class="file-desc">Resets both chips on startup, then programs the 28-bit frequency word for a sine output. Frequency is live-tunable via the <code>dither</code> command without interrupting the servo loops.</div>
+        <div class="file-role">AD9833 DDS — drive + reference oscillators</div>
+        <div class="file-desc"><strong>Rev 2.0.</strong> Programs the 28-bit frequency (FREQ0) <em>and</em> 12-bit phase (PHASE0) registers. <code>ad9833_load()</code>/<code>ad9833_run()</code> split the write from the RESET release so a channel's drive+reference pair can be released together → phase-coherent. <code>ad9833_set_phase()</code> updates the demod phase live (used by <code>cal1/2</code>). Ω is live-tunable via <code>omega1/2</code>.</div>
       </td>
     </tr>
     <tr>
@@ -638,8 +707,8 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
       <td><span class="file-tag pair">pid.h / .cpp</span></td>
       <td>Algorithm</td>
       <td>
-        <div class="file-role">Discrete PID controller</div>
-        <div class="file-desc">Anti-windup integrator clamp, derivative on error. <code>pid_step()</code> returns the output clamped to [out_min, out_max]. <code>pid_to_dac()</code> maps the ±1 output to a 16-bit unsigned DAC code. Integrator and previous-error state are reset when gains are changed via command.</div>
+        <div class="file-role">Discrete PID controller <em>(legacy)</em></div>
+        <div class="file-desc"><strong>Rev 2.0: no longer the lock servo</strong> — the PI servo is analog hardware. <code>pid[]</code> is retained for the CLI/JSON and the optional integrator-centering gain. <code>pid_step()</code>/<code>pid_to_dac()</code> remain available but are not in the lock path.</div>
       </td>
     </tr>
     <tr>
@@ -687,7 +756,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
       <td>Main sketch</td>
       <td>
         <div class="file-role">Entry point — setup() / loop()</div>
-        <div class="file-desc">Declares all global objects (<code>tft</code>, <code>ch[2]</code>, <code>pid[2]</code>, <code>disp</code>, <code>g_dither_freq</code>). Drives the 1 kHz control loop (<code>elapsedMicros loopTimer</code>), 10 Hz display/network tick, 1 Hz debug print, and USB serial line buffer. Calls into all modules.</div>
+        <div class="file-desc">Declares all global objects (<code>tft</code>, <code>ch[2]</code>, <code>pid[2]</code>, <code>disp</code>, <code>g_rf_omega[2]</code>, <code>g_rf_phase[2]</code>). <strong>Rev 2.0:</strong> hosts the RF supervisor — <code>set_integrator()</code> (LOCKn_EN), <code>rf_set_omega()</code>, <code>rf_set_phase()</code>, <code>rf_phase_cal()</code>, the sweep-acquire <code>control_step()</code>, and the optional <code>center_step()</code>. Drives the 1 kHz supervisor loop, 10 Hz display/network tick, 1 Hz debug, and USB serial.</div>
       </td>
     </tr>
     <tr>
@@ -723,7 +792,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <h3>config.h — Hardware Configuration</h3>
 <p>Single header included by every other module. Contains three categories of defines:</p>
 <ul style="color:var(--dim);padding-left:20px;margin-bottom:14px">
-  <li><strong style="color:var(--ink)">Pin mapping</strong> — all Teensy 4.1 pin numbers matched to the schematic net names (I²C, SPI, DDS CS/RESET, DAC CS/LDAC/CLR, TFT, analog inputs).</li>
+  <li><strong style="color:var(--ink)">Pin mapping</strong> — all Teensy 4.1 pin numbers matched to the schematic net names (I²C, SPI, DDS CS/RESET, DAC CS/LDAC/CLR, TFT, analog inputs). <strong>Rev 2.0</strong> adds the reference-DDS CS (D6/D8), the integrator hold/run lines (<code>LOCK1/2_EN</code> D33/D34), optional CORR taps, and the <code>RF_OMEGA*/RF_PHASE*</code> constants — see the <a href="#pinout">Pinout</a> section.</li>
   <li><strong style="color:var(--ink)">Scaling constants</strong> — <code>LASER_IMON_MA_PER_LSB</code>, NTC thermistor beta coefficients, ADC reference, DAC midscale code. TEC IMON constants: <code>TEC_IMON_OFFSET_V</code> (1.20 V at 0 A), <code>TEC_IMON_V_PER_A</code> (0.72 V/A = INA826 G×R<sub>shunt</sub>), <code>TEC_DAC_ZERO_CODE</code> (15728 = 0 A at VOUTC ≈ 1.20 V).</li>
   <li><strong style="color:var(--ink)">Protection thresholds</strong> — <code>TEC_ILIMIT_A</code> (2.5 A), <code>TEC_ILIMIT_STEP</code> (0.05 — 5 % back-off per 1 ms tick when over-current), <code>TEC_ILIMIT_RESTORE</code> (0.005 — 0.5 % recovery per tick).</li>
   <li><strong style="color:var(--ink)">Fault pins</strong> — <code>PIN_HBRIDGE_FAULT1</code> (D31), <code>PIN_HBRIDGE_FAULT2</code> (D32). Open-drain active-low; configured <code>INPUT_PULLUP</code> in <code>setup()</code>.</li>
@@ -736,16 +805,23 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Programs the CDCE913 via I²C to synthesise 25 MHz from the 10 MHz board reference. The 32-byte EEPROM image is version-stamped; the chip is re-programmed only when the version byte differs from the compiled image. <code>cdce_wait_for_lock()</code> polls the lock-detect bit with a 200 ms timeout. <code>cdce_selftest_25mhz()</code> uses the Teensy <code>FreqCount</code> library to measure the output on pin 9 and verify 25.000 ±10 kHz.</p>
 </section>
 
-<section id="ad9833"><h3>ad9833.h / .cpp — Dither DDS</h3>
-<p>Each AD9833 receives a three-word SPI transaction to load a 28-bit frequency register (B28=1 mode). The dither frequency is set from <code>g_dither_freq</code> (default 10 kHz) and can be changed live via the <code>dither</code> command. Both chips share the SPI bus and are differentiated by their FSYNC (chip-select) lines.</p>
+<section id="ad9833"><h3>ad9833.h / .cpp — Drive + Reference DDS</h3>
+<p><strong>Rev 2.0.</strong> Four AD9833 share SPI0 and the 25 MHz MCLK, differentiated by FSYNC (chip-select). Per channel a <em>drive</em> DDS modulates the laser at Ω and a <em>reference</em> DDS supplies the phase-set demod LO.</p>
+<ul>
+  <li><code>ad9833_load(cs, f, refclk, phase)</code> — writes FREQ0 (two halves) and PHASE0 with RESET held (output parked).</li>
+  <li><code>ad9833_run(cs)</code> — clears RESET. Calling <code>load()</code> on a channel's drive+reference then <code>run()</code> on both back-to-back releases their accumulators together → <strong>phase-coherent</strong> (shared MCLK, identical FREQ word; the constant write skew is absorbed by the reference PHASE0 calibration).</li>
+  <li><code>ad9833_set_phase(cs, deg)</code> — live demod-phase update (PHASE0 only), used by <code>cal1/2</code>.</li>
+  <li><code>ad9833_reset_sw(cs)</code> — software RESET (no GPIO) for the reference DDS.</li>
+</ul>
+<p>Ω is set per channel from <code>g_rf_omega[]</code> (default 2.0 / 2.5 MHz) via <code>omega1/2</code>; the demod phase from <code>g_rf_phase[]</code> via <code>phase1/2</code> or <code>cal1/2</code>.</p>
 </section>
 
 <section id="ad5064"><h3>ad5064.h / .cpp — Setpoint DAC</h3>
 <p>All writes use command code 0x3 (write-and-update), making each channel's output settle immediately on the falling CS edge. LDAC is tied low so no separate latch pulse is required. Channels 2 and 3 drive the TEC current setpoints and are written every 1 kHz tick by <code>tec_limit_step()</code>. The zero-current code (15728, VOUTC ≈ 1.20 V) is defined by <code>TEC_DAC_ZERO_CODE</code>; the limit function scales the excursion from this code by the live <code>s_tec_lim_fac[]</code> factor.</p>
 </section>
 
-<section id="pid"><h3>pid.h / .cpp — PID Controller</h3>
-<p>Each channel has an independent <code>PID</code> struct. The integrator is clamped symmetrically to <code>integrator_limit</code> (default 0.5) to prevent windup during acquisition. When gains are changed via <code>p1</code> / <code>p2</code> commands, <code>integrator</code> and <code>prev_err</code> are zeroed to prevent a step transient on the output.</p>
+<section id="pid"><h3>pid.h / .cpp — PID Controller <em>(legacy)</em></h3>
+<p><strong>Rev 2.0: the lock servo is now the analog PI loop filter (hardware).</strong> The digital <code>PID</code> struct is retained for the CLI/JSON and as the optional integrator-centering gain — it no longer drives the fast lock. <code>p1</code>/<code>p2</code> still set its gains. If the optional <code>CORR</code> taps (A14/A16) are fitted, <code>center_step()</code> uses a slow loop to off-load the analog integrator by trimming the DC setpoint.</p>
 </section>
 
 <section id="lock"><h3>lock.h / .cpp — State Machine</h3>
@@ -800,7 +876,7 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 <p>Loop priorities (highest to lowest):</p>
 <ol style="color:var(--dim);padding-left:20px;margin-bottom:14px">
   <li><strong style="color:var(--ink)">USB serial input</strong> — polled every loop iteration via <code>Serial.available()</code>. Lines are buffered until <code>\n</code> or <code>\r</code>, then dispatched to <code>comms_process()</code>.</li>
-  <li><strong style="color:var(--ink)">1 kHz control loop</strong> — gated by <code>elapsedMicros loopTimer</code>. Reads ADC (including TEC IMON), runs <code>tec_limit_step()</code> for both channels, reads H-bridge fault pins with edge-triggered serial logging, runs both PDH state machines and PID steps, accumulates RMS.</li>
+  <li><strong style="color:var(--ink)">1 kHz supervisor loop</strong> — gated by <code>elapsedMicros loopTimer</code>. Reads ADC (baseband error, IMON, TEC IMON), runs <code>tec_limit_step()</code>, reads H-bridge fault pins with edge-triggered logging, runs both sweep-acquire state machines, drives <code>LOCKn_EN</code> (integrator hold/run), and accumulates RMS. <strong>Rev 2.0:</strong> no fast digital servo — the analog PI closes the loop.</li>
   <li><strong style="color:var(--ink)">10 Hz display + network tick</strong> — gated by <code>millis()</code> delta. Updates <code>DispModel</code> (including <code>tec_i_a</code>, <code>tec_lim_fac</code>, <code>hbridge_fault[]</code>), calls <code>display_update()</code>, then calls <code>network_poll()</code>.</li>
   <li><strong style="color:var(--ink)">1 Hz debug print</strong> — per-channel state, RMS, temperature, laser current, TEC current, and <code>*** H-BRIDGE FAULT ***</code> suffix if fault is active.</li>
 </ol>
@@ -827,25 +903,25 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     <tr class="st-search">
       <td><span class="state-dot">SEARCH</span></td>
       <td><code>lock1</code> / <code>lock2</code> command, or RELOCK backoff expires</td>
-      <td>Dither active. Polls |error| each 1 kHz tick. Display animates a sweep marker across the Lorentzian trace over 5 s.</td>
-      <td>|error| &gt; <code>acquire_threshold</code> → ACQUIRE</td>
+      <td><strong>Integrator HELD</strong> (<code>LOCKn_EN</code>=LOW). Sweeps the DC setpoint (DAC) to drag the laser across resonance; arms on a discriminator shoulder. Modulation Ω active throughout.</td>
+      <td>armed + error zero-crossing (resonance) → ACQUIRE</td>
     </tr>
     <tr class="st-acquire">
       <td><span class="state-dot">ACQUIRE</span></td>
-      <td>Error signal exceeds <code>acquire_threshold</code></td>
-      <td>PID loop active, output to DAC channel. Integrator building. Display shows transmission + S-curve overlay.</td>
+      <td>Resonance zero-crossing captured</td>
+      <td><strong>Integrator RELEASED</strong> (<code>LOCKn_EN</code>=HIGH) — the analog PI now closes the loop; DC setpoint held at the capture code.</td>
       <td>|error| &lt; <code>lock_threshold</code> → LOCKED<br>Timeout (<code>acquire_timeout_ms</code>) → RELOCK</td>
     </tr>
     <tr class="st-locked">
       <td><span class="state-dot">LOCKED</span></td>
-      <td>Error RMS drops below <code>lock_threshold</code></td>
-      <td>PID maintains lock. RMS accumulator runs. Display shows tight in-lock noise trace. Servo health bar fills.</td>
+      <td>Error settles below <code>lock_threshold</code></td>
+      <td><strong>Analog PI maintains lock.</strong> Supervisor monitors the baseband error and (optionally) runs slow integrator centering. RMS accumulator runs; servo health bar fills.</td>
       <td>|error| &gt; <code>acquire_threshold</code> → RELOCK<br><code>break</code> command → RELOCK<br><code>hold</code> command → HOLD</td>
     </tr>
     <tr class="st-hold">
       <td><span class="state-dot">HOLD</span></td>
       <td><code>hold1</code> / <code>hold2</code> command</td>
-      <td>DAC output frozen. No PID computation. Display shows wider noise trace. Servo health at 50%.</td>
+      <td><strong>Integrator HELD</strong>; DC setpoint frozen. Display shows wider noise trace. Servo health at 50%.</td>
       <td><code>lock</code> command → SEARCH<br><code>stop</code> command → IDLE</td>
     </tr>
     <tr class="st-relock">
@@ -1289,7 +1365,10 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
     </div>
   </div>
   <div class="cmd-desc">
-    Sets the <strong>proportional</strong>, <strong>integral</strong>, and <strong>derivative</strong> gains for CH1 or CH2 respectively. The integrator state and previous-error term are reset to zero on every gain change to prevent output steps. Gains take effect immediately on the next 1 kHz control tick. All three values are required; omitting any produces a usage error.
+    <strong>Legacy (Rev 2.0): the lock servo is now the analog PI.</strong> These gains no longer drive
+    the fast lock; they apply only to the optional slow integrator-centering loop (if the <code>CORR</code>
+    taps are fitted) and are reported in the CLI/JSON. Sets the proportional/integral/derivative gains
+    for CH1 or CH2; integrator and previous-error state are zeroed on change. All three values required.
   </div>
   <div class="cmd-examples">
     <div class="ex-label">Set CH1 gains (proportional-only, no derivative)</div>
@@ -1350,31 +1429,93 @@ hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 40px 
 </div>
 
 <!-- ── dither ── -->
-<div class="cmd-block" id="cmd-dither">
+<!-- ── omega ── -->
+<div class="cmd-block" id="cmd-omega">
   <div class="cmd-header">
-    <span class="cmd-name">dither</span>
+    <span class="cmd-name">omega1 / omega2</span>
     <span class="cmd-sig"><em>&lt;hz&gt;</em></span>
     <div class="cmd-badges">
-      <span class="badge usb">USB</span>
-      <span class="badge eth">Telnet</span>
-      <span class="badge web">Web</span>
+      <span class="badge usb">USB</span><span class="badge eth">Telnet</span><span class="badge web">Web</span>
     </div>
   </div>
   <div class="cmd-desc">
-    Sets the dither frequency for <strong>both</strong> AD9833 DDS chips simultaneously, taking effect on the next SPI transaction (within microseconds). The valid range is 100 Hz to 500 kHz. The value is stored in <code>g_dither_freq</code> and included in the JSON status. Note: frequency is <em>not</em> saved to non-volatile memory — it resets to <code>DITHER_FREQ_HZ</code> (10 kHz default) on power cycle.
+    <strong>Rev 2.0.</strong> Sets the per-channel modulation frequency Ω (range 100 kHz–3.5 MHz).
+    Reprograms that channel's <strong>drive + reference</strong> DDS and releases them together so the
+    pair restarts <strong>phase-coherent</strong>, preserving the calibrated demod phase. Stored in
+    <code>g_rf_omega[]</code> (not saved to EEPROM; resets to <code>RF_OMEGA1/2_HZ</code> on power cycle).
   </div>
   <div class="cmd-examples">
-    <div class="ex-label">Set dither to 10 kHz (default)</div>
-    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 10000</span>
-<span class="ok">Dither -> 10000 Hz</span></pre>
+    <div class="ex-label">Set CH1 to 2.0 MHz</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">omega1 2000000</span>
+<span class="ok">CH1 Omega -> 2000000 Hz</span></pre>
+  </div>
+</div>
 
-    <div class="ex-label">Increase dither to 50 kHz</div>
-    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 50000</span>
-<span class="ok">Dither -> 50000 Hz</span></pre>
+<!-- ── phase ── -->
+<div class="cmd-block" id="cmd-phase">
+  <div class="cmd-header">
+    <span class="cmd-name">phase1 / phase2</span>
+    <span class="cmd-sig"><em>&lt;deg&gt;</em></span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span><span class="badge eth">Telnet</span><span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    <strong>Rev 2.0.</strong> Sets the demod phase live by writing the reference DDS PHASE0 register
+    (12-bit, 0–360°). Use to fine-tune in-phase demodulation for maximum discriminator slope. Stored
+    in <code>g_rf_phase[]</code>.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Set CH1 demod phase to 90°</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">phase1 90</span>
+<span class="ok">CH1 demod phase -> 90.0 deg</span></pre>
+  </div>
+</div>
 
-    <div class="ex-label">Below minimum</div>
-    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 50</span>
-<span class="err">Usage: dither &lt;hz&gt;  (100–500000)</span></pre>
+<!-- ── cal ── -->
+<div class="cmd-block" id="cmd-cal">
+  <div class="cmd-header">
+    <span class="cmd-name">cal1 / cal2</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span><span class="badge eth">Telnet</span><span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    <strong>Rev 2.0.</strong> Auto-calibrates the demod phase: holds the integrator, steps the reference
+    phase over 0–360° (<code>PHASE_CAL_STEP_DEG</code>), averages the baseband error at each step, and
+    selects the phase that maximises the discriminator signal. <strong>Park the laser so there is a
+    non-zero error first</strong> (e.g. on a resonance shoulder or via <code>hold</code>). Verify lock
+    polarity afterwards — add 180° if the servo runs away.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Calibrate CH1 demod phase</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">cal1</span>
+<span class="ok">CH1 demod-phase calibration:
+  0 deg  |e|=812.4
+  ...
+  180 deg  |e|=1190.6
+CH1 demod phase -> 180 deg (verify lock polarity)</span></pre>
+  </div>
+</div>
+
+<!-- ── dither (legacy) ── -->
+<div class="cmd-block" id="cmd-dither">
+  <div class="cmd-header">
+    <span class="cmd-name">dither</span>
+    <span class="cmd-sig"><em>&lt;hz&gt;</em> · legacy</span>
+    <div class="cmd-badges">
+      <span class="badge usb">USB</span><span class="badge eth">Telnet</span><span class="badge web">Web</span>
+    </div>
+  </div>
+  <div class="cmd-desc">
+    <strong>Legacy (Rev 2.0).</strong> Now a convenience that sets <strong>both</strong> channels to the
+    same Ω via <code>rf_set_omega()</code> (range 100 kHz–3.5 MHz), keeping each drive+reference pair
+    coherent. Use <code>omega1</code>/<code>omega2</code> for normal split-frequency operation.
+  </div>
+  <div class="cmd-examples">
+    <div class="ex-label">Set both channels to 2 MHz</div>
+    <pre class="terminal"><span class="prompt">&gt; </span><span class="in">dither 2000000</span>
+<span class="ok">Both Omega -> 2000000 Hz  (use omega1/omega2 for split-frequency operation)</span></pre>
   </div>
 </div>
 

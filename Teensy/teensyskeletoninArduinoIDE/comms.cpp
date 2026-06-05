@@ -13,6 +13,11 @@
 // Declared in teensyskeletoninArduinoIDE.ino
 extern float g_dither_freq;
 extern bool  g_demo_mode;
+extern float g_rf_omega[2];
+extern float g_rf_phase[2];
+void rf_set_omega(int i, float hz);
+void rf_set_phase(int i, float deg);
+void rf_phase_cal(int i, Print& out);
 
 // ============================================================
 // JSON status generator
@@ -75,6 +80,8 @@ void comms_json_status(Print& out,
     out.print(F(",\"kd\":"));   out.print(pid[i].kd, 5);
     out.print(F(",\"lthr\":")); out.print(ch[i].lock_threshold, 5);
     out.print(F(",\"athr\":")); out.print(ch[i].acquire_threshold, 5);
+    out.print(F(",\"omega\":")); out.print(g_rf_omega[i], 0);
+    out.print(F(",\"phase\":")); out.print(g_rf_phase[i], 1);
     out.print('}');
   }
   out.print(F("]}"));
@@ -110,7 +117,11 @@ void comms_process(const String& line, Print& out,
       out.print(F(" acq="));       out.print(ch[i].acquire_threshold, 4);
       out.println();
     }
-    out.print(F("dither=")); out.print(g_dither_freq, 0); out.println(F(" Hz"));
+    out.print(F("RF: Omega1=")); out.print(g_rf_omega[0], 0);
+    out.print(F("Hz phi1="));    out.print(g_rf_phase[0], 0);
+    out.print(F("deg  Omega2=")); out.print(g_rf_omega[1], 0);
+    out.print(F("Hz phi2="));    out.print(g_rf_phase[1], 0);
+    out.println(F("deg"));
     return;
   }
 
@@ -165,15 +176,43 @@ void comms_process(const String& line, Print& out,
     return;
   }
 
-  // ---- dither frequency ------------------------------------
+  // ---- RF modulation Ω: omega1 <hz> / omega2 <hz> ----------
+  if (line.startsWith("omega1 ") || line.startsWith("omega2 ")) {
+    int idx = line[5] - '1';
+    float hz;
+    if (sscanf(line.c_str()+7, "%f", &hz)==1 && hz>=100000.0f && hz<=3500000.0f) {
+      rf_set_omega(idx, hz);
+      out.print(F("CH")); out.print(idx+1);
+      out.print(F(" Omega -> ")); out.print(hz,0); out.println(F(" Hz"));
+    } else out.println(F("Usage: omega1 <hz>  (100000-3500000)"));
+    return;
+  }
+
+  // ---- demod phase: phase1 <deg> / phase2 <deg> ------------
+  if (line.startsWith("phase1 ") || line.startsWith("phase2 ")) {
+    int idx = line[5] - '1';
+    float d;
+    if (sscanf(line.c_str()+7, "%f", &d)==1) {
+      rf_set_phase(idx, d);
+      out.print(F("CH")); out.print(idx+1);
+      out.print(F(" demod phase -> ")); out.print(d,1); out.println(F(" deg"));
+    } else out.println(F("Usage: phase1 <deg>"));
+    return;
+  }
+
+  // ---- demod-phase calibration: cal1 / cal2 ----------------
+  if (line == "cal1") { rf_phase_cal(0, out); return; }
+  if (line == "cal2") { rf_phase_cal(1, out); return; }
+
+  // ---- legacy: set BOTH Ω the same (kept for compatibility) -
   if (line.startsWith("dither ")) {
     float hz;
-    if (sscanf(line.c_str()+7, "%f", &hz)==1 && hz>100.0f && hz<500000.0f) {
-      g_dither_freq = hz;
-      ad9833_set_freq(PIN_AD9833_1_CS, hz, REFCLK_HZ);
-      ad9833_set_freq(PIN_AD9833_2_CS, hz, REFCLK_HZ);
-      out.print(F("Dither -> ")); out.print(hz,0); out.println(F(" Hz"));
-    } else out.println(F("Usage: dither <hz>  (100-500000)"));
+    if (sscanf(line.c_str()+7, "%f", &hz)==1 && hz>=100000.0f && hz<=3500000.0f) {
+      rf_set_omega(0, hz);
+      rf_set_omega(1, hz);
+      out.print(F("Both Omega -> ")); out.print(hz,0);
+      out.println(F(" Hz  (use omega1/omega2 for split-frequency operation)"));
+    } else out.println(F("Usage: dither <hz>  (100000-3500000)  [legacy: sets both Omega]"));
     return;
   }
 
@@ -328,11 +367,16 @@ void comms_process(const String& line, Print& out,
     out.println(F("  hold1 / hold2        — freeze outputs"));
     out.println(F("  break1 / break2      — break lock -> RELOCK"));
     out.println(F("  reset1 / reset2      — clear relock counter"));
-    out.println(F("  p1 kp ki kd          — CH1 PID gains"));
-    out.println(F("  p2 kp ki kd          — CH2 PID gains"));
-    out.println(F("  thresh1 lock acq     — CH1 thresholds"));
+    out.println(F("  omega1 <hz>          — CH1 modulation Ω (100k-3.5M)"));
+    out.println(F("  omega2 <hz>          — CH2 modulation Ω (100k-3.5M)"));
+    out.println(F("  phase1 <deg>         — CH1 demod phase (reference DDS)"));
+    out.println(F("  phase2 <deg>         — CH2 demod phase"));
+    out.println(F("  cal1 / cal2          — auto-calibrate demod phase"));
+    out.println(F("  thresh1 lock acq     — CH1 capture/loss thresholds"));
     out.println(F("  thresh2 lock acq     — CH2 thresholds"));
-    out.println(F("  dither <hz>          — dither frequency (100-500000)"));
+    out.println(F("  p1 kp ki kd          — CH1 PID gains (LEGACY: servo is analog)"));
+    out.println(F("  p2 kp ki kd          — CH2 PID gains (LEGACY)"));
+    out.println(F("  dither <hz>          — legacy: set both Ω the same"));
     out.println(F("  d                    — raw ADC dump"));
     out.println(F("  r                    — reprogram CDCE913 EEPROM"));
     out.println(F("Demo:"));

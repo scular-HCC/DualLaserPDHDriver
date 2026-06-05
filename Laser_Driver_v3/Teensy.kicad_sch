@@ -1513,16 +1513,6 @@
 		)
 		(uuid "70233c15-251f-48b0-a767-045291f95d96")
 	)
-	(text "MCLK3 to pin 9 for frequency check (pin 9 required per library)"
-		(exclude_from_sim no)
-		(at 107.188 87.63 0)
-		(effects
-			(font
-				(size 0.762 0.762)
-			)
-		)
-		(uuid "ebe22a13-213a-432d-bbec-4a2537048c9a")
-	)
 	(junction
 		(at 129.54 105.41)
 		(diameter 0)
@@ -1532,18 +1522,6 @@
 	(no_connect
 		(at 77.47 54.61)
 		(uuid "00ae273e-81b0-4af8-b23e-1e3c0ffb6e0f")
-	)
-	(no_connect
-		(at 77.47 87.63)
-		(uuid "09400b3c-de35-47f6-a79a-47604bbfdb0c")
-	)
-	(no_connect
-		(at 77.47 44.45)
-		(uuid "0ec5202d-32ea-4c93-a95f-a14d671eb4d7")
-	)
-	(no_connect
-		(at 77.47 92.71)
-		(uuid "33001888-8cab-4406-91d4-f2f034611b08")
 	)
 	(no_connect
 		(at 109.22 120.65)
@@ -1608,10 +1586,6 @@
 	(no_connect
 		(at 77.47 39.37)
 		(uuid "deb9a55d-2392-4516-bcbc-ca16b3c5c282")
-	)
-	(no_connect
-		(at 77.47 46.99)
-		(uuid "e2ad697b-1bee-4711-930a-4fa38ac3d8a4")
 	)
 	(no_connect
 		(at 149.86 125.73)
@@ -1777,6 +1751,16 @@
 	)
 	(wire
 		(pts
+			(xy 77.47 46.99) (xy 82.55 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "48bd560a-ac55-47d1-a056-916e513a20ce")
+	)
+	(wire
+		(pts
 			(xy 149.86 130.81) (xy 182.88 130.81)
 		)
 		(stroke
@@ -1937,6 +1921,16 @@
 	)
 	(wire
 		(pts
+			(xy 77.47 87.63) (xy 85.09 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9c331aa0-cad8-4bc8-bcd5-8c210b2c31e5")
+	)
+	(wire
+		(pts
 			(xy 129.54 101.6) (xy 129.54 105.41)
 		)
 		(stroke
@@ -1944,6 +1938,16 @@
 			(type default)
 		)
 		(uuid "9cec5147-7f38-4c46-8935-1616375db5a0")
+	)
+	(wire
+		(pts
+			(xy 77.47 92.71) (xy 85.09 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a27a58b7-c5e8-4403-abfd-0cabb5631f77")
 	)
 	(wire
 		(pts
@@ -1994,6 +1998,16 @@
 			(type default)
 		)
 		(uuid "b3caed43-6bed-4619-a26e-55d5a82641d1")
+	)
+	(wire
+		(pts
+			(xy 77.47 44.45) (xy 82.55 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd14d697-ddfc-4d13-8093-5b25a7f05815")
 	)
 	(wire
 		(pts
@@ -13766,7 +13780,7 @@
 			)
 		)
 	)
-	(global_label "LOCK2_IN"
+	(global_label "ERR2"
 		(shape output)
 		(at 43.18 59.69 180)
 		(fields_autoplaced yes)
@@ -13778,7 +13792,7 @@
 		)
 		(uuid "b36d0df6-4f9d-4963-9d0f-ebb48e54d1d3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 31.1838 59.69 0)
+			(at 35.2963 59.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13787,6 +13801,30 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+	)
+	(global_label "DDS3_FSYNC"
+		(shape input)
+		(at 85.09 92.71 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "be5ac8fe-8960-49c9-b6f5-bdf36246d741")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 99.989 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -13827,6 +13865,54 @@
 		(uuid "c660042e-d5e0-4f80-99e7-0d825c47a0ed")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 104.2828 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "LOCK2_EN"
+		(shape input)
+		(at 82.55 46.99 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ca3f7e8a-e10e-4288-93dc-11ab8e2e8ce8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 95.0904 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "DDS4_FSYNC"
+		(shape input)
+		(at 85.09 87.63 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cb295532-6985-487f-9e52-875cc74ff7cf")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 99.989 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13982,7 +14068,7 @@
 			)
 		)
 	)
-	(global_label "LOCK1_IN"
+	(global_label "ERR1"
 		(shape output)
 		(at 43.18 62.23 180)
 		(fields_autoplaced yes)
@@ -13994,7 +14080,7 @@
 		)
 		(uuid "fe223eb4-1fd4-4937-82f5-fe01f73afd83")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 31.1838 62.23 0)
+			(at 35.2963 62.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14019,6 +14105,30 @@
 		(uuid "ff3c0ded-b236-4923-8498-910600511170")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 99.8075 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "LOCK1_EN"
+		(shape input)
+		(at 82.55 44.45 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ff638309-59a8-4ddd-8959-3aced1f260a3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 95.0904 44.45 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

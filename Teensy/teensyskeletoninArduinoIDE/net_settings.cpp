@@ -14,6 +14,8 @@ static void fill_defaults(NetSettings& s) {
   strncpy(s.hostname, NET_DEFAULT_HOSTNAME, sizeof(s.hostname) - 1);
   s.hostname[sizeof(s.hostname) - 1] = '\0';
   s.demo_mode = NET_DEFAULT_DEMO;
+  s.rf_omega[0] = RF_OMEGA1_HZ;  s.rf_omega[1] = RF_OMEGA2_HZ;
+  s.rf_phase[0] = RF_PHASE1_DEG; s.rf_phase[1] = RF_PHASE2_DEG;
 }
 
 void net_settings_load(NetSettings& s) {

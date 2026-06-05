@@ -496,6 +496,52 @@
 		)
 	)
 	(sheet
+		(at 182.88 66.04)
+		(size 30.48 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e1449f4d-dad3-47f6-967e-c2fd4c822347")
+		(property "Sheetname" "PhaseRef"
+			(at 182.88 65.3284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PhaseRef.kicad_sch"
+			(at 182.88 94.5646 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "15")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 107.95 104.14)
 		(size 25.4 22.86)
 		(exclude_from_sim no)

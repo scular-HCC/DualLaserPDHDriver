@@ -16,9 +16,16 @@
 // ============================================================
 // Hardware pin mapping — Teensy 4.1
 //
-// SPI0 (pins 11/12/13): AD5064 + AD9833 x2  (signal-path chips)
+// SPI0 (pins 11/12/13): AD5064 + AD9833 x4  (signal-path chips)
+//                        2 drive DDS (Ω) + 2 reference DDS (demod LO)
 // SPI1 (pins 26/27/39): ILI9341 TFT          (dedicated display bus)
 // I2C0 (pins 18/19):    CDCE913 clock gen
+//
+// RF analog-derivative lock (supersedes kHz dither): the lock-in demod
+// and PI servo are now ANALOG. The Teensy is a supervisor — it programs
+// the DDS (drive + phase-set reference), sweeps to acquire, hands the
+// loop to the analog PI via the LOCKn_EN integrator hold/run line, and
+// monitors the post-mix baseband error on LOCKn_IN.
 // ============================================================
 
 // --- I2C0 ---------------------------------------------------
@@ -31,10 +38,26 @@
 #define PIN_MISO          12
 
 // AD9833 DDS chips
-#define PIN_AD9833_1_CS    2    // DDS1_FSYNC
-#define PIN_AD9833_2_CS    3    // DDS2_FSYNC
+#define PIN_AD9833_1_CS    2    // DDS1_FSYNC — CH1 DRIVE (Ω, to bias-tee injection)
+#define PIN_AD9833_2_CS    3    // DDS2_FSYNC — CH2 DRIVE (Ω)
 #define PIN_AD9833_1_RESET 4
 #define PIN_AD9833_2_RESET 5
+// Reference DDS (Option B): phase-set demod LO, one per channel.
+// All four AD9833 share the one 25 MHz MCLK → drive/reference phase-coherent.
+#define PIN_AD9833_3_CS    6    // DDS3_FSYNC — CH1 REFERENCE (demod LO → LO1_REF)
+#define PIN_AD9833_4_CS    8    // DDS4_FSYNC — CH2 REFERENCE (demod LO → LO2_REF)
+
+// Analog PI integrator hold/run (lock enable) — one per channel.
+// Drives the hold/reset switch across the analog integrator cap in the
+// PI_LoopFilter block.  HIGH = RUN (loop closed), LOW = HOLD/RESET (acquiring).
+#define PIN_LOCK1_EN      33    // CH1 integrator RUN(HIGH)/HOLD(LOW)
+#define PIN_LOCK2_EN      34    // CH2 integrator RUN(HIGH)/HOLD(LOW)
+
+// OPTIONAL — dedicated analog-PI-output taps for integrator centering
+// (anti-windup off-load loop). Leave undefined to disable centering;
+// firmware then leaves the DC setpoint fixed after acquisition.
+// #define PIN_LAS1_CORR_MON  A14   // pin 38
+// #define PIN_LAS2_CORR_MON  A16   // pin 40
 
 // AD5064 setpoint DAC  (pin 10 = hardware CS0 on SPI0)
 #define PIN_AD5064_CS     10
@@ -63,8 +86,8 @@
 #define PIN_TEC2_IMON     A7   // pin 21
 #define PIN_LAS2_IMON     A8   // pin 22 — Laser 2 current monitor
 #define PIN_MPD2_MON      A9   // pin 23
-#define PIN_LOCK1_IN      A10  // pin 24 — PDH error CH1
-#define PIN_LOCK2_IN      A11  // pin 25 — PDH error CH2
+#define PIN_LOCK1_IN      A10  // pin 24 — CH1 post-mix baseband error (ERR1) MONITOR
+#define PIN_LOCK2_IN      A11  // pin 25 — CH2 post-mix baseband error (ERR2) MONITOR
 
 // ============================================================
 // ADC / DAC constants
@@ -110,10 +133,29 @@
 #define TEC_ILIMIT_RESTORE   0.005f  // limit-factor restoration per tick when under-current
 
 // ============================================================
-// Dither / clock
+// RF modulation / clock
+//
+// Drive + reference DDS run at the per-channel modulation frequency Ω
+// (just above the DFB thermal/carrier FM crossover, ~1–3 MHz). Channels
+// use slightly different Ω so cross-channel tones stay out of the beat.
+// Final Ω set after measuring the per-device crossover. The reference
+// DDS phase (RF_PHASEn_DEG) is the demod phase — calibrate per channel.
 // ============================================================
-#define DITHER_FREQ_HZ    10000.0f
+#define RF_OMEGA1_HZ      2000000.0f   // CH1 modulation/demod Ω
+#define RF_OMEGA2_HZ      2500000.0f   // CH2 modulation/demod Ω
+#define RF_PHASE1_DEG     0.0f         // CH1 demod phase (run 'cal1' to set)
+#define RF_PHASE2_DEG     0.0f         // CH2 demod phase (run 'cal2' to set)
 #define REFCLK_HZ         25000000.0f
+
+// Legacy: kept for the web/JSON "dither" field and the 'dither' test
+// command. Now holds the representative (CH1) modulation frequency.
+#define DITHER_FREQ_HZ    RF_OMEGA1_HZ
+
+// Acquisition sweep + lock supervisor
+#define SWEEP_STEP_CODE   24      // DAC code increment per control tick during SEARCH
+#define PHASE_CAL_STEP_DEG 15     // reference-phase step for 'caln'
+#define PHASE_CAL_SETTLE_MS 5     // settle before sampling at each phase
+#define PHASE_CAL_SAMPLES  64     // error samples averaged per phase step
 
 // ============================================================
 // H-Bridge fault inputs (OPA551 Flag pin — open-drain active-low)

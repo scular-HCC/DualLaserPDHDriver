@@ -9,7 +9,7 @@
 // Changes written with net_settings_save() survive power cycles.
 // ============================================================
 
-#define NET_MAGIC       0x50444832UL   // 'P','D','H','2' — bump when struct changes
+#define NET_MAGIC       0x50444833UL   // 'P','D','H','3' — bump when struct changes
 #define NET_EEPROM_ADDR 0              // byte offset in EEPROM
 
 struct NetSettings {
@@ -20,6 +20,8 @@ struct NetSettings {
   uint8_t  gateway[4];
   char     hostname[32];
   bool     demo_mode;    // runtime demo flag — toggled by 'demo on/off'
+  float    rf_omega[2];  // per-channel modulation Ω (Hz)  — survives power cycle
+  float    rf_phase[2];  // per-channel demod phase (deg)  — set by phaseN / calN
 };
 
 // Default values used when EEPROM is blank or magic is wrong.

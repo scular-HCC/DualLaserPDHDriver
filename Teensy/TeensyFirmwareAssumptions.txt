@@ -1,26 +1,115 @@
-Assumed and need to tune
-ADC midscale: code assumes PDH mixer error is centered at midscale (ADC_MID). If the front‑end offsets differ, change adc_to_error() accordingly.
+================================================================
+Dual-PDH Controller — Firmware Assumptions & Notes
+Rev 2.0 (2026-06-04) — RF analog-derivative lock
+================================================================
 
-PID gains: initial kp/ki/kd are conservative placeholders. Tune on the real system (use serial p1/p2 commands).
+ARCHITECTURE (Rev 2.0)
+The kHz digital dither lock is replaced by a ~1-3 MHz ANALOG derivative lock.
+The lock-in demod (AD831 mixer) and the PI servo are now analog HARDWARE.
+The Teensy is a SUPERVISOR, not a real-time DSP loop. Per channel it:
+  - programs a DRIVE DDS (modulates laser current at Omega) + a REFERENCE DDS
+    (phase-set demod LO); both share the 25 MHz MCLK -> phase-coherent,
+  - sweeps the DC current setpoint (DAC) to drag the laser across resonance,
+  - on the discriminator zero-crossing, RELEASES the analog integrator via
+    LOCKn_EN so the analog PI holds the lock,
+  - calibrates the demod phase via the reference-DDS PHASE0 register,
+  - monitors the post-mix baseband error on LOCKn_IN.
+See docs/firmware_reference.html (Rev 2.0) and
+docs/laser_driver_v3_rf_modulation_design.html for the full hardware design.
 
-Lock thresholds: lock_threshold and acquire_threshold are starting values; adjust to your mixer amplitude and noise floor.
+----------------------------------------------------------------
+ASSUMED — verify / tune on the real system
+----------------------------------------------------------------
+ADC midscale: adc_to_error() assumes the baseband mixer error is centered at
+  ADC_MID. If the front-end offset differs, change adc_to_error().
 
-DAC mapping: pid_to_dac() maps -1..1 to full DAC range. If the laser current driver expects a different voltage range or polarity, change mapping or invert sign.
+Modulation Omega: RF_OMEGA1_HZ / RF_OMEGA2_HZ default to 2.0 / 2.5 MHz. Set
+  each just ABOVE the measured DFB thermal/carrier FM crossover (open item 1),
+  and keep |Omega1 - Omega2| large vs the loop/LPF bandwidth. Live: omega1/2.
 
-AD9833 dither: set frequency and amplitude on the PDH board; code sets 10 kHz reference example.
+Demod phase: RF_PHASE1/2_DEG default 0. The true value depends on the detection
+  path delay — run cal1/cal2 (park the laser so there IS a non-zero error first,
+  e.g. on a resonance shoulder / 'hold'). VERIFY LOCK POLARITY: if the servo runs
+  away, add 180 deg (the analog PI is inverting; phase + integrator-switch
+  polarity must give negative feedback).
 
-CDCE913: code programs EEPROM only when version byte differs; you can force reprogram with serial r.
+Capture/loss thresholds: lock_threshold / acquire_threshold are starting values
+  (0.02 / 0.10). Tune to the mixer amplitude and noise floor. Live: thresh1/2.
+
+Sweep rate: SWEEP_STEP_CODE (DAC code/tick at 1 kHz) sets the SEARCH speed.
+  Too fast -> the discriminator zero-crossing is missed; too slow -> long
+  acquisition. Tune to the discriminator width.
+
+LOCKn_EN polarity: firmware convention is HIGH = RUN (loop closed),
+  LOW = HOLD/RESET. Map this to the chosen analog switch (ADG419 etc.) in the
+  PI_LoopFilter block. If inverted, flip set_integrator().
+
+Integrator centering (OPTIONAL): if the CORR taps (PIN_LAS1/2_CORR_MON, A14/A16)
+  are fitted and #defined in config.h, center_step() slowly trims the DC setpoint
+  to off-load the analog integrator. The nudge SIGN (corr >> 6) depends on wiring
+  -- confirm it drives toward centre, not the rail. Default: disabled (DC setpoint
+  fixed after acquisition).
+
+PID is LEGACY: pid[] no longer drives the lock (the PI is analog). p1/p2 set its
+  gains only for the optional centering loop and the CLI/JSON readout.
+
+CDCE913: programs EEPROM only when the version byte differs; force with 'r'.
+  IMPORTANT (Rev 2.0): the 25 MHz must now fan out to FOUR AD9833 MCLK inputs.
+
+----------------------------------------------------------------
+PIN ADDITIONS (Rev 2.0) — wire into the schematics
+----------------------------------------------------------------
+  D6   PIN_AD9833_3_CS   DDS3_FSYNC   CH1 reference DDS chip-select (-> LO1_REF)
+  D8   PIN_AD9833_4_CS   DDS4_FSYNC   CH2 reference DDS chip-select (-> LO2_REF)
+  D33  PIN_LOCK1_EN      LOCK1_EN     CH1 integrator HOLD(LOW)/RUN(HIGH) (ADG419)
+  D34  PIN_LOCK2_EN      LOCK2_EN     CH2 integrator HOLD/RUN
+  A14  PIN_LAS1_CORR_MON CORR1        (optional) CH1 analog-PI output tap
+  A16  PIN_LAS2_CORR_MON CORR2        (optional) CH2 analog-PI output tap
+Role changed (no rewire):
+  D2/D3   drive DDS, now at Omega (MHz) instead of 10 kHz dither
+  A10/A11 LOCKn_IN -> post-mix baseband error monitor (ERR1/ERR2)
+Reference DDS share SPI0 SCK/MOSI (D13/D11) + 25 MHz MCLK; software RESET (no GPIO).
+Full map: config.h and docs/firmware_reference.html #pinout.
 
 //////////////////////////////////////////
-/  Runtime serial commands (simple console)
+//  Runtime serial commands (USB / Telnet / Web)
 //////////////////////////////////////////
 
-s — print channel states and relock attempts
+s / status        — channel states, RMS, temps, currents, Omega/phase
+lock1 / lock2      — start sweep-to-lock (analog PI takes over on capture)
+stop1 / stop2      — to IDLE
+hold1 / hold2      — freeze (integrator held)
+break1 / break2    — break lock -> RELOCK
+reset1 / reset2    — clear relock counter
 
-p1 kp ki kd — set PID gains for channel 1 (example: p1 0.1 0.5 0.0)
+omega1 / omega2 <hz>   — set CH modulation Omega (100k-3.5M); reprograms
+                          drive+reference pair phase-coherently
+phase1 / phase2 <deg>  — set demod phase live (reference DDS PHASE0)
+cal1 / cal2            — auto-calibrate demod phase (park on a shoulder first)
+thresh1 / thresh2 <lock> <acq> — capture/loss thresholds
 
-p2 kp ki kd — set PID gains for channel 2
+p1 / p2 kp ki kd  — LEGACY PID gains (servo is analog; centering loop only)
+dither <hz>       — LEGACY: set BOTH channels to the same Omega
+d                 — dump raw ADC readings
+r                 — force CDCE913 EEPROM reprogram
+help              — full command list
+(demo on/off, netinfo, netset, netreset — unchanged)
 
-r — force CDCE913 EEPROM reprogram
+----------------------------------------------------------------
+CHANGELOG
+----------------------------------------------------------------
+Rev 2.0 (2026-06-04) — RF analog-derivative lock
+  - config.h: +PIN_AD9833_3/4_CS (D6/D8), +PIN_LOCK1/2_EN (D33/D34),
+    optional CORR taps (A14/A16); +RF_OMEGA1/2_HZ, RF_PHASE1/2_DEG, sweep/cal
+    constants; LOCKn_IN re-documented as baseband error.
+  - ad9833.*: +phase register (PHASE0); +ad9833_load()/ad9833_run() split for
+    phase-coherent pair start; +ad9833_set_phase() live; +ad9833_reset_sw().
+  - .ino: control_step() reworked to sweep-acquire + integrator hold/run (no
+    digital servo); +set_integrator(), rf_set_omega(), rf_set_phase(),
+    rf_phase_cal(), center_step(); setup() brings up 4 DDS phase-coherent.
+  - comms.cpp: +omega1/2, phase1/2, cal1/2; dither -> legacy (both Omega);
+    p1/p2 -> legacy; status shows Omega/phase; help updated.
+  - PID retained for CLI/JSON + optional centering only.
+  - Compiles clean under Arduino/Teensyduino (verified).
 
-d — dump ADC readings for quick diagnostics
+Rev 1.0 (2026-05-30) — kHz digital dither lock with Teensy digital lock-in/PID.

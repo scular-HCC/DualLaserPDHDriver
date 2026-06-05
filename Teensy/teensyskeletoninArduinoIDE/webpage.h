@@ -181,7 +181,7 @@ details.settings[open] summary::before{content:"▾  "}
 <div class="cmd-box">
   <h3>Serial Console</h3>
   <div class="cmd-row">
-    <input id="cmd-in" placeholder="lock1  p1 0.08 0.5 0  thresh1 0.02 0.1  dither 10000  help" onkeydown="if(event.key==='Enter')sendCmd()">
+    <input id="cmd-in" placeholder="lock1  omega1 2000000  phase1 90  cal1  thresh1 0.02 0.1  help" onkeydown="if(event.key==='Enter')sendCmd()">
     <button id="cmd-send" onclick="sendCmd()">Send</button>
   </div>
   <div id="cmd-out"></div>
@@ -297,6 +297,8 @@ function renderCh(c){
     <div class="stat"><div class="k">LASER I</div><div class="v">${ff(c.ima,1)}<span class="u"> mA</span></div></div>
     <div class="stat hl" style="color:${acc}"><div class="k">SETPOINT</div><div class="v">${ff(c.setp,1)}<span class="u"> %</span></div></div>
     <div class="stat"><div class="k">ERR RMS</div><div class="v" style="font-size:13px">${ff(c.rms,5)}</div></div>
+    <div class="stat"><div class="k">MOD Ω</div><div class="v">${ff(c.omega/1e6,3)}<span class="u"> MHz</span></div></div>
+    <div class="stat"><div class="k">DEMOD φ</div><div class="v">${ff(c.phase,0)}<span class="u"> °</span></div></div>
   </div>
   <div class="srv">
     <span class="srv-l">SERVO</span>
@@ -328,12 +330,14 @@ function renderSettings(data){
   <div class="fr"><label>Lock thr</label><input id="lt${c.n}" value="${c.lthr.toFixed(5)}"></div>
   <div class="fr"><label>Acq thr</label><input id="at${c.n}" value="${c.athr.toFixed(5)}">
     <button class="fr-apply" onclick="applyThr(${c.n})">Apply</button></div>
-</div>`).join('')+`
-<div class="set-ch">
-  <h4 style="color:var(--dim)">Global</h4>
-  <div class="fr"><label>Dither</label><input id="dHz" value="${data.dither||10000}">
-    <button class="fr-apply" onclick="applyDither()">Apply</button></div>
-</div>`;
+  <hr class="set-divider">
+  <h4 style="color:${CC[c.n-1]};margin-top:6px">CH${c.n} — RF Lock <span style="font-size:9px;color:var(--mu)">(saved to EEPROM)</span></h4>
+  <div class="fr"><label>Ω (Hz)</label><input id="om${c.n}" value="${(c.omega||0).toFixed(0)}"></div>
+  <div class="fr"><label>Demod φ°</label><input id="ph${c.n}" value="${(c.phase||0).toFixed(1)}">
+    <button class="fr-apply" onclick="applyRF(${c.n})">Apply</button></div>
+  <div class="fr"><label></label>
+    <button class="fr-apply" style="width:100%" onclick="calPhase(${c.n})">⊙ Auto-cal demod φ</button></div>
+</div>`).join('');
 }
 
 function applyPID(n){
@@ -341,7 +345,8 @@ function applyPID(n){
   cmd(`p${n} ${kp} ${ki} ${kd}`);
 }
 function applyThr(n){cmd(`thresh${n} ${V('lt'+n)} ${V('at'+n)}`);}
-function applyDither(){cmd(`dither ${V('dHz')}`);}
+function applyRF(n){cmd(`omega${n} ${V('om'+n)}`);cmd(`phase${n} ${V('ph'+n)}`);}
+function calPhase(n){cmd(`cal${n}`);}
 function V(id){return document.getElementById(id).value.trim();}
 
 // ---- network settings ----
