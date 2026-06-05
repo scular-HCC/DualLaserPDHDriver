@@ -1832,6 +1832,121 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "DAC: Ch A=Laser1 DC  Ch B=Laser2 DC  Ch C=TEC1  Ch D=TEC2  |  DDS f1=2.000kHz  f2=3.100kHz"
 		(exclude_from_sim no)
@@ -1964,6 +2079,12 @@
 			(justify left)
 		)
 		(uuid "ffc1f960-9382-4cd7-a15b-b9308af3c8a8")
+	)
+	(junction
+		(at 25.4 44.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1869b7f1-9d14-4e97-a474-4d5e0969848e")
 	)
 	(junction
 		(at 35.56 158.75)
@@ -2267,7 +2388,7 @@
 	)
 	(wire
 		(pts
-			(xy 24.13 44.45) (xy 29.21 44.45)
+			(xy 24.13 44.45) (xy 25.4 44.45)
 		)
 		(stroke
 			(width 0)
@@ -2987,6 +3108,16 @@
 	)
 	(wire
 		(pts
+			(xy 25.4 44.45) (xy 29.21 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d03b1b20-e52e-4f04-ac3f-dab2f3fed958")
+	)
+	(wire
+		(pts
 			(xy 78.74 72.39) (xy 78.74 60.96)
 		)
 		(stroke
@@ -3257,7 +3388,7 @@
 			)
 		)
 	)
-	(global_label "5V_DAC"
+	(global_label "+5V"
 		(shape output)
 		(at 90.17 63.5 180)
 		(fields_autoplaced yes)
@@ -3269,7 +3400,7 @@
 		)
 		(uuid "13590522-e061-4877-b4b0-198e02e4e68a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 80.2905 63.5 0)
+			(at 83.3143 63.5 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3761,7 +3892,7 @@
 			)
 		)
 	)
-	(global_label "5V_DAC"
+	(global_label "+5V"
 		(shape output)
 		(at 72.39 53.34 180)
 		(fields_autoplaced yes)
@@ -3773,7 +3904,7 @@
 		)
 		(uuid "5858e6e2-daac-4f6f-8bdc-8405f39142c9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 62.5105 53.34 0)
+			(at 65.5343 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4598,7 +4729,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1af98821-21ce-4017-bc32-a9f46424bcef")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR025"
 			(at 34.29 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -4658,7 +4789,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "#PWR027")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -4675,7 +4806,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2ed7bdf3-e132-48f9-9150-b81b425bcaf7")
-		(property "Reference" "C841"
+		(property "Reference" "C82"
 			(at 40.894 155.702 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4735,7 +4866,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C841")
+					(reference "C82")
 					(unit 1)
 				)
 			)
@@ -4752,7 +4883,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "345ba809-d164-42bf-b4dd-21e92e12ffa8")
-		(property "Reference" "U833"
+		(property "Reference" "U35"
 			(at 64.516 165.1 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4836,7 +4967,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U833")
+					(reference "U35")
 					(unit 1)
 				)
 			)
@@ -4854,7 +4985,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "75789848-a93a-4a6b-92cd-a372f25a4ff8")
-		(property "Reference" "U31"
+		(property "Reference" "U34"
 			(at 56.388 130.302 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4940,7 +5071,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U31")
+					(reference "U34")
 					(unit 1)
 				)
 			)
@@ -4957,7 +5088,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7caa1960-cd31-4d66-80b1-51af5b3faad4")
-		(property "Reference" "C845"
+		(property "Reference" "C87"
 			(at 148.59 165.862 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5017,7 +5148,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C845")
+					(reference "C87")
 					(unit 1)
 				)
 			)
@@ -5034,7 +5165,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "828d4d5d-b8b5-4e20-a2dd-54de368a25f1")
-		(property "Reference" "U834"
+		(property "Reference" "U38"
 			(at 138.176 163.83 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5118,7 +5249,85 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U834")
+					(reference "U38")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 25.4 44.45 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8876d9df-7e19-4e72-a426-adcd48f07d50")
+		(property "Reference" "#FLG06"
+			(at 25.4 42.545 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 25.4 39.37 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 25.4 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b74a440b-3629-4798-b28e-87534a74891d")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
+					(reference "#FLG06")
 					(unit 1)
 				)
 			)
@@ -5135,7 +5344,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8b4c5db1-d23e-4b40-89e7-0e2be7e524fe")
-		(property "Reference" "U32"
+		(property "Reference" "U37"
 			(at 104.14 52.578 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5232,7 +5441,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U32")
+					(reference "U37")
 					(unit 1)
 				)
 			)
@@ -5249,7 +5458,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "95846dd8-f76f-44bb-b924-def2c11824d6")
-		(property "Reference" "C842"
+		(property "Reference" "C83"
 			(at 74.93 167.132 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5309,7 +5518,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C842")
+					(reference "C83")
 					(unit 1)
 				)
 			)
@@ -5327,7 +5536,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "97997742-a7c4-456e-b833-de9a4565e876")
-		(property "Reference" "C73"
+		(property "Reference" "C86"
 			(at 142.24 110.744 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5389,7 +5598,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C73")
+					(reference "C86")
 					(unit 1)
 				)
 			)
@@ -5406,7 +5615,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a522b3ce-c6b1-477a-a57e-7dd6fda267e6")
-		(property "Reference" "U30"
+		(property "Reference" "U36"
 			(at 58.42 53.086 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5503,7 +5712,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U30")
+					(reference "U36")
 					(unit 1)
 				)
 			)
@@ -5520,7 +5729,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b8d57ded-051a-48b4-bda3-27f735904742")
-		(property "Reference" "C843"
+		(property "Reference" "C84"
 			(at 105.664 152.146 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5580,7 +5789,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C843")
+					(reference "C84")
 					(unit 1)
 				)
 			)
@@ -5597,7 +5806,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d1f4aa3d-4730-4454-abe0-0f2f8f5c654e")
-		(property "Reference" "C844"
+		(property "Reference" "C85"
 			(at 114.554 154.432 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5657,7 +5866,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C844")
+					(reference "C85")
 					(unit 1)
 				)
 			)
@@ -5675,7 +5884,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e08e0e70-e12f-403d-9a00-8d3cf21457cd")
-		(property "Reference" "C72"
+		(property "Reference" "C81"
 			(at 41.91 110.744 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5737,7 +5946,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C72")
+					(reference "C81")
 					(unit 1)
 				)
 			)
@@ -5754,7 +5963,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ee184e99-fd37-457a-93a1-43639e38cd11")
-		(property "Reference" "C840"
+		(property "Reference" "C80"
 			(at 32.004 153.416 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5814,7 +6023,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "C840")
+					(reference "C80")
 					(unit 1)
 				)
 			)
@@ -5831,7 +6040,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f4ae6979-0c8e-42ce-8e60-7e3452b71539")
-		(property "Reference" "U33"
+		(property "Reference" "U39"
 			(at 156.718 130.302 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5917,7 +6126,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf"
-					(reference "U33")
+					(reference "U39")
 					(unit 1)
 				)
 			)

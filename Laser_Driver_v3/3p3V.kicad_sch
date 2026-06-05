@@ -2838,7 +2838,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "61ff2331-1727-4d72-b942-3ce97d5e4c93")
-		(property "Reference" "U8"
+		(property "Reference" "U7"
 			(at 230.886 65.024 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2909,7 +2909,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
-					(reference "U8")
+					(reference "U7")
 					(unit 1)
 				)
 			)
@@ -3029,7 +3029,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "65ffcab5-0171-4c85-9229-a8c809f543c8")
-		(property "Reference" "U6"
+		(property "Reference" "U5"
 			(at 116.84 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3094,7 +3094,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
-					(reference "U6")
+					(reference "U5")
 					(unit 1)
 				)
 			)
@@ -3355,7 +3355,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7nF NP0"
+		(property "Value" "4.7uF NP0"
 			(at 183.75 74.582 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3502,7 +3502,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c90ab007-959e-4c6a-91cc-2a93834a8e56")
-		(property "Reference" "U7"
+		(property "Reference" "U6"
 			(at 160.02 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3587,7 +3587,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
-					(reference "U7")
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -3605,7 +3605,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d3e5e292-e053-4e39-9323-7720b497f55e")
-		(property "Reference" "U5"
+		(property "Reference" "U4"
 			(at 74.93 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3671,7 +3671,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
-					(reference "U5")
+					(reference "U4")
 					(unit 1)
 				)
 			)

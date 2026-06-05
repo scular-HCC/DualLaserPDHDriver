@@ -3437,7 +3437,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "077ded5c-193d-4285-993a-e04c6b7cf050")
-		(property "Reference" "U14"
+		(property "Reference" "U13"
 			(at 91.44 35.56 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3503,7 +3503,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "U14")
+					(reference "U13")
 					(unit 1)
 				)
 			)
@@ -3756,7 +3756,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "30c25e88-e7a7-4f0c-86e3-fc7f73674018")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR016"
 			(at 243.84 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -3816,7 +3816,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "#PWR018")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -3990,7 +3990,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "38bd87fe-0311-4fdb-a456-1a3fb9b391cb")
-		(property "Reference" "U15"
+		(property "Reference" "U14"
 			(at 147.32 35.56 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4056,7 +4056,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "U15")
+					(reference "U14")
 					(unit 1)
 				)
 			)
@@ -4073,7 +4073,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4362ca05-99bd-4997-923a-7425ab241e43")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR017"
 			(at 245.11 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -4133,7 +4133,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "#PWR019")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -4228,7 +4228,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5527ee54-2a45-4272-ab91-26061bc50b5c")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR015"
 			(at 233.68 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -4288,7 +4288,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "#PWR017")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -4877,7 +4877,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e5916656-5f6c-49b9-ab0a-f91a57110182")
-		(property "Reference" "U17"
+		(property "Reference" "U16"
 			(at 215.392 68.834 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5130,7 +5130,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "U17")
+					(reference "U16")
 					(unit 1)
 				)
 			)
@@ -5148,7 +5148,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e681f4e6-5721-4341-8c8e-c2b7f02d5ea7")
-		(property "Reference" "U16"
+		(property "Reference" "U15"
 			(at 215.646 37.592 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5401,7 +5401,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "U16")
+					(reference "U15")
 					(unit 1)
 				)
 			)
@@ -5418,7 +5418,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e7c9b458-e687-4d04-8d10-e8446e2a14e7")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR014"
 			(at 233.68 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -5478,7 +5478,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "#PWR016")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -5574,7 +5574,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fd128b05-9996-48f1-937c-0ffb2df99243")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR013"
 			(at 167.64 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -5634,7 +5634,7 @@
 		(instances
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/4c904a9b-f13b-4762-ac7d-2743bb4f9a22"
-					(reference "#PWR015")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)

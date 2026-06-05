@@ -1096,7 +1096,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "C78-79,C801-804,C810-811,C821-826,C830-831,C840-845,U29,U810-811,U821-822,U830-835,#PWR13-14,#PWR28,L801-802,R92-93,R801-802,R810-811,R823-826,R830-835",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
@@ -1149,8 +1149,8 @@
       "Clock"
     ],
     [
-      "3cc9b630-4516-4d07-8624-99717cc6cbce",
-      "LaserPackage"
+      "5a800bdf-c78b-4bfb-a7c6-d84c2550e565",
+      "PhotoDiodes"
     ],
     [
       "20b1c7a7-d05f-4e99-ab1a-7c26c0a8ad66",
@@ -1159,6 +1159,10 @@
     [
       "e1449f4d-dad3-47f6-967e-c2fd4c822347",
       "PhaseRef"
+    ],
+    [
+      "5e81dcd4-9b1b-47dc-9619-b54132a8671e",
+      "pm5V"
     ]
   ],
   "text_variables": {},
