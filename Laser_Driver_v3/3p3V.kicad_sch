@@ -5,6 +5,265 @@
 	(uuid "eb005bb7-70a9-42eb-aa77-0ace7bc8a143")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Connector:Screw_Terminal_01x03"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Screw_Terminal_01x03"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "screw terminal"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TerminalBlock*:*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Screw_Terminal_01x03_1_1"
+				(rectangle
+					(start -1.27 3.81)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 2.8702) (xy 0.3302 2.032)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 0.3302) (xy 0.3302 -0.508)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 -2.2098) (xy 0.3302 -3.048)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 3.048) (xy 0.508 2.2098)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 0.508) (xy 0.508 -0.3302)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 -2.032) (xy 0.508 -2.8702)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 2.54)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -2.54)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C"
 			(pin_names
 				(offset 0.254)
@@ -1652,6 +1911,16 @@
 	)
 	(wire
 		(pts
+			(xy 260.35 66.04) (xy 264.16 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "19c7b3f1-84b5-4014-bc33-320f2230b65f")
+	)
+	(wire
+		(pts
 			(xy 133.35 67.31) (xy 133.35 81.28)
 		)
 		(stroke
@@ -1912,6 +2181,16 @@
 	)
 	(wire
 		(pts
+			(xy 264.16 68.58) (xy 246.38 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71f45109-0c83-437b-aa8d-b02ec24cba09")
+	)
+	(wire
+		(pts
 			(xy 82.55 55.88) (xy 85.09 55.88)
 		)
 		(stroke
@@ -1922,7 +2201,7 @@
 	)
 	(wire
 		(pts
-			(xy 240.03 71.12) (xy 248.92 71.12)
+			(xy 240.03 71.12) (xy 264.16 71.12)
 		)
 		(stroke
 			(width 0)
@@ -2092,6 +2371,16 @@
 	)
 	(wire
 		(pts
+			(xy 246.38 68.58) (xy 246.38 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1315ff9-42c5-4cae-85d7-120232a1953f")
+	)
+	(wire
+		(pts
 			(xy 85.09 45.72) (xy 85.09 55.88)
 		)
 		(stroke
@@ -2102,7 +2391,7 @@
 	)
 	(wire
 		(pts
-			(xy 212.09 57.15) (xy 222.25 57.15)
+			(xy 212.09 57.15) (xy 246.38 57.15)
 		)
 		(stroke
 			(width 0)
@@ -2388,6 +2677,30 @@
 			)
 		)
 	)
+	(global_label "5Vref"
+		(shape output)
+		(at 260.35 66.04 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cf1185fc-3b61-4b3a-aa29-4f0e08344269")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 252.4662 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
 	(global_label "1V8"
 		(shape input)
 		(at 248.92 71.12 0)
@@ -2482,7 +2795,7 @@
 			(uuid "9f3fb436-f7e5-4df1-8236-39dfe9ba6b73")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C17")
 					(unit 1)
@@ -2560,7 +2873,7 @@
 			(uuid "2ad205eb-3aea-4161-aaec-b08ef344e937")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C20")
 					(unit 1)
@@ -2639,7 +2952,7 @@
 			(uuid "cc3d6243-1a81-4160-87d2-2752c42e8b78")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C23")
 					(unit 1)
@@ -2717,7 +3030,7 @@
 			(uuid "8a06cde3-c778-4fd9-84f9-908f6bf473b8")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "R13")
 					(unit 1)
@@ -2819,7 +3132,7 @@
 			(uuid "d2d1537f-4be2-4eeb-82aa-1f64ad832a34")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "D6")
 					(unit 1)
@@ -2907,7 +3220,7 @@
 			(uuid "d6daeb1a-205b-4080-ac8f-2691992523e0")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "U7")
 					(unit 1)
@@ -3009,7 +3322,7 @@
 			(uuid "ecd5c3bf-6f29-4ab3-858f-66ee33e0d88b")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "D5")
 					(unit 1)
@@ -3092,7 +3405,7 @@
 			(uuid "5a564822-f0d6-4611-bc3c-b8424ade1b76")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "U5")
 					(unit 1)
@@ -3170,7 +3483,7 @@
 			(uuid "a9b28fc3-0ed9-4bd6-9bad-9f7fe3f6bb48")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C22")
 					(unit 1)
@@ -3248,7 +3561,7 @@
 			(uuid "52080717-2ea8-46b1-b91f-77536fff5c73")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C18")
 					(unit 1)
@@ -3326,9 +3639,93 @@
 			(uuid "10b3195d-7326-4b10-8238-77c9911ab331")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "R12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Screw_Terminal_01x03")
+		(at 269.24 68.58 0)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9336e6a4-fb27-440f-ba10-1d85c8e6d8f4")
+		(property "Reference" "J8"
+			(at 269.494 62.484 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Screw_Terminal_01x03"
+			(at 269.24 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal"
+			(at 269.24 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 269.24 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 269.24 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e0dad533-be30-4295-b28e-fa5edc039dac")
+		)
+		(pin "2"
+			(uuid "5c5a506e-1d50-4f85-8c8d-813481fd651e")
+		)
+		(pin "3"
+			(uuid "255d2dce-a154-452b-beca-54ba254ca86e")
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
+					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -3404,7 +3801,7 @@
 			(uuid "3fc02762-681e-4494-ac5f-bab1cd2e6328")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C21")
 					(unit 1)
@@ -3482,7 +3879,7 @@
 			(uuid "fa76e5a3-d483-4add-8f75-5a6df7563e65")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C19")
 					(unit 1)
@@ -3522,7 +3919,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_SO:Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm_ThermalVias"
+		(property "Footprint" "Package_SO:MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm_ThermalVias"
 			(at 80.02 37.69 0)
 			(hide yes)
 			(show_name no)
@@ -3585,7 +3982,7 @@
 			(uuid "b822f0d7-7ae3-428c-a32b-197e93c1923f")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "U6")
 					(unit 1)
@@ -3669,7 +4066,7 @@
 			(uuid "c22251b0-7e0e-41b5-b8a2-c30feb002778")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "U4")
 					(unit 1)
@@ -3747,7 +4144,7 @@
 			(uuid "853a9e86-0730-4805-b523-10bdfa8f1a64")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "#PWR09")
 					(unit 1)
@@ -3826,7 +4223,7 @@
 			(uuid "1e374e5b-77a6-4ec1-9856-54c33e78ee8c")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/8f1d8420-6d65-4b14-9d89-baaedfa51091"
 					(reference "C24")
 					(unit 1)

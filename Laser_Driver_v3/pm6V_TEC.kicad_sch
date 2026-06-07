@@ -5,6 +5,265 @@
 	(uuid "5365321a-08de-4684-a53b-218d659c9e20")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Connector:Screw_Terminal_01x03"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Screw_Terminal_01x03"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "screw terminal"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TerminalBlock*:*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Screw_Terminal_01x03_1_1"
+				(rectangle
+					(start -1.27 3.81)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 2.8702) (xy 0.3302 2.032)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 0.3302) (xy 0.3302 -0.508)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.5334 -2.2098) (xy 0.3302 -3.048)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 3.048) (xy 0.508 2.2098)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 0.508) (xy 0.508 -0.3302)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3556 -2.032) (xy 0.508 -2.8702)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 2.54)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -2.54)
+					(radius 0.635)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C"
 			(pin_names
 				(offset 0.254)
@@ -324,8 +583,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "Q"
-				(at 5.08 1.27 0)
+			(property "Reference" "Q10"
+				(at 5.08 1.2701 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -335,8 +594,8 @@
 					(justify left)
 				)
 			)
-			(property "Value" "Q_NPN"
-				(at 5.08 -1.27 0)
+			(property "Value" "Q_NPN MJL21194"
+				(at 5.08 -1.2699 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -346,7 +605,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
 				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -357,7 +616,7 @@
 					)
 				)
 			)
-			(property "Datasheet" ""
+			(property "Datasheet" "~"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -369,7 +628,7 @@
 				)
 			)
 			(property "Description" "NPN bipolar junction transistor"
-				(at 0 0 0)
+				(at 4.572 -16.256 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -474,7 +733,7 @@
 							)
 						)
 					)
-					(number "B"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -492,7 +751,7 @@
 							)
 						)
 					)
-					(number "C"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -510,7 +769,7 @@
 							)
 						)
 					)
-					(number "E"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -534,7 +793,7 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "Q15"
+			(property "Reference" "Q8"
 				(at 5.08 1.2701 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -545,7 +804,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "Q_PNP"
+			(property "Value" "Q_PNP_MJL21193"
 				(at 5.08 -1.2699 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -684,7 +943,7 @@
 							)
 						)
 					)
-					(number "B"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -702,7 +961,7 @@
 							)
 						)
 					)
-					(number "C"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -720,7 +979,7 @@
 							)
 						)
 					)
-					(number "E"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1681,6 +1940,843 @@
 						)
 					)
 					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Q_NPN_1"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q6"
+				(at 0.762 2.794 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "MMBT2222"
+				(at 5.08 -5.588 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+				(at 1.778 -9.144 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_NPN_1_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.778) (xy 1.778 -1.27) (xy 2.286 -2.286) (xy 1.27 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "Q_NPN_1_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Q_NPN_2"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q9"
+				(at 5.08 1.2701 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Q_NPN MJL21194"
+				(at -4.318 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "NPN bipolar junction transistor"
+				(at 1.524 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_NPN_2_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.778) (xy 1.778 -1.27) (xy 2.286 -2.286) (xy 1.27 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "Q_NPN_2_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Q_PNP_1"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q5"
+				(at 1.27 3.81 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "MMBT2907"
+				(at 5.588 -4.572 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+				(at 0.762 13.97 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "PNP bipolar junction transistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_PNP_1_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -1.778) (xy 1.778 -2.286) (xy 1.27 -1.27) (xy 2.286 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "Q_PNP_1_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Q_PNP_2"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q7"
+				(at 5.08 1.2701 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Q_PNP_MJL21193"
+				(at 5.08 -1.2699 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+				(at 6.096 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/mjl21193-d.pdf"
+				(at 1.27 -14.986 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "PNP bipolar junction transistor"
+				(at 1.524 12.446 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_PNP_2_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -1.778) (xy 1.778 -2.286) (xy 1.27 -1.27) (xy 2.286 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "Q_PNP_2_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3260,6 +4356,12 @@
 		(uuid "079ef140-8b4c-4f1c-b789-f19809441854")
 	)
 	(junction
+		(at 264.16 157.48)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "12957256-3a65-4202-a05b-ff9a88bf5dd9")
+	)
+	(junction
 		(at 156.21 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3482,6 +4584,12 @@
 		(uuid "9abefa33-213e-49c2-832e-9d437588e6ca")
 	)
 	(junction
+		(at 265.43 116.84)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a33dabf8-1d93-4e15-afee-68e3b7c2b50d")
+	)
+	(junction
 		(at 170.18 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3608,6 +4716,12 @@
 		(uuid "ea6a1ac8-13c1-4ec0-8279-8e4cab9caf12")
 	)
 	(junction
+		(at 269.24 128.27)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f268f8af-1b13-4f3a-b25b-41c258a8e1e5")
+	)
+	(junction
 		(at 78.74 100.33)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3681,7 +4795,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 128.27) (xy 271.78 128.27)
+			(xy 248.92 128.27) (xy 269.24 128.27)
 		)
 		(stroke
 			(width 0)
@@ -3801,7 +4915,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 157.48) (xy 266.7 157.48)
+			(xy 248.92 157.48) (xy 264.16 157.48)
 		)
 		(stroke
 			(width 0)
@@ -3858,6 +4972,16 @@
 			(type default)
 		)
 		(uuid "1b6e5486-e1c9-46a8-9c3b-5ff45e466856")
+	)
+	(wire
+		(pts
+			(xy 265.43 121.92) (xy 265.43 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c6ad51a-955a-43c5-83a2-115c2a63b5d1")
 	)
 	(wire
 		(pts
@@ -4131,6 +5255,16 @@
 	)
 	(wire
 		(pts
+			(xy 264.16 151.13) (xy 264.16 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "40b0e6b9-5daa-47cf-b48e-1a7957edba02")
+	)
+	(wire
+		(pts
 			(xy 187.96 38.1) (xy 187.96 44.45)
 		)
 		(stroke
@@ -4251,6 +5385,16 @@
 	)
 	(wire
 		(pts
+			(xy 269.24 135.89) (xy 269.24 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4bcd156a-54ca-47fb-b1e7-e94b2f1485a9")
+	)
+	(wire
+		(pts
 			(xy 170.18 38.1) (xy 187.96 38.1)
 		)
 		(stroke
@@ -4261,7 +5405,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 116.84) (xy 267.97 116.84)
+			(xy 248.92 116.84) (xy 265.43 116.84)
 		)
 		(stroke
 			(width 0)
@@ -4461,6 +5605,16 @@
 	)
 	(wire
 		(pts
+			(xy 276.86 133.35) (xy 276.86 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6c7bbeb0-e965-40f9-9b1a-35bac48d0731")
+	)
+	(wire
+		(pts
 			(xy 220.98 157.48) (xy 236.22 157.48)
 		)
 		(stroke
@@ -4501,6 +5655,16 @@
 	)
 	(wire
 		(pts
+			(xy 264.16 157.48) (xy 266.7 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "70e53c06-0834-4d5b-8739-0d33ff18030b")
+	)
+	(wire
+		(pts
 			(xy 218.44 107.95) (xy 218.44 116.84)
 		)
 		(stroke
@@ -4508,6 +5672,16 @@
 			(type default)
 		)
 		(uuid "73f4ce87-305c-4453-91df-798b193585fe")
+	)
+	(wire
+		(pts
+			(xy 265.43 116.84) (xy 269.24 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7addbabb-063c-4b10-9efb-3013bca890e3")
 	)
 	(wire
 		(pts
@@ -4631,6 +5805,16 @@
 	)
 	(wire
 		(pts
+			(xy 276.86 135.89) (xy 269.24 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89561c75-da6c-445d-bcdc-149e17819384")
+	)
+	(wire
+		(pts
 			(xy 138.43 25.4) (xy 138.43 34.29)
 		)
 		(stroke
@@ -4641,6 +5825,16 @@
 	)
 	(wire
 		(pts
+			(xy 279.4 121.92) (xy 265.43 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8eceaf75-fca6-4a76-87d6-8d335e04a7b9")
+	)
+	(wire
+		(pts
 			(xy 86.36 140.97) (xy 86.36 151.13)
 		)
 		(stroke
@@ -4648,6 +5842,16 @@
 			(type default)
 		)
 		(uuid "8f9be76f-4810-470f-83a2-e049b4190bbc")
+	)
+	(wire
+		(pts
+			(xy 276.86 130.81) (xy 279.4 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90485457-567b-48c0-8b7c-5919851f3efe")
 	)
 	(wire
 		(pts
@@ -4741,6 +5945,16 @@
 	)
 	(wire
 		(pts
+			(xy 269.24 128.27) (xy 271.78 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f7b1a87-3533-4f07-9231-961b5d48e419")
+	)
+	(wire
+		(pts
 			(xy 187.96 36.83) (xy 187.96 38.1)
 		)
 		(stroke
@@ -4748,6 +5962,16 @@
 			(type default)
 		)
 		(uuid "a02aea83-7eea-4b46-bef6-0c1a0be7549c")
+	)
+	(wire
+		(pts
+			(xy 276.86 138.43) (xy 270.51 138.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a033d195-d43a-4587-8e32-5fecd41f1089")
 	)
 	(wire
 		(pts
@@ -4911,6 +6135,16 @@
 	)
 	(wire
 		(pts
+			(xy 270.51 151.13) (xy 264.16 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b325b847-868d-4eb4-b089-29f09ed7b1a9")
+	)
+	(wire
+		(pts
 			(xy 156.21 128.27) (xy 208.28 128.27)
 		)
 		(stroke
@@ -4988,6 +6222,16 @@
 			(type default)
 		)
 		(uuid "bbc37dbc-3f87-4b96-88e8-ac2c65a20240")
+	)
+	(wire
+		(pts
+			(xy 270.51 138.43) (xy 270.51 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd27cb89-b621-441a-a399-88856a043d61")
 	)
 	(wire
 		(pts
@@ -5301,6 +6545,16 @@
 	)
 	(wire
 		(pts
+			(xy 279.4 130.81) (xy 279.4 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ea382162-d097-41db-8f3a-aee9aa14a5d8")
+	)
+	(wire
+		(pts
 			(xy 128.27 49.53) (xy 163.83 49.53)
 		)
 		(stroke
@@ -5409,7 +6663,7 @@
 	)
 	(global_label "+6V_TEC"
 		(shape input)
-		(at 267.97 116.84 0)
+		(at 269.24 116.84 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5419,7 +6673,7 @@
 		)
 		(uuid "2d8d3bae-5cd2-4372-8ce6-74912f45f9dd")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 279.1799 116.84 0)
+			(at 280.4499 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5576,7 +6830,7 @@
 			(uuid "19948e6e-fd4e-4ddc-a419-434602688b87")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C36")
 					(unit 1)
@@ -5657,7 +6911,7 @@
 			(uuid "4c9fe47c-c233-4d2f-9533-e2de61773c0d")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C35")
 					(unit 1)
@@ -5735,7 +6989,7 @@
 			(uuid "a894498f-6458-4379-8863-32f5d05b29cc")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C43")
 					(unit 1)
@@ -5813,7 +7067,7 @@
 			(uuid "3e0c815b-a812-492d-8304-6d6b0a150d29")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C44")
 					(unit 1)
@@ -5893,7 +7147,7 @@
 			(uuid "0e5bfa4f-4013-488d-87dd-17c8a6e8bb3b")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C51")
 					(unit 1)
@@ -5975,7 +7229,7 @@
 			(uuid "aa839a46-cc57-41b2-91a8-b167c10c1a03")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C42")
 					(unit 1)
@@ -6058,7 +7312,7 @@
 			(uuid "f3c5a908-8a62-4e8b-845a-f847a66f9aa6")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R25")
 					(unit 1)
@@ -6140,7 +7394,7 @@
 			(uuid "78c9480f-ed63-4295-8a37-8f02e06ebb27")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R26")
 					(unit 1)
@@ -6221,7 +7475,7 @@
 			(uuid "4b44a326-587a-4c58-a5b8-b6f74c257da4")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C40")
 					(unit 1)
@@ -6303,7 +7557,7 @@
 			(uuid "24176b16-7d06-44d0-af43-bd41a38b38f9")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D9")
 					(unit 1)
@@ -6383,7 +7637,7 @@
 			(uuid "a080e715-6dfc-415a-a7c2-7cbfd8c155a5")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R29")
 					(unit 1)
@@ -6465,7 +7719,7 @@
 			(uuid "31b82aee-2d04-4eca-8641-ddaf19e0b8cc")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C47")
 					(unit 1)
@@ -6546,7 +7800,7 @@
 			(uuid "7449dedf-14c4-4910-8f4a-ec97763d83e1")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C39")
 					(unit 1)
@@ -6650,7 +7904,7 @@
 			(uuid "dd79b2d4-4d6c-4796-b47f-fb0492dfaf95")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D10")
 					(unit 1)
@@ -6691,7 +7945,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 156.21 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6704,6 +7958,7 @@
 		)
 		(property "Datasheet" ""
 			(at 156.21 152.4 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6712,8 +7967,9 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "onsemi 1N4148WT1G) — 100 V, 150 mA, fast switching"
 			(at 156.21 152.4 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6729,7 +7985,7 @@
 			(uuid "97bd3248-0bcc-40e5-bfe3-ad70333aded3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D_CP2")
 					(unit 1)
@@ -6809,7 +8065,7 @@
 			(uuid "944ec5cf-3bd6-4156-a7b7-ac64a9532b49")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R21")
 					(unit 1)
@@ -6850,7 +8106,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 156.21 109.22 0)
 			(hide yes)
 			(show_name no)
@@ -6871,8 +8127,9 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "onsemi 1N4148WT1G) — 100 V, 150 mA, fast switching"
 			(at 156.21 109.22 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6888,7 +8145,7 @@
 			(uuid "4fa98826-1169-43c4-83e2-90d7e081fcd3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D_CP1")
 					(unit 1)
@@ -6974,9 +8231,93 @@
 			(uuid "e3823c44-c1fe-40d2-bc9e-ff4719ca55e4")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Screw_Terminal_01x03")
+		(at 281.94 135.89 0)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "491a1f19-696d-4a04-9070-dcdabb064eda")
+		(property "Reference" "J10"
+			(at 282.194 129.794 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Screw_Terminal_01x03"
+			(at 281.94 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal"
+			(at 281.94 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 281.94 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 281.94 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "33fa6375-d109-4fc2-aced-009e5540dcc3")
+		)
+		(pin "2"
+			(uuid "5ed50bcc-9224-4122-8f5b-deb0584895fa")
+		)
+		(pin "3"
+			(uuid "1a2328ae-e291-456f-8b1d-77cd1e17bb6b")
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
+					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -7052,7 +8393,7 @@
 			(uuid "c64ae292-8cfb-4b22-9fa0-37b7eb9c90bc")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C45")
 					(unit 1)
@@ -7133,7 +8474,7 @@
 			(uuid "9386299f-c627-4f88-aeac-6bc82e3dafa3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C52")
 					(unit 1)
@@ -7215,7 +8556,7 @@
 			(uuid "06bbff2d-191d-4709-a687-7104b0d676eb")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C50")
 					(unit 1)
@@ -7295,7 +8636,7 @@
 			(uuid "43eca0a3-df25-4bc7-92ba-59858bb424f3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R22")
 					(unit 1)
@@ -7379,7 +8720,7 @@
 			(uuid "c43e5f38-b772-4fe6-a986-331e3133e012")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "U12")
 					(unit 1)
@@ -7388,6 +8729,7 @@
 		)
 	)
 	(symbol
+		(lib_name "Q_PNP_2")
 		(lib_id "Device:Q_PNP")
 		(at 185.42 140.97 0)
 		(unit 1)
@@ -7454,17 +8796,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "1"
 			(uuid "9c211336-ccf0-40c1-9076-60992c6c1674")
 		)
-		(pin "C"
+		(pin "2"
 			(uuid "0950b52f-e2c2-4df6-a1bf-9baea501de95")
 		)
-		(pin "E"
+		(pin "3"
 			(uuid "120711b8-50b9-42f2-9f03-e96b3b1f572d")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q7")
 					(unit 1)
@@ -7547,7 +8889,7 @@
 			(uuid "3d96a305-d963-4677-81b0-b25cb092a359")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q4")
 					(unit 1)
@@ -7628,7 +8970,7 @@
 			(uuid "046f9fdd-ba18-4b14-aeb1-3b130ae85530")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C37")
 					(unit 1)
@@ -7693,7 +9035,7 @@
 			)
 		)
 		(property "Description" "NPN bipolar junction transistor"
-			(at 215.9 90.17 0)
+			(at 220.472 106.426 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7703,17 +9045,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "2"
 			(uuid "ee84da85-ec04-4de0-aa08-67e27a06f209")
 		)
-		(pin "C"
+		(pin "3"
 			(uuid "084b0640-e37c-42a0-bb1b-8cb4d6082e91")
 		)
-		(pin "E"
+		(pin "1"
 			(uuid "65e9f422-b21a-4818-a9a0-9de4ea73a11c")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q10")
 					(unit 1)
@@ -7788,17 +9130,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "2"
 			(uuid "624598c8-3f23-47e2-8d8a-88416a9a831c")
 		)
-		(pin "C"
+		(pin "1"
 			(uuid "d60bdfb5-84a9-41e9-bed5-51ebd96c5ab2")
 		)
-		(pin "E"
+		(pin "3"
 			(uuid "e95cf05d-eb4f-4143-823e-b608e31190a5")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q8")
 					(unit 1)
@@ -7884,7 +9226,7 @@
 			(uuid "92008e3b-0b2e-4d0e-92c4-8176b4e2d46e")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R32")
 					(unit 1)
@@ -7966,7 +9308,7 @@
 			(uuid "b68bc6b3-03ec-4401-8555-7d8edccb6a8a")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C48")
 					(unit 1)
@@ -7975,6 +9317,7 @@
 		)
 	)
 	(symbol
+		(lib_name "Q_NPN_1")
 		(lib_id "Device:Q_NPN")
 		(at 177.8 93.98 90)
 		(unit 1)
@@ -8007,8 +9350,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 177.8 93.98 0)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+			(at 186.944 92.202 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8038,17 +9381,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "3"
 			(uuid "265da544-21c8-4ba8-bea4-0b8c8b4d9510")
 		)
-		(pin "C"
+		(pin "2"
 			(uuid "3dd4cfb6-bb11-42fc-8ea7-408540af5f4c")
 		)
-		(pin "E"
+		(pin "1"
 			(uuid "e608a2d0-92cc-4973-a7d4-6ccdd09d455a")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q6")
 					(unit 1)
@@ -8126,7 +9469,7 @@
 			(uuid "028d5d84-047b-469f-ae8f-b3a6717fb7ee")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C54")
 					(unit 1)
@@ -8211,7 +9554,7 @@
 			(uuid "6bb743da-c89e-48ae-9c61-dbd0d3564684")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D7")
 					(unit 1)
@@ -8293,7 +9636,7 @@
 			(uuid "2f47e940-9a16-454e-b831-ef8c751cfaa1")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R34")
 					(unit 1)
@@ -8371,7 +9714,7 @@
 			(uuid "bbaee99c-3fd3-495c-94b0-39101f54706a")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C46")
 					(unit 1)
@@ -8449,7 +9792,7 @@
 			(uuid "f96886ec-56b3-4180-a4a4-f5bef15be5d4")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C53")
 					(unit 1)
@@ -8529,7 +9872,7 @@
 			(uuid "d3e5c898-a963-4339-b4c2-71e9b8d82e8d")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R23")
 					(unit 1)
@@ -8538,6 +9881,7 @@
 		)
 	)
 	(symbol
+		(lib_name "Q_NPN_2")
 		(lib_id "Device:Q_NPN")
 		(at 205.74 100.33 0)
 		(unit 1)
@@ -8593,7 +9937,7 @@
 			)
 		)
 		(property "Description" "NPN bipolar junction transistor"
-			(at 205.74 100.33 0)
+			(at 207.264 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8603,17 +9947,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "2"
 			(uuid "8bba99d7-15de-4256-93f3-353de8fa7e57")
 		)
-		(pin "C"
+		(pin "1"
 			(uuid "ddac6463-8da2-489d-ae7d-69309dbbefd3")
 		)
-		(pin "E"
+		(pin "3"
 			(uuid "0c3a20a8-7d79-44b4-b65a-51ad7d9ac4ed")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q9")
 					(unit 1)
@@ -8696,7 +10040,7 @@
 			(uuid "ec5cc332-96a6-4d45-a754-7f41dfc73dac")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q3")
 					(unit 1)
@@ -8783,7 +10127,7 @@
 			(uuid "28010968-ac7d-4fbc-9732-0945c33bcae4")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "U11")
 					(unit 1)
@@ -8865,7 +10209,7 @@
 			(uuid "f8b4c05f-3f06-447e-9295-6970ee45e9d7")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C49")
 					(unit 1)
@@ -8947,7 +10291,7 @@
 			(uuid "66881fdc-8aa5-4c32-a24c-ab0402cfd4b2")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R35")
 					(unit 1)
@@ -9033,7 +10377,7 @@
 			(uuid "8d79f11b-1736-4a1b-aa4d-b56aec86c063")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R31")
 					(unit 1)
@@ -9114,7 +10458,7 @@
 			(uuid "f5f8ed04-5518-4e62-be78-f074703799c5")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C38")
 					(unit 1)
@@ -9218,7 +10562,7 @@
 			(uuid "c48fea2b-7f92-41f4-a979-d9bea990cd61")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D11")
 					(unit 1)
@@ -9304,7 +10648,7 @@
 			(uuid "9fa8f2aa-feea-415b-93ed-786b69e8d874")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R30")
 					(unit 1)
@@ -9384,7 +10728,7 @@
 			(uuid "fd7b9150-4a5e-4f04-836e-a04950086b52")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R20")
 					(unit 1)
@@ -9462,7 +10806,7 @@
 			(uuid "94711836-b410-4aae-98cc-687283e161d9")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "#PWR012")
 					(unit 1)
@@ -9542,7 +10886,7 @@
 			(uuid "16a982b1-a451-411d-94cf-480d7f97f372")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R28")
 					(unit 1)
@@ -9624,7 +10968,7 @@
 			(uuid "5b222047-45c0-4faf-a2e6-997e3be6788a")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "C41")
 					(unit 1)
@@ -9707,7 +11051,7 @@
 			(uuid "bf552553-6c74-4faa-92bd-5ee38467a74f")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R24")
 					(unit 1)
@@ -9716,6 +11060,7 @@
 		)
 	)
 	(symbol
+		(lib_name "Q_PNP_1")
 		(lib_id "Device:Q_PNP")
 		(at 165.1 135.89 90)
 		(unit 1)
@@ -9727,7 +11072,7 @@
 		(dnp no)
 		(uuid "f41210bf-e897-45f0-8b62-cc5f09381590")
 		(property "Reference" "Q5"
-			(at 166.1 122.89 0)
+			(at 161.29 134.62 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9738,7 +11083,7 @@
 			)
 		)
 		(property "Value" "MMBT2907"
-			(at 163.6 122.89 0)
+			(at 169.672 130.302 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9748,8 +11093,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 165.1 135.89 0)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+			(at 151.13 135.128 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9769,8 +11114,9 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "PNP bipolar junction transistor"
 			(at 165.1 135.89 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9779,17 +11125,17 @@
 				)
 			)
 		)
-		(pin "B"
+		(pin "3"
 			(uuid "34c78bc6-6736-4637-b9c0-10ac6f8cd697")
 		)
-		(pin "C"
+		(pin "2"
 			(uuid "e42a1179-6467-4e63-9d65-bdad0e4dc312")
 		)
-		(pin "E"
+		(pin "1"
 			(uuid "926d2af8-dcaf-423c-a36e-cc9ac22d1a73")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "Q5")
 					(unit 1)
@@ -9872,7 +11218,7 @@
 			(uuid "22411ed5-a341-46f8-bfb8-1498ab304d0f")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R27")
 					(unit 1)
@@ -9954,7 +11300,7 @@
 			(uuid "c7c2aa7e-83fd-40d6-8a6a-63e2c7f8c87c")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "D8")
 					(unit 1)

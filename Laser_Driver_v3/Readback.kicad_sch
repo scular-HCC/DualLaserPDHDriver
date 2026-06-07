@@ -5052,7 +5052,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
 			(at 77.47 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -5288,7 +5288,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 90.17 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -5433,6 +5433,103 @@
 	)
 	(symbol
 		(lib_id "Amplifier_Instrumentation:INA821xD")
+		(at 53.34 41.91 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7c1a71ef-6cba-48cb-8c6f-04ed3980c09e")
+		(property "Reference" "U28"
+			(at 58.42 34.798 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "INA826"
+			(at 60.198 37.338 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 53.594 69.342 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/gpn/ina821"
+			(at 53.848 71.882 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "4.7 MHz Bandwidth, Low Offset, Low-Power, Precision Instrumentation Amplifier, G = 1 + 49.4kOhm/Rg, 4.5 V to 36 V Supply, SOIC-8"
+			(at 53.34 66.802 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "4"
+			(uuid "409c391a-4b03-46f3-a948-873d1364522e")
+		)
+		(pin "7"
+			(uuid "0a8972d5-269c-4471-bab8-da978f50264c")
+		)
+		(pin "6"
+			(uuid "eb808a5a-4e9c-4c09-8412-ca0dc83a0481")
+		)
+		(pin "3"
+			(uuid "3734a4ad-d4d1-43bc-8f86-edd29ee781a2")
+		)
+		(pin "5"
+			(uuid "bc0ec089-f8d6-49b1-be2e-f2b7c1120d3e")
+		)
+		(pin "8"
+			(uuid "1ea88e36-a7de-4bb8-af88-514d96f1c46e")
+		)
+		(pin "2"
+			(uuid "99a9bb49-b3e6-4fbe-a429-01cfcb7c13f2")
+		)
+		(pin "1"
+			(uuid "bee81d44-dcee-4e93-b45f-d8dc9ae8df20")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
+					(reference "U28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Instrumentation:INA821xD")
 		(at 129.54 73.66 0)
 		(unit 1)
 		(body_style 1)
@@ -5559,7 +5656,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 77.47 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -5976,7 +6073,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 90.17 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -6333,103 +6430,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
 					(reference "R_NTC2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Amplifier_Instrumentation:INA821xD")
-		(at 53.34 69.85 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a9137aec-8317-453e-9729-f9b4388a82f3")
-		(property "Reference" "U29"
-			(at 58.42 62.738 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "INA826"
-			(at 60.198 65.278 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 53.594 97.282 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/gpn/ina821"
-			(at 53.848 99.822 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "4.7 MHz Bandwidth, Low Offset, Low-Power, Precision Instrumentation Amplifier, G = 1 + 49.4kOhm/Rg, 4.5 V to 36 V Supply, SOIC-8"
-			(at 53.34 94.742 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "4"
-			(uuid "69e63960-1c1e-46d5-8ecb-942e71f1ef4a")
-		)
-		(pin "7"
-			(uuid "15394b61-c706-4e8a-9f6c-b9279318c3fe")
-		)
-		(pin "6"
-			(uuid "0db0f04f-b1c8-4caa-80f7-47bdad72f81d")
-		)
-		(pin "3"
-			(uuid "823b814f-738f-4002-b831-73c56eae8acf")
-		)
-		(pin "5"
-			(uuid "b2b6a781-f2e0-4fff-9fb6-4286f3c2e6f8")
-		)
-		(pin "8"
-			(uuid "b7c11fbd-9e65-4108-b3f7-2378b06c7ede")
-		)
-		(pin "2"
-			(uuid "f7b13c82-42cf-42ad-b8f2-0267a72f33cf")
-		)
-		(pin "1"
-			(uuid "12713f74-14a2-4178-8189-f8a857441dce")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "U29")
 					(unit 1)
 				)
 			)
@@ -7096,6 +7096,103 @@
 		)
 	)
 	(symbol
+		(lib_id "Amplifier_Instrumentation:INA821xD")
+		(at 53.34 69.85 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f10f0e43-1fd4-4fbb-b238-4b851a5279f3")
+		(property "Reference" "U29"
+			(at 58.42 62.738 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "INA826"
+			(at 60.198 65.278 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 53.594 97.282 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/gpn/ina821"
+			(at 53.848 99.822 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "4.7 MHz Bandwidth, Low Offset, Low-Power, Precision Instrumentation Amplifier, G = 1 + 49.4kOhm/Rg, 4.5 V to 36 V Supply, SOIC-8"
+			(at 53.34 94.742 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "4"
+			(uuid "b2c32d05-ae77-48c0-8364-ac8e781dc73f")
+		)
+		(pin "7"
+			(uuid "98abf254-a7ab-46a3-80a3-a1b3a4bd18d6")
+		)
+		(pin "6"
+			(uuid "4720d420-9816-419c-a654-1a3025576b10")
+		)
+		(pin "3"
+			(uuid "ab5c5a99-385c-4338-be08-eafa8f2e751c")
+		)
+		(pin "5"
+			(uuid "5a222438-88ab-4aee-998f-6eef37f64f8e")
+		)
+		(pin "8"
+			(uuid "96c5cf23-f122-4489-85ce-9f81143e1248")
+		)
+		(pin "2"
+			(uuid "cf784041-5e37-4ee5-9f1b-a892b00a5ec5")
+		)
+		(pin "1"
+			(uuid "03eceb56-af30-4fef-a5fe-fe67a4b1da3f")
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
+					(reference "U29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 39.37 41.91 0)
 		(mirror y)
@@ -7249,103 +7346,6 @@
 			(project "laser_driver_v3"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
 					(reference "R_f4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Amplifier_Instrumentation:INA821xD")
-		(at 53.34 41.91 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "fd5d7ae0-0b7b-4fc1-ad71-0c29f11b6ffc")
-		(property "Reference" "U28"
-			(at 58.42 34.798 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "INA826"
-			(at 60.198 37.338 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 53.594 69.342 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.ti.com/lit/gpn/ina821"
-			(at 53.848 71.882 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "4.7 MHz Bandwidth, Low Offset, Low-Power, Precision Instrumentation Amplifier, G = 1 + 49.4kOhm/Rg, 4.5 V to 36 V Supply, SOIC-8"
-			(at 53.34 66.802 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "4"
-			(uuid "1a8743b3-8d5b-4f2b-a2ae-1654cf432915")
-		)
-		(pin "7"
-			(uuid "bfbb8e7a-f054-4c2e-9a30-9ae5a0e3cdad")
-		)
-		(pin "6"
-			(uuid "fc892611-b735-4283-85e4-41c61b4c84f7")
-		)
-		(pin "3"
-			(uuid "f3082004-50dc-4f75-8e2d-e7c3bac8710f")
-		)
-		(pin "5"
-			(uuid "7a9e1d25-8cb1-4b45-a17b-dd9b9cedd02b")
-		)
-		(pin "8"
-			(uuid "cbbd901b-cda9-4684-9a78-0dfea25d8262")
-		)
-		(pin "2"
-			(uuid "aa428882-f032-4e19-ba46-f7347e3fc004")
-		)
-		(pin "1"
-			(uuid "c3ab1436-014f-4110-988f-e33706172ebf")
-		)
-		(instances
-			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/e2f6689f-2746-4fd7-aa4a-0128f1e05d63"
-					(reference "U28")
 					(unit 1)
 				)
 			)

@@ -2407,7 +2407,7 @@
 			(uuid "22b2aa89-b8c8-4823-9572-493c38e7a5c3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C14")
 					(unit 1)
@@ -2485,7 +2485,7 @@
 			(uuid "49ed4840-69a3-4f6e-b223-84c47471f55d")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C10")
 					(unit 1)
@@ -2563,7 +2563,7 @@
 			(uuid "d2422f25-211e-4290-b4fb-4c0379ec95a3")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C15")
 					(unit 1)
@@ -2642,7 +2642,7 @@
 			(uuid "d4434563-9e61-429b-bcbd-6c1220fc8849")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "#FLG05")
 					(unit 1)
@@ -2720,7 +2720,7 @@
 			(uuid "c0fdf69f-a1c3-4deb-9943-983489386588")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "#PWR07")
 					(unit 1)
@@ -2798,7 +2798,7 @@
 			(uuid "c8944194-1c0a-448e-939a-8083c45c9f19")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C11")
 					(unit 1)
@@ -2882,7 +2882,7 @@
 			(uuid "43bbee41-944a-49c9-92d0-7c1268d89978")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "U1")
 					(unit 1)
@@ -2960,7 +2960,7 @@
 			(uuid "fda4f708-a9f9-421b-8450-2020c1ce66a7")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C16")
 					(unit 1)
@@ -3038,7 +3038,7 @@
 			(uuid "e48546f9-682a-4a96-98b6-cb20ae1ce6aa")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C13")
 					(unit 1)
@@ -3116,7 +3116,7 @@
 			(uuid "96c7e7ae-c301-4098-9332-a552209de67e")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C9")
 					(unit 1)
@@ -3194,7 +3194,7 @@
 			(uuid "9239ad79-5a1e-4c21-9ffc-9bf0cbee84d0")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "C12")
 					(unit 1)
@@ -3290,7 +3290,7 @@
 			(uuid "0d4b771a-a9ae-42b1-97eb-0ed4bf5c2928")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "U3")
 					(unit 1)
@@ -3368,7 +3368,7 @@
 			(uuid "edac5a9f-629a-41dc-b850-21f99958a214")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "R10")
 					(unit 1)
@@ -3470,7 +3470,7 @@
 			(uuid "8c5caf76-57fc-4aa1-84c4-4b73d8e11ea0")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "D4")
 					(unit 1)
@@ -3572,7 +3572,7 @@
 			(uuid "40682502-012f-4a83-9e70-ad3601e3a38f")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "U2")
 					(unit 1)
@@ -3650,7 +3650,7 @@
 			(uuid "ef108c9e-60fb-4943-bc98-adab6fc42398")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "R11")
 					(unit 1)
@@ -3727,7 +3727,7 @@
 			(uuid "e736f5d0-7aac-4cd0-8ed8-76f8e7a3333f")
 		)
 		(instances
-			(project "laser_driver_v3"
+			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/66b4928b-0f98-4282-b6fa-f46162bb9680"
 					(reference "#PWR08")
 					(unit 1)

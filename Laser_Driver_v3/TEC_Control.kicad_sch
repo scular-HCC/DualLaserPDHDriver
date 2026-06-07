@@ -5170,14 +5170,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "a3e8253b-57f8-42b4-9882-e3548643b5b5")
+			(uuid "4d4ab1c2-0767-4c85-a5d5-d6c3eda1a69b")
 		)
 		(pin "2"
-			(uuid "d06e5215-8d44-4a5c-a586-4ffa138a384f")
+			(uuid "36d89b04-9078-498b-a5f0-413a943b10e8")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R54")
 					(unit 1)
 				)
@@ -5249,14 +5249,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "c1b77b06-cafc-4d86-9482-37b461cec641")
+			(uuid "326dfa5b-079f-40e5-aa1c-7c9878fe2435")
 		)
 		(pin "2"
-			(uuid "74576aa2-359b-467b-a172-c2b3d079b8c8")
+			(uuid "79beb071-fe8e-42aa-9c36-3f87ff3036aa")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R56")
 					(unit 1)
 				)
@@ -5329,20 +5329,20 @@
 			)
 		)
 		(pin "2"
-			(uuid "80766e06-5d83-4e37-b79f-3626ebd534cd")
+			(uuid "c5c60eb1-6f28-4361-a436-e23aa5ce8dbc")
 		)
 		(pin "3"
-			(uuid "3bc48fb2-e26e-4512-a3d5-4af1d2a2a1f0")
+			(uuid "9a7a4808-3c13-46ea-98c9-eba9a0d56afe")
 		)
 		(pin "4"
-			(uuid "f91d1714-dd42-4798-8a8a-1130ac1f764b")
+			(uuid "41d94a2b-040e-4ea2-a8bc-f6aa769dcb7b")
 		)
 		(pin "1"
-			(uuid "cd1bbfeb-6270-440d-9513-95b6f5859e09")
+			(uuid "6d404373-4f5d-45b3-b292-74073c3a558a")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R64")
 					(unit 1)
 				)
@@ -5416,14 +5416,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "8d26e2fb-0228-4330-b461-6979977b4715")
+			(uuid "3cd84ffa-926c-4380-9416-bb3c3cafbb23")
 		)
 		(pin "1"
-			(uuid "24a98f45-6a1d-4698-885d-aafbd20becac")
+			(uuid "ce451caa-4d15-44f6-b28d-e80fb109849e")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D17")
 					(unit 1)
 				)
@@ -5497,14 +5497,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "80eef094-1b61-4892-a3e1-33c6ff4c0b90")
+			(uuid "55cb3023-fbed-4cfc-ab03-f36bf0e14cd8")
 		)
 		(pin "1"
-			(uuid "61a005ce-363f-4bf8-8ac5-7ba57832f057")
+			(uuid "e9252849-f7d6-46ba-9a51-0d14b511f104")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D19")
 					(unit 1)
 				)
@@ -5576,14 +5576,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "3920e0d4-8b3c-4599-bc06-736c1131c846")
+			(uuid "c7866b37-38b3-41c9-b89f-9a212d085f9f")
 		)
 		(pin "2"
-			(uuid "75b530f3-ca20-49d4-8c4b-df9f5f55ce4c")
+			(uuid "95d9be9d-2033-4b62-b63d-e6e10dd7052c")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R51")
 					(unit 1)
 				)
@@ -5661,17 +5661,17 @@
 			)
 		)
 		(pin "3"
-			(uuid "8d2e4477-0633-4fc2-aa55-decbb589c3a7")
+			(uuid "88fb0dc0-f050-4c99-8573-23e0d47c8174")
 		)
 		(pin "1"
-			(uuid "d33ed881-8b47-4d09-999b-700d8c02b2e8")
+			(uuid "9304f404-3dcc-42b4-998e-b5a5bd3218db")
 		)
 		(pin "2"
-			(uuid "1524a406-e0ad-4b7e-99a3-54c80579c8bd")
+			(uuid "6bfff581-0f5a-41c8-aa87-72be53dc82fb")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q17")
 					(unit 1)
 				)
@@ -5745,14 +5745,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "47436a60-42c3-4864-a249-1de99b26f87f")
+			(uuid "9b73c74c-f3c0-473b-9f8a-344720e7c758")
 		)
 		(pin "1"
-			(uuid "6c042bd8-0aed-40fa-9c2c-27027fe7b804")
+			(uuid "a730473e-9a93-48c3-ab9b-0299ec1d06f8")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D20")
 					(unit 1)
 				)
@@ -5824,14 +5824,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "8c973588-732e-45df-b4b6-25460c0e719b")
+			(uuid "3a1ceb7a-21c1-4f67-b506-8c94ea95d96d")
 		)
 		(pin "2"
-			(uuid "dcbbb86c-03e2-4e6d-9ce2-41bf6445d071")
+			(uuid "ada4902b-dd7c-46eb-864e-3a971e16245f")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R48")
 					(unit 1)
 				)
@@ -5903,14 +5903,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "847f8a94-19c9-4f49-8c24-dac1567fef2e")
+			(uuid "58527a10-c871-4067-b246-354c212e52db")
 		)
 		(pin "2"
-			(uuid "229acf07-3cbb-41bf-b49c-be9305dc85f4")
+			(uuid "aead6f5c-af8d-4c2e-a5e0-e517edf5eeb3")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R62")
 					(unit 1)
 				)
@@ -5982,14 +5982,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "130b098e-2b7e-4c07-962f-d965aeb87fd2")
+			(uuid "8d878164-3627-4b7f-8885-9c6bdfae9ae3")
 		)
 		(pin "2"
-			(uuid "a387d608-732f-460d-a456-ebdce9a656a3")
+			(uuid "7e40d3ca-cba0-43c7-88a2-d5376e777780")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R53")
 					(unit 1)
 				)
@@ -6063,14 +6063,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "8e45337a-a017-4122-aac3-e5036e59fe23")
+			(uuid "0896d38d-98c6-406f-a0eb-c6187cbc604e")
 		)
 		(pin "1"
-			(uuid "d87e5df7-7674-4111-be77-01f6fb055ac0")
+			(uuid "113fb938-a979-4cd3-b5c4-5824950310cf")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D14")
 					(unit 1)
 				)
@@ -6142,14 +6142,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "fd9c94ed-5297-4abd-8291-a1741cf88c3a")
+			(uuid "407e4d93-568d-480a-a0c7-07dd8a978e6e")
 		)
 		(pin "2"
-			(uuid "bb621095-7393-4843-b81d-d069a71eebbb")
+			(uuid "e0011a08-412d-4ccf-a636-77b13fce02ba")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R45")
 					(unit 1)
 				)
@@ -6222,11 +6222,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "9a22e54d-0601-40e7-9536-350e2777a8de")
+			(uuid "4dbfb0ae-6405-43af-b7bc-a198d7f67052")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "#PWR018")
 					(unit 1)
 				)
@@ -6298,14 +6298,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "0aab4eac-3927-4d10-977f-e8ce742da828")
+			(uuid "4ee12a44-21c2-4a02-acb1-94f24abbcb43")
 		)
 		(pin "2"
-			(uuid "6ddca5d0-c409-4e19-b703-77b6315aafe1")
+			(uuid "045616fd-a0a6-401e-8578-1bd7ec9d0c36")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R46")
 					(unit 1)
 				)
@@ -6379,23 +6379,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "f4b1f2d7-fb8a-4daa-861a-c1f7823793e8")
+			(uuid "ce905f29-bb5f-4c83-95f8-4f325df44ece")
 		)
 		(pin "2"
-			(uuid "124a141d-6c46-457a-97af-1c1575c3ad26")
+			(uuid "3973cc5c-5062-4461-85c0-1ab0ba6a78af")
 		)
 		(pin "3"
-			(uuid "a443b4b7-52a8-4907-b741-036414d5099a")
+			(uuid "efd6b66b-35f4-4424-9408-e4fa63c2689e")
 		)
 		(pin "4"
-			(uuid "cce43a5c-9d0c-476f-bcff-83ab9d20c74f")
+			(uuid "315517c2-67f7-4171-a4b8-bc2e67433395")
 		)
 		(pin "5"
-			(uuid "aaa03977-89b0-4898-a73c-b7b508a82eac")
+			(uuid "f3d40570-60e5-488d-8ecc-0273deb2354c")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "U18")
 					(unit 1)
 				)
@@ -6467,14 +6467,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "5dd064ed-3d8a-4c36-a147-f63bbdeefb91")
+			(uuid "d8641807-9917-4bc2-b191-9943e936cb46")
 		)
 		(pin "2"
-			(uuid "e02e26f9-7a98-4933-9c13-37a6e860f7bc")
+			(uuid "ec43ad3d-fff1-4e65-b3ed-36582cc833f5")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R50")
 					(unit 1)
 				)
@@ -6551,17 +6551,17 @@
 			)
 		)
 		(pin "2"
-			(uuid "a481368a-cfca-44a3-a872-088fc1331155")
+			(uuid "bdf1a8dd-f350-4288-aa05-c0562608d9d8")
 		)
 		(pin "1"
-			(uuid "d19a8c94-47d9-4d68-aadd-5a8358933992")
+			(uuid "6e555218-0e78-46a1-bdb9-8cde678b0dcb")
 		)
 		(pin "3"
-			(uuid "7a5398e6-8b60-42e5-bcaf-fe9591815a3d")
+			(uuid "5d2ba878-a52d-4578-832b-e178c81032c1")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q14")
 					(unit 1)
 				)
@@ -6638,17 +6638,17 @@
 			)
 		)
 		(pin "3"
-			(uuid "47e49e9b-2f40-4f24-96c6-515b5f790492")
+			(uuid "f9130358-7f0b-4ed8-b925-56229728fd9a")
 		)
 		(pin "1"
-			(uuid "e0de44e2-17a5-4578-a5ea-5ac1470beea5")
+			(uuid "ffaa3542-dbe0-4e48-a88b-1e70d5e54b24")
 		)
 		(pin "2"
-			(uuid "2c192402-1512-4517-9ef6-dd4e46a555d3")
+			(uuid "1adfd33b-e941-407d-9dd9-6551e43ee884")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q11")
 					(unit 1)
 				)
@@ -6718,14 +6718,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "691344cd-460c-49d0-8930-ec440e4344da")
+			(uuid "7cc41052-da06-48c0-8bbc-663d45babe27")
 		)
 		(pin "2"
-			(uuid "6e5aa315-3509-4360-8472-c08d770a8eb7")
+			(uuid "d593bd18-d03d-407f-bb4f-e6a9e2abc60f")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R40")
 					(unit 1)
 				)
@@ -6798,20 +6798,20 @@
 			)
 		)
 		(pin "2"
-			(uuid "30042d15-d62e-459a-a9e0-918c81d40aec")
+			(uuid "391f6a3a-2b44-4022-81c3-5a962b14a917")
 		)
 		(pin "3"
-			(uuid "a0533fcf-34ef-4fe5-b10d-eb415a990219")
+			(uuid "1e7763a6-5995-4dfd-839a-fecc43d4e561")
 		)
 		(pin "4"
-			(uuid "426eed1b-a889-412c-b4ef-2911cfd26aee")
+			(uuid "a0c8c551-2189-4ebb-90d2-4210b435a5ff")
 		)
 		(pin "1"
-			(uuid "d1a5bd3f-148b-4e5b-bdb3-d1b10835311d")
+			(uuid "337c5a3f-0f9b-46ec-84fe-3d4fc381f704")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R65")
 					(unit 1)
 				)
@@ -6883,14 +6883,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "648b5147-16be-4017-9ae4-fba3cd083ee6")
+			(uuid "b7545440-5e43-41cc-b2f7-f97be594716f")
 		)
 		(pin "2"
-			(uuid "c9cd4783-05fa-4444-82ea-8b8591b29c79")
+			(uuid "1015b2b6-a0ca-4ec8-9da4-83863203d84d")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R57")
 					(unit 1)
 				)
@@ -6964,23 +6964,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "251df1c9-0d9b-4f15-97fc-9047720ee91b")
+			(uuid "80b7973c-de33-4bcf-86e4-a6c0388a2cb0")
 		)
 		(pin "2"
-			(uuid "0f6a90cc-7a4e-46bc-aa44-a1aa7bfc4fba")
+			(uuid "0958a6f7-cfa9-4140-918d-f9f99fd8baa0")
 		)
 		(pin "3"
-			(uuid "75fb4612-a67c-471e-a471-e67e017c5a13")
+			(uuid "ad292b7c-b9ec-4d2d-8f26-4d968fe682be")
 		)
 		(pin "4"
-			(uuid "afae6923-bfe5-4e5b-a86e-d1b5b9f11528")
+			(uuid "37475ada-ef71-4167-9aee-e2faf64c93eb")
 		)
 		(pin "5"
-			(uuid "a8d819a8-a4d2-44d3-bb5a-641d7bdcc895")
+			(uuid "848556b8-19db-4676-aa72-a4ce5b6a9c61")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "U19")
 					(unit 1)
 				)
@@ -7054,11 +7054,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "154b6d99-930f-45cc-b84d-c98c63385652")
+			(uuid "4d594a12-cf57-46a3-959b-9f134d59796f")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "#PWR020")
 					(unit 1)
 				)
@@ -7133,14 +7133,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "68590775-3822-4041-bd85-7e9560a4ebf0")
+			(uuid "5c7d7da4-c7b3-47dc-be6e-76aacc825abd")
 		)
 		(pin "2"
-			(uuid "0ccf69e7-97fa-44e7-9f02-0e881f34d6dd")
+			(uuid "ed9060ad-0d5a-4a68-83b9-686744c4a9aa")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "C65")
 					(unit 1)
 				)
@@ -7212,14 +7212,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "2b20863f-48a8-4fd5-a92b-b7f47127f2b3")
+			(uuid "8081b064-cad2-4ace-9ce9-13673b8dfdd1")
 		)
 		(pin "2"
-			(uuid "5f832786-7232-4a8d-b0fe-66a6d0ad25f5")
+			(uuid "4165716e-1eb4-4149-8eb3-1d5bf51a17cb")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R55")
 					(unit 1)
 				)
@@ -7291,14 +7291,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "327f4db2-950e-4969-901d-e844c5606ffb")
+			(uuid "0a9c184e-6fe3-4a3f-9def-1254986b1777")
 		)
 		(pin "2"
-			(uuid "1d1aa31f-bf45-4995-86c5-e73c1285c71e")
+			(uuid "f5abe3f5-3721-49a6-ad8f-565a9a5f820e")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R58")
 					(unit 1)
 				)
@@ -7370,14 +7370,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "e141e02c-fc22-4e46-8801-cf2c79c386a0")
+			(uuid "7d8d3cc8-29f8-4531-9e27-c2fe2f712809")
 		)
 		(pin "2"
-			(uuid "0d276d34-a6cc-48f0-b89b-e4e7b25c992e")
+			(uuid "6b2f092d-d69e-41e2-8783-6e70e0c2df83")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R47")
 					(unit 1)
 				)
@@ -7451,14 +7451,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "59f45e66-7135-4104-a38a-4fa1158ac7bd")
+			(uuid "2efa321b-5640-42ba-8c7a-ae88960643ad")
 		)
 		(pin "1"
-			(uuid "579ac081-a495-4b7f-9303-97343a2aac1f")
+			(uuid "f50facec-88b8-4e22-83ff-f22cca9b3496")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D18")
 					(unit 1)
 				)
@@ -7530,14 +7530,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "e1df3f8b-3aad-4cdb-8d0e-177c5519c4b1")
+			(uuid "51e5dd9b-b3ce-488c-b0fc-ad6650a1c83f")
 		)
 		(pin "2"
-			(uuid "2dca4fb4-f102-497d-8f90-f56832d0d9f7")
+			(uuid "09aa0885-b2f9-4d74-b7dd-c716bfad6b0a")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R49")
 					(unit 1)
 				)
@@ -7610,32 +7610,32 @@
 			)
 		)
 		(pin "3"
-			(uuid "98e00142-4ece-41d6-b2cd-bd112ff842e3")
+			(uuid "abc06139-7b50-4e18-86c3-a076c99bdedb")
 		)
 		(pin "8"
-			(uuid "92e9c778-1ad3-4057-9006-3b60b56d8ebd")
+			(uuid "6c81d6c7-d1cd-4b5e-93a7-b3311fb7631c")
 		)
 		(pin "1"
-			(uuid "578627f6-dc2a-4821-bc39-fa5d27190329")
+			(uuid "c12f8974-0bd4-4faf-b48e-1cc6d5d6811e")
 		)
 		(pin "2"
-			(uuid "6849b69d-effd-4848-a16b-d83a53c40b7b")
+			(uuid "8e8efb39-0709-4a33-b1ce-1d16399fca25")
 		)
 		(pin "4"
-			(uuid "c1ff3295-93db-4e54-ae02-12cfd6ff76e8")
+			(uuid "8ff435df-c3a2-4696-bb7f-89f09f3069e1")
 		)
 		(pin "5"
-			(uuid "f9968eb2-3549-4ec5-b99b-b8d4a215153d")
+			(uuid "c7f00c86-408d-477c-a45b-db73f455508e")
 		)
 		(pin "6"
-			(uuid "c605335c-f657-487c-b6d0-20d68a2ff7ca")
+			(uuid "3509f7db-a1c5-4135-a722-e6d531b224df")
 		)
 		(pin "7"
-			(uuid "235ae8fc-7de8-44e1-a058-20f835ea1a00")
+			(uuid "dc53d5df-20c8-4b53-ad64-458a4852da71")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "U21")
 					(unit 1)
 				)
@@ -7707,14 +7707,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "371d28aa-d177-4ecc-985d-a8d0ea7c8ef5")
+			(uuid "3c7ba84e-0c8c-4af2-a442-fffb16465d56")
 		)
 		(pin "2"
-			(uuid "8517c860-c4a5-405f-a584-242a0bca4bec")
+			(uuid "a8f3392e-046a-4483-a861-490604d764b0")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R60")
 					(unit 1)
 				)
@@ -7787,20 +7787,20 @@
 			)
 		)
 		(pin "2"
-			(uuid "d17c1a75-b78e-44a0-b9d9-6cf964d78366")
+			(uuid "b659f23e-f7f2-4741-9e26-2f24fa62f21f")
 		)
 		(pin "3"
-			(uuid "d1af0763-3762-4a07-875f-a1ea004a36c9")
+			(uuid "3db7b8dd-27c0-4ce5-81b1-bd9dfbc186ff")
 		)
 		(pin "4"
-			(uuid "1f9fc2ef-f8f9-4c27-9371-eb5d0c22ce6d")
+			(uuid "c49a2891-6d9f-4742-ab9f-0cfdb2535d61")
 		)
 		(pin "1"
-			(uuid "0bf1db6e-5716-4f52-945f-f5fe246f2bac")
+			(uuid "3023ab47-4563-4312-90a4-be4ff6d21190")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R63")
 					(unit 1)
 				)
@@ -7877,17 +7877,17 @@
 			)
 		)
 		(pin "3"
-			(uuid "bcf49e02-cb5b-4d24-bb6e-4a42e3576362")
+			(uuid "8e759ed7-d7c9-47c5-9663-4812019dab2e")
 		)
 		(pin "1"
-			(uuid "763dccf3-92e1-46c9-ae51-b7879cd5922a")
+			(uuid "63cd5f97-0e90-42d8-9b83-60a25b6d5e64")
 		)
 		(pin "2"
-			(uuid "120dc7ae-a1af-44bb-8694-746df53a7e8a")
+			(uuid "cba31482-1f21-415a-86cb-bbafc2bdaf9a")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q13")
 					(unit 1)
 				)
@@ -7961,14 +7961,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "7a15d61b-176d-4411-aa77-8b3e204d240b")
+			(uuid "7c443c15-2663-4572-a667-1ddddf3bf022")
 		)
 		(pin "1"
-			(uuid "151de353-fbc7-4f07-84b2-9cec6b1ed6ca")
+			(uuid "8f5a4d39-25e9-4731-aee4-d9797c3faaca")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D21")
 					(unit 1)
 				)
@@ -8046,17 +8046,17 @@
 			)
 		)
 		(pin "2"
-			(uuid "5deac600-fe5d-41de-a32a-a8ebcf36ba6c")
+			(uuid "0075668d-86c5-48c0-8fa7-55de68738789")
 		)
 		(pin "1"
-			(uuid "3e73d35c-fc34-4f4e-a8f1-3b5eee9eaa97")
+			(uuid "96c9f529-c706-43e9-9fc6-f941af8a0cc0")
 		)
 		(pin "3"
-			(uuid "f6c532bf-3276-48f7-a387-31a4660e8d02")
+			(uuid "c973915e-8eb0-4412-9fb4-63e28d72f3c6")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q16")
 					(unit 1)
 				)
@@ -8129,32 +8129,32 @@
 			)
 		)
 		(pin "3"
-			(uuid "28bef0da-964b-4409-ad16-3fd596439c65")
+			(uuid "00f27609-6460-4dec-a523-417ac8dc841a")
 		)
 		(pin "8"
-			(uuid "52de4899-75ae-49d2-a680-37ba43ceff0d")
+			(uuid "6fb28adc-6ad5-4c75-bf1d-9c776869f9bb")
 		)
 		(pin "1"
-			(uuid "92628d73-16d6-4da5-b7b2-5b0b5bb4e765")
+			(uuid "078b2c12-049e-4647-a026-49c10fb1df53")
 		)
 		(pin "2"
-			(uuid "a7a72006-0210-4568-b398-32f02fdf184e")
+			(uuid "f2b53c94-619f-4566-a14f-f25e6474f73f")
 		)
 		(pin "4"
-			(uuid "322dd83a-7b2d-4dff-a6e1-5fc6fe1d845f")
+			(uuid "3a1bdcee-315e-4e5a-a1af-8244dc63b997")
 		)
 		(pin "5"
-			(uuid "f0654560-375a-45e9-84b9-52570ea92d9d")
+			(uuid "543f2f46-7f56-401d-a0cd-2119438ebd8d")
 		)
 		(pin "6"
-			(uuid "6c9e441e-6bc5-4842-9dd2-a12b039e8ce9")
+			(uuid "b0333c2d-6a05-474b-af7b-4b5502593bf1")
 		)
 		(pin "7"
-			(uuid "fddce578-e681-486b-ad22-72be9413ae3b")
+			(uuid "7befc9de-45a8-4d3e-a255-74b0e6f2c7ed")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "U20")
 					(unit 1)
 				)
@@ -8228,14 +8228,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "08d07684-b69b-45d5-bdf3-756dd1ac13ee")
+			(uuid "8e053a10-cb71-4f9f-8374-c797dd7c9d57")
 		)
 		(pin "1"
-			(uuid "9c972427-5587-4993-a1b1-dcfb87d98adb")
+			(uuid "004addd5-abef-48d2-83d1-32a22d67bb32")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D15")
 					(unit 1)
 				)
@@ -8309,23 +8309,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "3133ed1f-04c1-4f72-ab72-d7fcb5f56873")
+			(uuid "522222bf-fa8e-48eb-acf0-fc42a04cf93e")
 		)
 		(pin "2"
-			(uuid "96463a57-1b50-4420-bf60-29774faf4048")
+			(uuid "06f2d8bb-3ff6-43ad-8509-10ad54d38051")
 		)
 		(pin "3"
-			(uuid "ae0ab763-ca63-4cfe-9b6d-501ccea58321")
+			(uuid "bfda17f5-fb71-4f80-8257-8b59ca5b2e23")
 		)
 		(pin "4"
-			(uuid "09d178ca-43b5-441c-b7cc-bdf962774c21")
+			(uuid "5e2f6996-65a7-4c82-9d1f-b23d1ed30d98")
 		)
 		(pin "5"
-			(uuid "da6360e7-3c86-4449-9751-3888af8ce16e")
+			(uuid "3b20822c-1f71-41a6-b799-40c97a3cd1f5")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "U17")
 					(unit 1)
 				)
@@ -8397,14 +8397,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "44a88217-acc8-41be-8afb-02c2ba2f5c0c")
+			(uuid "19e5d46b-20de-49f7-93eb-fc184ec73641")
 		)
 		(pin "2"
-			(uuid "978952af-a44e-4068-9115-dfe3d5693a54")
+			(uuid "786b52cf-2985-4d66-9c55-406e7d07a856")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R59")
 					(unit 1)
 				)
@@ -8478,11 +8478,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "6223c727-af8d-4a51-8602-67a4afe3711b")
+			(uuid "817f41c8-a3a4-4b9d-90cd-79fff0087a4d")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "#PWR019")
 					(unit 1)
 				)
@@ -8557,14 +8557,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "6fe806e5-aac1-4fc5-b61c-b1476beb159e")
+			(uuid "1f1bbec2-5a7e-41ab-9fd8-bf3b7634de2e")
 		)
 		(pin "2"
-			(uuid "60198072-d13a-444f-aebc-a91c95fdc473")
+			(uuid "a0214fb9-415e-4c5f-a7f6-351c13c508ff")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "C64")
 					(unit 1)
 				)
@@ -8639,14 +8639,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "ce7e92b3-9762-4fa8-bdbd-4e04fbbe6eb7")
+			(uuid "c6d8fd90-775f-4dff-b08c-8b07ea3bf456")
 		)
 		(pin "1"
-			(uuid "73ee6e3c-459c-463e-8589-bd1600955f82")
+			(uuid "d16acc8f-5326-4d9b-8d40-ac049fc23f03")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R41")
 					(unit 1)
 				)
@@ -8717,14 +8717,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "6d999174-6b15-469b-8a24-4f528273ff27")
+			(uuid "9811d6fa-e1a8-4474-a09e-dc0b0445650e")
 		)
 		(pin "2"
-			(uuid "27df3098-3998-4a1f-97ef-19448eae25aa")
+			(uuid "152e0b08-0290-4ea3-8cc7-0b55d1e499b9")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R44")
 					(unit 1)
 				)
@@ -8801,17 +8801,17 @@
 			)
 		)
 		(pin "2"
-			(uuid "1579c5e2-3575-4e66-a273-00a1383f0762")
+			(uuid "857dc19e-bf78-4051-8add-7bb7445b4a01")
 		)
 		(pin "1"
-			(uuid "119f973d-e9fe-4e02-9a3b-e59c21317578")
+			(uuid "fa13ac0c-a9c1-4afa-a963-348cdf5e04cb")
 		)
 		(pin "3"
-			(uuid "6c61eb2f-eff9-4e18-a94d-d619b137b9f8")
+			(uuid "8042f694-e62b-4770-b79c-a98144f55d1f")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q12")
 					(unit 1)
 				)
@@ -8884,14 +8884,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "04993e84-468c-413d-a8ee-24c7aada467a")
+			(uuid "0d4e255b-0ae3-42b3-83a8-10a7b6ed8393")
 		)
 		(pin "2"
-			(uuid "d7d52b57-a43b-4dda-8390-1dfb92ae392b")
+			(uuid "2a3f2c65-0fbf-4be2-8710-cb321a4f4c61")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R43")
 					(unit 1)
 				)
@@ -8964,20 +8964,20 @@
 			)
 		)
 		(pin "2"
-			(uuid "29f03884-9e46-4d62-bcce-314fe09d58e4")
+			(uuid "d12ea63f-f24f-4be4-8cdf-e37808ac073d")
 		)
 		(pin "3"
-			(uuid "9b76b389-547d-4d65-81f5-67c74bf20a38")
+			(uuid "c1eec167-56a6-484b-9668-c5513dba6b86")
 		)
 		(pin "4"
-			(uuid "06167fdb-e33e-4e8f-a65b-f6a0628b9795")
+			(uuid "b06a67e5-db6b-4f3c-9535-a36bde459702")
 		)
 		(pin "1"
-			(uuid "3f98bc8e-da49-4a05-9c12-f161e30191a4")
+			(uuid "293bfe07-7a8b-4aa3-b373-e0c7474a7cca")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R61")
 					(unit 1)
 				)
@@ -9055,17 +9055,17 @@
 			)
 		)
 		(pin "2"
-			(uuid "307208a4-a4db-46b6-87ae-8b9bc3c8bde2")
+			(uuid "d26e6aa4-ac2b-4d0f-99e0-397a0ecb725d")
 		)
 		(pin "1"
-			(uuid "8cc69dc4-a7fe-4697-824d-dc2ba2dc7956")
+			(uuid "0f4c684a-7b96-47ff-9c19-375bb674de94")
 		)
 		(pin "3"
-			(uuid "e4621e97-d25f-4903-8306-2c0bd0c3e050")
+			(uuid "1a3c6a62-2ca6-46a2-afd2-c73e978d592c")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q18")
 					(unit 1)
 				)
@@ -9140,14 +9140,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "56d8af56-de1a-4588-b880-1f150df088bf")
+			(uuid "5f002d0d-0208-4787-b7b1-3186ce1b0ca4")
 		)
 		(pin "1"
-			(uuid "048ca467-6340-4f47-ad6f-5ccbb3f14155")
+			(uuid "2815165b-f38c-4fe9-8c2c-06cb13d3f404")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "D16")
 					(unit 1)
 				)
@@ -9225,17 +9225,17 @@
 			)
 		)
 		(pin "3"
-			(uuid "1ca97ce4-c767-4954-80cd-d2e2219610cc")
+			(uuid "54aa1709-f323-47f4-bccf-8814148bdf5b")
 		)
 		(pin "1"
-			(uuid "429c8095-cdab-48e2-9dd8-9f350415f0b1")
+			(uuid "1b181a07-f353-4ce4-a2b0-71a14afbaf5d")
 		)
 		(pin "2"
-			(uuid "d574a308-59fe-417c-94c9-5e76dde56b81")
+			(uuid "33908523-c6a3-4da9-beef-fa0cd6655ffa")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "Q15")
 					(unit 1)
 				)
@@ -9310,14 +9310,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "179c3cf4-c78e-45b1-8fb3-f8d7cf53d6ca")
+			(uuid "17ed88b1-7ef6-4336-9647-75af606a8461")
 		)
 		(pin "2"
-			(uuid "055edb34-30e3-4ddb-8a26-a562abd8e694")
+			(uuid "91041b04-f5f4-4562-9264-17036452c336")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R42")
 					(unit 1)
 				)
@@ -9389,14 +9389,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "3e433d73-c481-4196-8ea5-7336746cdee5")
+			(uuid "86e3a4fd-cd2f-4241-86dc-14d2b955cec2")
 		)
 		(pin "2"
-			(uuid "0466124b-70e8-4a5e-9375-4d7403ba5002")
+			(uuid "5555236a-ba47-4259-9b44-72563d3072f4")
 		)
 		(instances
 			(project "laser_driver_v3"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06f22b47-dee6-4fbe-8e7e-6abe24fabe38"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/3056e0f1-6b1f-4e3d-a620-28c4febe4cf4"
 					(reference "R52")
 					(unit 1)
 				)

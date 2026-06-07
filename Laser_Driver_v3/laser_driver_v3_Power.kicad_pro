@@ -69,13 +69,7 @@
           "thermal_relief_spoke_width": 0.5
         }
       },
-      "diff_pair_dimensions": [
-        {
-          "gap": 0.0,
-          "via_gap": 0.0,
-          "width": 0.0
-        }
-      ],
+      "diff_pair_dimensions": [],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -146,7 +140,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.2,
+        "min_clearance": 0.0,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -158,7 +152,7 @@
         "min_silk_clearance": 0.0,
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
-        "min_through_hole_diameter": 0.4,
+        "min_through_hole_diameter": 0.3,
         "min_track_width": 0.2,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
@@ -209,16 +203,7 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [
-        0.0,
-        0.2,
-        0.25,
-        0.4,
-        0.8,
-        1.5,
-        1.5,
-        2.5
-      ],
+      "track_widths": [],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -245,12 +230,7 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [
-        {
-          "diameter": 0.0,
-          "drill": 0.0
-        }
-      ],
+      "via_dimensions": [],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -508,7 +488,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "laser_driver_v3.kicad_pro",
+    "filename": "laser_driver_v3_Power.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -531,83 +511,6 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
-      },
-      {
-        "clearance": 0.5,
-        "name": "HV_Rail",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 1.5,
-        "tuning_profile": "",
-        "via_diameter": 1.6,
-        "via_drill": 1.0
-      },
-      {
-        "clearance": 0.3,
-        "name": "Laser_Drive",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 4,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.4,
-        "tuning_profile": "",
-        "via_diameter": 1.0,
-        "via_drill": 0.6
-      },
-      {
-        "clearance": 8.0,
-        "name": "Mains",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 1.5,
-        "tuning_profile": "",
-        "via_diameter": 1.8,
-        "via_drill": 1.2
-      },
-      {
-        "clearance": 0.25,
-        "name": "Power",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 3,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.8,
-        "tuning_profile": "",
-        "via_diameter": 1.3,
-        "via_drill": 1.0
-      },
-      {
-        "clearance": 0.3,
-        "name": "Sensitive",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 6,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
-        "tuning_profile": "",
-        "via_diameter": 0.8,
-        "via_drill": 0.4
-      },
-      {
-        "clearance": 0.2,
-        "name": "Signal",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 5,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.25,
-        "tuning_profile": "",
-        "via_diameter": 0.9,
-        "via_drill": 0.5
-      },
-      {
-        "clearance": 0.4,
-        "name": "TEC_Power",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 2,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 2.5,
-        "tuning_profile": "",
-        "via_diameter": 1.6,
-        "via_drill": 1.0
       }
     ],
     "meta": {
@@ -615,236 +518,7 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": [
-      {
-        "netclass": "Mains",
-        "pattern": "+12Vac"
-      },
-      {
-        "netclass": "Mains",
-        "pattern": "-12Vac"
-      },
-      {
-        "netclass": "Mains",
-        "pattern": "0Vac"
-      },
-      {
-        "netclass": "Mains",
-        "pattern": "120Vac"
-      },
-      {
-        "netclass": "Mains",
-        "pattern": "Earth"
-      },
-      {
-        "netclass": "HV_Rail",
-        "pattern": "+18V"
-      },
-      {
-        "netclass": "HV_Rail",
-        "pattern": "-18V"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "TEC1_BTF_P"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "TEC2_BTF_P"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "TEC1_BTF_N"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "TEC2_BTF_N"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "+6V_TEC"
-      },
-      {
-        "netclass": "TEC_Power",
-        "pattern": "-6V_TEC"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "+15V"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "-15V"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "+5V_LASER"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "5V_DAC"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "5Vref"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "1V8"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "+6V_TEC"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "-6V_TEC"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "LASER1_A"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "LASER1_K"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "LASER2_A"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "LASER_K"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "BTF1_LASER"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "BTF1_LASER_K"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "BTF2_LASER"
-      },
-      {
-        "netclass": "Laser_Drive",
-        "pattern": "BTF2_LASER_K"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "MOSI_3V3"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "SCK_3V3"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "DDS1_FSYNC"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "DDS2_FSYNC"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "MCU_SCL"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "MCU_SDA"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "VOUTA"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "VOUTB"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "VOUTC"
-      },
-      {
-        "netclass": "Signal",
-        "pattern": "VOUTD"
-      },
-      {
-        "netclass": "Default",
-        "pattern": "DITH1_SUM"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "DITH2_SUM"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "LAS1_SENSE_P"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "LAS1_SENSE_N"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "LAS2_SENSE_P"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "LAS2_SENSE_N"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "TEC1_SENSE_P"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "TEC1_SENSE_N"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "TEC2_SENSE_P"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "TEC2_SENSE_N"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "MPD1_K"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "MPD2_K"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "MPD1_MON"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "MPD2_MON"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "PD1_MON"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "PD2_MON"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "NTC1_A"
-      },
-      {
-        "netclass": "Sensitive",
-        "pattern": "NTC2_A"
-      }
-    ]
+    "netclass_patterns": []
   },
   "pcbnew": {
     "last_paths": {
@@ -884,15 +558,33 @@
           "show": true
         },
         {
+          "group_by": false,
+          "label": "Qty",
+          "name": "${QUANTITY}",
+          "show": true
+        },
+        {
           "group_by": true,
           "label": "Value",
           "name": "Value",
           "show": true
         },
         {
-          "group_by": false,
-          "label": "Datasheet",
-          "name": "Datasheet",
+          "group_by": true,
+          "label": "DNP",
+          "name": "${DNP}",
+          "show": true
+        },
+        {
+          "group_by": true,
+          "label": "Exclude from BOM",
+          "name": "${EXCLUDE_FROM_BOM}",
+          "show": true
+        },
+        {
+          "group_by": true,
+          "label": "Exclude from Board",
+          "name": "${EXCLUDE_FROM_BOARD}",
           "show": true
         },
         {
@@ -903,147 +595,15 @@
         },
         {
           "group_by": false,
-          "label": "Qty",
-          "name": "${QUANTITY}",
+          "label": "Datasheet",
+          "name": "Datasheet",
           "show": true
-        },
-        {
-          "group_by": true,
-          "label": "DNP",
-          "name": "${DNP}",
-          "show": true
-        },
-        {
-          "group_by": false,
-          "label": "Exclude from Board",
-          "name": "${EXCLUDE_FROM_BOARD}",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Exclude from BOM",
-          "name": "${EXCLUDE_FROM_BOM}",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Pins",
-          "name": "Sim.Pins",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Device",
-          "name": "Sim.Device",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Description",
-          "name": "Description",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "#",
-          "name": "${ITEM_NUMBER}",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MF",
-          "name": "MF",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MP",
-          "name": "MP",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Package",
-          "name": "Package",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "PARTREV",
-          "name": "PARTREV",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Price",
-          "name": "Price",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Purchase-URL",
-          "name": "Purchase-URL",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "DUPLICATE",
-          "name": "DUPLICATE",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Check_prices",
-          "name": "Check_prices",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "SnapEDA_Link",
-          "name": "SnapEDA_Link",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "SNAPEDA_PN",
-          "name": "SNAPEDA_PN",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "STANDARD",
-          "name": "STANDARD",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "TEENSY",
-          "name": "TEENSY",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Availability",
-          "name": "Availability",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MANUFACTURER",
-          "name": "MANUFACTURER",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MAXIMUM_PACKAGE_HEIGHT",
-          "name": "MAXIMUM_PACKAGE_HEIGHT",
-          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
-      "include_excluded_from_bom": false,
-      "name": "",
+      "include_excluded_from_bom": true,
+      "name": "Default Editing",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -1076,14 +636,6 @@
     "meta": {
       "version": 1
     },
-    "ngspice": {
-      "fix_include_paths": true,
-      "meta": {
-        "version": 0
-      },
-      "model_mode": 4,
-      "workbook_filename": ""
-    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "reuse_designators": true,
@@ -1091,50 +643,46 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "laser_driver_v3.kicad_sch",
-        "name": "Root",
+        "filename": "laser_driver_v3_Power.kicad_sch",
+        "name": "laser_driver_v3_Power",
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "U1,U47",
+    "used_designators": "J8-12",
     "variants": []
   },
   "sheets": [
     [
       "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-      "Root"
+      "laser_driver_v3_Power"
     ],
     [
-      "3056e0f1-6b1f-4e3d-a620-28c4febe4cf4",
-      "TEC H-Bridges"
+      "06a154d7-731d-44d9-be1c-56d316ca362e",
+      "Mains to +-18V"
     ],
     [
-      "e4a8b7d8-d294-4c89-ba57-bde3505f7415",
-      "Laser Drivers"
+      "66b4928b-0f98-4282-b6fa-f46162bb9680",
+      "5Vref"
     ],
     [
-      "e2f6689f-2746-4fd7-aa4a-0128f1e05d63",
-      "Readback"
+      "8f1d8420-6d65-4b14-9d89-baaedfa51091",
+      "3p3V and 1p8V"
     ],
     [
-      "e4d7b089-62e9-414f-b4cc-abd1480c07cf",
-      "Laser Control"
+      "9e8b43e2-3f50-408f-92ae-40d797615721",
+      "+-15V"
     ],
     [
-      "4858802c-cb9b-4721-97ea-d5e718762850",
-      "Clock"
+      "1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d",
+      "+-6V TEC"
     ],
     [
-      "5a800bdf-c78b-4bfb-a7c6-d84c2550e565",
-      "PhotoDiodes"
+      "4c904a9b-f13b-4762-ac7d-2743bb4f9a22",
+      "5V Laser"
     ],
     [
-      "20b1c7a7-d05f-4e99-ab1a-7c26c0a8ad66",
-      "Teensy"
-    ],
-    [
-      "e1449f4d-dad3-47f6-967e-c2fd4c822347",
-      "PhaseRef"
+      "5e81dcd4-9b1b-47dc-9619-b54132a8671e",
+      "pm5V"
     ]
   ],
   "text_variables": {},
