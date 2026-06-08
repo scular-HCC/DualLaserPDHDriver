@@ -5,265 +5,6 @@
 	(uuid "5365321a-08de-4684-a53b-218d659c9e20")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector:Screw_Terminal_01x03"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "J"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Screw_Terminal_01x03"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "screw terminal"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "TerminalBlock*:*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "Screw_Terminal_01x03_1_1"
-				(rectangle
-					(start -1.27 3.81)
-					(end 1.27 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.5334 2.8702) (xy 0.3302 2.032)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.5334 0.3302) (xy 0.3302 -0.508)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.5334 -2.2098) (xy 0.3302 -3.048)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.3556 3.048) (xy 0.508 2.2098)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.3556 0.508) (xy 0.508 -0.3302)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.3556 -2.032) (xy 0.508 -2.8702)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 2.54)
-					(radius 0.635)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 0)
-					(radius 0.635)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 -2.54)
-					(radius 0.635)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 2.54 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:C"
 			(pin_names
 				(offset 0.254)
@@ -4281,7 +4022,7 @@
 	)
 	(text "Use Phoenix Contact MSTB for going between power and main board.\nMSTB 2,5/3-G-5,08 and MSTB 2,5/6-G-5,08\nand\nMSTB 2,5/3-STF-5,08 and MSTB 2,5/6-STF-5,08\n6 position needed for +/-6V"
 		(exclude_from_sim no)
-		(at 244.602 77.47 0)
+		(at 124.206 -8.636 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4354,12 +4095,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "079ef140-8b4c-4f1c-b789-f19809441854")
-	)
-	(junction
-		(at 264.16 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "12957256-3a65-4202-a05b-ff9a88bf5dd9")
 	)
 	(junction
 		(at 156.21 55.88)
@@ -4584,12 +4319,6 @@
 		(uuid "9abefa33-213e-49c2-832e-9d437588e6ca")
 	)
 	(junction
-		(at 265.43 116.84)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a33dabf8-1d93-4e15-afee-68e3b7c2b50d")
-	)
-	(junction
 		(at 170.18 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4716,12 +4445,6 @@
 		(uuid "ea6a1ac8-13c1-4ec0-8279-8e4cab9caf12")
 	)
 	(junction
-		(at 269.24 128.27)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f268f8af-1b13-4f3a-b25b-41c258a8e1e5")
-	)
-	(junction
 		(at 78.74 100.33)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4795,7 +4518,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 128.27) (xy 269.24 128.27)
+			(xy 248.92 128.27) (xy 271.78 128.27)
 		)
 		(stroke
 			(width 0)
@@ -4915,16 +4638,6 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 157.48) (xy 264.16 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "140eddd5-fc59-4374-8f2d-e98aa1c01c1c")
-	)
-	(wire
-		(pts
 			(xy 176.53 140.97) (xy 180.34 140.97)
 		)
 		(stroke
@@ -4972,16 +4685,6 @@
 			(type default)
 		)
 		(uuid "1b6e5486-e1c9-46a8-9c3b-5ff45e466856")
-	)
-	(wire
-		(pts
-			(xy 265.43 121.92) (xy 265.43 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1c6ad51a-955a-43c5-83a2-115c2a63b5d1")
 	)
 	(wire
 		(pts
@@ -5255,16 +4958,6 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 151.13) (xy 264.16 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "40b0e6b9-5daa-47cf-b48e-1a7957edba02")
-	)
-	(wire
-		(pts
 			(xy 187.96 38.1) (xy 187.96 44.45)
 		)
 		(stroke
@@ -5385,16 +5078,6 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 135.89) (xy 269.24 128.27)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4bcd156a-54ca-47fb-b1e7-e94b2f1485a9")
-	)
-	(wire
-		(pts
 			(xy 170.18 38.1) (xy 187.96 38.1)
 		)
 		(stroke
@@ -5405,7 +5088,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 116.84) (xy 265.43 116.84)
+			(xy 248.92 116.84) (xy 269.24 116.84)
 		)
 		(stroke
 			(width 0)
@@ -5605,16 +5288,6 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 133.35) (xy 276.86 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6c7bbeb0-e965-40f9-9b1a-35bac48d0731")
-	)
-	(wire
-		(pts
 			(xy 220.98 157.48) (xy 236.22 157.48)
 		)
 		(stroke
@@ -5655,7 +5328,7 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 157.48) (xy 266.7 157.48)
+			(xy 248.92 157.48) (xy 266.7 157.48)
 		)
 		(stroke
 			(width 0)
@@ -5672,16 +5345,6 @@
 			(type default)
 		)
 		(uuid "73f4ce87-305c-4453-91df-798b193585fe")
-	)
-	(wire
-		(pts
-			(xy 265.43 116.84) (xy 269.24 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7addbabb-063c-4b10-9efb-3013bca890e3")
 	)
 	(wire
 		(pts
@@ -5805,16 +5468,6 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 135.89) (xy 269.24 135.89)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "89561c75-da6c-445d-bcdc-149e17819384")
-	)
-	(wire
-		(pts
 			(xy 138.43 25.4) (xy 138.43 34.29)
 		)
 		(stroke
@@ -5825,16 +5478,6 @@
 	)
 	(wire
 		(pts
-			(xy 279.4 121.92) (xy 265.43 121.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8eceaf75-fca6-4a76-87d6-8d335e04a7b9")
-	)
-	(wire
-		(pts
 			(xy 86.36 140.97) (xy 86.36 151.13)
 		)
 		(stroke
@@ -5842,16 +5485,6 @@
 			(type default)
 		)
 		(uuid "8f9be76f-4810-470f-83a2-e049b4190bbc")
-	)
-	(wire
-		(pts
-			(xy 276.86 130.81) (xy 279.4 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "90485457-567b-48c0-8b7c-5919851f3efe")
 	)
 	(wire
 		(pts
@@ -5945,16 +5578,6 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 128.27) (xy 271.78 128.27)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9f7b1a87-3533-4f07-9231-961b5d48e419")
-	)
-	(wire
-		(pts
 			(xy 187.96 36.83) (xy 187.96 38.1)
 		)
 		(stroke
@@ -5962,16 +5585,6 @@
 			(type default)
 		)
 		(uuid "a02aea83-7eea-4b46-bef6-0c1a0be7549c")
-	)
-	(wire
-		(pts
-			(xy 276.86 138.43) (xy 270.51 138.43)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a033d195-d43a-4587-8e32-5fecd41f1089")
 	)
 	(wire
 		(pts
@@ -6135,16 +5748,6 @@
 	)
 	(wire
 		(pts
-			(xy 270.51 151.13) (xy 264.16 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b325b847-868d-4eb4-b089-29f09ed7b1a9")
-	)
-	(wire
-		(pts
 			(xy 156.21 128.27) (xy 208.28 128.27)
 		)
 		(stroke
@@ -6222,16 +5825,6 @@
 			(type default)
 		)
 		(uuid "bbc37dbc-3f87-4b96-88e8-ac2c65a20240")
-	)
-	(wire
-		(pts
-			(xy 270.51 138.43) (xy 270.51 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bd27cb89-b621-441a-a399-88856a043d61")
 	)
 	(wire
 		(pts
@@ -6542,16 +6135,6 @@
 			(type default)
 		)
 		(uuid "ea164e5a-32e8-474d-a372-4a65836beb00")
-	)
-	(wire
-		(pts
-			(xy 279.4 130.81) (xy 279.4 121.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ea382162-d097-41db-8f3a-aee9aa14a5d8")
 	)
 	(wire
 		(pts
@@ -8025,7 +7608,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_THT:R_Axial_Power_L38.0mm_W9.0mm_P45.72mm"
 			(at 127 57.658 90)
 			(hide yes)
 			(show_name no)
@@ -8234,90 +7817,6 @@
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
 					(reference "R33")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x03")
-		(at 281.94 135.89 0)
-		(mirror x)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "491a1f19-696d-4a04-9070-dcdabb064eda")
-		(property "Reference" "J10"
-			(at 282.194 129.794 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x03"
-			(at 281.94 129.54 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal"
-			(at 281.94 135.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 281.94 135.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 281.94 135.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "33fa6375-d109-4fc2-aced-009e5540dcc3")
-		)
-		(pin "2"
-			(uuid "5ed50bcc-9224-4122-8f5b-deb0584895fa")
-		)
-		(pin "3"
-			(uuid "1a2328ae-e291-456f-8b1d-77cd1e17bb6b")
-		)
-		(instances
-			(project "laser_driver_v3_Power"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d"
-					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -9498,7 +8997,7 @@
 				)
 			)
 		)
-		(property "Value" "KBPC1501W"
+		(property "Value" "GBU1506"
 			(at 34.036 45.974 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9508,7 +9007,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:Diode_Bridge_GeneSiC_KBPC_W"
+		(property "Footprint" "Diode_THT:Diode_Bridge_Vishay_GBU"
 			(at 45.72 64.77 0)
 			(hide yes)
 			(show_name no)
@@ -9519,7 +9018,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.diodemodule.com/bridge-rectifier/kbpc/kbpc1501t.pdf"
+		(property "Datasheet" ""
 			(at 45.466 68.072 0)
 			(hide yes)
 			(show_name no)
@@ -10688,7 +10187,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_THT:R_Axial_Power_L38.0mm_W9.0mm_P45.72mm"
 			(at 127 27.178 90)
 			(hide yes)
 			(show_name no)
@@ -10846,7 +10345,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder"
 			(at 177.8 27.178 90)
 			(hide yes)
 			(show_name no)

@@ -312,6 +312,52 @@
 		)
 	)
 	(sheet
+		(at 66.04 101.6)
+		(size 22.86 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "95c9f2bc-5f61-41c2-a204-afd07f26a3be")
+		(property "Sheetname" "PowerConnectorOut"
+			(at 66.04 100.8884 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PowerConnector.kicad_sch"
+			(at 66.04 127.5846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 22.86 59.69)
 		(size 24.13 22.86)
 		(exclude_from_sim no)
