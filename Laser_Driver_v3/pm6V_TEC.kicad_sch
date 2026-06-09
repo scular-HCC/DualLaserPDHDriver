@@ -10806,5 +10806,21 @@
 				)
 			)
 		)
+	)	(label "TEC_RAW+"
+		(at 53.34 49.53 0)
+		(effects
+			(font (size 1.27 1.27))
+			(justify left bottom)
+		)
+		(uuid "f4d2f93d-a95c-4eba-bda3-f71a8f985ade")
 	)
+	(label "TEC_RAW-"
+		(at 38.1 49.53 0)
+		(effects
+			(font (size 1.27 1.27))
+			(justify left bottom)
+		)
+		(uuid "1a4e96a7-e991-46ca-8bea-d760a2df5978")
+	)
+
 )
