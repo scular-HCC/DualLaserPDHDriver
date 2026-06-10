@@ -587,7 +587,7 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U7"
+			(property "Reference" "U6"
 				(at 0 6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -607,7 +607,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Package_SO:Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm_ThermalVias"
+			(property "Footprint" "Package_SO:MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm_ThermalVias"
 				(at -80 22 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -834,6 +834,25 @@
 						)
 					)
 					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 6.35 -1.27 180)
+					(length 2.54)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3583,6 +3602,9 @@
 		)
 		(pin "9"
 			(uuid "b822f0d7-7ae3-428c-a32b-197e93c1923f")
+		)
+		(pin "13"
+			(uuid "07701a61-f650-4157-b450-e01ac13a24a3")
 		)
 		(instances
 			(project "laser_driver_v3_Power"

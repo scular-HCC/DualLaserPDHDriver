@@ -6196,6 +6196,26 @@
 		)
 		(uuid "fd21098b-d333-4e83-9b6d-3ca55770930f")
 	)
+	(label "TEC_RAW-"
+		(at 38.1 49.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1a4e96a7-e991-46ca-8bea-d760a2df5978")
+	)
+	(label "TEC_RAW+"
+		(at 53.34 49.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f4d2f93d-a95c-4eba-bda3-f71a8f985ade")
+	)
 	(global_label "+9Vac"
 		(shape output)
 		(at 26.67 33.02 180)
@@ -10806,21 +10826,5 @@
 				)
 			)
 		)
-	)	(label "TEC_RAW+"
-		(at 53.34 49.53 0)
-		(effects
-			(font (size 1.27 1.27))
-			(justify left bottom)
-		)
-		(uuid "f4d2f93d-a95c-4eba-bda3-f71a8f985ade")
 	)
-	(label "TEC_RAW-"
-		(at 38.1 49.53 0)
-		(effects
-			(font (size 1.27 1.27))
-			(justify left bottom)
-		)
-		(uuid "1a4e96a7-e991-46ca-8bea-d760a2df5978")
-	)
-
 )

@@ -6080,6 +6080,26 @@
 		)
 		(uuid "ff178a88-6720-496b-8327-cb6aed6cbb5a")
 	)
+	(label "RAW22+"
+		(at 165.1 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "87adc3ce-f6b6-4a38-8c2f-e1dc06cf7458")
+	)
+	(label "RAW22-"
+		(at 149.86 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d5d9fd1f-c07a-4b67-a91a-bb065551b942")
+	)
 	(label "-22VNF"
 		(at 212.09 69.85 0)
 		(effects
@@ -9436,21 +9456,5 @@
 				)
 			)
 		)
-	)	(label "RAW22+"
-		(at 165.1 50.8 0)
-		(effects
-			(font (size 1.27 1.27))
-			(justify left bottom)
-		)
-		(uuid "87adc3ce-f6b6-4a38-8c2f-e1dc06cf7458")
 	)
-	(label "RAW22-"
-		(at 149.86 50.8 0)
-		(effects
-			(font (size 1.27 1.27))
-			(justify left bottom)
-		)
-		(uuid "d5d9fd1f-c07a-4b67-a91a-bb065551b942")
-	)
-
 )
