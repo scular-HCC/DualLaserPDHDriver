@@ -280,7 +280,12 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      [
+        "pin_to_pin|660400|647700|72663a0c-cbd2-4cf9-9011-f2ec2892239c|342696bc-529b-46bc-8ae8-076bd86f50ac|/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf|/b2c3d4e5-f6a7-8901-bcde-f12345678901/e4d7b089-62e9-414f-b4cc-abd1480c07cf|/b2c3d4e5-f6a7-8901-bcde-f12345678901/1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d",
+        ""
+      ]
+    ],
     "meta": {
       "version": 0
     },
@@ -884,15 +889,33 @@
           "show": true
         },
         {
+          "group_by": false,
+          "label": "Qty",
+          "name": "${QUANTITY}",
+          "show": true
+        },
+        {
           "group_by": true,
           "label": "Value",
           "name": "Value",
           "show": true
         },
         {
-          "group_by": false,
-          "label": "Datasheet",
-          "name": "Datasheet",
+          "group_by": true,
+          "label": "DNP",
+          "name": "${DNP}",
+          "show": true
+        },
+        {
+          "group_by": true,
+          "label": "Exclude from BOM",
+          "name": "${EXCLUDE_FROM_BOM}",
+          "show": true
+        },
+        {
+          "group_by": true,
+          "label": "Exclude from Board",
+          "name": "${EXCLUDE_FROM_BOARD}",
           "show": true
         },
         {
@@ -903,27 +926,9 @@
         },
         {
           "group_by": false,
-          "label": "Qty",
-          "name": "${QUANTITY}",
+          "label": "Datasheet",
+          "name": "Datasheet",
           "show": true
-        },
-        {
-          "group_by": true,
-          "label": "DNP",
-          "name": "${DNP}",
-          "show": true
-        },
-        {
-          "group_by": false,
-          "label": "Exclude from Board",
-          "name": "${EXCLUDE_FROM_BOARD}",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Exclude from BOM",
-          "name": "${EXCLUDE_FROM_BOM}",
-          "show": false
         },
         {
           "group_by": false,
@@ -948,101 +953,11 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MF",
-          "name": "MF",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MP",
-          "name": "MP",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Package",
-          "name": "Package",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "PARTREV",
-          "name": "PARTREV",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Price",
-          "name": "Price",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Purchase-URL",
-          "name": "Purchase-URL",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "DUPLICATE",
-          "name": "DUPLICATE",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Check_prices",
-          "name": "Check_prices",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "SnapEDA_Link",
-          "name": "SnapEDA_Link",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "SNAPEDA_PN",
-          "name": "SNAPEDA_PN",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "STANDARD",
-          "name": "STANDARD",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "TEENSY",
-          "name": "TEENSY",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Availability",
-          "name": "Availability",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MANUFACTURER",
-          "name": "MANUFACTURER",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MAXIMUM_PACKAGE_HEIGHT",
-          "name": "MAXIMUM_PACKAGE_HEIGHT",
-          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
-      "include_excluded_from_bom": false,
+      "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
       "sort_field": "Reference"
@@ -1076,14 +991,6 @@
     "meta": {
       "version": 1
     },
-    "ngspice": {
-      "fix_include_paths": true,
-      "meta": {
-        "version": 0
-      },
-      "model_mode": 4,
-      "workbook_filename": ""
-    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "reuse_designators": true,
@@ -1096,7 +1003,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "U1,U47,#PWR28,J3",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
@@ -1105,12 +1012,32 @@
       "Root"
     ],
     [
-      "3056e0f1-6b1f-4e3d-a620-28c4febe4cf4",
-      "TEC H-Bridges"
+      "06a154d7-731d-44d9-be1c-56d316ca362e",
+      "Mains to +-18V"
     ],
     [
-      "9efac76c-a860-4cc9-8fe0-d6e05f647334",
-      "DriverConnector"
+      "66b4928b-0f98-4282-b6fa-f46162bb9680",
+      "5Vref"
+    ],
+    [
+      "8f1d8420-6d65-4b14-9d89-baaedfa51091",
+      "3p3V and 1p8V"
+    ],
+    [
+      "9e8b43e2-3f50-408f-92ae-40d797615721",
+      "+-15V"
+    ],
+    [
+      "1c9b8e35-72c7-455d-9b72-b59e9fdbfd8d",
+      "+-6V TEC"
+    ],
+    [
+      "4c904a9b-f13b-4762-ac7d-2743bb4f9a22",
+      "5V Laser"
+    ],
+    [
+      "06f22b47-dee6-4fbe-8e7e-6abe24fabe38",
+      "TEC H-Bridges"
     ],
     [
       "e4a8b7d8-d294-4c89-ba57-bde3505f7415",
@@ -1129,16 +1056,12 @@
       "Clock"
     ],
     [
-      "5a800bdf-c78b-4bfb-a7c6-d84c2550e565",
-      "PhotoDiodes"
+      "3cc9b630-4516-4d07-8624-99717cc6cbce",
+      "LaserPackage"
     ],
     [
       "20b1c7a7-d05f-4e99-ab1a-7c26c0a8ad66",
       "Teensy"
-    ],
-    [
-      "e1449f4d-dad3-47f6-967e-c2fd4c822347",
-      "PhaseRef"
     ]
   ],
   "text_variables": {},

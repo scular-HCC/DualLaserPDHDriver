@@ -4381,12 +4381,6 @@
 		(uuid "0512dd86-68fa-49d3-ac68-859b1a13b2c2")
 	)
 	(junction
-		(at 189.23 39.37)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "08be6bfe-080d-4579-80e4-336dc6e45553")
-	)
-	(junction
 		(at 275.59 39.37)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4571,6 +4565,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9b69a6f6-43a6-4a50-abeb-286e415897ae")
+	)
+	(junction
+		(at 189.23 39.37)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a050ce63-3e8d-4b77-a0d5-5e854cf14215")
 	)
 	(junction
 		(at 179.07 86.36)
@@ -6672,7 +6672,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1e40bbbb-68a8-45ba-a809-100554acaea0")
-		(property "Reference" "#FLG03"
+		(property "Reference" "#FLG01"
 			(at 275.59 37.465 0)
 			(hide yes)
 			(show_name no)
@@ -6733,7 +6733,7 @@
 		(instances
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
-					(reference "#FLG03")
+					(reference "#FLG01")
 					(unit 1)
 				)
 			)
@@ -6851,7 +6851,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder"
+		(property "Footprint" "RCL12254R75FKEG:RESC3263X80N"
 			(at 237.49 71.628 90)
 			(hide yes)
 			(show_name no)
@@ -7075,7 +7075,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4ed0ed60-e4b1-4982-9665-177100173cb0")
-		(property "Reference" "J6"
+		(property "Reference" "J4"
 			(at 139.446 86.614 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7141,7 +7141,7 @@
 		(instances
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
-					(reference "J6")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -7159,7 +7159,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "54638584-b540-4f32-a504-2457a7270c8a")
-		(property "Reference" "J4"
+		(property "Reference" "J2"
 			(at 95.504 86.614 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7225,7 +7225,7 @@
 		(instances
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
-					(reference "J4")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -7435,7 +7435,7 @@
 				)
 			)
 		)
-		(property "Value" "4.75"
+		(property "Value" "4.75 2W"
 			(at 234.95 39.37 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7445,7 +7445,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder"
+		(property "Footprint" "RCL12254R75FKEG:RESC3263X80N"
 			(at 234.95 41.148 90)
 			(hide yes)
 			(show_name no)
@@ -8811,7 +8811,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c95e1f0d-a5e3-4066-9411-d68a22c8441c")
-		(property "Reference" "#FLG04"
+		(property "Reference" "#FLG02"
 			(at 275.59 67.945 0)
 			(hide yes)
 			(show_name no)
@@ -8872,7 +8872,7 @@
 		(instances
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/06a154d7-731d-44d9-be1c-56d316ca362e"
-					(reference "#FLG04")
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)

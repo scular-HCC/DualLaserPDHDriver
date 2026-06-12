@@ -3410,7 +3410,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7uF NP0"
+		(property "Value" "4.7uF X7R"
 			(at 158.35 74.582 0)
 			(show_name no)
 			(do_not_autoplace no)

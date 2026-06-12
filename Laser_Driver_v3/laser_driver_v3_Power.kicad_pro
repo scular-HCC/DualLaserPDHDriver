@@ -663,9 +663,7 @@
     "meta": {
       "version": 5
     },
-    "net_colors": {
-      "Net-(D25-A)": "rgb(255, 33, 23)"
-    },
+    "net_colors": null,
     "netclass_assignments": null,
     "netclass_patterns": [
       {
@@ -890,7 +888,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "U17,PEM1",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [

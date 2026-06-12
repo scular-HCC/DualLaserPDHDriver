@@ -1607,7 +1607,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2ffd342b-e21c-402a-8b6a-3c53212fc389")
-		(property "Reference" "J2"
+		(property "Reference" "J6"
 			(at 88.9 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1735,7 +1735,7 @@
 		(instances
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/95c9f2bc-5f61-41c2-a204-afd07f26a3be"
-					(reference "J2")
+					(reference "J6")
 					(unit 1)
 				)
 			)
