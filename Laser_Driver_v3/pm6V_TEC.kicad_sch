@@ -8443,7 +8443,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LM4041"
+		(property "Value" "LM4051AIM3-ADJ/NOPB"
 			(at 153.67 168.9099 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8454,7 +8454,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
 			(at 151.13 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -8466,7 +8466,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4041-n.pdf"
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4060.pdf"
 			(at 160.02 170.18 0)
 			(hide yes)
 			(show_name no)
@@ -9844,7 +9844,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LM4041A"
+		(property "Value" "LM4051AIM3-ADJ/NOPB"
 			(at 158.75 125.7299 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9855,7 +9855,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
 			(at 161.29 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -9867,7 +9867,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4041-n.pdf"
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4060.pdf"
 			(at 152.4 121.92 0)
 			(hide yes)
 			(show_name no)
@@ -9879,7 +9879,7 @@
 				)
 			)
 		)
-		(property "Description" "Adjustable Precision Micropower Shunt Voltage Reference, TO-92"
+		(property "Description" "Adjustable Precision Micropower Shunt Voltage Reference, SOT-23"
 			(at 156.21 124.46 0)
 			(hide yes)
 			(show_name no)
