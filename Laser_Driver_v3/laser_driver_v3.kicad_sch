@@ -266,6 +266,52 @@
 		)
 	)
 	(sheet
+		(at 101.6 30.48)
+		(size 20.32 22.86)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c2796c0b-1bb2-4705-9ec2-915559b1b450")
+		(property "Sheetname" "DriverConnector"
+			(at 101.6 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "DriverConnector.kicad_sch"
+			(at 101.6 53.9246 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 138.43 63.5)
 		(size 30.48 27.94)
 		(exclude_from_sim no)

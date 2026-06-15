@@ -5,6 +5,187 @@
 	(uuid "c7272853-db6f-44aa-8cee-f80d8636e524")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Connector:Conn_01x02_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x02_Pin"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x02, script generated"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_01x02_Pin_1_1"
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector_Generic:Conn_02x12_Top_Bottom"
 			(pin_names
 				(offset 1.016)
@@ -801,6 +982,279 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:Thermistor_NTC"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TH"
+				(at -4.445 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Thermistor_NTC"
+				(at 3.175 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Temperature dependent resistor, negative temperature coefficient"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "thermistor NTC resistor sensor RTD"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_* RV_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Thermistor_NTC_0_1"
+				(arc
+					(start -3.175 2.413)
+					(mid -3.0506 2.3165)
+					(end -3.048 2.159)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -3.048 2.794)
+					(mid -2.9736 2.9736)
+					(end -2.794 3.048)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.794 3.048)
+					(mid -2.6144 2.9736)
+					(end -2.54 2.794)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.794 2.54)
+					(mid -2.9736 2.6144)
+					(end -3.048 2.794)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.794 1.905)
+					(mid -2.9736 1.9794)
+					(end -3.048 2.159)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.54 2.159)
+					(mid -2.6144 1.9794)
+					(end -2.794 1.905)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.159 2.794)
+					(mid -2.434 2.5608)
+					(end -2.794 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 2.159) (xy -2.54 2.794)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -3.683) (xy -2.54 -1.397) (xy -2.794 -2.159) (xy -2.286 -2.159) (xy -2.54 -1.397) (xy -2.54 -1.651)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 2.54) (xy -1.778 1.524) (xy 1.778 -1.524) (xy 1.778 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -1.397) (xy -1.778 -3.683) (xy -2.032 -2.921) (xy -1.524 -2.921) (xy -1.778 -3.683)
+						(xy -1.778 -3.429)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -1.016 2.54)
+					(end 1.016 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Thermistor_NTC_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:GND"
 			(power global)
 			(pin_numbers
@@ -936,22 +1390,10 @@
 		(uuid "6843e22d-eeac-42e9-b36f-b344f345234e")
 	)
 	(junction
-		(at 119.38 57.15)
+		(at 127 54.61)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "75b70100-9988-4d77-8774-12110d7dc782")
-	)
-	(junction
-		(at 102.87 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "99185d8d-1c15-45a5-8909-0a6ec6f600bb")
-	)
-	(junction
-		(at 119.38 72.39)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "9b26d3b8-301e-45e1-b872-c1079e099819")
+		(uuid "8586f185-c9f8-48f1-b3b2-0bcea27b977f")
 	)
 	(junction
 		(at 100.33 78.74)
@@ -960,10 +1402,22 @@
 		(uuid "a67fdff0-4a3d-4aea-ad98-0a76c656d116")
 	)
 	(junction
+		(at 127 57.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a9466599-b1f9-44c9-a6d8-35ed64cff6b6")
+	)
+	(junction
 		(at 82.55 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c16e5bab-aa1f-4207-9969-36eff70975ce")
+	)
+	(junction
+		(at 120.65 59.69)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c5234a81-4c1c-43bc-9d77-ab624ff5f19a")
 	)
 	(junction
 		(at 95.25 62.23)
@@ -972,10 +1426,26 @@
 		(uuid "cc354ca3-bcea-48b9-9aa7-2a13ea91025e")
 	)
 	(junction
+		(at 120.65 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "de13219e-97a6-458c-b859-0b540e287a4e")
+	)
+	(junction
 		(at 82.55 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e2aaafdd-e444-4c1d-be4a-02f74d3cdb89")
+	)
+	(wire
+		(pts
+			(xy 95.25 57.15) (xy 127 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "033476c2-583b-44ec-9db0-f8093aa7ee53")
 	)
 	(wire
 		(pts
@@ -989,16 +1459,6 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 57.15) (xy 102.87 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "056210f0-c47c-45fd-a817-055d301c3088")
-	)
-	(wire
-		(pts
 			(xy 71.12 82.55) (xy 82.55 82.55)
 		)
 		(stroke
@@ -1006,6 +1466,16 @@
 			(type default)
 		)
 		(uuid "07d526f8-1049-407c-9ba9-2751f427e143")
+	)
+	(wire
+		(pts
+			(xy 120.65 72.39) (xy 120.65 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "129081d7-f3e3-428f-a10b-1809b8cbef4c")
 	)
 	(wire
 		(pts
@@ -1039,16 +1509,6 @@
 	)
 	(wire
 		(pts
-			(xy 102.87 57.15) (xy 119.38 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "18473e7d-dba2-4e96-8f20-6da596cac06c")
-	)
-	(wire
-		(pts
 			(xy 82.55 62.23) (xy 95.25 62.23)
 		)
 		(stroke
@@ -1066,6 +1526,26 @@
 			(type default)
 		)
 		(uuid "258b47a1-e38a-45de-9dbc-d92e916c325c")
+	)
+	(wire
+		(pts
+			(xy 95.25 72.39) (xy 120.65 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2a20267f-dc4b-4a91-8f19-8bcf9f087bde")
+	)
+	(wire
+		(pts
+			(xy 120.65 59.69) (xy 123.19 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e3505cf-f0e5-4eff-9f06-4da94a713a2a")
 	)
 	(wire
 		(pts
@@ -1089,16 +1569,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 57.15) (xy 124.46 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3e90e0f3-498f-4bf9-aaf6-258cdd2b46a1")
-	)
-	(wire
-		(pts
 			(xy 95.25 80.01) (xy 100.33 80.01)
 		)
 		(stroke
@@ -1106,16 +1576,6 @@
 			(type default)
 		)
 		(uuid "4460c7ff-cff0-42ad-9799-4a1e19e2a403")
-	)
-	(wire
-		(pts
-			(xy 102.87 59.69) (xy 102.87 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4870804c-acfa-44f4-9f24-54766807863f")
 	)
 	(wire
 		(pts
@@ -1159,13 +1619,13 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 59.69) (xy 102.87 59.69)
+			(xy 127 54.61) (xy 128.27 54.61)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7b5dba2e-e4eb-4061-94b5-b22a450b963e")
+		(uuid "7793a143-69d9-4abe-b3ba-1a8f62f8121f")
 	)
 	(wire
 		(pts
@@ -1179,16 +1639,6 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 54.61) (xy 119.38 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f2268fe-0a18-4520-9fce-05b0b79e5c8d")
-	)
-	(wire
-		(pts
 			(xy 100.33 77.47) (xy 95.25 77.47)
 		)
 		(stroke
@@ -1199,13 +1649,13 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 54.61) (xy 119.38 57.15)
+			(xy 156.21 55.88) (xy 127 55.88)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a182a466-cc71-4f2b-a07a-3f8978200730")
+		(uuid "a156e703-e5e4-4e5e-a34b-ea0652d99ef3")
 	)
 	(wire
 		(pts
@@ -1219,6 +1669,16 @@
 	)
 	(wire
 		(pts
+			(xy 95.25 62.23) (xy 106.68 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c2838da4-b8c8-4c00-9250-9f2c5eca270a")
+	)
+	(wire
+		(pts
 			(xy 100.33 80.01) (xy 100.33 78.74)
 		)
 		(stroke
@@ -1226,6 +1686,16 @@
 			(type default)
 		)
 		(uuid "c6b76ec9-22d8-48ab-983e-387c37af193a")
+	)
+	(wire
+		(pts
+			(xy 95.25 59.69) (xy 120.65 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0c6952e-6a9a-47cb-a21b-901b24b9d9b7")
 	)
 	(wire
 		(pts
@@ -1239,23 +1709,23 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 72.39) (xy 95.25 72.39)
+			(xy 127 57.15) (xy 128.27 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "dd2bcf4d-e727-4eaf-9394-8f37255866f9")
+		(uuid "dc161571-a4f8-4dcc-97b9-6557a4cbed87")
 	)
 	(wire
 		(pts
-			(xy 95.25 62.23) (xy 106.68 62.23)
+			(xy 127 55.88) (xy 127 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "e5d7d27e-bdcd-4f3d-8e19-82200d669820")
+		(uuid "debd8ee2-b7ab-4a88-b490-fd7b931d7d06")
 	)
 	(wire
 		(pts
@@ -1269,17 +1739,17 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 78.74) (xy 119.38 72.39)
+			(xy 127 48.26) (xy 127 54.61)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f37e6d73-cacd-4a1c-bf6a-b2006e36e590")
+		(uuid "f1cb921c-a32e-45b8-8bf1-b8bb03dfea98")
 	)
 	(wire
 		(pts
-			(xy 119.38 57.15) (xy 119.38 72.39)
+			(xy 120.65 59.69) (xy 120.65 72.39)
 		)
 		(stroke
 			(width 0)
@@ -1299,13 +1769,33 @@
 	)
 	(wire
 		(pts
-			(xy 100.33 78.74) (xy 119.38 78.74)
+			(xy 100.33 78.74) (xy 120.65 78.74)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "f7467e43-4b8b-4dd9-9696-5f813e285243")
+	)
+	(wire
+		(pts
+			(xy 95.25 54.61) (xy 127 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f8aec876-37ef-4d68-b17e-6769b95e077e")
+	)
+	(wire
+		(pts
+			(xy 156.21 48.26) (xy 127 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9eba8df-67fd-41d7-9ba3-890f230084c9")
 	)
 	(global_label "+15V"
 		(shape output)
@@ -1596,6 +2086,168 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Conn_01x02_Pin")
+		(at 133.35 54.61 0)
+		(mirror y)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0117df7c-9917-430d-b223-7272534179c4")
+		(property "Reference" "J7"
+			(at 132.715 49.53 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x02_Pin"
+			(at 132.715 52.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_2-G_1x02_P5.00mm_Horizontal"
+			(at 133.35 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "2-pos MSTBA 2,5/2-G-5,08 = 1757242"
+			(at 133.35 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "24917878-4dde-475f-a8d9-0932a9c8d4ee")
+		)
+		(pin "2"
+			(uuid "3dd65bff-3d7a-4590-9931-0ac5120b7037")
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/95c9f2bc-5f61-41c2-a204-afd07f26a3be"
+					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:Thermistor_NTC")
+		(at 156.21 52.07 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board no)
+		(in_pos_files no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(uuid "0601bd67-9aa7-4f92-87a9-1c5b9a7ab6f3")
+		(property "Reference" "TH2"
+			(at 158.75 51.1174 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Thermistor_NTC"
+			(at 158.75 53.6574 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 156.21 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 156.21 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "NTCALUG03A103GC"
+			(at 156.21 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3e365a48-c502-418a-94fb-8fca096a891a")
+		)
+		(pin "2"
+			(uuid "95f2b52e-ad80-4fc2-8f76-148d01d88a40")
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/95c9f2bc-5f61-41c2-a204-afd07f26a3be"
+					(reference "TH2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector_Generic:Conn_02x12_Top_Bottom")
 		(at 87.63 67.31 0)
 		(unit 1)
@@ -1743,7 +2395,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 124.46 57.15 0)
+		(at 123.19 59.69 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1754,7 +2406,7 @@
 		(fields_autoplaced yes)
 		(uuid "9fad2dc6-9038-45ba-9815-fe0ebf2aca81")
 		(property "Reference" "#PWR018"
-			(at 124.46 63.5 0)
+			(at 123.19 66.04 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1765,7 +2417,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 124.46 62.23 0)
+			(at 123.19 64.77 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1775,7 +2427,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 124.46 57.15 0)
+			(at 123.19 59.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1786,7 +2438,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 124.46 57.15 0)
+			(at 123.19 59.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1797,7 +2449,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 124.46 57.15 0)
+			(at 123.19 59.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

@@ -6553,7 +6553,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "3-pos MSTBA 2,5/3-G-5,08 = 1757255"
 			(at 59.69 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -7118,7 +7118,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "3-pos MSTBA 2,5/3-G-5,08 = 1757255"
 			(at 139.7 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -7202,7 +7202,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "3-pos MSTBA 2,5/3-G-5,08 = 1757255"
 			(at 95.25 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -7703,7 +7703,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "3-pos MSTBA 2,5/3-G-5,08 = 1757255"
 			(at 140.97 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -8933,7 +8933,7 @@
 				)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "3-pos MSTBA 2,5/3-G-5,08 = 1757255"
 			(at 99.06 48.26 0)
 			(hide yes)
 			(show_name no)
