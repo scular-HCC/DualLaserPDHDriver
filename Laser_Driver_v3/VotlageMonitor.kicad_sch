@@ -2049,6 +2049,12 @@
 		(uuid "0800ba3f-c74b-4773-8c2a-9c6d85212a67")
 	)
 	(junction
+		(at 25.4 33.02)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "08cf6084-d06a-4a03-8aed-370157654de2")
+	)
+	(junction
 		(at 113.03 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2203,6 +2209,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5d537bce-29b4-4403-b646-f97b456f5728")
+	)
+	(junction
+		(at 25.4 16.51)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "610c9de5-6b90-4884-993c-7b330d62dc3a")
 	)
 	(junction
 		(at 83.82 109.22)
@@ -2705,6 +2717,16 @@
 			(type default)
 		)
 		(uuid "0871947d-eb32-4ec0-9c44-a0de4d95ccd4")
+	)
+	(wire
+		(pts
+			(xy 25.4 16.51) (xy 35.56 16.51)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0971ea1d-edb2-4d6b-bacb-b926aa0c43c5")
 	)
 	(wire
 		(pts
@@ -3285,6 +3307,16 @@
 			(type default)
 		)
 		(uuid "363511eb-3c15-43d1-b47c-7435b133a595")
+	)
+	(wire
+		(pts
+			(xy 35.56 21.59) (xy 35.56 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "385e92da-23c6-43ca-8afe-d3e310574680")
 	)
 	(wire
 		(pts
@@ -4498,6 +4530,16 @@
 	)
 	(wire
 		(pts
+			(xy 35.56 33.02) (xy 25.4 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a6c150c3-39b9-498a-a384-701399be5802")
+	)
+	(wire
+		(pts
 			(xy 139.7 114.3) (xy 139.7 106.68)
 		)
 		(stroke
@@ -4895,6 +4937,16 @@
 			(type default)
 		)
 		(uuid "c20ded76-9b0d-486b-9b72-678e81531668")
+	)
+	(wire
+		(pts
+			(xy 25.4 33.02) (xy 25.4 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c2ce4ecd-32d7-4bca-8af7-d4a359481aa4")
 	)
 	(wire
 		(pts
@@ -5318,7 +5370,7 @@
 	)
 	(wire
 		(pts
-			(xy 25.4 31.75) (xy 25.4 35.56)
+			(xy 25.4 31.75) (xy 25.4 33.02)
 		)
 		(stroke
 			(width 0)
@@ -7105,7 +7157,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 261.62 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -7266,7 +7318,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 205.74 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -7928,7 +7980,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 128.27 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -8046,7 +8098,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 181.61 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -8272,7 +8324,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 234.95 21.59 0)
 			(hide yes)
 			(show_name no)
@@ -8351,6 +8403,88 @@
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/fd6acaef-35b2-46a9-8e00-d67b5db47cae"
 					(reference "U27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small_US")
+		(at 35.56 19.05 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "16813a34-645b-4e7c-a1a1-e0a680d3cbe9")
+		(property "Reference" "C90"
+			(at 38.1 17.9069 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 38.1 20.4469 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 35.56 19.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 35.56 19.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "capacitor, small US symbol"
+			(at 35.56 19.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "29dff754-5eba-48c0-9af0-664552526eeb")
+		)
+		(pin "2"
+			(uuid "9430e3f5-a947-4760-bdd1-9cdc0c769f1e")
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/fd6acaef-35b2-46a9-8e00-d67b5db47cae"
+					(reference "C90")
 					(unit 1)
 				)
 			)
@@ -8795,7 +8929,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 219.71 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -8913,7 +9047,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 189.23 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -8993,7 +9127,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 238.76 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -9108,7 +9242,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:DFN-8-1EP_3x2mm_P0.5mm_EP1.75x1.45mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 44.45 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -9567,7 +9701,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 236.22 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -9762,7 +9896,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 72.39 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -9878,7 +10012,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 129.54 172.72 0)
 			(hide yes)
 			(show_name no)
@@ -10593,7 +10727,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 238.76 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -11201,7 +11335,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 95.25 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -11391,7 +11525,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 237.49 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -11818,7 +11952,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 127 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -12029,7 +12163,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 255.27 142.24 0)
 			(hide yes)
 			(show_name no)
@@ -12224,7 +12358,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 96.52 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -12554,7 +12688,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 125.73 19.05 0)
 			(hide yes)
 			(show_name no)
@@ -12749,7 +12883,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:DFN-8-1EP_3x2mm_P0.5mm_EP1.75x1.45mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 27.94 24.13 0)
 			(hide yes)
 			(show_name no)
@@ -12929,7 +13063,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 203.2 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -13322,7 +13456,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 127 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -13440,7 +13574,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 204.47 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -13598,7 +13732,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 127 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -13713,7 +13847,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 234.95 33.02 0)
 			(hide yes)
 			(show_name no)
@@ -13829,7 +13963,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 129.54 161.29 0)
 			(hide yes)
 			(show_name no)
@@ -13945,7 +14079,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 237.49 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -14142,7 +14276,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 95.25 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -14413,7 +14547,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 226.06 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -14492,7 +14626,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 128.27 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -14607,7 +14741,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 127 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -15119,7 +15253,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 62.23 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -15398,7 +15532,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 128.27 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -15593,7 +15727,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 66.04 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -15947,7 +16081,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 96.52 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -16185,7 +16319,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 97.79 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -16346,7 +16480,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 237.49 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -16636,7 +16770,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 199.39 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -17001,7 +17135,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 64.77 185.42 0)
 			(hide yes)
 			(show_name no)
@@ -17198,7 +17332,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 93.98 31.75 0)
 			(hide yes)
 			(show_name no)
@@ -17472,7 +17606,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 273.05 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -17837,7 +17971,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 125.73 30.48 0)
 			(hide yes)
 			(show_name no)
@@ -18961,7 +19095,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:DFN-8-1EP_3x2mm_P0.5mm_EP1.75x1.45mm"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 43.18 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -19061,7 +19195,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 128.27 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -19258,7 +19392,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 279.4 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -19417,7 +19551,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 236.22 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -19693,7 +19827,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 243.84 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -19775,7 +19909,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 208.28 143.51 0)
 			(hide yes)
 			(show_name no)
