@@ -403,6 +403,98 @@
 			)
 		)
 	)
+	(sheet
+		(at 68.58 149.86)
+		(size 17.78 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "d31b308d-62dc-47e3-b185-e322cb257dbd")
+		(property "Sheetname" "PowerMounting"
+			(at 68.58 149.1484 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PowerMounting.kicad_sch"
+			(at 68.58 170.7646 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 106.68 30.48)
+		(size 20.32 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "fd6acaef-35b2-46a9-8e00-d67b5db47cae")
+		(property "Sheetname" "VoltageMonitor"
+			(at 106.68 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "VotlageMonitor.kicad_sch"
+			(at 106.68 56.4646 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "laser_driver_v3_Power"
+				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901"
+					(page "10")
+				)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")

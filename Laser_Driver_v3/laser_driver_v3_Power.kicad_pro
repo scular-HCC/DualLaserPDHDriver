@@ -888,7 +888,7 @@
         "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
       }
     ],
-    "used_designators": "J7,TH2",
+    "used_designators": "R88-105,#FLG3",
     "variants": []
   },
   "sheets": [
@@ -923,6 +923,14 @@
     [
       "95c9f2bc-5f61-41c2-a204-afd07f26a3be",
       "PowerConnectorOut"
+    ],
+    [
+      "d31b308d-62dc-47e3-b185-e322cb257dbd",
+      "PowerMounting"
+    ],
+    [
+      "fd6acaef-35b2-46a9-8e00-d67b5db47cae",
+      "VoltageMonitor"
     ],
     [
       "5e81dcd4-9b1b-47dc-9619-b54132a8671e",

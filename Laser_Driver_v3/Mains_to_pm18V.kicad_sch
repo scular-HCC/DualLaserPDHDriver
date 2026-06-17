@@ -4673,12 +4673,12 @@
 		(uuid "23e59ec0-c060-44ca-a27d-9f5f71b91e25")
 	)
 	(no_connect
-		(at 12.7 48.26)
-		(uuid "843714da-9d2e-45e2-ad86-949063364b5d")
-	)
-	(no_connect
 		(at 12.7 45.72)
 		(uuid "96adc7de-8f36-4b88-bafe-0c7c090c7232")
+	)
+	(no_connect
+		(at 12.7 48.26)
+		(uuid "d178e14d-d74a-49f9-a9aa-6784761ebedd")
 	)
 	(wire
 		(pts

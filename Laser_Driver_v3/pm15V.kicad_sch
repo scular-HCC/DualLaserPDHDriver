@@ -1577,121 +1577,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "power:PWR_FLAG"
-			(power global)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "#FLG"
-				(at 0 1.905 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "PWR_FLAG"
-				(at 0 3.81 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Special symbol for telling ERC where power comes from"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "flag power"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "PWR_FLAG_0_0"
-				(pin power_out line
-					(at 0 0 90)
-					(length 0)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "PWR_FLAG_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 	)
 	(text "RAIL 1: +/-15V (Rset =143k ohm give 14.3V for safe operation of the OPA551) direct to opa192 op-amps"
 		(exclude_from_sim no)
@@ -1749,12 +1634,6 @@
 		(uuid "285001c6-5d8f-47b2-8615-8a363b5b5c38")
 	)
 	(junction
-		(at 227.33 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "33f7dfc9-88f6-472c-a038-59e95a10d791")
-	)
-	(junction
 		(at 158.75 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1801,12 +1680,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "603c3775-3c5e-47c3-8f4d-9288caeef3b0")
-	)
-	(junction
-		(at 226.06 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "64f1c03f-4bfe-4787-96f1-24b7f40b4ac9")
 	)
 	(junction
 		(at 86.36 78.74)
@@ -2256,16 +2129,6 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 57.15) (xy 227.33 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "57f6c269-420e-4f5b-99cd-fc35e6572feb")
-	)
-	(wire
-		(pts
 			(xy 86.36 88.9) (xy 113.03 88.9)
 		)
 		(stroke
@@ -2326,7 +2189,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 77.47) (xy 226.06 77.47)
+			(xy 222.25 77.47) (xy 228.6 77.47)
 		)
 		(stroke
 			(width 0)
@@ -2416,16 +2279,6 @@
 	)
 	(wire
 		(pts
-			(xy 226.06 77.47) (xy 228.6 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7a7e185c-cfdc-4b62-b9d8-1b00c5d2ae77")
-	)
-	(wire
-		(pts
 			(xy 142.24 62.23) (xy 143.51 62.23)
 		)
 		(stroke
@@ -2496,7 +2349,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 57.15) (xy 229.87 57.15)
+			(xy 222.25 57.15) (xy 229.87 57.15)
 		)
 		(stroke
 			(width 0)
@@ -3872,84 +3725,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 226.06 77.47 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "88737897-772b-48ef-875b-6ee7b05c3752")
-		(property "Reference" "#FLG04"
-			(at 226.06 75.565 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 226.06 72.39 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 226.06 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 226.06 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 226.06 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "1c32449a-415d-4b5a-8104-6fd1c829edd1")
-		)
-		(instances
-			(project "laser_driver_v3_Power"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/9e8b43e2-3f50-408f-92ae-40d797615721"
-					(reference "#FLG04")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 163.83 91.44 0)
 		(unit 1)
@@ -4756,84 +4531,6 @@
 			(project "laser_driver_v3_Power"
 				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/9e8b43e2-3f50-408f-92ae-40d797615721"
 					(reference "R16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 227.33 57.15 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ff2e893e-a671-4317-a129-8917e9f67acf")
-		(property "Reference" "#FLG05"
-			(at 227.33 55.245 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 227.33 52.07 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 227.33 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 227.33 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 227.33 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "37a4871d-e4e0-4706-8915-9dfc12456b28")
-		)
-		(instances
-			(project "laser_driver_v3_Power"
-				(path "/b2c3d4e5-f6a7-8901-bcde-f12345678901/9e8b43e2-3f50-408f-92ae-40d797615721"
-					(reference "#FLG05")
 					(unit 1)
 				)
 			)
