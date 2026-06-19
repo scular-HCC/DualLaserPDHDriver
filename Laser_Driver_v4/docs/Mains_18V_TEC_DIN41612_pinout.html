@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRAFT — Mains_18V_TEC DIN 41612 Connector Pinout (J6)</title>
+<style>
+  :root{
+    --hc:#c0392b; --hc-bg:#fbeae8;
+    --raw:#1f5fa5; --raw-bg:#e8f0fa;
+    --gnd:#4a4a46; --gnd-bg:#eceae3;
+    --sig:#6b4fa0; --sig-bg:#efeafa;
+    --spare:#8a8a82; --spare-bg:#f4f3ee;
+    --add:#a65a00; --line:#d9d6cc; --ink:#23241f; --muted:#6b6b64;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+       max-width:980px;margin:0 auto;padding:28px 22px 60px;line-height:1.55;background:#fff}
+  h1{font-size:24px;font-weight:600;margin:.2em 0 .1em}
+  h2{font-size:18px;font-weight:600;margin:1.8em 0 .5em;border-bottom:2px solid var(--line);padding-bottom:4px}
+  h3{font-size:15px;font-weight:600;margin:1.2em 0 .4em;color:var(--muted)}
+  .draft{display:inline-block;background:#b3000022;color:#b30000;border:1px solid #b3000055;
+         font-weight:700;letter-spacing:.12em;padding:3px 12px;border-radius:4px;font-size:12px;vertical-align:middle}
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 22px;
+        background:var(--spare-bg);border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:14px 0 6px;font-size:13px}
+  .meta b{color:var(--muted);font-weight:600;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  table{border-collapse:collapse;width:100%;margin:.6em 0 1em;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#f3f1ea;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+  td.pin{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;white-space:nowrap}
+  td.net{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}
+  .t-hc{background:var(--hc-bg);color:var(--hc)} .t-raw{background:var(--raw-bg);color:var(--raw)}
+  .t-gnd{background:var(--gnd-bg);color:var(--gnd)} .t-sig{background:var(--sig-bg);color:var(--sig)}
+  .t-spare{background:var(--spare-bg);color:var(--spare)}
+  .s-exist{color:#1d6e3a;font-weight:600} .s-add{color:var(--add);font-weight:600} .s-opt{color:var(--muted);font-style:italic}
+  tr.hc td{background:linear-gradient(90deg,var(--hc-bg) 0 4px,transparent 4px)}
+  tr.raw td{background:linear-gradient(90deg,var(--raw-bg) 0 4px,transparent 4px)}
+  tr.gnd td{background:linear-gradient(90deg,var(--gnd-bg) 0 4px,transparent 4px)}
+  .note{background:#fcf8ec;border-left:4px solid #d9b441;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0;font-size:13.5px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;margin:8px 0}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid #0002}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:12px}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;background:#f3f1ea;padding:1px 5px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body>
+
+<h1>Mains&nbsp;18V&nbsp;TEC — DIN&nbsp;41612 Connector Pinout <span class="draft">DRAFT</span></h1>
+<p style="color:var(--muted);margin:.2em 0 0">Backplane connector <code>J6</code> — proposed pin assignment. Subject to review; signal-side nets are largely recommendations not yet in the schematic.</p>
+
+<div class="meta">
+  <div><b>Board</b>Laser_Driver_v4 / Mains_18V_TEC</div>
+  <div><b>Connector</b>DIN 41612 Type M, 24 signal + 8 power</div>
+  <div><b>Board part (RA male)</b>ERNI 374144-E</div>
+  <div><b>Backplane mate (vert. female)</b>ERNI 294711-E</div>
+  <div><b>Power blades</b>P1–P8, ~10 A each</div>
+  <div><b>Signal contacts</b>a/b/c × 13–20, ~2 A each</div>
+  <div><b>Date</b>2026-06-19</div>
+  <div><b>Status</b>Draft pinout proposal</div>
+</div>
+
+<div class="note"><b>Scope assumption:</b> custom backplane. If this card plugs into a <b>standard bus</b> (VME, etc.) the pinout is dictated by that standard and this proposal does not apply.</div>
+
+<h2>1 &nbsp;Power blades — P1–P8</h2>
+<p>10 A blades. Each supply is paired with an adjacent ground blade for a short return loop and current sharing (matters for the pulsed 5 A TEC). All nets below already exist on the board.</p>
+<table>
+  <thead><tr><th>Pin</th><th>Net</th><th>Class</th><th>Current</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr class="hc"><td class="pin">P1</td><td class="net">+6V_TEC</td><td><span class="tag t-hc">HighCurrent</span></td><td>5 A pk</td><td>TEC + rail</td></tr>
+    <tr class="gnd"><td class="pin">P2</td><td class="net">GND</td><td><span class="tag t-gnd">GND</span></td><td>—</td><td>return for P1</td></tr>
+    <tr class="hc"><td class="pin">P3</td><td class="net">-6V_TEC</td><td><span class="tag t-hc">HighCurrent</span></td><td>3 A</td><td>TEC − rail</td></tr>
+    <tr class="gnd"><td class="pin">P4</td><td class="net">GND</td><td><span class="tag t-gnd">GND</span></td><td>—</td><td>return for P3 / TEC return capacity</td></tr>
+    <tr class="raw"><td class="pin">P5</td><td class="net">+22V</td><td><span class="tag t-raw">RawDC</span></td><td>~0.5 A</td><td>main analog raw bus → downstream regs</td></tr>
+    <tr class="gnd"><td class="pin">P6</td><td class="net">GND</td><td><span class="tag t-gnd">GND</span></td><td>—</td><td>return for P5</td></tr>
+    <tr class="raw"><td class="pin">P7</td><td class="net">-22V</td><td><span class="tag t-raw">RawDC</span></td><td>~0.5 A</td><td>negative analog raw bus</td></tr>
+    <tr class="gnd"><td class="pin">P8</td><td class="net">GND</td><td><span class="tag t-gnd">GND</span></td><td>—</td><td>return for P7</td></tr>
+  </tbody>
+</table>
+<p style="font-size:12.5px;color:var(--muted)">4 supplies + 4 grounds, fully interleaved (~40 A return capacity). Order blades physically so <code>+6V_TEC</code>/<code>GND</code> land nearest the TEC pass-transistor copper.</p>
+
+<h2>2 &nbsp;Signal field — 24 contacts (rows a / b / c, columns 13–20)</h2>
+<p>Middle row <b>b = ground curtain</b>; outer rows a and c carry monitoring/control and spares.</p>
+
+<h3>Row b (b13–b20) — ground</h3>
+<table><tbody><tr class="gnd">
+  <td class="net">b13–b20 = GND ×8</td>
+  <td><span class="tag t-gnd">GND</span></td>
+  <td><span class="s-exist">exists</span></td>
+  <td>shield / return between signal rows a and c</td>
+</tr></tbody></table>
+
+<h3>Row a (a13–a20) — monitor / sense</h3>
+<table>
+  <thead><tr><th>Pin</th><th>Signal</th><th>Status</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td class="pin">a13</td><td class="net">PG_22V</td><td><span class="s-add">add</span></td><td>rail-good, ±22V</td></tr>
+    <tr><td class="pin">a14</td><td class="net">PG_TEC</td><td><span class="s-add">add</span></td><td>rail-good, ±6V TEC</td></tr>
+    <tr><td class="pin">a15</td><td class="net">EN / INH</td><td><span class="s-add">add</span></td><td>enable / inhibit (sequencing)</td></tr>
+    <tr><td class="pin">a16</td><td class="net">HS_NTC</td><td><span class="s-exist">exists</span></td><td>heatsink thermistor sense</td></tr>
+    <tr><td class="pin">a17</td><td class="net">+22V_SENSE</td><td><span class="s-opt">add · optional¹</span></td><td>remote sense</td></tr>
+    <tr><td class="pin">a18</td><td class="net">-22V_SENSE</td><td><span class="s-opt">add · optional¹</span></td><td>remote sense</td></tr>
+    <tr><td class="pin">a19</td><td class="net">+6V_TEC_SENSE</td><td><span class="s-opt">add · optional¹</span></td><td>remote sense</td></tr>
+    <tr><td class="pin">a20</td><td class="net">-6V_TEC_SENSE</td><td><span class="s-opt">add · optional¹</span></td><td>remote sense</td></tr>
+  </tbody>
+</table>
+
+<h3>Row c (c13–c20) — control / reference / spare</h3>
+<table>
+  <thead><tr><th>Pin</th><th>Signal</th><th>Status</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td class="pin">c13</td><td class="net">DGND</td><td><span class="s-exist">exists</span></td><td>reference / digital ground</td></tr>
+    <tr><td class="pin">c14</td><td class="net">Earth</td><td><span class="s-exist">exists · see²</span></td><td>chassis bond</td></tr>
+    <tr><td class="pin">c15</td><td class="net">SENSE_RTN</td><td><span class="s-opt">add · optional¹</span></td><td>sense reference (GND at load)</td></tr>
+    <tr><td class="pin">c16</td><td class="net">TEC_IMON</td><td><span class="s-add">add</span></td><td>TEC current monitor out</td></tr>
+    <tr><td class="pin">c17</td><td class="net">FAULT / OT</td><td><span class="s-add">add</span></td><td>over-temp / fault flag</td></tr>
+    <tr><td class="pin">c18</td><td class="net">—</td><td><span class="tag t-spare">spare</span></td><td>reserved</td></tr>
+    <tr><td class="pin">c19</td><td class="net">—</td><td><span class="tag t-spare">spare</span></td><td>reserved</td></tr>
+    <tr><td class="pin">c20</td><td class="net">—</td><td><span class="tag t-spare">spare</span></td><td>reserved</td></tr>
+  </tbody>
+</table>
+
+<h2>3 &nbsp;Legend &amp; notes</h2>
+<div class="legend">
+  <span><i class="sw" style="background:var(--hc-bg);border-color:var(--hc)"></i>HighCurrent (2.5 mm)</span>
+  <span><i class="sw" style="background:var(--raw-bg);border-color:var(--raw)"></i>RawDC (1.0 mm)</span>
+  <span><i class="sw" style="background:var(--gnd-bg);border-color:var(--gnd)"></i>GND (0.6 mm)</span>
+  <span><i class="sw" style="background:var(--sig-bg);border-color:var(--sig)"></i>Signal</span>
+  <span><i class="sw" style="background:var(--spare-bg);border-color:var(--spare)"></i>Spare/reserved</span>
+</div>
+<p style="font-size:13px"><span class="s-exist">exists</span> = net already in the schematic &nbsp;·&nbsp; <span class="s-add">add</span> = needs monitoring/control circuitry &nbsp;·&nbsp; <span class="s-opt">optional</span> = nice-to-have.</p>
+
+<div class="note"><b>¹ Remote sense is optional here.</b> ±22V feeds downstream regulators that re-regulate, so backplane IR drop mostly doesn't matter. Sense is more useful on ±6V_TEC (linear headroom). Keep for margining/monitoring, otherwise reclaim those pins as spares.</div>
+<div class="note"><b>² Earth.</b> Safety/chassis ground conventionally bonds through the rack frame (front panel + card guides), not a connector pin. Pin <code>Earth</code> on c14 only if your backplane distributes earth — otherwise free c14 as spare.</div>
+
+<h3>Existing vs to-be-added</h3>
+<p style="font-size:13px">Only 7 nets exist today and are assignable now: <code>+22V</code>, <code>-22V</code>, <code>+6V_TEC</code>, <code>-6V_TEC</code>, <code>GND</code>, <code>DGND</code>, <code>Earth</code>. The <code>PG_*</code>, <code>EN</code>, <code>HS_NTC</code> readout, <code>TEC_IMON</code>, <code>FAULT</code>, and sense lines require circuitry to be added (the v3 rail-good / voltage-monitor blocks are a starting point).</p>
+
+<footer>
+  Mains_18V_TEC DIN 41612 pinout — <b>DRAFT</b>, 2026-06-19. Connector ERNI 374144-E (board) / 294711-E (mate).
+  Net classes per the imported v3 power-board scheme. This document is a proposal for review and does not yet reflect committed schematic nets.
+</footer>
+
+</body>
+</html>
