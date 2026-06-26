@@ -1,0 +1,141 @@
+(footprint "Bridge_GBPC_Heatsink_Boyd_6223BG"
+	(version 20240108)
+	(generator "pcbnew")
+	(layer "F.Cu")
+	(descr "Boyd/Aavid 6223BG bridge-rectifier heat sink (DigiKey 6223BG-ND): square finned, bolt-on, 26.92 x 26.92mm base, 31.75mm fin height. Thermal: 9.4 C/W natural, 3.0 C/W @ 400 LFM (rated 3.0W @ 30C rise). Designed for the GBPC / KBPC metal-case square bridge (28.6 x 28.6mm, e.g. Vishay GBPC3510, KiCad Diode_Bridge_28.6x28.6x7.3mm_P18.0mm_P11.6mm). The bridge lies flat on the board and the heat sink stacks on TOP, clamped by a single screw through the bridge's central hole into the heat sink's tapped 0.163in/M4 hole - so this footprint is a MECHANICAL KEEPOUT ONLY with no copper pads or board drill. Place the origin (central bolt axis) over the GBPC body centre. Courtyard is the projected 26.92mm base. VERIFY screw/standoff hardware and clearance to the enclosure lid before fabrication - the part stands 31.75mm tall above the bridge.")
+	(tags "heatsink bridge rectifier GBPC KBPC 6223BG Boyd Aavid bolt-on")
+	(attr exclude_from_pos_files)
+	(property "Reference" "REF**"
+		(at 0 -15.0 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Bridge_GBPC_Heatsink_Boyd_6223BG"
+		(at 0 15.4 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.digikey.com/en/products/detail/boyd-laconia-llc/6223BG"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Bridge rectifier heat sink, bolt-on, Boyd 6223BG, 9.4 C/W, for GBPC"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 -2.6 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "6223BG  9.4C/W nat | 3.0C/W @400LFM"
+		(at 0 2.2 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "Stacks ON TOP of GBPC, fins up"
+		(at 0 4.4 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "Fin H 31.75mm - check lid clearance"
+		(at 0 6.4 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "Center screw thru bridge hole (no board hole)"
+		(at 0 8.4 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_circle
+		(center 0 0)
+		(end 2.07 0)
+		(stroke (width 0.12) (type solid))
+		(fill none)
+		(layer "F.Fab")
+	)
+	(fp_line
+		(start -2.6 0)
+		(end 2.6 0)
+		(stroke (width 0.1) (type solid))
+		(layer "F.Fab")
+	)
+	(fp_line
+		(start 0 -2.6)
+		(end 0 2.6)
+		(stroke (width 0.1) (type solid))
+		(layer "F.Fab")
+	)
+	(fp_rect
+		(start -13.46 -13.46)
+		(end 13.46 13.46)
+		(stroke (width 0.15) (type solid))
+		(fill none)
+		(layer "F.SilkS")
+	)
+	(fp_rect
+		(start -13.46 -13.46)
+		(end 13.46 13.46)
+		(stroke (width 0.1) (type solid))
+		(fill none)
+		(layer "F.Fab")
+	)
+	(fp_rect
+		(start -13.71 -13.71)
+		(end 13.71 13.71)
+		(stroke (width 0.05) (type solid))
+		(fill none)
+		(layer "F.CrtYd")
+	)
+	(embedded_fonts no)
+)

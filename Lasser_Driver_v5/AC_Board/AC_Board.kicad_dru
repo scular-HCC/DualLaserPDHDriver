@@ -1,0 +1,37 @@
+(version 1)
+
+# Custom design rules for the v5 AC mains-entry board.
+# Auto-loaded by KiCad because the filename matches the board (AC_Board.kicad_dru).
+#
+# Net-class setup (see AC_Board.kicad_pro):
+#   "Mains"   = primary / hazardous nets: 120Vac, Neutral, Earth, Net-(J2-Pin_2/3)
+#   "Default" = everything else, i.e. the low-voltage transformer secondaries
+#               (0Vac, +/-22Vac, +/-9Vac)
+
+# --- Reinforced isolation: primary mains <-> low-voltage secondary -------------
+# IEC/UL rule of thumb for mains -> SELV is ~6 mm creepage. This enforces it on
+# ROUTED COPPER (tracks/zones) where spacing is your choice. Pad-to-pad is
+# exempted because the screw-terminal geometry is fixed at 5.08 mm pitch and
+# cannot meet 6 mm -- see the WARNING note below; that is a layout problem to
+# solve by separating mains and SELV onto different connectors, not a DRC value.
+(rule "primary_to_secondary_isolation"
+	(layer outer)
+	(condition "((A.NetClass == 'Mains' && B.NetClass == 'Default') || (A.NetClass == 'Default' && B.NetClass == 'Mains')) && (A.Type != 'Pad' || B.Type != 'Pad')")
+	(constraint clearance (min 6mm)))
+
+# WARNING (not enforceable by DRC): connector J1 places live 120Vac (pin 3)
+# adjacent to secondary 0Vac (pin 2) and Earth (pin 1) at 5.08 mm pitch (~3 mm
+# copper-to-copper). Mains and SELV on one terminal block cannot achieve
+# reinforced isolation. Recommended fix: move 120Vac/Neutral onto their own
+# connector, separated from the secondary terminals.
+
+# --- Mains copper to board edge ------------------------------------------------
+# Keep hazardous copper well back from the cut edge / chassis.
+(rule "mains_to_board_edge"
+	(condition "A.NetClass == 'Mains'")
+	(constraint edge_clearance (min 2mm)))
+
+# NOTE (manual check, not a rule): keep line/neutral copper >=3 mm from the
+# M3 mounting holes H1-H4, which bolt to the chassis. Left out of DRC because a
+# reliable hole-type selector varies by KiCad version and a bad rule disables
+# the whole file. Verify by eye / measure tool after placement.

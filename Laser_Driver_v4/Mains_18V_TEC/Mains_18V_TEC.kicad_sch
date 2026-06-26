@@ -3643,7 +3643,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -3853,7 +3853,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -4271,7 +4271,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 				(at 6.096 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -4481,7 +4481,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 				(at 6.096 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -7728,7 +7728,7 @@
 	)
 	(text "DIN 41612 BACKPLANE CONNECTOR  (Type H, 24 signal + 8 power):\nBoard:  TE/Erni 374144-E  (right-angle male, 24+8, gold THT).\nMate:   TE/Erni 294711-E  (vertical female, backplane side).\n8 power blades ~10 A (+/-6V_TEC, +/-22V, returns); 24 signal ~2 A.\nAC / transformer leads stay on screw terminals J1-J5."
 		(exclude_from_sim no)
-		(at 212 112 0)
+		(at 238.76 107.696 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7817,9 +7817,9 @@
 		)
 		(uuid "ec27382f-1f33-4d14-969d-48026707c19e")
 	)
-	(text "HEATSINK NOTE (2026-06-18):\nQ7, Q8, Q9, Q10, D7 each mount to an individual heatsink:\nSame Sky HSE-B18254-0396H  (42 mm, 2.29 C/W @ 200 LFM, forced air).\nIsolate each device tab with thermal pad Same Sky WTI7R1F0-1.00X0.75.\nPer-device sinks (not a chassis bar) chosen for Eurocard fit.\nSee Mains_18V_TEC.kicad_pcb silkscreen (F.SilkS) for placement."
+	(text "HEATSINK NOTE (rev 2026-06-24b):\nQ7, Q8, Q9, Q10 each mount to a Wakefield 657-10ABPE low-profile vertical board-mount heat sink\n(41.9 x 25.4 mm base, 25.4 mm tall - fits the 100x160 Eurocard; 6.8 C/W natural, 3.7 C/W @ 200 LFM forced air).\nFan-cooled; at <=50% load (~4.5 W/device) Tj ~ 69 C; fan-fail survivable (Tj ~83 C nominal indef., ~121 C worst-case 3 A - allows orderly shutdown).\nIsolate each device tab with thermal pad Same Sky WTI7R1F0-1.00X0.75.\nFootprint Heatsinks:TO-264-3_Vertical_HS657-25ABPE (shared 6533 profile - same pads/pins for all 657 lengths).\nD7 (GBU1506) retains its own heat sink. See PCB F.SilkS for placement."
 		(exclude_from_sim no)
-		(at 212 66 0)
+		(at 233.68 85.344 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7905,6 +7905,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "24cd6294-6ca6-4f4c-9925-b052811d98e2")
+	)
+	(junction
+		(at 210.82 165.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2591648f-41fc-4271-9ea6-45e7fde51ff3")
 	)
 	(junction
 		(at 200.66 111.76)
@@ -8459,16 +8465,16 @@
 		(uuid "ded4a294-09c6-4131-b52f-c0c5d3a375d8")
 	)
 	(junction
-		(at 210.82 165.1)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "df55209a-acdb-4295-beef-552ff4ed44c0")
-	)
-	(junction
 		(at 261.62 231.14)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e5858d7d-22da-44ab-b67f-e2c32d97beee")
+	)
+	(junction
+		(at 186.69 207.01)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e7733fb7-a430-4290-bd4a-c6e0e0920281")
 	)
 	(junction
 		(at 151.13 201.93)
@@ -8523,12 +8529,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f476f00d-19a8-44a9-af3a-a22e094132a6")
-	)
-	(junction
-		(at 189.23 208.28)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f5333aaa-1c10-4f41-b9c0-acd2c22247fb")
 	)
 	(junction
 		(at 261.62 190.5)
@@ -8993,6 +8993,16 @@
 			(type default)
 		)
 		(uuid "1ada89df-87ed-424e-b9a3-b716d45222ad")
+	)
+	(wire
+		(pts
+			(xy 210.82 165.1) (xy 210.82 166.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ae288f3-2d8c-49b0-b4e1-fecd8fae9f9d")
 	)
 	(wire
 		(pts
@@ -9466,7 +9476,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 163.83) (xy 210.82 163.83)
+			(xy 223.52 163.83) (xy 219.71 163.83)
 		)
 		(stroke
 			(width 0)
@@ -9483,6 +9493,16 @@
 			(type default)
 		)
 		(uuid "47204f77-b374-41e0-a922-2b79b077a4f2")
+	)
+	(wire
+		(pts
+			(xy 212.09 163.83) (xy 210.82 163.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "483c98e2-1287-470e-a09c-54092a97f42e")
 	)
 	(wire
 		(pts
@@ -9656,7 +9676,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 99.06) (xy 186.69 99.06)
+			(xy 168.91 99.06) (xy 200.66 99.06)
 		)
 		(stroke
 			(width 0)
@@ -10056,7 +10076,7 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 208.28) (xy 189.23 208.28)
+			(xy 204.47 208.28) (xy 199.39 208.28)
 		)
 		(stroke
 			(width 0)
@@ -10286,16 +10306,6 @@
 	)
 	(wire
 		(pts
-			(xy 196.85 129.54) (xy 200.66 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "85a3652e-ccce-4404-93ec-5e1e9287f59d")
-	)
-	(wire
-		(pts
 			(xy 154.94 193.04) (xy 154.94 194.31)
 		)
 		(stroke
@@ -10406,7 +10416,7 @@
 	)
 	(wire
 		(pts
-			(xy 189.23 214.63) (xy 193.04 214.63)
+			(xy 186.69 214.63) (xy 193.04 214.63)
 		)
 		(stroke
 			(width 0)
@@ -10543,16 +10553,6 @@
 			(type default)
 		)
 		(uuid "94f8b113-108d-4390-b1b5-cb05a116dec2")
-	)
-	(wire
-		(pts
-			(xy 189.23 208.28) (xy 189.23 214.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9634fd1d-7180-41b2-9e54-e636ebecd5db")
 	)
 	(wire
 		(pts
@@ -10856,7 +10856,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 207.01) (xy 189.23 207.01)
+			(xy 182.88 207.01) (xy 186.69 207.01)
 		)
 		(stroke
 			(width 0)
@@ -10916,7 +10916,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 129.54) (xy 189.23 129.54)
+			(xy 168.91 129.54) (xy 200.66 129.54)
 		)
 		(stroke
 			(width 0)
@@ -10933,6 +10933,16 @@
 			(type default)
 		)
 		(uuid "b09b00c2-51a3-4bbe-89ed-29b083ef1cc7")
+	)
+	(wire
+		(pts
+			(xy 186.69 207.01) (xy 189.23 207.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b11876d8-0f3d-492f-be5b-ef2ac9274354")
 	)
 	(wire
 		(pts
@@ -11356,16 +11366,6 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 165.1) (xy 210.82 173.99)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d90133e4-bcd9-4913-b4ed-4da416b452bc")
-	)
-	(wire
-		(pts
 			(xy 248.92 215.9) (xy 248.92 231.14)
 		)
 		(stroke
@@ -11556,6 +11556,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 208.28) (xy 189.23 208.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e304562e-1a34-4655-8f83-bb31252a4c1f")
+	)
+	(wire
+		(pts
 			(xy 220.98 201.93) (xy 233.68 201.93)
 		)
 		(stroke
@@ -11693,16 +11703,6 @@
 			(type default)
 		)
 		(uuid "eb37ce6c-61ef-4ecb-9342-545eb5c21ac2")
-	)
-	(wire
-		(pts
-			(xy 194.31 99.06) (xy 200.66 99.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eba29d10-664d-4f08-ae09-25421ee65414")
 	)
 	(wire
 		(pts
@@ -13561,9 +13561,8 @@
 		)
 	)
 	(symbol
-		(lib_name "R_1")
 		(lib_id "Device:R")
-		(at 190.5 99.06 90)
+		(at 195.58 208.28 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -13571,29 +13570,31 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "144bd8f0-b136-4fa9-854f-2c28a0946a55")
-		(property "Reference" "R32"
-			(at 190.246 96.52 90)
+		(uuid "123a1b5b-ab86-4800-9899-68c2afdb4da8")
+		(property "Reference" "R43"
+			(at 197.104 208.28 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "4.75R 2W"
-			(at 190.5 99.06 90)
+		(property "Value" "10R base-stopper"
+			(at 208.534 205.994 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" "RCL12254R75FKEG:RESC3263X80N"
-			(at 190.5 100.838 90)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 195.58 210.058 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13604,7 +13605,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 99.06 0)
+			(at 195.58 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13615,7 +13616,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 190.5 99.06 0)
+			(at 195.58 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13626,15 +13627,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "6fbc2a7f-19ab-4134-8bf7-3ed3fc88f703")
+			(uuid "55099452-0f15-4449-83b8-4e3600ac09c7")
 		)
 		(pin "2"
-			(uuid "98799c62-4b7a-4028-b693-15875bb78ca2")
+			(uuid "e7dece52-51b1-4ee4-8b3f-90d0d5df58fe")
 		)
 		(instances
 			(project "Mains_18V_TEC"
 				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
-					(reference "R32")
+					(reference "R43")
 					(unit 1)
 				)
 			)
@@ -13835,7 +13836,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 			(at 223.52 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -16018,6 +16019,87 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 186.69 210.82 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "568c2ef4-ea96-46a9-a0ac-8eef94971d44")
+		(property "Reference" "R42"
+			(at 186.69 212.344 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10R base-stopper"
+			(at 180.086 216.154 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 184.912 210.82 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 186.69 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 186.69 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f1927dca-3ca4-442b-8c6b-8b53e65160cf")
+		)
+		(pin "2"
+			(uuid "66486c9d-f12f-47d3-b105-732928489d3b")
+		)
+		(instances
+			(project "Mains_18V_TEC"
+				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
+					(reference "R42")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C_Polarized")
 		(at 91.44 218.44 0)
 		(unit 1)
@@ -16337,6 +16419,87 @@
 			(project "Mains_18V_TEC"
 				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
 					(reference "Q4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 215.9 163.83 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "74887c15-6573-4612-a399-2223c55f8f20")
+		(property "Reference" "R41"
+			(at 217.424 163.83 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10R base-stopper"
+			(at 222.504 161.29 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 215.9 165.608 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 215.9 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 215.9 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b7c9ed87-c659-48ce-a55a-0b014dedc775")
+		)
+		(pin "2"
+			(uuid "25abba36-20cd-4265-8b65-59283e71a924")
+		)
+		(instances
+			(project "Mains_18V_TEC"
+				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
+					(reference "R41")
 					(unit 1)
 				)
 			)
@@ -17337,6 +17500,87 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 210.82 170.18 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8d3c50a3-4e69-4016-a617-62cd73336547")
+		(property "Reference" "R40"
+			(at 210.82 171.704 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10R base-stopper"
+			(at 200.66 171.704 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 209.042 170.18 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 210.82 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "48c3ba93-1ae6-43d6-b837-2a26b3aa384b")
+		)
+		(pin "2"
+			(uuid "a1ecef5b-65a0-42b3-9970-76f10afd9840")
+		)
+		(instances
+			(project "Mains_18V_TEC"
+				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
+					(reference "R40")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 269.24 48.26 0)
 		(unit 1)
@@ -17688,7 +17932,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 			(at 233.68 161.29 0)
 			(hide yes)
 			(show_name no)
@@ -18061,86 +18305,6 @@
 			(project "Mains_18V_TEC"
 				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
 					(reference "C36")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "R_2")
-		(lib_id "Device:R")
-		(at 193.04 129.54 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a58f9a5a-d68b-490f-9653-fbdf4caf4026")
-		(property "Reference" "R33"
-			(at 192.786 127.254 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "4.75R 2W"
-			(at 193.04 129.54 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "RCL12254R75FKEG:RESC3263X80N"
-			(at 193.04 131.318 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 193.04 129.54 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 193.04 129.54 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "9493d458-a654-4ad0-bdd1-8cf5624932fa")
-		)
-		(pin "2"
-			(uuid "3daa631f-140c-4a5a-8f2d-44fd307976cb")
-		)
-		(instances
-			(project "Mains_18V_TEC"
-				(path "/cba46944-4f8c-4534-be28-4a917354ebf6"
-					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -19091,7 +19255,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 			(at 204.216 227.33 0)
 			(hide yes)
 			(show_name no)
@@ -20064,7 +20228,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-264-3_Vertical"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
 			(at 215.646 220.98 0)
 			(hide yes)
 			(show_name no)

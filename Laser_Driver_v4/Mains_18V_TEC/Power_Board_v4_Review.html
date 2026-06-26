@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Board v4 (Mains_18V_TEC) — Design Review</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#171a21; --ink:#e7eaf0; --muted:#9aa3b2; --line:#2a2f3a;
+    --accent:#5aa9ff; --crit:#ff5d5d; --warn:#ffb454; --ok:#46d39a; --info:#7aa2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{padding:32px 28px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#1b1f29,#12151c)}
+  header h1{margin:0 0 6px;font-size:26px}
+  header .sub{color:var(--muted)}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 28px 80px}
+  h2{margin:38px 0 12px;font-size:20px;border-left:4px solid var(--accent);padding-left:10px}
+  h3{margin:24px 0 8px;font-size:16px;color:#cfd6e4}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#1d212b;color:#cfd6e4}
+  tr:nth-child(even) td{background:#14171e}
+  code{background:#0c0e13;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12.5px;color:#cdd6e6}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.3px}
+  .crit{background:rgba(255,93,93,.15);color:var(--crit);border:1px solid rgba(255,93,93,.4)}
+  .warn{background:rgba(255,180,84,.13);color:var(--warn);border:1px solid rgba(255,180,84,.4)}
+  .ok{background:rgba(70,211,154,.13);color:var(--ok);border:1px solid rgba(70,211,154,.4)}
+  .info{background:rgba(122,162,255,.13);color:var(--info);border:1px solid rgba(122,162,255,.4)}
+  ul{margin:8px 0 8px 0;padding-left:20px}
+  li{margin:4px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .kv{background:#12151c;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .kv b{display:block;color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .kv span{font-size:18px}
+  .muted{color:var(--muted)}
+  .small{font-size:12.5px}
+  .calc{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#0c0e13;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:#bcd}
+  .tag{font-family:ui-monospace,Consolas,monospace;font-size:12px}
+  footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:18px 28px}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Power Board v4 — Design Review</h1>
+  <div class="sub">Project <b>Mains_18V_TEC</b> · Dual-Laser PDH Driver · 3U Eurocard (160 × 100 mm), 2-layer ·
+  Review date 2026-06-24</div>
+</header>
+<div class="wrap">
+
+<!-- ============ EXEC SUMMARY ============ -->
+<h2>1 · Executive Summary</h2>
+<div class="card">
+<p>This is a <b>dual-transformer linear power board</b> for a Eurocard crate: it generates <b>&plusmn;22&nbsp;V</b>
+auxiliary rails (T1, 50&nbsp;VA) and a high-current <b>&plusmn;6&nbsp;V TEC supply</b> (T2, 160&nbsp;VA), distributed
+through a DIN&nbsp;41612 Type-M backplane connector. The architecture is sound and the parts are real, current,
+and in stock on DigiKey. <b>Both high-severity issues are now resolved (2026-06-24):</b> F1 (pass-transistor
+heatsinking → low-profile Wakefield 657-10ABPE) and F2 (the R32/R33 collector-feed resistors removed and
+base-stoppers R40–R43 added). <b>Remaining work is medium/low</b> — trace sizing (F4), copper weight (F5),
+component lifecycle/stock (F6) — plus confirming the low-line headroom note in §4.3.</p>
+
+<table>
+<tr><th>#</th><th>Severity</th><th>Area</th><th>Finding</th></tr>
+<tr><td>F1</td><td><span class="pill ok">RESOLVED</span></td><td>Thermal</td>
+<td><s>OMNI-UNI-PF-38 clip (8.07 °C/W) inadequate in still air.</s> <b>Fixed 2026-06-24:</b> changed to
+<b>Wakefield 657-10ABPE</b> — low-profile 25.4 mm, fits the 100×160 card (6.8 °C/W nat / 3.7 °C/W @200 LFM).
+Fan-cooled, ≤50 % nominal load → Tj ≈ 69 °C; survives fan loss at nominal indefinitely (~83 °C), ~121 °C worst-case.
+BOM/notes/footprint updated. See §4.1.</td></tr>
+<tr><td>F2</td><td><span class="pill ok">RESOLVED</span></td><td>Topology</td>
+<td><s>R32/R33 (4.75 Ω 2 W) in the MJL collector feed limited TEC current to &lt;0.65 A.</s> <b>Fixed 2026-06-24:</b>
+the headroom math (8.8 V valley − 6 V − 2 V Vce ≈ 0.27 Ω max) showed 4.75 Ω was a leftover from the old ~16 V rail.
+<b>R32/R33 removed</b> (collector tied straight to raw) and <b>base-stopper resistors R40–R43 (10 Ω) added</b> for the
+paralleled pass devices. See §4.3.</td></tr>
+<tr><td>F3</td><td><span class="pill ok">RESOLVED</span></td><td>Docs</td>
+<td><b>Heatsink mismatch fixed 2026-06-24:</b> schematic note, all three BOMs, and the Q7–Q10 footprint now
+consistently specify the <b>657-10ABPE</b> (stale HSE-B18254 / OMNI lines removed, OMNI-UC clip deleted).</td></tr>
+<tr><td>F4</td><td><span class="pill warn">MEDIUM</span></td><td>Traces</td>
+<td><b>±6V_TEC outputs and ±9Vac feeds routed at 1.5 mm</b>, below the 2.5 mm <code>HighCurrent</code> net-class
+spec. Marginal at 3 A DC / ~5 A AC-RMS on assumed 1 oz copper.</td></tr>
+<tr><td>F5</td><td><span class="pill warn">MEDIUM</span></td><td>Fab</td>
+<td><b>No stackup / copper weight defined</b> — defaults to 1 oz (35 µm). A board carrying multi-amp rails should
+explicitly call out 2 oz outer copper.</td></tr>
+<tr><td>F6</td><td><span class="pill warn">MEDIUM</span></td><td>Supply chain</td>
+<td>All bulk electrolytics (Nichicon UPW: C3-6, C34-41, C46-51) are <b>"Not For New Designs."</b>
+T2 (VPT18-8800) has <b>only 2 in stock</b> — single-source risk.</td></tr>
+<tr><td>F7</td><td><span class="pill info">LOW</span></td><td>Topology</td>
+<td>±22 V uses series caps C3/C4 with grounded midpoint from one bridge — rail balance depends on symmetric
+loading; verify bleeders R38/R39 are matched and sized.</td></tr>
+<tr><td>F8</td><td><span class="pill info">LOW</span></td><td>Margin</td>
+<td>Mains fuse is 2 A slow-blow; note states ~0.8 A continuous draw. At full TEC load input ≈ 0.8–0.9 A — modest
+headroom to the documented continuous figure.</td></tr>
+</table>
+<p class="small muted">Severity key: <span class="pill crit">CRITICAL</span> blocks fabrication /
+safety-or-function risk · <span class="pill warn">MEDIUM</span> fix before production ·
+<span class="pill info">LOW</span> advisory.</p>
+</div>
+
+<!-- ============ OVERVIEW ============ -->
+<h2>2 · Board Overview</h2>
+<div class="grid">
+  <div class="kv"><b>Form factor</b><span>160 × 100 mm</span><div class="small muted">3U Eurocard, single height</div></div>
+  <div class="kv"><b>Layers / thickness</b><span>2-layer · 1.6 mm</span><div class="small muted">no stackup defined → 1 oz default</div></div>
+  <div class="kv"><b>Components</b><span>87 placed</span><div class="small muted">29 R · 28 C · 10 Q · 8 D · 6 J · 2 T · 2 U</div></div>
+  <div class="kv"><b>Outputs</b><span>±22 V, ±6 V TEC</span><div class="small muted">via DIN 41612 Type-M J6</div></div>
+  <div class="kv"><b>Mains input</b><span>120 Vac</span><div class="small muted">IEC fused/filtered PEM + NTC inrush</div></div>
+  <div class="kv"><b>Topology</b><span>Linear</span><div class="small muted">bridge + cap-multiplier / pass</div></div>
+</div>
+
+<!-- ============ POWER ARCHITECTURE ============ -->
+<h2>3 · Power Architecture &amp; Rail Analysis</h2>
+<div class="card">
+<h3>Mains front-end</h3>
+<p>120 Vac → <b>PEM01</b> (TE 7-6609940-4 IEC-C14 with integral 2 A slow-blow fuse + EMI filter + switch) →
+<b>TH1</b> (Ametherm SL22 10005, 10 Ω / 5 A NTC inrush limiter) → dual-primary toroids wired for 115 V.
+Transformers are chassis-mount (off-board), wired in via screw terminals J1–J5. <span class="pill ok">OK</span> —
+proper inrush limiting, fusing and filtering. Mains net-class clearance is set to <b>3.0 mm</b> and the on-board
+mains copper is minimal (PEM is panel-mounted).</p>
+
+<h3>Rail 1 — ±22 V auxiliary (T1: Triad VPT30-1670, 50 VA, 2×15 Vac CT)</h3>
+<div class="calc">
+Bridge D1 (GBU4M, 4 A/1000 V) across the 15-0-15 winding; C3/C4 (2200 µF 50 V) in series, midpoint = GND.<br>
+Raw rail   ≈ 15 Vac × √2 − Vf  ≈  <b>±20 V</b><br>
+Each series cap sees ≈ 20 V across a 50 V part  →  OK (2.5× derating).<br>
+Pass: Q1 IRF540N / Q2 IRF9540N MOSFET cap-multiplier → ±22VNF → series R8/R9 (4.75 Ω) → ±22 V → J6.P5/P7.<br>
+Net rail under load ≈ 18–19 V (label "22 V" is nominal). Adequate to feed downstream ±15 V regulators.
+</div>
+<p class="small">R2/R3 (15 Ω 15 W wirewound) are in parallel with the MOSFET D-S as soft-start/bleed; in steady state
+Vds≈0 so dissipation ≈ 0 W. <span class="pill ok">OK</span></p>
+
+<h3>Rail 2 — ±6 V TEC supply (T2: Triad VPT18-8800, 160 VA, 2×9 Vac CT) — high current</h3>
+<div class="calc">
+Bridge D7 (GBU1506, 15 A/600 V, heatsinked) on the 9-0-9 winding, CT = DGND.<br>
+Reservoir: 6 × 3300 µF 25 V (C34-39), ≈ 9900 µF per rail.<br>
+Raw rail ≈ 9 Vac × √2 − Vf  ≈ <b>±11.5 V</b>  (rises to ≈ ±12.5 V at light load, T2 reg = 8%).<br>
+120 Hz ripple at 3 A: ΔV = I·t/C = 3 × (1/120) / 9.9 mF ≈ <b>2.5 Vpp</b> → valley ≈ 9 V.<br>
+Pass network: Q3/Q4 MOSFET cap-multiplier + MJL21193 (PNP, −6 V) / MJL21194 (NPN, +6 V) pass pairs,<br>
+driven by Q5/Q6, referenced by U11/U12 (LM4051 adj shunt) → ±6V_TEC → J6 power blades.
+</div>
+<p class="small">The 25 V reservoir caps on an ±11.5 V raw rail give 2.2× derating — <span class="pill ok">OK</span>.
+T2 at 160 VA is generously rated: TEC delivers 2×6 V×3 A = 36 W, and linear losses add a roughly equal amount,
+so input ≈ 70–80 VA — within rating but note the ~45 % efficiency means the board itself must shed ≈ 36 W of heat.</p>
+</div>
+
+<!-- ============ THERMAL ============ -->
+<h2>4 · Thermal Verification</h2>
+
+<div class="card">
+<h3>4.1 TEC pass transistors Q7–Q10 (MJL21193/4, TO-264) — <span class="pill ok">RESOLVED (F1)</span></h3>
+<p class="small muted" style="margin-top:0">Update 2026-06-24: heatsink changed from the OMNI-UNI-PF-38 clip (8.07 °C/W)
+to a <b>Wakefield 657 vertical board-mount sink</b> after confirming the system is fan-cooled and nominal TEC load is
+≤ 50 % (≈ 1.5 A/rail). The first pick (657-25ABPE, 63.5 mm tall) was too tall/bulky for the 100×160 mm Eurocard, so
+the board uses the low-profile <b>657-10ABPE (25.4 mm tall)</b> — same 41.9×25.4 mm base and pin pattern (shared
+extrusion 6533), so the composite footprint <code>Heatsinks:TO-264-3_Vertical_HS657-25ABPE</code> is unchanged. At
+25.4 mm it matches the existing reservoir-cap height. BOM and schematic/PCB notes updated to match.</p>
+<p>Two paralleled pass devices per rail (emitter ballast R34–R37 = 0.1 Ω). Per-device dissipation, V_raw≈11.5 V,
+V_out=6 V (~6 V drop):</p>
+<div class="calc">
+Nominal (≤50%, 1.5 A/rail):  P_device = (11.5−6)×1.5 / 2 ≈ <b>4.5 W</b><br>
+Max     (3 A/rail):          P_device = (11.5−6)×3   / 2 ≈ <b>9 W</b><br><br>
+<b>657-10ABPE</b> (25.4 mm) = 6.8 °C/W natural · 3.7 °C/W @200 LFM ; θ_jc 0.875 + pad 0.7 = 1.575 °C/W ; Ta ≈ 45 °C<br>
+Fan ON,  nom 4.5 W:  θ_total = 1.575 + 3.7  = 5.28 → Tj ≈ <b>69 °C</b>   ✓<br>
+Fan ON,  max 9 W:    θ_total = 5.28          → Tj ≈ <b>92 °C</b>   ✓<br>
+Fan FAIL, nom 4.5 W: θ_total = 1.575 + 6.8  = 8.4  → Tj ≈ <b>83 °C</b>   ✓ indefinite<br>
+Fan FAIL, max 9 W:   θ_total = 8.4           → Tj ≈ <b>121 °C</b>  ✓ survivable (shutdown time)
+</div>
+<p><b>Verdict:</b> <span class="pill ok">PASS</span>, and it fits the card. With the fan the junction sits ~69 °C at
+nominal load. A <b>fan failure is survivable indefinitely at nominal load</b> (~83 °C); even the worst case (full 3 A
+<i>and</i> fan loss simultaneously) only reaches ~121 °C — under the 125 °C target and well under the 150 °C max —
+with thermal mass giving ample time for an orderly shutdown. 4 × 657-10ABPE (DK 657-10ABPE-ND, in stock, $2.49 ea).</p>
+<p class="small muted"><b>Mechanical follow-ups:</b> 657-10ABPE is 25.4 mm tall (same as the reservoir caps) and
+bolt-on (adds a #6 screw per device); four fit as 2 rows of 2 (~84×51 mm). Confirm the composite footprint's
+solder-pin depth against the physical part. If even the 41.9 mm width is too tight, an OMNI-UNI-PF-38 clip
+(30×27 mm, but 8.07 °C/W and a footprint change) is the ultra-compact fallback. Pass-device dissipation still depends
+on F2 (now resolved — R32/R33 removed); the numbers above bound the worst case.</p>
+</div>
+
+<div class="card">
+<h3>4.2 Bridge rectifiers</h3>
+<table>
+<tr><th>Part</th><th>Rating</th><th>Role</th><th>Est. dissipation</th><th>Heatsink</th><th>Verdict</th></tr>
+<tr><td>D7 GBU1506</td><td>15 A / 600 V</td><td>TEC, ~3 A/rail</td><td>≈ 2·Vf·I ≈ 5–6 W</td><td>Yes (note)</td><td><span class="pill ok">OK</span></td></tr>
+<tr><td>D1 GBU4M</td><td>4 A / 1000 V</td><td>±22 V, &lt;0.5 A</td><td>&lt; 1 W</td><td>No</td><td><span class="pill ok">OK</span></td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>4.3 Power resistors</h3>
+<table>
+<tr><th>Ref</th><th>Value / rating</th><th>Role</th><th>Worst-case P</th><th>Verdict</th></tr>
+<tr><td>R2,R3,R20,R21</td><td>15 Ω 15 W WW (TUW15J15RE)</td><td>Soft-start / bleed across MOSFET D-S</td><td>≈ 0 W steady state</td><td><span class="pill ok">OK</span></td></tr>
+<tr><td>R8,R9</td><td>4.75 Ω 2 W (RCL1225)</td><td>±22 V output series</td><td>~1.2 W @ 0.5 A</td><td><span class="pill warn">Warm — watch if rail load grows</span></td></tr>
+<tr><td><s>R32,R33</s></td><td>removed</td><td>was MJL collector feed</td><td>—</td><td><span class="pill ok">REMOVED — see F2</span></td></tr>
+<tr><td>R34-R37</td><td>0.1 Ω 1 W (WSL2512)</td><td>Emitter ballast (DC sharing)</td><td>~0.22 W @ 1.5 A</td><td><span class="pill ok">OK</span></td></tr>
+<tr><td>R40-R43</td><td>10 Ω 0805 (RC0805FR-0710RL)</td><td>Base stoppers (HF stability)</td><td>~9 mW</td><td><span class="pill ok">Added</span></td></tr>
+</table>
+<p class="small"><b>F2 detail (resolved 2026-06-24):</b> R32/R33 (4.75 Ω) fed the MJL collector node and, carrying the
+full load current, capped it at √(2 W/4.75 Ω) ≈ <b>0.65 A</b> — incompatible with the 3 A spec, and a leftover from
+the earlier ~16 V raw rail. Working back from F1 (raw ≈ 11.3 V, ripple valley ≈ 8.8 V at 3 A, Vout 6 V, Vce ≥ 2 V):
+R_max = (8.8 − 6 − 2)/3 ≈ <b>0.27 Ω</b> — far below 4.75 Ω, and at 0.1 Ω the resistor is lost in the trace/connector
+parasitics. <b>Resolution:</b> R32/R33 <b>removed</b> (collector tied directly to the cleaned raw node via heavy copper);
+the pass transistor takes the full ~6 W/device, which the 657-10ABPE covers (§4.1). Because the bases of the paralleled
+MJL devices were commoned, <b>base-stopper resistors R40–R43 (10 Ω 0805, one per device, placed at the base pin)</b>
+were added to suppress HF parasitic oscillation. <b>Residual caveat:</b> even with R≈0, the 9 Vac rail gives only
+~1.5 V Vce headroom at full 3 A and −10 % line — true worst-case 3 A is at the edge of dropout, so a hard 3 A spec
+would want a slightly higher TEC secondary tap. Not an issue at the ≤50 % nominal load.</p>
+</div>
+
+<!-- ============ TRACES ============ -->
+<h2>5 · Trace / Current-Capacity Verification</h2>
+<div class="card">
+<p>Copper weight is <b>not specified</b> (no stackup) → KiCad default <b>1 oz / 35 µm</b> outer copper assumed.
+IPC-2221 external-layer ampacity for the routed widths:</p>
+<table>
+<tr><th>Width</th><th>Area (1 oz)</th><th>I @ ΔT=10 °C</th><th>I @ ΔT=20 °C</th><th>I @ ΔT=30 °C</th></tr>
+<tr><td>1.5 mm</td><td>0.053 mm²</td><td>~3.2 A</td><td>~4.4 A</td><td>~5.2 A</td></tr>
+<tr><td>2.5 mm</td><td>0.088 mm²</td><td>~4.6 A</td><td>~6.3 A</td><td>~7.6 A</td></tr>
+</table>
+
+<h3>Net-class spec vs. as-routed</h3>
+<table>
+<tr><th>Net</th><th>Class width</th><th>As routed</th><th>Current</th><th>Verdict</th></tr>
+<tr><td>±TEC_RAW, ±RAW22, GND/DGND</td><td>—</td><td><b>Poured zones, both layers</b> (filled)</td><td>raw / return</td><td><span class="pill ok">OK — bulk via planes</span></td></tr>
+<tr><td>+6V_TEC / −6V_TEC</td><td>2.5 mm (HighCurrent)</td><td><b>mostly 1.5 mm</b> (only a few 2.5 mm segs)</td><td>3 A</td><td><span class="pill warn">Marginal — ~9 °C rise, below spec (F4)</span></td></tr>
+<tr><td>+9Vac / −9Vac</td><td>2.5 mm (HighCurrent)</td><td><b>1.5 mm</b></td><td>~5 A RMS (cap-input)</td><td><span class="pill warn">Undersized — ~25–30 °C rise (F4)</span></td></tr>
+<tr><td>Net-(Q10-C), Net-(Q7-C) collectors</td><td>—</td><td>1.5 mm</td><td>full pass current</td><td><span class="pill warn">Match to output width</span></td></tr>
+<tr><td>+22V / −22V</td><td>—</td><td>1.5 mm</td><td>&lt; 0.5 A</td><td><span class="pill ok">OK</span></td></tr>
+<tr><td>High-current vias</td><td>1.2 mm (class)</td><td>0.6 mm / 0.3 mm drill (few)</td><td>layer transitions</td><td><span class="pill info">Undersized but few — mostly single-layer + pours</span></td></tr>
+</table>
+<p class="small"><b>F4/F5 recommendation:</b> Re-pour or widen +6V_TEC / −6V_TEC and the ±9Vac feeds to the 2.5 mm
+class (or convert them to zones like the raw rails), and <b>explicitly specify 2 oz outer copper</b> in the stackup.
+With 2 oz, even the existing 1.5 mm routing comfortably carries 3 A — the cheapest robust fix is to set 2 oz copper
+and re-run the DRC ampacity check. The poured raw rails and grounds are already fine on either weight.</p>
+</div>
+
+<!-- ============ DIGIKEY ============ -->
+<h2>6 · Component Verification (DigiKey, live)</h2>
+<div class="card">
+<p>The BOM was priced against the live DigiKey API on <b>2026-06-22</b>; the highest-risk lines were
+re-queried <b>today (2026-06-24)</b>. <b>All 37 BOM lines resolve to real, orderable DigiKey parts.</b>
+No part is obsolete or discontinued. Lifecycle/stock flags:</p>
+<table>
+<tr><th>Part</th><th>Refs</th><th>DigiKey P/N</th><th>Status</th><th>Stock</th><th>Note</th></tr>
+<tr><td>UPW1E332MHD (Nichicon 3300µF)</td><td>C34-39</td><td>493-1841-ND</td><td><span class="pill warn">Not For New Designs</span></td><td>598</td><td>functional; plan replacement</td></tr>
+<tr><td>UPW-series (2200/1000 µF)</td><td>C3-6, C40-51</td><td>various 493-*</td><td><span class="pill warn">Not For New Designs</span></td><td>OK</td><td>same family, migrate</td></tr>
+<tr><td>VPT18-8800 (Triad, T2)</td><td>T1/T2</td><td>237-1344-ND</td><td><span class="pill ok">Active</span></td><td><span class="pill crit">2</span></td><td>single-source risk — buy ahead / 2nd source</td></tr>
+<tr><td>MJL21194G / MJL21193G</td><td>Q7-Q10</td><td>MJL2119xGOS-ND</td><td><span class="pill ok">Active</span></td><td>322 / 2013</td><td>OK</td></tr>
+<tr><td>OMNI-UNI-PF-38</td><td>Q7-Q10 sink</td><td>345-1600-ND</td><td><span class="pill ok">Active</span></td><td>877</td><td>real, but see F1 (under-spec thermally)</td></tr>
+<tr><td>IRF540N / IRF9540N, LM4051, GBU1506, GBU4M, 1N4742A, Phoenix/TE conns, PEM, fuse</td><td>—</td><td>all resolved</td><td><span class="pill ok">Active</span></td><td>OK</td><td>healthy stock</td></tr>
+</table>
+<p class="small">Lines tagged <code>APPROX MATCH (verify)</code> in the priced BOM (GBU4M, GBU1506, 1N4742A,
+SL2210005, 60.4 k) are standard industry parts — low risk; just confirm the exact orderable suffix before
+placing the order. <b>BOM-vs-schematic (F3) — resolved:</b> heatsink now consistently the Wakefield 657-10ABPE
+(×4) + WTI7R1F0 pad across all three BOMs, the schematic/PCB notes, and the Q7–Q10 footprint.</p>
+</div>
+
+<!-- ============ RECOMMENDATIONS ============ -->
+<h2>7 · Prioritized Action List</h2>
+<div class="card">
+<h3>Before fabrication — both blocking items now cleared <span class="pill ok">✓</span></h3>
+<ul>
+<li><b>F2 — <span class="pill ok">DONE</span></b> R32/R33 removed (collector tied to raw); base stoppers R40–R43
+(10 Ω) added; BOM updated. Remaining: confirm the worst-case TEC current vs. the low-line dropout headroom note (§4.3)
+— only relevant if a hard 3 A at −10 % line is required.</li>
+<li><b>F1 — <span class="pill ok">DONE</span></b> Heatsink set to low-profile Wakefield 657-10ABPE (25.4 mm, ×4);
+BOM, notes and Q7–Q10 footprint updated, fits the 100×160 card. Remaining: verify the composite footprint's
+solder-pin depth against the physical part.</li>
+</ul>
+<h3>Before production</h3>
+<ul>
+<li><b>F5 —</b> Add a stackup and specify <b>2 oz outer copper</b>; re-run DRC track-width/ampacity.</li>
+<li><b>F4 —</b> Widen +6V_TEC / −6V_TEC and ±9Vac to the 2.5 mm <code>HighCurrent</code> class (or pour them);
+match collector traces.</li>
+<li><b>F3 — <span class="pill ok">DONE</span></b> Heatsink note/BOM/footprint reconciled to the 657-10ABPE.
+Still delete the stale "−16.6 V / Q17" annotation in the TEC regulator note.</li>
+<li><b>F6 —</b> Plan replacements for the "Not For New Designs" Nichicon electrolytics; secure a second source
+or stock for T2 (VPT18-8800, qty 2 available).</li>
+</ul>
+<h3>Advisory</h3>
+<ul>
+<li><b>F7 —</b> Verify ±22 V series-cap balance under asymmetric load; ensure R38/R39 bleeders are matched.</li>
+<li><b>F8 —</b> Confirm total input-current headroom vs. the 2 A / 0.8 A-continuous mains fuse at full TEC load.</li>
+<li>Enlarge the few high-current vias to the 1.2 mm class where any multi-amp net changes layers.</li>
+</ul>
+</div>
+
+<p class="small muted">Method: parsed <code>Mains_18V_TEC.kicad_sch</code> / <code>.kicad_pcb</code> /
+<code>.kicad_pro</code> for netlist connectivity, net classes, routed track/zone geometry and stackup; cross-checked
+the priced BOM and live DigiKey API; thermal/ampacity per IPC-2221 and vendor datasheets (Wakefield 657-10ABPE
+= 6.8 °C/W nat / 3.7 °C/W @200 LFM, ext. profile 6533; Triad VPT18-8800 = 160 VA, 2×9 Vac CT, 8 % reg).
+<b>Revision 2026-06-24:</b> F1/F3 resolved (low-profile 657-10ABPE heatsink + composite Q7–Q10 footprint, fits the
+100×160 mm Eurocard) and F2 resolved (R32/R33 removed, base-stoppers R40–R43 added). All applied to the BOMs and
+schematic/PCB notes. Only the worst-case 3 A low-line dropout note (§4.3) is left for the designer to confirm against
+the real TEC duty.</p>
+
+</div>
+<footer>
+Generated 2026-06-24 · Power Board v4 (Mains_18V_TEC) review · figures are engineering estimates for review
+guidance, not a substitute for bench thermal measurement.
+</footer>
+</body>
+</html>
