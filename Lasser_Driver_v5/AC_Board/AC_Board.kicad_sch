@@ -1227,7 +1227,7 @@
 					)
 				)
 			)
-			(property "Value" "Triad VPT30-1670"
+			(property "Value" "Triad VPT36-1390"
 				(at 0 12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2575,6 +2575,12 @@
 		(uuid "1b28b112-2e6b-4ab7-bbc6-ed64d652a6a8")
 	)
 	(junction
+		(at 87.63 50.8)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1b2fba86-7503-42c0-99ba-ecc1803fa6a2")
+	)
+	(junction
 		(at 125.73 48.26)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2605,10 +2611,10 @@
 		(uuid "64f85254-4ea2-4b3a-9ab5-bc098e82adb2")
 	)
 	(junction
-		(at 72.39 45.72)
+		(at 72.39 50.8)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "7f207888-cbf1-4a4e-8fec-3cba429ceeab")
+		(uuid "6eaa77ea-e141-4751-8f16-e947be52e6c4")
 	)
 	(junction
 		(at 133.35 69.85)
@@ -2633,12 +2639,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "93539e9b-c900-4330-bf7e-74ed73cde9ef")
-	)
-	(junction
-		(at 87.63 45.72)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ba1f1421-c3a4-47ec-a866-0fbdcae2cba4")
 	)
 	(junction
 		(at 116.84 40.64)
@@ -2722,7 +2722,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 77.47) (xy 72.39 45.72)
+			(xy 72.39 77.47) (xy 72.39 50.8)
 		)
 		(stroke
 			(width 0)
@@ -2749,16 +2749,6 @@
 			(type default)
 		)
 		(uuid "187077bf-6d9d-4f1a-b1a4-660afe878600")
-	)
-	(wire
-		(pts
-			(xy 90.17 57.15) (xy 90.17 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1f73c130-b0b2-4873-8009-13b041c9c642")
 	)
 	(wire
 		(pts
@@ -2809,6 +2799,16 @@
 			(type default)
 		)
 		(uuid "39162f9e-d5bf-4ff8-9c72-7c86fc73c71e")
+	)
+	(wire
+		(pts
+			(xy 87.63 45.72) (xy 87.63 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3f4b204c-4b27-4441-b95b-4010b1b52ae0")
 	)
 	(wire
 		(pts
@@ -2872,6 +2872,16 @@
 	)
 	(wire
 		(pts
+			(xy 87.63 50.8) (xy 90.17 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5529f0e9-84ef-49e0-89d8-2fae99772909")
+	)
+	(wire
+		(pts
 			(xy 116.84 40.64) (xy 133.35 40.64)
 		)
 		(stroke
@@ -2919,6 +2929,16 @@
 			(type default)
 		)
 		(uuid "6334cd81-0d53-4582-b701-2e3d943c7db3")
+	)
+	(wire
+		(pts
+			(xy 90.17 50.8) (xy 90.17 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "66bf36af-7a7d-473e-b232-50033ac59a7e")
 	)
 	(wire
 		(pts
@@ -2972,6 +2992,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 50.8) (xy 87.63 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87e13e7b-b3ae-43d1-ac2a-49f6a85cc712")
+	)
+	(wire
+		(pts
 			(xy 156.21 90.17) (xy 162.56 90.17)
 		)
 		(stroke
@@ -2999,16 +3029,6 @@
 			(type default)
 		)
 		(uuid "8dc4c214-67f3-4d5a-a177-a88dee4bc57f")
-	)
-	(wire
-		(pts
-			(xy 90.17 45.72) (xy 87.63 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8e653f38-e848-4d3f-b758-d13094a7ebe1")
 	)
 	(wire
 		(pts
@@ -3062,6 +3082,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 50.8) (xy 72.39 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b052e969-f19b-4732-9911-db460cfa2ae1")
+	)
+	(wire
+		(pts
 			(xy 133.35 53.34) (xy 133.35 82.55)
 		)
 		(stroke
@@ -3099,16 +3129,6 @@
 			(type default)
 		)
 		(uuid "c7838bd0-e5a2-4b3a-9c19-2c42842dc764")
-	)
-	(wire
-		(pts
-			(xy 72.39 45.72) (xy 87.63 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cf59a4cb-a430-479c-99a1-0cae33ceece2")
 	)
 	(wire
 		(pts
@@ -3210,6 +3230,16 @@
 		)
 		(uuid "ff4df5a0-2be8-41a6-be73-76e660106a63")
 	)
+	(label "Line_TH"
+		(at 108 40.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7d8c6a37-fea3-459a-9096-7317eac4e27f")
+	)
 	(global_label "-9Vac"
 		(shape input)
 		(at 162.56 90.17 0)
@@ -3234,7 +3264,7 @@
 			)
 		)
 	)
-	(global_label "-22Vac"
+	(global_label "-18Vac"
 		(shape input)
 		(at 161.29 60.96 0)
 		(fields_autoplaced yes)
@@ -3306,7 +3336,7 @@
 			)
 		)
 	)
-	(global_label "0Vac"
+	(global_label "Neutral"
 		(shape output)
 		(at 76.2 43.18 180)
 		(fields_autoplaced yes)
@@ -3318,7 +3348,7 @@
 		)
 		(uuid "baac3f1e-4f34-4f11-8c76-7997ab13a120")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 68.6791 43.18 0)
+			(at 66.3206 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3330,7 +3360,7 @@
 			)
 		)
 	)
-	(global_label "+22Vac"
+	(global_label "+18Vac"
 		(shape input)
 		(at 160.02 40.64 0)
 		(fields_autoplaced yes)
@@ -3625,7 +3655,7 @@
 				)
 			)
 		)
-		(property "Value" "Triad VPT30-1670"
+		(property "Value" "Triad VPT36-1390"
 			(at 146.05 38.1 0)
 			(show_name no)
 			(do_not_autoplace no)

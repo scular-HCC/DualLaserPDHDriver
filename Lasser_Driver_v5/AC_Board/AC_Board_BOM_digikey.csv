@@ -1,0 +1,8 @@
+Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint,Description
+3,1757255,Phoenix Contact,"J1,J2,J3","MSTBA 2,5/3-G-5,08",Phoenix_MSTBA_3,Term block header 3pos 5.08mm horiz
+1,7-6609940-4,TE Connectivity,PEM01,IEC inlet+fuse+filter+sw,Chassis,"Power entry module, 2A fused/EMI/switch"
+1,0218002.MXP,Littelfuse,PEM01 fuse,2A 5x20 Slo-Blo,Cartridge (in PEM),Fuse 2A 250VAC 5x20mm time-lag for PEM01
+1,CRCW08051K00FKEA,Vishay Dale,R1,1k,R_0805,Res 1k 1% 1/8W 0805 (earth-GND bleed)
+1,VPT36-1390,Triad Magnetics,T1,2x18V 50VA,Chassis,Xfmr dual-pri 2x115V sec 2x18V
+1,VPT18-8800,Triad Magnetics,T2,2x9V,Chassis,Xfmr dual-pri 2x115V sec 2x9V
+1,SL2210005,Ametherm,TH1,SL22 10005,R_Axial_DIN0411,Inrush NTC 10ohm 5A
