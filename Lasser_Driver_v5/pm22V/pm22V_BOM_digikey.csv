@@ -1,18 +1,19 @@
 Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint,Description
-2,CL21B474KBFNNNE,Samsung,"C1,C2",0.47uF,C_0805,MLCC 0.47uF 50V X7R 0805 (gate soft-start)
-4,UVZ1H222MHD,Nichicon,"C3,C4,C9,C10",2200uF 50V,CP_Radial_D18.0mm_P7.5mm,Al elec 2200uF 50V 105C 18x35.5 7.5mm (reservoir)
-2,UHE1H102MHD,Nichicon,"C5,C6",1000uF 50V,CP_Radial_D16.0mm_P7.5mm,Al elec 1000uF 50V 105C 16x25 7.5mm (output)
-2,CL21B225KBYNNWE,Samsung,"C7,C8",2.2uF,C_0805,MLCC 2.2uF 50V X7R 0805 (output bypass)
-1,GBPC1510-E4/51,Vishay,D1,GBPC1510,Diode_Bridge_GBPC,Bridge rect 15A 1000V GBPC bolt
-2,1N4742ATR,onsemi,"D2,D3",1N4742A,D_DO-41,Zener 12V 1W DO-41 (Vgs clamp)
-2,531102B02500G,Boyd,"HS1,HS2",Heatsink TO-220,Heatsink_H38.1mm,Heatsink TO-220 board-mount H38.1mm
-1,6223BG,Boyd,HS3,Heatsink GBPC,Bridge_GBPC_Heatsink,Heatsink for GBPC bridge
-2,4880G,Boyd,"Q1,Q2 (TO-220 iso)",TO-220 mount kit,Hardware (off-PCB),Insulator+shoulder washer kit; isolates FET tab from heatsink
-1,1757255,Phoenix Contact,J5,"MSTBA 2,5/3-G-5,08",Phoenix_MSTBA_3,Term block header 3pos 5.08mm horiz
-1,374144-E,TE/ERNI,J6,DIN41612 M 3x8+8,DIN41612_M_Power_Male,DIN41612 Type M 24sig+8pwr R/A male
-1,IRF540NPBF,Infineon,Q1,IRF540N,TO-220-3,N-MOSFET 100V 33A TO-220 (pos pass)
-1,IRF9540NPBF,Infineon,Q2,IRF9540N,TO-220-3,P-MOSFET -100V TO-220 (neg pass)
-2,TUW15J15RE,Ohmite,"R2,R3",15 ohm 15W,R_Axial_Power_P45.72mm,WW 15ohm 15W axial (soft-start)
-2,RC0805FR-071ML,Yageo,"R4,R5",1M,R_0805,Res 1M 1% 1/8W 0805 (gate bleed)
-2,RC0805FR-07100KL,Yageo,"R6,R7",100k,R_0805,Res 100k 1% 1/8W 0805 (gate pull)
-2,CRL1206-FW-R470ELF,Bourns,"R8,R9",0.47,R_1206,Res 0.47ohm 1% 1/2W 1206 (output series)
+2,CL21B474KBFNNNE,Samsung,"pm22V C1,C2",0.47uF,C_0805,MLCC 0.47uF 50V X7R 0805 (gate soft-start)
+4,UVZ1H222MHD,Nichicon,"pm22V C3,C4,C9,C10",2200uF 50V,CP_Radial_D18.0mm_P7.5mm,Al elec 2200uF 50V 105C 18x35.5 7.5mm (reservoir)
+2,UHE1H102MHD,Nichicon,"pm22V C5,C6",1000uF 50V,CP_Radial_D16.0mm_P7.5mm,Al elec 1000uF 50V 105C 16x25 7.5mm (output)
+2,CL21B225KBYNNWE,Samsung,"pm22V C7,C8",2.2uF,C_0805,MLCC 2.2uF 50V X7R 0805 (output bypass)
+1,GBPC1510W,Surge Components,pm22V D1,GBPC1510W (GBPC-W),Diode_Bridge_GBPC-W_PCB,Bridge rect 15A 1000V GBPC-W wire-lead PCB+bolt
+2,1N4742ATR,onsemi,"pm22V D2,D3",1N4742A,D_DO-41,Zener 12V 1W DO-41 (Vgs clamp)
+2,531102B02500G,Boyd,"pm22V HS1,HS2",Heatsink TO-220,Heatsink_H38.1mm,Heatsink TO-220 board-mount H38.1mm
+1,6223BG,Boyd,pm22V HS3,Heatsink GBPC,Bridge_GBPC_Heatsink,Heatsink for GBPC bridge
+2,4880G,Boyd,"pm22V Q1,Q2 (TO-220 iso)",TO-220 mount kit,Hardware (off-PCB),Insulator+shoulder washer kit; isolates FET tab from heatsink
+1,TG-A3500-30-30-0.5,t-Global,pm22V D1/HS3 (thermal),30x30x0.5mm pad,Hardware (off-PCB),Thermal pad 30x30x0.5mm for GBPC bridge to HS3
+1,1729131,Phoenix Contact,pm22V J5,"MKDS 1,5/3-5,08",TerminalBlock_MKDS_3_P5.08mm,Single-piece PCB screw terminal 3pos 5.08mm side-entry
+1,374144-E,TE/ERNI,pm22V J6,DIN41612 M 3x8+8,DIN41612_M_Power_Male,DIN41612 Type M 24sig+8pwr R/A male
+1,IRF540NPBF,Infineon,pm22V Q1,IRF540N,TO-220-3,N-MOSFET 100V 33A TO-220 (pos pass)
+1,IRF9540NPBF,Infineon,pm22V Q2,IRF9540N,TO-220-3,P-MOSFET -100V TO-220 (neg pass)
+2,TUW15J15RE,Ohmite,"pm22V R2,R3",15 ohm 15W,R_Axial_Power_P45.72mm,WW 15ohm 15W axial (soft-start)
+2,RC0805FR-071ML,Yageo,"pm22V R4,R5",1M,R_0805,Res 1M 1% 1/8W 0805 (gate bleed)
+2,RC0805FR-07100KL,Yageo,"pm22V R6,R7",100k,R_0805,Res 100k 1% 1/8W 0805 (gate pull)
+2,CRL1206-FW-R470ELF,Bourns,"pm22V R8,R9",0.47,R_1206,Res 0.47ohm 1% 1/2W 1206 (output series)
