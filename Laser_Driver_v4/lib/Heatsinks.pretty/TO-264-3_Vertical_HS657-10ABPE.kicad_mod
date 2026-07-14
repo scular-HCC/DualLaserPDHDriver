@@ -1,12 +1,12 @@
-(footprint "TO-264-3_Vertical_HS657-25ABPE"
+(footprint "TO-264-3_Vertical_HS657-10ABPE"
 	(version 20240108)
 	(generator "pcbnew")
 	(layer "F.Cu")
-	(descr "TO-264-3 vertical transistor (RM 5.45mm, MJL21193/MJL21194) bolted to a Wakefield 657-series vertical board-mount heat sink (extrusion 6533 - identical base/pin pattern for 657-10/15/20/25ABPE; the board uses 657-10ABPE, 25.4mm tall, to fit the 100x160 Eurocard). Combined footprint: pads 1/2/3 = device B/C/E (drill 1.5mm); two unnamed plated pads = heat-sink wave-solder pins (Wakefield 6533 extrusion, 0.093in/2.4mm pins on 1.000in/25.4mm centers, centred on device tab axis). Heat-sink base 41.9 x 25.4mm; device mounting hole 0.144in/3.7mm at 21.6mm up the vertical face (NOT a board hole). Pad pitch and pin span are exact; the pin-row depth (Y) is set 8.0mm behind the lead plane (~4mm into the base per the 6533 drawing) and should be verified against the physical part before fabrication. FINALIZED heatsink = Wakefield 657-10ABPE (1in, ~10C/W) - pin pattern identical for all 657-10/15/20/25ABPE. Isolate device tab from sink with insulating thermal pad (Wakefield WTI7R1F0-1.00X0.75) plus a #4 shoulder washer (Boyd 7721-7PPSG) on the mounting bolt. Per-device dissipation ~4.4W (+6V Q9/Q10) / ~2.6W (-6V Q7/Q8) avg per v3 power analysis; Tj ~100C.")
-	(tags "TO-264 TO-247 heatsink 657-25ABPE Wakefield vertical MJL21193 MJL21194 power pass transistor")
+	(descr "TO-264-3 vertical transistor (RM 5.45mm, MJL21193/MJL21194) bolted to a Wakefield 657-10ABPE vertical board-mount heat sink (extrusion 6533 - symmetric fin profile with a central mounting web; identical base/pad/pin pattern for all 657-10/15/20/25ABPE; the -10 = 1in/25.4mm tall variant is used to fit the 100x160 Eurocard). The device bolts to the CENTRAL WEB (0.144in/3.7mm hole THRU, 21.6mm up the vertical face) so the transistor sits centred in the 25.4mm heat-sink depth, NOT on the front face. Combined footprint (origin = device centre lead): pads 1/2/3 = device B/C/E (drill 1.5mm) at the depth-centre of the sink; two unnamed plated pads = heat-sink wave-solder pins (0.093in/2.4mm dia on 1.000in/25.4mm centres across the 41.9mm width, symmetric about the device). Heat-sink base 41.9 x 25.4mm, centred on the device leads. Pad pitch and pin span are exact; the pins are drawn coplanar with the device lead row (depth Y=0) - VERIFY the exact pin-row depth against the physical part before fabrication. Thermal 6.8 C/W natural (41C@6W), 3.7 C/W @ 200 LFM. Isolate device tab from sink with an insulating thermal pad (Same Sky/Wakefield WTI7R1F0-1.00X0.75) plus a #4 shoulder washer (Boyd 7721-7PPSG) on the mounting bolt. Per-device dissipation ~4.5W avg (fan-cooled Tj ~69C) per v3 power analysis.")
+	(tags "TO-264 TO-247 heatsink 657-10ABPE Wakefield vertical MJL21193 MJL21194 power pass transistor")
 	(attr through_hole)
 	(property "Reference" "REF**"
-		(at 5.45 -2.6 0)
+		(at 5.45 -14.6 0)
 		(layer "F.SilkS")
 		(effects
 			(font
@@ -15,8 +15,8 @@
 			)
 		)
 	)
-	(property "Value" "TO-264-3_Vertical_HS657-25ABPE"
-		(at 5.45 31.5 0)
+	(property "Value" "TO-264-3_Vertical_HS657-10ABPE"
+		(at 5.45 14.6 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -25,7 +25,7 @@
 			)
 		)
 	)
-	(property "Datasheet" "https://www.digikey.com/en/products/detail/wakefield-thermal-solutions/657-25ABPE/5068326"
+	(property "Datasheet" "https://wakefieldthermal.com/content/data_sheets/647%20(1).pdf"
 		(at 5.45 0 0)
 		(layer "F.Fab")
 		(hide yes)
@@ -37,7 +37,7 @@
 		)
 	)
 	(fp_text user "${REFERENCE}"
-		(at 5.45 16 0)
+		(at 5.45 -6.0 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -46,8 +46,8 @@
 			)
 		)
 	)
-	(fp_text user "657-25ABPE  4.17C/W nat | 2.7C/W @200LFM"
-		(at 5.45 18.2 0)
+	(fp_text user "657-10ABPE  6.8C/W nat | 3.7C/W @200LFM"
+		(at 5.45 6.0 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -56,8 +56,8 @@
 			)
 		)
 	)
-	(fp_text user "Tab hole 3.7mm @21.6mm UP face (not a board hole)"
-		(at 5.45 20 0)
+	(fp_text user "Device bolts to central web (hole 3.7mm @21.6mm UP face)"
+		(at 5.45 8.0 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -67,7 +67,7 @@
 		)
 	)
 	(fp_text user "VERIFY pin-row depth vs part"
-		(at 5.45 9.6 0)
+		(at 5.45 10.0 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -77,7 +77,7 @@
 		)
 	)
 	(fp_text user "HS pin 2.4mm"
-		(at -7.25 5.6 0)
+		(at -7.25 -2.6 0)
 		(layer "F.SilkS")
 		(effects
 			(font
@@ -87,7 +87,7 @@
 		)
 	)
 	(fp_text user "25.4mm centres"
-		(at 5.45 6.4 0)
+		(at 5.45 -9.0 0)
 		(layer "F.Fab")
 		(effects
 			(font
@@ -133,36 +133,36 @@
 		(layer "F.SilkS")
 	)
 	(fp_rect
-		(start -2.55 0.8)
-		(end 13.45 4.0)
+		(start -2.55 -1.6)
+		(end 13.45 1.6)
 		(stroke (width 0.12) (type solid))
 		(fill none)
 		(layer "F.SilkS")
 	)
 	(fp_rect
-		(start -15.5 4.0)
-		(end 26.4 29.4)
+		(start -15.5 -12.7)
+		(end 26.4 12.7)
 		(stroke (width 0.15) (type solid))
 		(fill none)
 		(layer "F.SilkS")
 	)
 	(fp_rect
-		(start -15.5 4.0)
-		(end 26.4 29.4)
+		(start -15.5 -12.7)
+		(end 26.4 12.7)
 		(stroke (width 0.1) (type solid))
 		(fill none)
 		(layer "F.Fab")
 	)
 	(fp_rect
-		(start -4.55 -1.9)
-		(end 15.45 0.8)
+		(start -4.55 -2.5)
+		(end 15.45 2.5)
 		(stroke (width 0.1) (type solid))
 		(fill none)
 		(layer "F.Fab")
 	)
 	(fp_rect
-		(start -15.8 -2.8)
-		(end 26.7 29.7)
+		(start -15.8 -13.0)
+		(end 26.7 13.0)
 		(stroke (width 0.05) (type solid))
 		(fill none)
 		(layer "F.CrtYd")
@@ -189,14 +189,14 @@
 		(remove_unused_layers no)
 	)
 	(pad "" thru_hole circle
-		(at -7.25 8.0)
+		(at -7.25 0)
 		(size 4.0 4.0)
 		(drill 2.6)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 	)
 	(pad "" thru_hole circle
-		(at 18.15 8.0)
+		(at 18.15 0)
 		(size 4.0 4.0)
 		(drill 2.6)
 		(layers "*.Cu" "*.Mask")
