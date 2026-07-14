@@ -650,6 +650,184 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "C_Polarized_1"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C39"
+				(at -0.762 -2.286 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "3300uF (UPW1E332MHD)"
+				(at 4.318 -5.842 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
+				(at -0.9652 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Polarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "CP_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_Polarized_1_0_1"
+				(rectangle
+					(start -2.286 0.508)
+					(end 2.286 1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 2.286) (xy -0.762 2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 2.794) (xy -1.27 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 2.286 -0.508)
+					(end -2.286 -1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "C_Polarized_1_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector:Screw_Terminal_01x03"
 			(pin_names
 				(offset 1.016)
@@ -2682,6 +2860,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" "https://www.diodemodule.com/bridge-rectifier/kbpc/kbpc1501t.pdf"
 				(at -0.254 -18.542 0)
 				(show_name no)
@@ -3062,7 +3241,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
 				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -3073,6 +3252,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" "~"
 				(at 0 0 0)
 				(show_name no)
@@ -3272,7 +3452,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
 				(at 5.08 2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -3283,6 +3463,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" "~"
 				(at 0 0 0)
 				(show_name no)
@@ -3493,6 +3674,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" ""
 				(at 0 0 0)
 				(show_name no)
@@ -3690,7 +3872,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
 				(at 6.096 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -3701,6 +3883,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/mjl21193-d.pdf"
 				(at 1.27 -14.986 0)
 				(show_name no)
@@ -3900,7 +4083,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+			(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
 				(at 6.096 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -3911,6 +4094,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/mjl21193-d.pdf"
 				(at 1.27 -14.986 0)
 				(show_name no)
@@ -4121,6 +4305,7 @@
 					)
 				)
 			)
+
 			(property "Datasheet" ""
 				(at 0 0 0)
 				(show_name no)
@@ -5443,7 +5628,7 @@
 		)
 		(uuid "d2bdcc84-8099-47ed-8c29-283b205cbc63")
 	)
-	(text "HEATSINK NOTE (rev 2026-06-24b):\nQ7, Q8, Q9, Q10 each mount to a Wakefield 657-10ABPE low-profile vertical board-mount heat sink\n(41.9 x 25.4 mm base, 25.4 mm tall - fits the 100x160 Eurocard; 6.8 C/W natural, 3.7 C/W @ 200 LFM forced air).\nFan-cooled; at <=50% load (~4.5 W/device) Tj ~ 69 C; fan-fail survivable (Tj ~83 C nominal indef., ~121 C worst-case 3 A - allows orderly shutdown).\nIsolate each device tab with thermal pad Same Sky WTI7R1F0-1.00X0.75.\nFootprint Heatsinks:TO-264-3_Vertical_HS657-25ABPE (shared 6533 profile - same pads/pins for all 657 lengths).\nD7 (GBU1506) retains its own heat sink. See PCB F.SilkS for placement."
+	(text "HEATSINK NOTE (rev 2026-06-24b):\nQ7, Q8, Q9, Q10 each mount to a Wakefield 657-10ABPE low-profile vertical board-mount heat sink\n(41.9 x 25.4 mm base, 25.4 mm tall - fits the 100x160 Eurocard; 6.8 C/W natural, 3.7 C/W @ 200 LFM forced air).\nFan-cooled; at <=50% load (~4.5 W/device) Tj ~ 69 C; fan-fail survivable (Tj ~83 C nominal indef., ~121 C worst-case 3 A - allows orderly shutdown).\nIsolate each device tab with thermal pad Same Sky WTI7R1F0-1.00X0.75.\nFootprint Heatsinks:TO-264-3_Vertical_HS657-10ABPE (shared 6533 profile - same pads/pins for all 657 lengths).\nD7 (GBU1506) retains its own heat sink. See PCB F.SilkS for placement."
 		(exclude_from_sim no)
 		(at 103.124 -3.556 0)
 		(effects
@@ -5541,12 +5726,6 @@
 		(uuid "1162e9c8-be4c-42a6-a8fe-55011f3468e8")
 	)
 	(junction
-		(at 137.16 127)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "163cdc9a-fdd1-427c-a3c3-45e81870c8b8")
-	)
-	(junction
 		(at 73.66 99.06)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5613,12 +5792,6 @@
 		(uuid "41495b99-2a68-4565-9588-f965294e2421")
 	)
 	(junction
-		(at 151.13 127)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "43ac1315-7789-44b0-bb70-b9dcea281b93")
-	)
-	(junction
 		(at 243.84 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5647,6 +5820,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "672bb46c-0786-48f1-a4f0-9e8d5ca5216c")
+	)
+	(junction
+		(at 151.13 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "68e6f470-f05e-4400-87bf-b4287895eed9")
 	)
 	(junction
 		(at 143.51 24.13)
@@ -5755,6 +5934,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9fe64ba7-6537-4b5f-aee5-fed332cbebc1")
+	)
+	(junction
+		(at 137.16 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a51b892d-dbb0-4470-a3da-edda73df50e9")
 	)
 	(junction
 		(at 193.04 90.17)
@@ -7164,6 +7349,16 @@
 	)
 	(wire
 		(pts
+			(xy 182.88 144.78) (xy 182.88 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90abf69b-2504-4124-83bc-d6aded02e812")
+	)
+	(wire
+		(pts
 			(xy 111.76 40.64) (xy 114.3 40.64)
 		)
 		(stroke
@@ -7551,16 +7746,6 @@
 			(type default)
 		)
 		(uuid "c81bb605-1439-4b1c-acfe-10fab85ba42b")
-	)
-	(wire
-		(pts
-			(xy 182.88 144.78) (xy 182.88 147.32)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cab9bcc9-d2ce-4cd8-bc70-0dd68c59b07a")
 	)
 	(wire
 		(pts
@@ -8409,6 +8594,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "ERJ-6ENF6042V"
+			(at 163.322 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Panasonic"
+			(at 163.322 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "P60.4KCTR-ND"
+			(at 163.322 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 165.1 165.1 0)
 			(hide yes)
@@ -8488,6 +8707,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "6223BG"
+			(at 67.31 22.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Boyd"
+			(at 67.31 22.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "6223BG-ND"
+			(at 67.31 22.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 67.31 22.86 0)
 			(hide yes)
@@ -8514,152 +8767,6 @@
 			(project "pm6V"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "HS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 133.35 30.48 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "72d489ac-69e4-4230-9fe0-de27c2cc04b3")
-		(property "Reference" "HS2"
-			(at 135.89 25.4 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Heatsink Boyd 531102B02500G"
-			(at 134.62 32.258 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Heatsink:Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm"
-			(at 133.35 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 133.35 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Heatsink TO-220 board-mount, DK HS352-ND"
-			(at 133.35 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "pm6V"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "HS2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 133.35 60.96 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7b87a79e-8144-4ac6-b138-cf4150c85d1e")
-		(property "Reference" "HS3"
-			(at 135.89 55.88 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Heatsink Boyd 531102B02500G"
-			(at 134.62 62.738 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Heatsink:Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm"
-			(at 133.35 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 133.35 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Heatsink TO-220 board-mount, DK HS352-ND"
-			(at 133.35 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "pm6V"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "HS3")
 					(unit 1)
 				)
 			)
@@ -8709,6 +8816,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 203.2 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 203.2 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 203.2 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "~"
 			(at 203.2 123.19 0)
 			(hide yes)
@@ -8789,6 +8930,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0710RL"
+			(at 167.132 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 167.132 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-10.0CRTR-ND"
+			(at 167.132 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 168.91 135.89 0)
 			(hide yes)
@@ -8870,6 +9045,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0710RL"
+			(at 177.8 135.128 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 177.8 135.128 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-10.0CRTR-ND"
+			(at 177.8 135.128 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 177.8 133.35 0)
 			(hide yes)
@@ -8941,7 +9150,40 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
+			(at 205.74 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "MJL21194G"
+			(at 205.74 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 205.74 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MJL21194GOS-ND"
 			(at 205.74 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -9027,7 +9269,40 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
+			(at 197.866 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "MJL21193G"
+			(at 197.866 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 197.866 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MJL21193GOS-ND"
 			(at 197.866 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -9123,6 +9398,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 215.9 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 215.9 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 215.9 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "~"
 			(at 215.9 142.24 0)
 			(hide yes)
@@ -9203,6 +9512,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4148W-7-F"
+			(at 151.13 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Diodes Incorporated"
+			(at 151.13 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4148W-FDITR-ND"
+			(at 151.13 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 151.13 0)
 			(hide yes)
@@ -9283,6 +9626,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B225KBYNNWE"
+			(at 93.35 81.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 93.35 81.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-CL21B225KBYNNWETR-ND"
+			(at 93.35 81.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 93.35 81.76 0)
 			(hide yes)
@@ -9362,6 +9739,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "WSL2512R1000FEA"
+			(at 201.422 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 201.422 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "WSLG-.10TR-ND"
+			(at 201.422 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 203.2 110.49 0)
 			(hide yes)
@@ -9442,6 +9853,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-07100KL"
+			(at 118.11 38.862 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 118.11 38.862 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-100KCRTR-ND"
+			(at 118.11 38.862 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 118.11 40.64 0)
 			(hide yes)
@@ -9523,6 +9968,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0710RL"
+			(at 191.262 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 191.262 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-10.0CRTR-ND"
+			(at 191.262 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 193.04 95.25 0)
 			(hide yes)
@@ -9605,6 +10084,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 183.8452 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 183.8452 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 183.8452 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 182.88 46.99 0)
 			(hide yes)
@@ -9664,7 +10177,7 @@
 				)
 			)
 		)
-		(property "Value" "IRF540NPBF"
+		(property "Value" "IRF540ZPBF"
 			(at 123.19 29.21 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9685,6 +10198,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "IRF540ZPBF"
+			(at 120.65 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Infineon"
+			(at 120.65 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "IRF540ZPBF-ND"
+			(at 120.65 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 123.19 35.56 0)
 			(hide yes)
@@ -9758,7 +10305,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 			(at 68.2752 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -9769,6 +10316,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 68.2752 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 68.2752 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
+			(at 68.2752 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 67.31 113.03 0)
 			(hide yes)
@@ -9852,6 +10433,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "LM4051AIM3-ADJ/NOPB"
+			(at 156.21 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 156.21 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "LM4051AIM3-ADJ/NOPBTR-ND"
+			(at 156.21 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4060.pdf"
 			(at 147.32 120.65 0)
 			(hide yes)
@@ -9938,6 +10553,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UVZ1H222MHD"
+			(at 166.0652 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 166.0652 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1346-ND"
+			(at 166.0652 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 165.1 33.02 0)
 			(hide yes)
@@ -10021,6 +10670,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-071K5L"
+			(at 149.352 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 149.352 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-1.50KCRTR-ND"
+			(at 149.352 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 143.51 0)
 			(hide yes)
@@ -10103,6 +10786,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "ERJ-6ENF6042V"
+			(at 138.938 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Panasonic"
+			(at 138.938 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "P60.4KCTR-ND"
+			(at 138.938 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 137.16 123.19 0)
 			(hide yes)
@@ -10183,6 +10900,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B474KBFNNNE"
+			(at 83.19 44.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 83.19 44.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1039-2-ND"
+			(at 83.19 44.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 83.19 44.93 0)
 			(hide yes)
@@ -10221,7 +10972,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 81.28 153.67 0)
+		(at 81.28 153.67 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10252,7 +11003,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 			(at 82.2452 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -10263,6 +11014,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 82.2452 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 82.2452 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
+			(at 82.2452 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 81.28 153.67 0)
 			(hide yes)
@@ -10343,6 +11128,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B225KBYNNWE"
+			(at 191.14 108.43 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 191.14 108.43 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-CL21B225KBYNNWETR-ND"
+			(at 191.14 108.43 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 191.14 108.43 0)
 			(hide yes)
@@ -10381,7 +11200,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 120.65 147.32 0)
+		(at 120.65 147.32 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10392,29 +11211,29 @@
 		(fields_autoplaced yes)
 		(uuid "4879ee27-f298-4b9d-95ef-61a28180f3e0")
 		(property "Reference" "C41"
-			(at 124.46 145.1609 0)
+			(at 124.46 146.9389 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "1000uF 25V"
-			(at 124.46 147.7009 0)
+			(at 124.46 149.4789 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm"
-			(at 121.6152 151.13 0)
+			(at 119.6848 143.51 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10424,6 +11243,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 119.6848 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 119.6848 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 119.6848 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 120.65 147.32 0)
 			(hide yes)
@@ -10504,6 +11357,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "WSL2512R1000FEA"
+			(at 192.532 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 192.532 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "WSLG-.10TR-ND"
+			(at 192.532 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 194.31 146.05 0)
 			(hide yes)
@@ -10584,6 +11471,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "WSL2512R1000FEA"
+			(at 211.582 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 211.582 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "WSLG-.10TR-ND"
+			(at 211.582 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 213.36 101.6 0)
 			(hide yes)
@@ -10656,6 +11577,39 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+			(at 146.05 133.858 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "MMBT2907A-TP"
+			(at 146.05 133.858 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "MCC"
+			(at 146.05 133.858 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MMBT2907A-TPMSTR-ND"
 			(at 146.05 133.858 0)
 			(hide yes)
 			(show_name no)
@@ -10749,6 +11703,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4148W-7-F"
+			(at 151.13 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Diodes Incorporated"
+			(at 151.13 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4148W-FDITR-ND"
+			(at 151.13 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 107.95 0)
 			(show_name no)
@@ -10829,6 +11817,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0710RL"
+			(at 198.12 90.678 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 198.12 90.678 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-10.0CRTR-ND"
+			(at 198.12 90.678 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 198.12 88.9 0)
 			(hide yes)
@@ -10868,7 +11890,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 73.66 143.51 0)
+		(at 73.66 143.51 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10899,7 +11921,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 			(at 74.6252 147.32 0)
 			(hide yes)
 			(show_name no)
@@ -10910,6 +11932,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 74.6252 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 74.6252 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
+			(at 74.6252 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 73.66 143.51 0)
 			(hide yes)
@@ -10990,6 +12046,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "IRF9540NPBF"
+			(at 120.65 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Infineon"
+			(at 120.65 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "IRF9540NPBF-ND"
+			(at 120.65 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 123.19 66.04 0)
 			(hide yes)
@@ -11065,7 +12155,40 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
+			(at 186.436 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "MJL21193G"
+			(at 186.436 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 186.436 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MJL21193GOS-ND"
 			(at 186.436 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -11161,6 +12284,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-071K5L"
+			(at 152.908 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 152.908 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-1.50KCRTR-ND"
+			(at 152.908 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 97.79 0)
 			(hide yes)
@@ -11193,6 +12350,113 @@
 			(project "pm6V"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "R28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 132.08 68.58 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "72d489ac-69e4-4230-9fe0-de27c2cc04b3")
+		(property "Reference" "HS2"
+			(at 134.62 63.5 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Heatsink Boyd 531102B02500G"
+			(at 133.35 70.358 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Heatsink:Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm"
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "531102B02500G"
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Boyd"
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "HS352-ND"
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
+		(property "Datasheet" ""
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Heatsink TO-220 board-mount, DK HS352-ND"
+			(at 132.08 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "pm6V"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "HS2")
 					(unit 1)
 				)
 			)
@@ -11241,6 +12505,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "WSL2512R1000FEA"
+			(at 181.102 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 181.102 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "WSLG-.10TR-ND"
+			(at 181.102 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 182.88 151.13 0)
 			(hide yes)
@@ -11323,6 +12621,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UVZ1H222MHD"
+			(at 166.0652 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 166.0652 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1346-ND"
+			(at 166.0652 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 165.1 46.99 0)
 			(hide yes)
@@ -11406,6 +12738,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-071ML"
+			(at 149.352 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 149.352 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-1.00MCRTR-ND"
+			(at 149.352 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 63.5 0)
 			(hide yes)
@@ -11438,6 +12804,113 @@
 			(project "pm6V"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "R27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 130.81 36.83 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7b87a79e-8144-4ac6-b138-cf4150c85d1e")
+		(property "Reference" "HS3"
+			(at 133.35 31.75 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Heatsink Boyd 531102B02500G"
+			(at 132.08 38.608 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Heatsink:Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm"
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "531102B02500G"
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Boyd"
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "HS352-ND"
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
+		(property "Datasheet" ""
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Heatsink TO-220 board-mount, DK HS352-ND"
+			(at 130.81 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "pm6V"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "HS3")
 					(unit 1)
 				)
 			)
@@ -11489,6 +12962,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "LM4051AIM3-ADJ/NOPB"
+			(at 146.05 166.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 146.05 166.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "LM4051AIM3-ADJ/NOPBTR-ND"
+			(at 146.05 166.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4060.pdf"
 			(at 154.94 168.91 0)
 			(hide yes)
@@ -11531,8 +13038,9 @@
 		)
 	)
 	(symbol
+		(lib_name "C_Polarized_1")
 		(lib_id "Device:C_Polarized")
-		(at 87.63 160.02 0)
+		(at 87.63 160.02 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11563,7 +13071,40 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
+			(at 88.5952 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 88.5952 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 88.5952 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
 			(at 88.5952 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -11656,6 +13197,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4148W-7-F"
+			(at 146.685 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Diodes Incorporated"
+			(at 146.685 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4148W-FDITR-ND"
+			(at 146.685 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
 			(at 151.13 158.75 0)
 			(hide yes)
@@ -11760,6 +13335,39 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "MMBT2222ALT1G"
+			(at 181.864 90.932 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 181.864 90.932 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MMBT2222ALT1GOSTR-ND"
+			(at 181.864 90.932 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(property "Datasheet" ""
 			(at 172.72 92.71 0)
 			(show_name no)
@@ -11841,6 +13449,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B225KBYNNWE"
+			(at 191.14 91.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 191.14 91.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-CL21B225KBYNNWETR-ND"
+			(at 191.14 91.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 191.14 91.92 0)
 			(hide yes)
@@ -11920,6 +13562,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "374144-E"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "TE Connectivity"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "2684-374144-E-ND"
+			(at 245.11 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "https://www.erni.com"
 			(at 245.11 48.26 0)
 			(hide yes)
@@ -12092,6 +13768,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4148W-7-F"
+			(at 155.575 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Diodes Incorporated"
+			(at 155.575 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4148W-FDITR-ND"
+			(at 155.575 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
 			(at 151.13 115.57 0)
 			(hide yes)
@@ -12184,7 +13894,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 			(at 74.6252 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -12195,6 +13905,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 74.6252 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 74.6252 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
+			(at 74.6252 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 73.66 119.38 0)
 			(hide yes)
@@ -12275,6 +14019,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B225KBYNNWE"
+			(at 93.35 124.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 93.35 124.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-CL21B225KBYNNWETR-ND"
+			(at 93.35 124.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 93.35 124.94 0)
 			(hide yes)
@@ -12332,7 +14110,7 @@
 				)
 			)
 		)
-		(property "Value" "GBPC1510-E4/51"
+		(property "Value" "GBPC1510W-E4/51"
 			(at 28.956 44.704 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12343,6 +14121,39 @@
 			)
 		)
 		(property "Footprint" "Diode_THT:Diode_Bridge_28.6x28.6x7.3mm_P18.0mm_P11.6mm"
+			(at 40.64 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "GBPC1510W"
+			(at 40.64 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Surge Components"
+			(at 40.64 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "2616-GBPC1510W-ND"
 			(at 40.64 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -12439,6 +14250,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-07100KL"
+			(at 113.538 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 113.538 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-100KCRTR-ND"
+			(at 113.538 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 111.76 67.31 0)
 			(hide yes)
@@ -12521,6 +14366,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 121.6152 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 121.6152 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 121.6152 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 120.65 106.68 0)
 			(hide yes)
@@ -12603,6 +14482,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4742ATR"
+			(at 147.955 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 147.955 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4742AFSTR-ND"
+			(at 147.955 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "https://www.vishay.com/docs/85816/1n4728a.pdf"
 			(at 143.51 35.56 0)
 			(hide yes)
@@ -12673,7 +14586,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Radial_D16.0mm_H25.0mm_P7.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 			(at 60.6552 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -12684,6 +14597,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E332MHD"
+			(at 60.6552 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 60.6552 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1568-ND"
+			(at 60.6552 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 59.69 102.87 0)
 			(hide yes)
@@ -12766,6 +14713,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0715KL"
+			(at 163.322 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 163.322 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-15.0KCRTR-ND"
+			(at 163.322 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 165.1 173.99 0)
 			(hide yes)
@@ -12849,6 +14830,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-071ML"
+			(at 149.352 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 149.352 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-1.00MCRTR-ND"
+			(at 149.352 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 151.13 31.75 0)
 			(hide yes)
@@ -12931,6 +14946,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CRCW08051K00FKEA"
+			(at 242.062 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 242.062 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "541-1.00KCTR-ND"
+			(at 242.062 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 243.84 140.97 0)
 			(hide yes)
@@ -13011,6 +15060,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "TUW15J15RE"
+			(at 121.92 56.388 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Ohmite"
+			(at 121.92 56.388 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "TUW15J15RE-ND"
+			(at 121.92 56.388 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 121.92 54.61 0)
 			(hide yes)
@@ -13092,6 +15175,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1729131"
+			(at 30.48 27.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Phoenix Contact"
+			(at 30.48 27.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "277-1248-ND"
+			(at 30.48 27.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 30.48 27.94 0)
 			(hide yes)
@@ -13115,17 +15232,6 @@
 			)
 		)
 		(property "MPN" "1729131"
-			(at -87.63 -44.45 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Phoenix Contact"
 			(at -87.63 -44.45 0)
 			(hide yes)
 			(show_name no)
@@ -13199,6 +15305,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "1N4742ATR"
+			(at 133.985 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 133.985 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1N4742AFSTR-ND"
+			(at 133.985 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" "https://www.vishay.com/docs/85816/1n4728a.pdf"
 			(at 138.43 63.5 0)
 			(hide yes)
@@ -13281,6 +15421,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "UHE1E102MPD"
+			(at 183.8452 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nichicon"
+			(at 183.8452 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "493-1557-ND"
+			(at 183.8452 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 182.88 31.75 0)
 			(hide yes)
@@ -13363,6 +15537,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "RC0805FR-0715KL"
+			(at 138.938 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 138.938 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "311-15.0KCRTR-ND"
+			(at 138.938 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 137.16 114.3 0)
 			(hide yes)
@@ -13435,7 +15643,40 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-25ABPE"
+		(property "Footprint" "Heatsinks:TO-264-3_Vertical_HS657-10ABPE"
+			(at 215.9 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "MJL21194G"
+			(at 215.9 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "onsemi"
+			(at 215.9 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "MJL21194GOS-ND"
 			(at 215.9 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -13528,6 +15769,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CL21B474KBFNNNE"
+			(at 83.19 14.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 83.19 14.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1039-2-ND"
+			(at 83.19 14.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 83.19 14.45 0)
 			(hide yes)
@@ -13609,6 +15884,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "CRCW08051K00FKEA"
+			(at 242.062 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 242.062 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "541-1.00KCTR-ND"
+			(at 242.062 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 243.84 123.19 0)
 			(hide yes)
@@ -13689,6 +15998,40 @@
 				)
 			)
 		)
+		(property "Manufacturer Part Number" "TUW15J15RE"
+			(at 121.92 25.908 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Ohmite"
+			(at 121.92 25.908 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "TUW15J15RE-ND"
+			(at 121.92 25.908 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+
 		(property "Datasheet" ""
 			(at 121.92 24.13 0)
 			(hide yes)
