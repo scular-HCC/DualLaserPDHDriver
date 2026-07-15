@@ -8,7 +8,7 @@
 #include "network.h"
 #include "demo.h"
 #include "lock.h"
-#include "ad5064.h"
+#include "chcard.h"
 
 // Declared in teensyskeletoninArduinoIDE.ino
 extern float g_dither_freq;
@@ -216,16 +216,23 @@ void comms_process(const String& line, Print& out,
     return;
   }
 
-  // ---- raw ADC dump ----------------------------------------
+  // ---- raw sensor dump --------------------------------------
+  // LOCKn = Teensy ADC counts (ERRn_BUS); the rest are the latest
+  // I2C telemetry values in VOLTS (per-card ADS1115, 10 Hz round robin).
   if (line == "d") {
     out.print(F("LOCK1=")); out.print(analogRead(PIN_LOCK1_IN));
     out.print(F(" LOCK2=")); out.print(analogRead(PIN_LOCK2_IN));
-    out.print(F(" NTC1="));  out.print(analogRead(PIN_NTC1_MON));
-    out.print(F(" NTC2="));  out.print(analogRead(PIN_NTC2_MON));
-    out.print(F(" LAS1="));  out.print(analogRead(PIN_LAS1_IMON));
-    out.print(F(" LAS2="));  out.print(analogRead(PIN_LAS2_IMON));
-    out.print(F(" TEC1="));  out.print(analogRead(PIN_TEC1_IMON));
-    out.print(F(" TEC2="));  out.println(analogRead(PIN_TEC2_IMON));
+    for (int i = 0; i < 2; i++) {
+      const ChCardMon& m = chcard_mon(i);
+      out.print(F(" NTC"));  out.print(i+1); out.print('='); out.print(m.ntc_v, 3);
+      out.print(F(" LAS"));  out.print(i+1); out.print('='); out.print(m.las_imon_v, 3);
+      out.print(F(" TEC"));  out.print(i+1); out.print('='); out.print(m.tec_imon_v, 3);
+      out.print(F(" MPD"));  out.print(i+1); out.print('='); out.print(m.mpd_mon_v, 3);
+    }
+    const AfeMon& a = afe_mon();
+    out.print(F(" PD1=")); out.print(a.pd_lvl_v[0], 3);
+    out.print(F(" PD2=")); out.print(a.pd_lvl_v[1], 3);
+    out.println();
     return;
   }
 
@@ -340,7 +347,7 @@ void comms_process(const String& line, Print& out,
       out.println(F("Type 'demo off' to switch to real hardware (persists across reboot)."));
     } else {
       // Exit demo: safe DAC outputs, reset to IDLE
-      ad5064_set_midscale();
+      chcard_set_midscale_all();
       lock_init(ch[0]);
       lock_init(ch[1]);
       out.println(F("Demo mode OFF — real hardware mode."));

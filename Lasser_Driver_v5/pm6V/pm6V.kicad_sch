@@ -8237,7 +8237,7 @@
 		)
 		(uuid "bfac219a-e31b-44ef-88b2-9c4c8abf7119")
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 106.68 176.53 0)
 		(fields_autoplaced yes)
@@ -8285,7 +8285,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 38.1 27.94 0)
 		(fields_autoplaced yes)
@@ -8357,7 +8357,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 267.97 46.99 0)
 		(fields_autoplaced yes)
@@ -8405,7 +8405,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 267.97 41.91 0)
 		(fields_autoplaced yes)
@@ -8453,7 +8453,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 266.7 127 0)
 		(fields_autoplaced yes)
@@ -8477,7 +8477,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 193.04 38.1 0)
 		(fields_autoplaced yes)
@@ -8501,7 +8501,7 @@
 			)
 		)
 	)
-	(global_label "DGND"
+	(global_label "PGND_TEC"
 		(shape passive)
 		(at 127 81.28 0)
 		(fields_autoplaced yes)

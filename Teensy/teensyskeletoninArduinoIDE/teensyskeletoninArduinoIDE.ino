@@ -9,9 +9,12 @@
    post-mix baseband error on LOCKn_IN. See TeensyFirmwareAssumptions.txt and
    docs/firmware_reference.html (Rev 2.0).
 
-   Hardware : CDCE913 clock, 4x AD9833 DDS (2 drive + 2 ref), AD831 demod,
-              analog PI + ADG419 hold, AD5064 setpoint DAC,
-              ILI9341 320×240 TFT, built-in Ethernet (QNEthernet)
+   Hardware : v5 DIG eurocard — CDCE913 clock, 4x AD9833 DDS (2 drive + 2 ref),
+              ILI9341 320×240 TFT, built-in Ethernet (QNEthernet).
+              Per CH card via the I2C backplane bus: AD5696R setpoint DAC,
+              ADS1115 monitors, PCA9538 (LOCK_EN out / HB fault in).
+              AFE card: AD831 demod + analog PI (ERRn_BUS analog to A10/A11),
+              ADS1115 PD-level monitors. Shared open-drain FAULT_n on pin 31.
    Interfaces: USB-serial CLI | Ethernet Telnet CLI (port 23) | HTTP dashboard (port 80)
 
    Demo mode is a RUNTIME setting — no recompile needed:
@@ -30,7 +33,7 @@
 #include "config.h"
 #include "cdce913.h"
 #include "ad9833.h"
-#include "ad5064.h"
+#include "chcard.h"
 #include "pid.h"
 #include "lock.h"
 #include "display.h"
@@ -92,8 +95,9 @@ static inline float adc_to_error(int raw) {
   return (raw - ADC_MID) / (float)ADC_MID;
 }
 
-static inline float adc_to_tec_amps(int raw) {
-  float v = raw * (ADC_REF_V / ADC_MAX);
+// v5: monitors arrive as VOLTS from the per-card ADS1115s.
+static inline float volts_to_tec_amps(float v) {
+  if (isnan(v)) return 0.0f;
   return (v - TEC_IMON_OFFSET_V) / TEC_IMON_V_PER_A;
 }
 
@@ -114,12 +118,12 @@ static void tec_limit_step(int i) {
   int32_t raw   = (int32_t)s_tec_dac[i];
   int32_t delta = (int32_t)((raw - zero) * s_tec_lim_fac[i]);
   int32_t out   = constrain(zero + delta, 0, 65535);
-  ad5064_write_channel(2 + i, (uint16_t)out);
+  chcard_write_tec_dac(i, (uint16_t)out);   // cached: no I2C if unchanged
 }
 
-static float ntc_to_celsius(int raw) {
-  if (raw <= 0 || raw >= ADC_MAX) return NAN;
-  float ratio = raw / (float)ADC_MAX;
+static float ntc_to_celsius(float v) {
+  if (isnan(v) || v <= 0.0f || v >= NTC_VSUP) return NAN;
+  float ratio = v / NTC_VSUP;
   float r = NTC_R_SERIES * ratio / (1.0f - ratio);
   float t_k = 1.0f / (1.0f / 298.15f + logf(r / NTC_R25) / NTC_BETA);
   return t_k - 273.15f;
@@ -174,9 +178,10 @@ static void update_disp_model() {
 // the legacy CLI/JSON and the optional centering gain).
 // ============================================================
 
-// Analog integrator: HIGH = RUN (loop closed), LOW = HOLD/RESET (acquiring).
+// Analog integrator: RUN (loop closed) / HOLD (acquiring). v5: via the
+// CH card's PCA9538 IO0 — write-on-change, so calling every tick is free.
 static inline void set_integrator(int i, bool run) {
-  digitalWrite(i == 0 ? PIN_LOCK1_EN : PIN_LOCK2_EN, run ? HIGH : LOW);
+  chcard_set_lock_en(i, run);
 }
 
 // Persist the current Ω / demod-phase to EEPROM (via net_settings) so they
@@ -245,7 +250,7 @@ static void center_step(int i) {
   int corr = analogRead(pin) - ADC_MID;      // analog-PI output vs centre
   int32_t code = (int32_t)s_dac[i] - (corr >> 6);  // small step; sign per wiring — FLAG
   s_dac[i] = (uint16_t)constrain(code, 0, 65535);
-  ad5064_write_channel(i, s_dac[i]);
+  chcard_write_laser_dac(i, s_dac[i]);
 #else
   (void)i;
 #endif
@@ -278,7 +283,7 @@ static void control_step(int i, float e, float dt) {
       if      (code >= 65535) { code = 65535; s_sweep_dir[i] = -1; }
       else if (code <= 0)     { code = 0;     s_sweep_dir[i] =  1; }
       s_dac[i] = (uint16_t)code;
-      ad5064_write_channel(i, s_dac[i]);
+      chcard_write_laser_dac(i, s_dac[i]);   // ~90 µs I2C write; pre-lock, so noise-safe
       // Arm on a discriminator shoulder; capture the next zero-crossing (= resonance).
       if (fabsf(e) > ch[i].acquire_threshold) s_armed[i] = true;
       bool zero_cross = (e == 0.0f) || (e * s_prev_e[i] < 0.0f);
@@ -344,30 +349,30 @@ void setup() {
 
   const uint8_t out_pins[] = {
     PIN_AD9833_1_CS, PIN_AD9833_2_CS, PIN_AD9833_3_CS, PIN_AD9833_4_CS,
-    PIN_AD5064_CS,
     PIN_AD9833_1_RESET, PIN_AD9833_2_RESET,
-    PIN_AD5064_CLR,
-    PIN_LOCK1_EN, PIN_LOCK2_EN,
     PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RST
   };
   for (uint8_t p : out_pins) pinMode(p, OUTPUT);
   pinMode(PIN_FREQ_TEST, INPUT);
 
-  // H-bridge fault inputs: OPA551 Flag is open-drain active-low
-  pinMode(PIN_HBRIDGE_FAULT1, INPUT_PULLUP);
-  pinMode(PIN_HBRIDGE_FAULT2, INPUT_PULLUP);
+  // Backplane slot ID straps (geographic address) and the shared fault
+  // line. FAULT_n has an external 10k pullup (R305); internal as backup.
+  pinMode(PIN_GA0, INPUT);
+  pinMode(PIN_GA1, INPUT);
+  pinMode(PIN_GA2, INPUT);
+  pinMode(PIN_FAULT_N, INPUT_PULLUP);
 
   digitalWrite(PIN_AD9833_1_CS,  HIGH);
   digitalWrite(PIN_AD9833_2_CS,  HIGH);
   digitalWrite(PIN_AD9833_3_CS,  HIGH);
   digitalWrite(PIN_AD9833_4_CS,  HIGH);
-  digitalWrite(PIN_AD5064_CS,    HIGH);
-  digitalWrite(PIN_LOCK1_EN,     LOW);   // integrator HELD until a lock is acquired
-  digitalWrite(PIN_LOCK2_EN,     LOW);
   digitalWrite(PIN_TFT_CS,       HIGH);
   digitalWrite(PIN_TFT_DC,       HIGH);
   digitalWrite(PIN_TFT_RST,      HIGH);
-  digitalWrite(PIN_AD5064_CLR,   HIGH);
+
+  uint8_t slot_ga = (digitalRead(PIN_GA2) << 2) | (digitalRead(PIN_GA1) << 1)
+                  |  digitalRead(PIN_GA0);
+  Serial.print(F("Backplane slot GA = ")); Serial.println(slot_ga, BIN);
 
   delay(50);
   display_init(tft);
@@ -411,7 +416,12 @@ void setup() {
   ad9833_load(PIN_AD9833_2_CS, g_rf_omega[1], REFCLK_HZ, 0.0f);
   ad9833_load(PIN_AD9833_4_CS, g_rf_omega[1], REFCLK_HZ, g_rf_phase[1]);
   ad9833_run(PIN_AD9833_2_CS);  ad9833_run(PIN_AD9833_4_CS);
-  ad5064_set_midscale();
+
+  // Bring up the CH cards over the backplane I2C bus: expander
+  // directions (integrators HELD), DACs parked (laser mid, TEC 0 A).
+  uint8_t cards = chcard_init_all();
+  Serial.print(F("CH card 1 (I2C): ")); Serial.println((cards & 1) ? F("OK") : F("NOT FOUND"));
+  Serial.print(F("CH card 2 (I2C): ")); Serial.println((cards & 2) ? F("OK") : F("NOT FOUND"));
 
   // ── Mode-specific channel init ─────────────────────────────
   if (g_demo_mode) {
@@ -457,38 +467,58 @@ void loop() {
     // Demo: drive state machine and fill DispModel from simulation
     demo_update(ch, disp, dt);
   } else {
-    // Real hardware: read sensors, run PID control loops
-    s_err[0]      = adc_to_error(analogRead(PIN_LOCK1_IN));
-    s_err[1]      = adc_to_error(analogRead(PIN_LOCK2_IN));
-    s_laser_i[0]  = analogRead(PIN_LAS1_IMON) * LASER_IMON_MA_PER_LSB;
-    s_laser_i[1]  = analogRead(PIN_LAS2_IMON) * LASER_IMON_MA_PER_LSB;
-    s_tec_temp[0] = ntc_to_celsius(analogRead(PIN_NTC1_MON));
-    s_tec_temp[1] = ntc_to_celsius(analogRead(PIN_NTC2_MON));
-    s_tec_i[0]    = adc_to_tec_amps(analogRead(PIN_TEC1_IMON));
-    s_tec_i[1]    = adc_to_tec_amps(analogRead(PIN_TEC2_IMON));
+    // Real hardware. Fast path (1 kHz): analog error sampling only —
+    // the slow monitors are I2C telemetry, refreshed in the 10 Hz tick.
+    s_err[0] = adc_to_error(analogRead(PIN_LOCK1_IN));
+    s_err[1] = adc_to_error(analogRead(PIN_LOCK2_IN));
     tec_limit_step(0);
     tec_limit_step(1);
 
-    // H-bridge fault: OPA551 Flag is open-drain active-low → LOW = fault
-    bool fault0 = (digitalRead(PIN_HBRIDGE_FAULT1) == LOW);
-    bool fault1 = (digitalRead(PIN_HBRIDGE_FAULT2) == LOW);
-    if (fault0 != disp.hbridge_fault[0]) {
-      disp.hbridge_fault[0] = fault0;
-      Serial.print(F("CH1 H-BRIDGE FAULT: ")); Serial.println(fault0 ? F("ASSERTED") : F("cleared"));
-    }
-    if (fault1 != disp.hbridge_fault[1]) {
-      disp.hbridge_fault[1] = fault1;
-      Serial.print(F("CH2 H-BRIDGE FAULT: ")); Serial.println(fault1 ? F("ASSERTED") : F("cleared"));
+    // Shared FAULT_n (open-drain wired-OR, active-low). On assertion,
+    // query each CH card's expander to identify the source; the line
+    // staying low keeps the faults latched in disp.
+    bool line_low = (digitalRead(PIN_FAULT_N) == LOW);
+    static bool prev_line_low = false;
+    if (line_low != prev_line_low) {
+      prev_line_low = line_low;
+      bool fault0 = line_low && chcard_fault(0);
+      bool fault1 = line_low && chcard_fault(1);
+      if (line_low && !fault0 && !fault1)
+        Serial.println(F("FAULT_n asserted by a non-CH card (check AFE/expander wiring)"));
+      if (fault0 != disp.hbridge_fault[0]) {
+        disp.hbridge_fault[0] = fault0;
+        Serial.print(F("CH1 H-BRIDGE FAULT: ")); Serial.println(fault0 ? F("ASSERTED") : F("cleared"));
+      }
+      if (fault1 != disp.hbridge_fault[1]) {
+        disp.hbridge_fault[1] = fault1;
+        Serial.print(F("CH2 H-BRIDGE FAULT: ")); Serial.println(fault1 ? F("ASSERTED") : F("cleared"));
+      }
     }
     control_step(0, s_err[0], dt);
     control_step(1, s_err[1], dt);
   }
 
-  // ---- 10 Hz display + network tick -------------------------
+  // ---- 10 Hz display + network + I2C telemetry tick ----------
   static unsigned long last_disp = 0;
   if (millis() - last_disp >= DISPLAY_PERIOD_MS) {
     last_disp = millis();
-    if (!g_demo_mode) update_disp_model();  // demo fills disp each tick
+    if (!g_demo_mode) {
+      // Telemetry round robin (one ADS1115 channel per card per tick).
+      // Noise rule: the bus stays quiet while a channel is acquiring.
+      bool acquiring = (ch[0].state == LOCK_ACQUIRE) || (ch[1].state == LOCK_ACQUIRE);
+      if (!acquiring) {
+        chcard_poll(0);
+        chcard_poll(1);
+        afe_poll();
+      }
+      for (int i = 0; i < 2; i++) {
+        const ChCardMon& m = chcard_mon(i);
+        s_laser_i[i]  = isnan(m.las_imon_v) ? 0.0f : m.las_imon_v * LASER_IMON_MA_PER_V;
+        s_tec_temp[i] = ntc_to_celsius(m.ntc_v);
+        s_tec_i[i]    = volts_to_tec_amps(m.tec_imon_v);
+      }
+      update_disp_model();  // demo fills disp each tick
+    }
     display_update(tft, disp);
     network_poll(ch, pid, disp, disp.pll_lock, disp.refclk_mhz);
   }
