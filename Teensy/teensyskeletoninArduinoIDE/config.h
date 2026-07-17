@@ -150,6 +150,24 @@
 #define NTC_VSUP          3.3f      // pullup supply on the CH card
 
 // ============================================================
+// Monitor-photodiode optical power (CH card rev C).
+// The DFB1550LP internal PD (anode J_BTF1.3→GND, cathode J_BTF1.4→
+// MPD_K) sinks I_pd from the MPD_K node; that current is drawn through
+// R_bias1 from U_TIA2's virtual ground, which is pinned at NTC_A. So
+// U_TIA1 buffers MPD_MON = NTC_A − I_pd·R_bias1, and the NTC_A offset
+// must be SUBTRACTED OUT to recover the photocurrent:
+//   I_pd  = (NTC_A − MPD_MON) / R_bias1
+//   P_mW  = I_pd / responsivity = (NTC_A − MPD_MON) · MPD_MW_PER_V
+// R_bias1 = 20k, responsivity 2.2 µA/mW (Thorlabs DFB1550LP ds):
+//   MPD_MW_PER_V = 1e3 / (20000 · 2.2e-6) = 22.7 mW/V
+// Full 20 mW output → I_pd ≈ 44 µA → ΔV ≈ 0.88 V (fits the ADS1115
+// window). VERIFY against a calibrated power meter at bring-up.
+// ============================================================
+#define MPD_R_BIAS_OHM        20000.0f  // R_bias1 (Ω)
+#define MPD_RESP_UA_PER_MW    2.2f      // PD monitor responsivity
+#define MPD_MW_PER_V          22.7f     // (NTC_A − MPD_MON) volts → mW
+
+// ============================================================
 // Laser IMON scaling — matches CH card rev C hardware:
 // INA828 (G = 1 + 50k/487R = 103.7) across the 0.25R laser shunt
 // → 25.93 V/A → 38.6 mA per volt.  (The old 100 mA/V was the v3

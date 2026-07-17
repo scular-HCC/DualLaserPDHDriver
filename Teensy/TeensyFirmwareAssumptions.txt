@@ -112,6 +112,17 @@ help              — full command list
 ----------------------------------------------------------------
 CHANGELOG
 ----------------------------------------------------------------
+Rev 3.3 (2026-07-17) — MPD optical-power (NTC_A offset removal)
+  - CH card MPD_MON = NTC_A − I_pd·R_bias1 (PD cathode node buffered by
+    U_TIA1; R_bias1 20k ties it to U_TIA2 virtual gnd @ NTC_A). Added
+    mpd_to_optical_mw(mpd_v, ntc_v) = (NTC_A − MPD_MON)·MPD_MW_PER_V,
+    clamp >=0 (chcard.h). NOTE sign: NTC_A − MPD_MON (PD pulls MPD_MON
+    below NTC_A), NOT MPD_MON − NTC_A.
+  - config.h += MPD_R_BIAS_OHM 20k, MPD_RESP_UA_PER_MW 2.2 (DFB1550LP),
+    MPD_MW_PER_V 22.7. chcard.h now #includes config.h + math.h.
+  - 'd' telemetry prints POPTn (mW) beside raw MPDn. Verify vs a
+    calibrated power meter at bring-up. Recompile (needs rebuild).
+
 Rev 3.2 (2026-07-17) — INA828 swap + IMON cal constants
   - CH card U28/U32 changed INA826 -> INA828IDR (826 EOL-ish at DigiKey;
     828 is the pin-compatible successor, G = 1 + 50k/RG).

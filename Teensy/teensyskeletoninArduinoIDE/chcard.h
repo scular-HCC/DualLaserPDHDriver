@@ -1,5 +1,7 @@
 #pragma once
 #include <Arduino.h>
+#include <math.h>
+#include "config.h"
 
 // ============================================================
 // CH / AFE card abstraction — v5 universal backplane.
@@ -58,3 +60,14 @@ void afe_poll();
 
 const ChCardMon& chcard_mon(int i);
 const AfeMon&    afe_mon();
+
+// Monitor-PD optical power (mW). MPD_MON rides on the NTC_A node (the PD
+// bias reference), so subtract NTC_A to strip that offset: the PD only
+// pulls MPD_MON *below* NTC_A, hence NTC_A − MPD_MON. Tiny negative
+// results (offset/noise at zero light) clamp to 0.
+static inline float mpd_to_optical_mw(float mpd_v, float ntc_v) {
+  if (isnan(mpd_v) || isnan(ntc_v)) return NAN;
+  float dv = ntc_v - mpd_v;
+  if (dv < 0.0f) dv = 0.0f;
+  return dv * MPD_MW_PER_V;
+}

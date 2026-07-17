@@ -198,7 +198,7 @@
     Follow your site's Class 3B/4 laser-safety procedures.</div>
   <div class="warn">
     <b>Laser reverse voltage.</b> The DFB die tolerates only ≈2 V reverse. The per-channel
-    Schottky clamp (BAT54) is mandatory — never bypass it, and confirm laser polarity before
+    Schottky clamp (BAT46W) is mandatory — never bypass it, and confirm laser polarity before
     first power-on.</div>
   <div class="warn">
     <b>Live heatsinks.</b> On the pm22V and pm6V supplies the pass-transistor tabs (and therefore
@@ -258,7 +258,7 @@ Resolution = V<sub>ref</sub> / 2<sup>16</sup> / 201 / R<sub>sense</sub>
   <p><b>Why this topology.</b> The ÷201 scaler deliberately compresses the full 5 V DAC span into a
   25 mV control window so that the DAC's own noise and the op-amp offset are divided down by 201
   before they become current noise. A Kelvin (4-terminal) sense resistor keeps the milliohms of
-  trace and solder out of the 0.25 Ω, and the BAT54 clamp protects the ≤2 V reverse-rated die. The
+  trace and solder out of the 0.25 Ω, and the BAT46W clamp protects the ≤2 V reverse-rated die. The
   PDH dither/correction is summed into the scaler's bottom node (<code>DITHn</code>), so the servo
   nudges current without disturbing the DC operating point.</p>
 
@@ -436,17 +436,43 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   <p class="pinref"><b>Blades:</b> P1 +6V_TEC · P2 PGND_TEC · P3 −6V_TEC · P4 PGND_TEC ·
   P5 +18V · P6 GND · P7 −18V · P8 GND.</p>
 
-  <h3>4.2 Geographic addressing</h3>
-  <p>Because every slot is identical, a card learns <em>which</em> slot it is in from three address
-  pins, <code>GA2..GA0</code>, which set its I²C address and identity. <b>The backplane hard-wires
-  each slot's GA pins to a fixed code</b> — every pin tied to <code>3V3</code> or <code>GND</code>
-  per slot (never bused between slots), so most cards need no on-card configuration and simply inherit
-  their identity from the slot they occupy.</p>
-  <p><b>The laser (CH) cards are the exception.</b> Because the two CH cards are physically identical
-  and either must be assignable to either laser channel, they do <em>not</em> take their address from
-  the slot: an <b>on-card jumper block</b> sets each CH card's GA code (and therefore channel 1 vs
-  channel 2 — an on-card ADG419 mux routes <code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>
-  accordingly). The two CH slots leave GA open on the backplane so the card's jumpers define it.</p>
+  <h3>4.2 Card addressing — on-card jumpers</h3>
+  <p>Every card sets its own identity with <b>on-card jumpers</b>; the backplane GA pins
+  (a20/c18/c19) are unused and may be left unrouted. Each address line <code>GA0..GA2</code> has a
+  10 kΩ pull-up to 3V3 and a two-pin jumper to ground: <b>jumper fitted = 0, jumper open = 1</b>.
+  The GA code sets the card's I²C addresses, and on the CH cards <code>GA0</code> additionally
+  steers the on-card ADG419 muxes that select which bused analog pair
+  (<code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>) the card uses. A card can therefore sit in
+  any slot — identity travels with the card, not the slot.</p>
+
+  <h4>Setting the address on a CH (laser channel) card</h4>
+  <p>The two CH cards are physically identical; the jumpers are the <em>only</em> thing that makes
+  one card "laser 1" and the other "laser 2". Set them <b>before installing the card</b>:</p>
+  <table class="pinref">
+    <thead><tr><th>Jumper</th><th>Bit</th><th>Channel 1 card</th><th>Channel 2 card</th></tr></thead>
+    <tbody>
+      <tr><td>JP101</td><td>GA0</td><td><b>Fitted</b> (GA0 = 0)</td><td><b>Open</b> (GA0 = 1)</td></tr>
+      <tr><td>JP102</td><td>GA1</td><td>Fitted (GA1 = 0)</td><td>Fitted (GA1 = 0)</td></tr>
+      <tr><td>JP103</td><td>GA2</td><td>Fitted (GA2 = 0)</td><td>Fitted (GA2 = 0)</td></tr>
+    </tbody>
+  </table>
+  <p>What each setting produces:</p>
+  <table class="pinref">
+    <thead><tr><th></th><th>Channel 1 (GA0 = 0)</th><th>Channel 2 (GA0 = 1)</th></tr></thead>
+    <tbody>
+      <tr><td>Analog buses (ADG419, IN = 0 → S1)</td><td>ERR1 / MOD1</td><td>ERR2 / MOD2</td></tr>
+      <tr><td>ADS1115 monitor ADC</td><td>0x48</td><td>0x49</td></tr>
+      <tr><td>AD5696R set-point DAC (base 00011 A1 A0)</td><td>0x0C</td><td>0x0D</td></tr>
+      <tr><td>PCA9538 GPIO expander (base 1110 0 A1 A0)</td><td>0x70</td><td>0x71</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Rules of thumb.</b> Exactly one CH card in the cage has JP101 fitted (that's
+  laser 1) and one has it open (laser 2). Leave JP102/JP103 fitted on both — they are spare address
+  bits for future expansion. Never install two CH cards with the same JP101 setting: both would
+  answer at the same I²C addresses <em>and</em> fight over the same ERR/MOD bus pair.</div>
+  <p><b>Other cards.</b> The DIG card is the bus master and needs no address. The AFE card's ADC is
+  address-strapped on-card (ADDR→SDA, 0x4A), deliberately outside the CH cards' 0x48/0x49 range;
+  where AFE/DIG carry GA jumpers they follow the same fitted-=-0 convention.</p>
 
   <h3>4.3 Fault handling</h3>
   <p><code>FAULT_n</code> (b20) is an open-drain wired-OR line any card can pull low. On assertion the
@@ -684,30 +710,51 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">11</span> CH card ×2 — laser channel</h2></div>
   <p><code>Lasser_Driver_v5/CH_Card</code>. Two identical cards, one per laser. Each is a complete
   channel: laser current driver, TEC bridge, readback, and the front-panel laser-head connector.
-  Which channel a card <em>is</em> comes from its geographic address strap.</p>
+  Which channel a card <em>is</em> comes from its on-card address jumpers
+  (<a href="#arch">§4.2</a>).</p>
   <h4>On-card blocks</h4>
   <ul>
-    <li><b>Laser ACC driver</b> — OPA192 + IRLML6344 current sink into a 0.25 Ω Kelvin sense with
-    BAT54 clamp (<a href="#theory">§3.2</a>). RF modulation enters here via the bias-tee.</li>
-    <li><b>TEC bipolar bridge</b> — OPA192/OPA551 error+buffer driving the four-quadrant FET H-bridge
-    into a 0.1 Ω Kelvin sense; virtual-ground referenced to VREF_MID (<a href="#theory">§3.3</a>).</li>
-    <li><b>Readback</b> — monitor-photodiode TIA (fault detect), laser IMON, TEC IMON, and the 10 kΩ
-    NTC, digitized on-card by an ADS1115.</li>
-    <li><b>Digitization &amp; interface</b> — J1 universal DIN, AD5696R DAC (set-points), ADS1115
-    (monitors), PCA9538 GPIO (LOCK_EN / HB fault), and ADG419 muxes that select
-    <code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code> from the geographic address.</li>
+    <li><b>Laser ACC driver</b> — OPA192 (SOT-23-5) driving a DMN3404L logic-level FET current sink
+    into a 0.25 Ω Kelvin sense with a BAT46W reverse clamp (<a href="#theory">§3.2</a>). RF modulation
+    enters here via the bias-tee.</li>
+    <li><b>TEC bipolar bridge</b> — OPA192/OPA551 error+buffer driving a four-quadrant H-bridge of
+    IRL540N (high-side N) and IRF9540N (low-side P) FETs into a 0.1 Ω Kelvin sense; virtual-ground
+    referenced to VREF_MID (<a href="#theory">§3.3</a>). <b>All four bridge FETs carry heatsinks</b>
+    — see the note below.</li>
+    <li><b>Readback</b> — laser IMON and TEC IMON via INA828 instrumentation amps, the internal
+    monitor-photodiode TIA (both a fault detector and an NTC-compensated optical-power reading,
+    <a href="#software">§13</a>), and the 10 kΩ NTC, all digitized on-card by an ADS1115.</li>
+    <li><b>Digitization &amp; interface</b> — J1 universal DIN, AD5696R DAC on +5 V with gain ×2 for a
+    0–5 V set-point span (matching the ÷201 laser and TEC scalers), ADS1115 (monitors), PCA9538 GPIO
+    (LOCK_EN / HB fault), and ADG419 muxes that select <code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>
+    from the JP101 address jumper.</li>
     <li><b>Front panel</b> — the butterfly laser head lands on the card's butterfly socket
-    (<code>J_BTF1</code>): laser diode, TEC, NTC and monitor-PD are all in that one package.</li>
+    (<code>J_BTF1</code>): laser diode, TEC (drive current flows through the socket directly), NTC and
+    the internal monitor photodiode are all in that one package.</li>
   </ul>
+  <div class="warn"><b>TEC H-bridge heatsinks (HS1–HS4).</b> The linear bridge burns the difference
+  between the ±6 V rails and the Peltier voltage — up to ≈10 W in a single FET at full 2.5 A cooling,
+  and any of the four can be the hot one depending on drive polarity. Each FET (Q13/Q14/Q17/Q18)
+  mounts on its own Wakefield 657-10ABPE vertical heatsink. <b>Every tab is live</b> — Q13/Q17 at
+  +6V_TEC, Q14/Q18 at the swinging bridge outputs — so isolate all four with the insulator +
+  shoulder-washer kits (no bare tab-to-sink contact). Steady-state lock current is well under 1 A
+  (≈3 W, cool); the firmware current limit and the OPA551 thermal flag bound the fault cases. Mount
+  fins vertical, away from the NTC divider and precision scalers.</div>
+  <div class="note"><b>Monitor-PD optical power.</b> The DFB package's internal photodiode is biased
+  from the NTC reference node, so its transimpedance output <code>MPD_MON</code> sits <em>below</em>
+  <code>NTC_A</code> by an amount proportional to photocurrent. The firmware strips that offset —
+  optical power ∝ (<code>NTC_A</code> − <code>MPD_MON</code>) — and reports it as <code>POPTn</code>
+  in the <code>d</code> dump (scale set for the ≈2.2 µA/mW monitor responsivity; trim against a power
+  meter at bring-up).</div>
   <h4>Interaction</h4>
   <p>A CH card receives its set-points over I²C, drives its laser and TEC locally, and supplies the
   modulation drive to its laser while returning its readbacks over I²C. Its demodulated error comes
   from the AFE over the bused <code>ERRn</code> line and is summed into the laser set-point by the
   analog PI. Raw fiber from the laser head routes to the <a href="#afe">AFE card</a>.</p>
-  <div class="warn"><b>The CH cards set their identity by on-card jumper, not by slot.</b> Unlike every
-  other card — whose geographic address is hard-wired by the backplane slot — the two identical CH
-  cards each carry a GA jumper block that selects channel 1 vs channel 2. Set one card to each channel
-  before installing; the CH slots leave GA open for exactly this (see <a href="#arch">§4.2</a>).</div>
+  <div class="warn"><b>Set the address jumpers before installing.</b> The two identical CH cards are
+  told apart only by JP101: <b>fitted = laser channel 1, open = laser channel 2</b> (JP102/JP103 stay
+  fitted on both). Two cards with the same JP101 setting will collide on I²C and on the ERR/MOD
+  buses. Full jumper and I²C address tables are in <a href="#arch">§4.2</a>.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -874,7 +921,8 @@ $ curl http://dual-pdh.local/api/status
       <tr><td><code>thresh1</code> / <code>thresh2 &lt;lock&gt; &lt;acq&gt;</code></td><td>Set the lock and acquire thresholds.</td></tr>
       <tr><td><code>p1</code> / <code>p2 &lt;kp&gt; &lt;ki&gt; &lt;kd&gt;</code></td><td>Set PID gains (used by the supervisor / logging path).</td></tr>
       <tr><td><code>s</code> / <code>status</code></td><td>Human-readable telemetry dump for both channels.</td></tr>
-      <tr><td><code>d</code></td><td>Detailed diagnostic dump (volts, PD levels).</td></tr>
+      <tr><td><code>d</code></td><td>Detailed diagnostic dump: raw monitor volts (NTC/LAS/TEC/MPD),
+      per-channel optical power <code>POPTn</code> (mW), and AFE PD levels.</td></tr>
       <tr><td><code>netinfo</code> / <code>netset</code> / <code>netreset</code></td><td>Network configuration (see §13.5).</td></tr>
       <tr><td><code>demo on</code> / <code>demo off</code></td><td>Enter/leave hardware-simulation mode (see §13.6).</td></tr>
       <tr><td><code>help</code></td><td>List all commands.</td></tr>
@@ -894,7 +942,7 @@ CH2 SEARCH rms=0.41800 temp=23.9°C I=138.0mA TEC=0.021A(lim=1.00) setp=50.0%</p
   <h3>13.4 Protection</h3>
   <ul>
     <li><b>TEC software current limit.</b> Inside the 1 kHz loop each channel reads its TEC IMON,
-    converts to amps via the INA826 scaling, and smoothly backs off the TEC DAC when current exceeds
+    converts to amps via the INA828 scaling, and smoothly backs off the TEC DAC when current exceeds
     2.5 A: a per-channel factor drops toward 0 (reaching zero in ~20 ms) and recovers in ~200 ms. It
     acts symmetrically on heating and cooling and never touches the laser loop.</li>
     <li><b>H-bridge hardware fault.</b> The OPA551 driver <code>Flag</code> pins are open-drain
@@ -927,8 +975,10 @@ Active IP: 192.168.10.50</pre>
   <h3>13.7 Backplane integration &amp; addressing</h3>
   <p>On the card-cage backplane the controller is also the I²C bus master. It:</p>
   <ul>
-    <li><b>Enumerates slots</b> from the geographic-address pins (GA0/1/2) and derives each card's
-    I²C address, confirming each card ACKs at boot.</li>
+    <li><b>Enumerates cards by I²C probe</b> at boot: each card self-identifies through its on-card
+    address jumpers (<a href="#arch">§4.2</a>), so the controller simply probes the known address set
+    (CH1 0x48/0x0C/0x70, CH2 0x49/0x0D/0x71, AFE 0x4A) and confirms each expected card ACKs. There
+    are no slot straps to read.</li>
     <li><b>Sets operating points</b> via each card's on-board DAC (channel A = laser, B = TEC) with
     cached write-on-change, so an unchanged set-point generates zero bus traffic.</li>
     <li><b>Reads telemetry</b> (laser IMON, TEC IMON, NTC, PD levels) from the on-card ADS1115s at
@@ -939,7 +989,13 @@ Active IP: 192.168.10.50</pre>
   </ul>
   <div class="note">The full pin and I²C address map (CDCE913 0x65; per-channel ADS1115 / DAC / GPIO)
   is in <code>config.h</code> and <code>TeensyFirmwareAssumptions.txt</code>. Build under Teensyduino
-  before flashing, and verify the DAC/GPIO address bases against the datasheets.</div>
+  before flashing.</div>
+  <div class="warn"><b>Firmware address map needs one swap.</b> <code>config.h</code> still assigns
+  channel 1 = GA0 = 1 (0x49/0x0D/0x71), a leftover of the old slot-strap plan. The ADG419 mux truth
+  table (IN = 0 → S1 = ERR1/MOD1, verified against the datasheet) fixes the hardware convention as
+  <b>channel 1 = GA0 = 0</b> (0x48/0x0C/0x70), i.e. JP101 fitted. Swap the CH1/CH2 address constants
+  in <code>config.h</code> before first flash; also note GA readback pins 14/15/16 no longer carry
+  slot straps.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -956,9 +1012,12 @@ Active IP: 192.168.10.50</pre>
     +5V_LASER. Confirm the ±15 V rails come up equal-and-opposite.</li>
     <li><b>Add the DIG card.</b> Confirm the Teensy boots, the TFT lights, I²C pull-ups are present,
     and the 10 MHz/DDS clock is alive.</li>
-    <li><b>Add AFE, then one CH card at a time.</b> Verify each CH card enumerates at the expected
-    I²C address for its slot/strap. With lasers still parked, confirm TEC servo reaches setpoint and
-    NTC reads plausibly.</li>
+    <li><b>Set the CH address jumpers.</b> On one CH card fit JP101 (laser channel 1); on the other
+    leave JP101 open (channel 2). JP102/JP103 fitted on both. See the tables in
+    <a href="#arch">§4.2</a>.</li>
+    <li><b>Add AFE, then one CH card at a time.</b> Verify each CH card enumerates at the I²C
+    addresses its jumpers select (ch1: 0x48/0x0C/0x70; ch2: 0x49/0x0D/0x71). With lasers still
+    parked, confirm TEC servo reaches setpoint and NTC reads plausibly.</li>
     <li><b>Laser enable.</b> Only after PGOOD/power-good and with fiber safely terminated, allow
     firmware to ramp the laser DAC from 0. Confirm IMON tracks command.</li>
     <li><b>Lock.</b> Bring up modulation (DIG DDS), verify the AFE produces a bipolar discriminator
@@ -1537,7 +1596,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <circle class="cmp" cx="276" cy="82" r="14"/>
     <line class="w" x1="270" y1="73" x2="270" y2="91"/><line class="w" x1="270" y1="78" x2="283" y2="71"/><line class="w" x1="270" y1="86" x2="283" y2="93"/>
     <line class="w" x1="262" y1="82" x2="258" y2="82"/><line class="w" x1="276" y1="68" x2="276" y2="44"/><line class="w" x1="276" y1="96" x2="276" y2="120"/>
-    <text class="ref" x="292" y="79">Q17</text><text class="sub" x="292" y="93">IRLML6344</text>
+    <text class="ref" x="292" y="79">Q17</text><text class="sub" x="292" y="93">DMN3404L</text>
     <!-- laser node + bias-tee + laser diode -->
     <line class="w" x1="276" y1="44" x2="452" y2="44"/><circle class="j" cx="340" cy="44" r="3"/>
     <line class="w" x1="340" y1="44" x2="340" y2="30"/><path class="w" d="M340 30 a6 6 0 0 1 12 0 a6 6 0 0 1 12 0"/><line class="w" x1="364" y1="30" x2="398" y2="30"/><text class="net" x="402" y="34">MOD (RF)</text>
@@ -1583,12 +1642,12 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="600" y="204">readback: laser IMON, TEC IMON, NTC</text>
   </svg>
   <figcaption><b>Fig 17.7.</b> Top — the laser current loop: the DAC set-point is divided ×201 into the
-  OPA192 (U23) non-inverting input; the amp drives the IRLML6344 (Q17) low-side sink pulling current
+  OPA192 (U23) non-inverting input; the amp drives the DMN3404L (Q17) low-side sink pulling current
   from +5V_LASER through the DFB laser, and the 0.25 Ω Kelvin sense (R79) feeds back to the inverting
   input. RF modulation is injected onto the laser line through the bias-tee choke (never the gate);
-  the BAT54 reverse clamp is omitted. Bottom — the four-quadrant linear TEC bridge: DAC → OPA192
-  (U20) → OPA551 power buffer → the four-FET H-bridge into the Peltier (0.1 Ω Kelvin sense),
-  referenced to VREF_MID so mid-code = 0 A. Right — the on-card I²C devices: ADS1115 (readback),
+  the BAT46W reverse clamp is omitted. Bottom — the four-quadrant linear TEC bridge: DAC → OPA192
+  (U20) → OPA551 power buffer → the IRL540N/IRF9540N H-bridge into the Peltier (0.1 Ω Kelvin sense),
+  each bridge FET heatsinked, referenced to VREF_MID so mid-code = 0 A. Right — the on-card I²C devices: ADS1115 (readback),
   ADG419 (ERR/MOD channel mux, set by GA), PCA9538 (LOCK_EN / fault); the GA jumper selects CH1 vs
   CH2.</figcaption>
   </figure>

@@ -228,6 +228,8 @@ void comms_process(const String& line, Print& out,
       out.print(F(" LAS"));  out.print(i+1); out.print('='); out.print(m.las_imon_v, 3);
       out.print(F(" TEC"));  out.print(i+1); out.print('='); out.print(m.tec_imon_v, 3);
       out.print(F(" MPD"));  out.print(i+1); out.print('='); out.print(m.mpd_mon_v, 3);
+      out.print(F(" POPT")); out.print(i+1); out.print('=');
+      out.print(mpd_to_optical_mw(m.mpd_mon_v, m.ntc_v), 2);
     }
     const AfeMon& a = afe_mon();
     out.print(F(" PD1=")); out.print(a.pd_lvl_v[0], 3);
