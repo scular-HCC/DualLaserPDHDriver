@@ -355,11 +355,9 @@ void setup() {
   for (uint8_t p : out_pins) pinMode(p, OUTPUT);
   pinMode(PIN_FREQ_TEST, INPUT);
 
-  // Backplane slot ID straps (geographic address) and the shared fault
-  // line. FAULT_n has an external 10k pullup (R305); internal as backup.
-  pinMode(PIN_GA0, INPUT);
-  pinMode(PIN_GA1, INPUT);
-  pinMode(PIN_GA2, INPUT);
+  // Shared fault line. Cards self-address via on-card jumpers, so there
+  // are no slot straps to read — presence is confirmed by I2C probe below.
+  // FAULT_n has an external 10k pullup (R305); internal as backup.
   pinMode(PIN_FAULT_N, INPUT_PULLUP);
 
   digitalWrite(PIN_AD9833_1_CS,  HIGH);
@@ -369,10 +367,6 @@ void setup() {
   digitalWrite(PIN_TFT_CS,       HIGH);
   digitalWrite(PIN_TFT_DC,       HIGH);
   digitalWrite(PIN_TFT_RST,      HIGH);
-
-  uint8_t slot_ga = (digitalRead(PIN_GA2) << 2) | (digitalRead(PIN_GA1) << 1)
-                  |  digitalRead(PIN_GA0);
-  Serial.print(F("Backplane slot GA = ")); Serial.println(slot_ga, BIN);
 
   delay(50);
   display_init(tft);

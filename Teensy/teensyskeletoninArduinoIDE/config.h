@@ -30,7 +30,8 @@
 //   analog monitor inputs -> REMOVED (per-card ADS1115 over I2C)
 //   LOCKn_EN GPIOs        -> REMOVED (PCA9538 IO0 on each CH card)
 //   HBRIDGE_FAULT1/2      -> replaced by ONE shared open-drain FAULT_n
-//   GA0..GA2 slot straps  -> read on freed pins 14/15/16
+//   card addressing       -> ON-CARD jumpers (JP101-103, fit=0); no
+//                            slot straps, DIG enumerates by I2C probe
 //   ERRn_BUS stays ANALOG on A10/A11 (1 kHz supervisor sampling)
 //
 // I2C NOISE RULES (see Backplane_Slots + AFE/CH sheets):
@@ -42,11 +43,10 @@
 #define PIN_SDA           18
 #define PIN_SCL           19
 
-// --- Backplane geographic address (slot ID straps) ----------
-// Freed analog pins re-used as digital inputs (schematic: DIG_Card).
-#define PIN_GA0           14   // was A0 / NTC1 monitor
-#define PIN_GA1           15   // was A1 / TEC1 current monitor
-#define PIN_GA2           16   // was A2 / LAS1 current monitor
+// --- Card addressing (2026-07-16): on-card jumpers ----------
+// Cards self-address with on-card jumpers (JP101-103, fitted = 0);
+// the backplane GA pins are unused and there is nothing to read.
+// D14/D15/D16 (was A0/A1/A2) are therefore SPARE.
 
 // --- Shared fault line (open-drain wired-OR, active-low) ----
 // Any card may assert; source identified via that card's PCA9538.
@@ -54,26 +54,27 @@
 #define PIN_FAULT_N       31   // was HBRIDGE_FAULT1
 
 // ============================================================
-// I2C address map (7-bit) — from the backplane GA strap table:
-//   slot 6 = CH laser 1 (GA2..0 = 101), slot 7 = CH laser 2 (110),
-//   slot 5 = AFE (100).  ADS1115 ADDR pin <- GA0 on CH cards;
-//   the AFE ADS1115 straps ADDR->SDA on-card (0x4A) to avoid the
-//   CH-card 0x48/0x49 range.  VERIFY AD5696R/PCA9538 base addresses
-//   against the datasheets before bring-up.
+// I2C address map (7-bit) — from the CH-card address jumpers:
+//   ch1 card: JP101 FITTED  -> GA1:0 = 00 (ADG419 IN=0 -> S1 =
+//   ERR1/MOD1, verified vs ADG419 datasheet truth table);
+//   ch2 card: JP101 OPEN    -> GA1:0 = 01.
+//   ADS1115 ADDR <- GA0; AD5696R base 00011|A1|A0 (verified vs
+//   ADI Rev E ds); PCA9538 base 0x70|A1<<1|A0.  The AFE ADS1115
+//   straps ADDR->SDA on-card (0x4A), outside the CH 0x48/0x49 range.
 // ============================================================
 #define I2C_CDCE913_ADDR     0x65          // fixed, on the DIG card
-#define I2C_ADS1115_CH1      0x49          // CH laser-1 card (GA0 = 1)
-#define I2C_ADS1115_CH2      0x48          // CH laser-2 card (GA0 = 0)
+#define I2C_ADS1115_CH1      0x48          // CH laser-1 card (GA0 = 0, JP101 fitted)
+#define I2C_ADS1115_CH2      0x49          // CH laser-2 card (GA0 = 1, JP101 open)
 #define I2C_ADS1115_AFE      0x4A          // AFE card (ADDR -> SDA)
-#define I2C_AD5696_CH1       0x0D          // base 0x0C | GA0
-#define I2C_AD5696_CH2       0x0C
-#define I2C_PCA9538_CH1      0x71          // base 0x70 | GA1<<1 | GA0 (slot 6: 01)
-#define I2C_PCA9538_CH2      0x72          // (slot 7: 10)
+#define I2C_AD5696_CH1       0x0C          // base 0x0C | GA0
+#define I2C_AD5696_CH2       0x0D
+#define I2C_PCA9538_CH1      0x70          // base 0x70 | GA1<<1 | GA0
+#define I2C_PCA9538_CH2      0x71
 
 // PCA9538 IO assignment on each CH card (see CH_Card schematic):
 //   IO0 = LOCK_EN (output: HIGH = integrator RUN)
 //   IO1 = HB_FAULT (input, active-low from OPA551 Flag)
-//   IO2 = GA2 readback, IO3..IO7 spare inputs
+//   IO2 = GA2 jumper readback (JP103), IO3..IO7 spare (10k pulldowns)
 
 // --- SPI0 (signal-path) — MOSI=11, MISO=12, SCK=13 ---------
 #define PIN_SCK           13

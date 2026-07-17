@@ -61,9 +61,9 @@ CDCE913: programs EEPROM only when the version byte differs; force with 'r'.
 PIN MAP (Rev 3.0) — v5 DIG eurocard, universal DIN 41612 backplane
 ----------------------------------------------------------------
 Matches Lasser_Driver_v5/DIG_Card/DIG_Card.kicad_sch and config.h.
-  D14  PIN_GA0     backplane slot-ID strap bit 0   (was A0 NTC1 monitor)
-  D15  PIN_GA1     slot-ID strap bit 1             (was A1 TEC1_IMON)
-  D16  PIN_GA2     slot-ID strap bit 2             (was A2 LAS1_IMON)
+  D14/D15/D16      SPARE (was A0/A1/A2 monitors; the planned GA slot-strap
+                   readback was dropped 2026-07-16 — cards self-address
+                   with on-card jumpers, DIG enumerates by I2C probe)
   D31  PIN_FAULT_N shared open-drain fault, active-low (was HBRIDGE_FAULT1)
   A10/A11 LOCKn_IN  post-mix baseband error (ERR1/2_BUS) — UNCHANGED
   D2/D3/D6/D8 DDS chip-selects, D4/D5 DDS resets     — UNCHANGED
@@ -74,9 +74,12 @@ REMOVED (functions moved onto the CH/AFE cards over I2C):
   LOCKn_EN GPIOs (D33/D34)     -> PCA9538 IO0 per CH card
   HBRIDGE_FAULT1/2 (D31/D32)   -> PCA9538 IO1 + shared FAULT_n (D31)
   all analog monitors (A0-A3, A6-A9) -> ADS1115 per card (volts)
-I2C addresses (from GA straps; see config.h table and VERIFY vs datasheets):
-  CDCE913 0x65 | CH1: ADS1115 0x49, AD5696R 0x0D, PCA9538 0x71
-              | CH2: ADS1115 0x48, AD5696R 0x0C, PCA9538 0x72
+I2C addresses (from CH-card address jumpers; datasheet-verified bases —
+AD5696R = 00011|A1|A0, PCA9538 = 0x70|A1<<1|A0. Hardware convention fixed
+by the ADG419 mux truth table, IN=0 -> S1 = ERR1/MOD1: ch1 = GA0=0 =
+JP101 FITTED; ch2 = GA0=1 = JP101 OPEN. See manual section 4.2):
+  CDCE913 0x65 | CH1: ADS1115 0x48, AD5696R 0x0C, PCA9538 0x70
+              | CH2: ADS1115 0x49, AD5696R 0x0D, PCA9538 0x71
               | AFE: ADS1115 0x4A (ADDR->SDA strapped on-card)
 Noise rules: telemetry <=10 Hz round robin, suspended during ACQUIRE;
 DAC/expander writes are cached (no I2C traffic when values unchanged);
@@ -109,6 +112,18 @@ help              — full command list
 ----------------------------------------------------------------
 CHANGELOG
 ----------------------------------------------------------------
+Rev 3.1 (2026-07-16) — jumper-based card addressing
+  - Card address moved from backplane slot straps to ON-CARD jumpers
+    (CH card rev B: JP101-103, fitted = 0). CH1/CH2 I2C address
+    constants SWAPPED in config.h to match the hardware convention
+    (ADG419 IN=0 -> S1 = ERR1/MOD1 => ch1 = GA0=0 = JP101 fitted):
+    CH1 now 0x48/0x0C/0x70, CH2 0x49/0x0D/0x71. AD5696R/PCA9538
+    address bases verified against datasheets (VERIFY note cleared).
+  - PIN_GA0-2 defines and the setup() slot-GA readback REMOVED;
+    D14-16 spare. Card presence = I2C probe of the known address set.
+  - Compiled successfully under Teensyduino 2026-07-16 (no errors);
+    not yet run on hardware.
+
 Rev 3.0 (2026-07-15) — v5 eurocard / universal I2C backplane
   - config.h: pin map reworked (GA0-2 on D14-16, FAULT_n on D31; AD5064,
     LOCKn_EN GPIOs, HBRIDGE_FAULTn and all analog monitor pins removed);
