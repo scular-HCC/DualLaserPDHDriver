@@ -150,11 +150,14 @@
 #define NTC_VSUP          3.3f      // pullup supply on the CH card
 
 // ============================================================
-// Laser IMON scaling — adjust to match schematic gain
-// v5: monitors arrive as VOLTS from the ADS1115.
-// (v3 was 0.0806 mA/LSB at 3.3V/4095 → 100 mA per volt.)
+// Laser IMON scaling — matches CH card rev C hardware:
+// INA828 (G = 1 + 50k/487R = 103.7) across the 0.25R laser shunt
+// → 25.93 V/A → 38.6 mA per volt.  (The old 100 mA/V was the v3
+// Teensy-ADC placeholder and never matched the INA chain.)
+// ADC headroom: 3.3V clip at ≈127 mA — above the 100 mA laser max.
+// VERIFY against a measured current at bring-up.
 // ============================================================
-#define LASER_IMON_MA_PER_V   100.0f
+#define LASER_IMON_MA_PER_V   38.6f
 
 // ============================================================
 // Telemetry (I2C) cadence — noise rules from the backplane sheet:
@@ -166,9 +169,10 @@
 
 // ============================================================
 // TEC current monitor scaling
-// Hardware: INA826 (G=7.2, Rg=8.06k), shunt R=0.1Ω
+// Hardware: INA828 (G = 1 + 50k/8.06k = 7.20 exactly), shunt R=0.1Ω
+// (was INA826, G=7.13; the 0.72 V/A constant is now exact)
 //   V_IMON = TEC_IMON_OFFSET_V + TEC_IMON_V_PER_A * I_amps
-//   At 0 A  → ~1.20 V  (INA826 REF pin)
+//   At 0 A  → ~1.20 V  (INA828 REF pin, from TEC_VZERO buffer)
 //   At 2.5 A → ~3.00 V  (Vmax from schematic annotation)
 // DAC zero-current code for the ≈1.20V virtual-zero. v5: AD5696R with
 // internal 2.5V ref × gain 2 → 5V span, so the code is unchanged from
@@ -181,7 +185,7 @@
 // current↔code table for VZERO=1.20V; the old table assumed VZERO=1.875V.
 // ============================================================
 #define TEC_IMON_OFFSET_V    1.20f   // V_IMON at 0 A
-#define TEC_IMON_V_PER_A     0.72f   // INA826 gain × shunt = 7.2 × 0.1
+#define TEC_IMON_V_PER_A     0.72f   // INA828 gain × shunt = 7.20 × 0.1
 #define TEC_ILIMIT_A         2.5f    // software current limit (amps)
 #define TEC_DAC_ZERO_CODE    15728u  // DAC code for 0 A TEC current (VOUTC≈1.20V, 5V ref)
 #define TEC_ILIMIT_STEP      0.05f   // limit-factor reduction per tick when over-current

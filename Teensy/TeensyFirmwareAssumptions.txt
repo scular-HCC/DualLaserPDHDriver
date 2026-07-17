@@ -112,6 +112,15 @@ help              — full command list
 ----------------------------------------------------------------
 CHANGELOG
 ----------------------------------------------------------------
+Rev 3.2 (2026-07-17) — INA828 swap + IMON cal constants
+  - CH card U28/U32 changed INA826 -> INA828IDR (826 EOL-ish at DigiKey;
+    828 is the pin-compatible successor, G = 1 + 50k/RG).
+  - TEC_IMON_V_PER_A 0.72 now EXACT (G = 1+50k/8.06k = 7.20).
+  - LASER_IMON_MA_PER_V corrected 100 -> 38.6 (INA828 G=103.7 x 0.25R
+    shunt = 25.93 V/A; the old 100 was a v3 placeholder that never
+    matched the INA chain). Verify both against measured currents at
+    bring-up. Requires recompile (constants only).
+
 Rev 3.1 (2026-07-16) — jumper-based card addressing
   - Card address moved from backplane slot straps to ON-CARD jumpers
     (CH card rev B: JP101-103, fitted = 0). CH1/CH2 I2C address
