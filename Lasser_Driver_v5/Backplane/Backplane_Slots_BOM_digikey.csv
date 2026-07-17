@@ -1,0 +1,6 @@
+Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint,Description
+8,294711-E,TE Connectivity Erni,"Backplane J1,J2,J3,J4,J5,J6,J7,J8",294711-E,DIN41612_M_3x8+8_Female_Vertical_THT_Power,DIN41612 Type M female vertical 24+8 (32pos) 10A backplane connector
+1,3634110,C/A Design,Backplane subrack frame,SUBRACK EASY 3U/84HP/235MM,Mechanical,3U 84HP 235mm subrack frame (RIPAC EASY / IEEE 1101.1) - card guides & screws separate
+16,3684669,C/A Design,Backplane card guides,GUIDE RAIL GRAY 160MM,Card guide rail gray for 1.6mm PCB 160mm (2 per slot x 8 slots)
+16,M2.56MPP188B,Kanebridge,Backplane H1-H16,M2.5x6 pan phillips SS,M2.5x6mm pan head Phillips 18-8 SS machine screw (backplane-to-tiebar)
+16,16FW004032,Essentra Components,Backplane H1-H16 standoff,Nylon washer 0.81mm (M2.5 clr),Nylon flat washer 0.81mm thick (2.92mm ID clears M2.5, 6.35mm OD) - insulating standoff/isolation at each hole (~1mm nominal, replaces spacer strip)
