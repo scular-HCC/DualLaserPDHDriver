@@ -10,121 +10,6 @@
 		(comment 1 "v3 ch1 slice + universal Type M bus interface; review fixes applied (pinouts, 5V DAC, decoupling)")
 	)
 	(lib_symbols
-		(symbol "Mechanical:Heatsink"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "HS"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Heatsink"
-				(at 0 -1.27 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0.3048 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0.3048 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Heatsink"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "thermal heat temperature"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "Heatsink_*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "Heatsink_0_1"
-				(polyline
-					(pts
-						(xy -0.3302 1.27) (xy -0.9652 1.27) (xy -0.9652 3.81) (xy -1.6002 3.81) (xy -1.6002 1.27) (xy -2.2352 1.27)
-						(xy -2.2352 3.81) (xy -2.8702 3.81) (xy -2.8702 0) (xy -0.9652 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.3302 1.27) (xy -0.3302 3.81) (xy 0.3048 3.81) (xy 0.3048 1.27) (xy 0.9398 1.27) (xy 0.9398 3.81)
-						(xy 1.5748 3.81) (xy 1.5748 1.27) (xy 2.2098 1.27) (xy 2.2098 3.81) (xy 2.8448 3.81) (xy 2.8448 0)
-						(xy -0.9652 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Amplifier_Instrumentation:INA821xD"
 			(pin_names
 				(offset 0.127)
@@ -4683,6 +4568,121 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Mechanical:Heatsink"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "HS"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Heatsink"
+				(at 0 -1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.3048 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0.3048 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Heatsink"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "thermal heat temperature"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Heatsink_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Heatsink_0_1"
+				(polyline
+					(pts
+						(xy -0.3302 1.27) (xy -0.9652 1.27) (xy -0.9652 3.81) (xy -1.6002 3.81) (xy -1.6002 1.27) (xy -2.2352 1.27)
+						(xy -2.2352 3.81) (xy -2.8702 3.81) (xy -2.8702 0) (xy -0.9652 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.3302 1.27) (xy -0.3302 3.81) (xy 0.3048 3.81) (xy 0.3048 1.27) (xy 0.9398 1.27) (xy 0.9398 3.81)
+						(xy 1.5748 3.81) (xy 1.5748 1.27) (xy 2.2098 1.27) (xy 2.2098 3.81) (xy 2.8448 3.81) (xy 2.8448 0)
+						(xy -0.9652 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Mechanical:MountingHole"
 			(pin_names
 				(offset 1.016)
@@ -6634,6 +6634,17 @@
 		)
 		(uuid "d9126637-20c8-4100-bbc2-98ee82aab4f9")
 	)
+	(text "TEC H-BRIDGE HEATSINKS: HS1-HS4 = Wakefield 657-10ABPE on Q13/Q14/Q17/Q18 (combined footprint\nHeatsinks:TO-220-3_Vertical_HS657-10ABPE carries the copper - HS symbols are BOM-only).\nIsolate every tab: Boyd 4880G kit + #4-40 screw/washers/nut. Worst case ~10W/FET at 2.5A TEC cooling.\nFins vertical; keep away from NTC divider + precision scalers."
+		(exclude_from_sim no)
+		(at 552.45 111.76 0)
+		(effects
+			(font
+				(size 1.6 1.6)
+			)
+			(justify left)
+		)
+		(uuid "ebd4ebf0-f357-4f9a-a56b-034a725ac8b4")
+	)
 	(junction
 		(at 534.67 115.57)
 		(diameter 0)
@@ -6675,6 +6686,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "065c33a8-3be9-48d1-8510-c50fee7f9373")
+	)
+	(junction
+		(at 50.8 149.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "077f5b7c-356b-425e-bcd8-a60de7179b83")
 	)
 	(junction
 		(at 382.27 196.85)
@@ -6729,6 +6746,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "221b0b42-4118-40c3-ad48-55bf412a1183")
+	)
+	(junction
+		(at 166.37 269.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "31e9ef20-4a3e-4ef5-bfea-37d8b49b54cb")
 	)
 	(junction
 		(at 185.42 262.89)
@@ -6933,6 +6956,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7e868b17-d8f8-4736-b977-89cfba7e995a")
+	)
+	(junction
+		(at 237.49 184.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "81a36326-88ef-49b7-b9a0-06cd4d47e9bf")
 	)
 	(junction
 		(at 382.27 128.27)
@@ -7910,6 +7939,16 @@
 	)
 	(wire
 		(pts
+			(xy 50.8 149.86) (xy 67.31 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ac2dac2-c4be-4435-965b-c037c587b59a")
+	)
+	(wire
+		(pts
 			(xy 143.51 168.91) (xy 99.06 168.91)
 		)
 		(stroke
@@ -8020,6 +8059,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 184.15) (xy 237.49 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55f2a9da-abb1-438a-a6e8-c325a23d5189")
+	)
+	(wire
+		(pts
 			(xy 510.54 102.87) (xy 538.48 102.87)
 		)
 		(stroke
@@ -8127,6 +8176,26 @@
 			(type default)
 		)
 		(uuid "5f4b614a-9527-4721-aab8-feaa993b863c")
+	)
+	(wire
+		(pts
+			(xy 50.8 149.86) (xy 50.8 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f9c116c-a5d7-4850-8d3b-df0b3ade3b08")
+	)
+	(wire
+		(pts
+			(xy 166.37 281.94) (xy 166.37 284.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "621714cf-b565-4e36-977d-420d0be09aeb")
 	)
 	(wire
 		(pts
@@ -8800,7 +8869,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 269.24) (xy 179.07 269.24)
+			(xy 165.1 269.24) (xy 166.37 269.24)
 		)
 		(stroke
 			(width 0)
@@ -8827,6 +8896,16 @@
 			(type default)
 		)
 		(uuid "94beb9c3-8284-4991-9bf0-ebf66be9c9c0")
+	)
+	(wire
+		(pts
+			(xy 166.37 269.24) (xy 179.07 269.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95ab1439-59c2-439c-a300-f205b2ae6994")
 	)
 	(wire
 		(pts
@@ -9850,6 +9929,16 @@
 	)
 	(wire
 		(pts
+			(xy 166.37 269.24) (xy 166.37 274.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd6d036f-3c89-47db-9f32-e05bb62d2144")
+	)
+	(wire
+		(pts
 			(xy 330.2 191.77) (xy 339.09 191.77)
 		)
 		(stroke
@@ -9870,7 +9959,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 149.86) (xy 67.31 149.86)
+			(xy 46.99 149.86) (xy 50.8 149.86)
 		)
 		(stroke
 			(width 0)
@@ -10197,6 +10286,16 @@
 			(justify left)
 		)
 		(uuid "01c4e6e6-f2a7-4a9d-baa7-a504963b6f15")
+	)
+	(label "N_Q13_S"
+		(at 387.35 222.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "04c37f63-627d-41f8-8f5a-e86060078231")
 	)
 	(label "DITH_SUM"
 		(at 215.9 251.46 180)
@@ -10618,17 +10717,6 @@
 		)
 		(uuid "6605b58f-5b05-4351-b084-73e8b0df9ea9")
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 218.44 26.67 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "663e68ed-6e40-4d2d-ad10-2f79f5a547ac")
-	)
 	(label "LAS_IMON_F"
 		(at 68.58 208.28 0)
 		(effects
@@ -10709,16 +10797,6 @@
 		)
 		(uuid "8cc52efd-1a56-4456-a16c-dc71d52dced5")
 	)
-	(label "N_U19_INP"
-		(at 237.49 186.69 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8d278aac-4d12-4051-835d-21e365e96c1e")
-	)
 	(label "N_Q19_G"
 		(at 232.41 278.13 90)
 		(effects
@@ -10728,16 +10806,6 @@
 			(justify left)
 		)
 		(uuid "97c84f5a-5510-4466-bffb-5b047a7313bc")
-	)
-	(label "TEC_BTF_N"
-		(at 387.35 219.71 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9cbdcdad-d18a-4e0a-8d15-fc0024a4f99b")
 	)
 	(label "unconnected-(J_BTF1-NC-Pad6)"
 		(at 218.44 34.29 180)
@@ -12265,6 +12333,30 @@
 	)
 	(global_label "GND"
 		(shape passive)
+		(at 166.37 284.48 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3de81e1e-208e-4363-894e-b5fcc805e348")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 290.2244 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
 		(at 278.13 34.29 0)
 		(fields_autoplaced yes)
 		(effects
@@ -12964,6 +13056,28 @@
 		(uuid "6565c59e-1bf5-47f5-ab95-cbbf7928063e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 76.2 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 218.44 26.67 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "663e68ed-6e40-4d2d-ad10-2f79f5a547ac")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 218.44 26.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15193,7 +15307,7 @@
 	)
 	(global_label "VOUT_TEC"
 		(shape passive)
-		(at 229.87 186.69 180)
+		(at 229.87 189.23 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -15203,7 +15317,7 @@
 		)
 		(uuid "df2adacf-4698-4e80-a930-5f2f94db859a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 218.9247 186.69 0)
+			(at 218.9247 189.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15559,29 +15673,6 @@
 		(uuid "f19b8656-69d5-4583-90a7-d27ae4721556")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 67.31 170.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "3V3_DIG"
-		(shape passive)
-		(at 50.8 158.75 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f1a073a7-1a20-4733-ab59-6a2e35c8d439")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 50.8 158.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17630,6 +17721,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 574.04 40.64 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board no)
+		(in_pos_files no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1d79f8cb-bb94-4041-bf77-fbe34adea021")
+		(property "Reference" "HS1"
+			(at 574.04 33.02 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "657-10ABPE (Q13)"
+			(at 574.04 48.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 574.04 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 574.04 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 574.04 40.64 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "HS1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 152.4 138.43 180)
 		(unit 1)
@@ -18488,6 +18652,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 574.04 58.42 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board no)
+		(in_pos_files no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "32d8a84b-7376-4630-a731-810f9cb3e694")
+		(property "Reference" "HS2"
+			(at 574.04 50.8 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "657-10ABPE (Q14)"
+			(at 574.04 66.04 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 574.04 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 574.04 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 574.04 58.42 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "HS2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 173.99 198.12 0)
 		(unit 1)
@@ -19229,7 +19466,7 @@
 				)
 			)
 		)
-		(property "Value" "DFB1550LP #1 Socket"
+		(property "Value" "Butterfly harness header - Wurth WR-PHD 2x7 (mates LDM-BUTTERFLY)"
 			(at 222.25 40.64 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19239,7 +19476,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical"
 			(at 222.25 29.21 0)
 			(hide yes)
 			(show_name no)
@@ -20618,6 +20855,84 @@
 			(project "CH_Card"
 				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
 					(reference "C141")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 166.37 278.13 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5c70cf34-929f-4d74-b2ae-a1317e2ca9e0")
+		(property "Reference" "R78"
+			(at 166.37 278.13 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100k"
+			(at 168.91 277.876 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 166.37 278.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 166.37 278.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 166.37 278.13 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cba97bbf-14d8-4db3-8e59-cff5ca037fd5")
+		)
+		(pin "2"
+			(uuid "cdcbbf84-47ff-410c-8914-e0d320f44acf")
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "R78")
 					(unit 1)
 				)
 			)
@@ -22301,6 +22616,79 @@
 			(project "CH_Card"
 				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
 					(reference "JP101")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 574.04 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board no)
+		(in_pos_files no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7bb882cc-42c5-44a4-b582-f1d6b1aa0fd5")
+		(property "Reference" "HS4"
+			(at 574.04 86.36 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "657-10ABPE (Q18)"
+			(at 574.04 101.6 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 574.04 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 574.04 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 574.04 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "HS4")
 					(unit 1)
 				)
 			)
@@ -25204,7 +25592,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 233.68 186.69 90)
+		(at 233.68 189.23 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -25214,7 +25602,7 @@
 		(dnp no)
 		(uuid "c2aa6266-80dd-4f38-9c89-a0837de45036")
 		(property "Reference" "R44"
-			(at 233.172 186.69 90)
+			(at 233.172 189.23 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25224,7 +25612,7 @@
 			)
 		)
 		(property "Value" "4.99k 0.1% TEC_scaler_top"
-			(at 235.966 189.484 90)
+			(at 235.966 192.024 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25234,7 +25622,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
-			(at 233.68 186.69 0)
+			(at 233.68 189.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25245,7 +25633,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 233.68 186.69 0)
+			(at 233.68 189.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25256,7 +25644,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 233.68 186.69 0)
+			(at 233.68 189.23 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -26812,6 +27200,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:Heatsink")
+		(at 574.04 76.2 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board no)
+		(in_pos_files no)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "eb14864f-5b0c-4044-a2e0-d06bac40e5eb")
+		(property "Reference" "HS3"
+			(at 574.04 68.58 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "657-10ABPE (Q17)"
+			(at 574.04 83.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 574.04 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 574.04 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 574.04 76.2 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "HS3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_Shunt")
 		(at 400.05 152.4 270)
 		(unit 1)
@@ -27857,165 +28318,6 @@
 				)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 574.04 40.64 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board no)
-		(in_pos_files no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1d79f8cb-bb94-4041-bf77-fbe34adea021")
-		(property "Reference" "HS1"
-			(at 574.04 33.02 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value" "657-10ABPE (Q13)"
-			(at 574.04 48.26 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint" ""
-			(at 574.04 40.64 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 574.04 40.64 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "HS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 574.04 58.42 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board no)
-		(in_pos_files no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "32d8a84b-7376-4630-a731-810f9cb3e694")
-		(property "Reference" "HS2"
-			(at 574.04 50.8 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value" "657-10ABPE (Q14)"
-			(at 574.04 66.04 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint" ""
-			(at 574.04 58.42 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 574.04 58.42 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "HS2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 574.04 76.2 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board no)
-		(in_pos_files no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "eb14864f-5b0c-4044-a2e0-d06bac40e5eb")
-		(property "Reference" "HS3"
-			(at 574.04 68.58 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value" "657-10ABPE (Q17)"
-			(at 574.04 83.82 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint" ""
-			(at 574.04 76.2 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 574.04 76.2 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "HS3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:Heatsink")
-		(at 574.04 93.98 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board no)
-		(in_pos_files no)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7bb882cc-42c5-44a4-b582-f1d6b1aa0fd5")
-		(property "Reference" "HS4"
-			(at 574.04 86.36 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Value" "657-10ABPE (Q18)"
-			(at 574.04 101.6 0)
-			(effects (font (size 1.27 1.27)))
-		)
-		(property "Footprint" ""
-			(at 574.04 93.98 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 574.04 93.98 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "HS4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(text "TEC H-BRIDGE HEATSINKS: HS1-HS4 = Wakefield 657-10ABPE on Q13/Q14/Q17/Q18 (combined footprint\nHeatsinks:TO-220-3_Vertical_HS657-10ABPE carries the copper - HS symbols are BOM-only).\nIsolate every tab: Boyd 4880G kit + #4-40 screw/washers/nut. Worst case ~10W/FET at 2.5A TEC cooling.\nFins vertical; keep away from NTC divider + precision scalers."
-		(exclude_from_sim no)
-		(at 552.45 111.76 0)
-		(effects
-			(font
-				(size 1.6 1.6)
-			)
-			(justify left)
-		)
-		(uuid "ebd4ebf0-f357-4f9a-a56b-034a725ac8b4")
 	)
 	(sheet_instances
 		(path "/"
