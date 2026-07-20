@@ -4791,28 +4791,28 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U_TIA3"
-				(at 3.302 -3.302 0)
+			(property "Reference" "U_TIA1"
+				(at 5.334 3.556 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
-						(size 1 1)
+						(size 1.27 1.27)
 					)
 				)
 			)
 			(property "Value" "OPA380AIDR MPD"
-				(at 7.112 2.794 0)
+				(at 10.414 -3.302 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
-						(size 1 1)
+						(size 1.27 1.27)
 					)
 				)
 			)
 			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-				(at -200 258 0)
+				(at 3.048 16.764 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -4823,7 +4823,7 @@
 				)
 			)
 			(property "Datasheet" ""
-				(at -200 258 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -4858,6 +4858,25 @@
 				)
 			)
 			(symbol "OPA380_3_1_1"
+				(pin no_connect line
+					(at -6.35 -3.81 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
 				(pin input line
 					(at -6.35 -1.27 0)
 					(length 2.54)
@@ -4912,6 +4931,25 @@
 						)
 					)
 				)
+				(pin no_connect line
+					(at -6.35 -5.08 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
 				(pin output line
 					(at 6.35 0 180)
 					(length 2.54)
@@ -4948,6 +4986,25 @@
 						)
 					)
 				)
+				(pin no_connect line
+					(at -6.35 -6.35 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
 			)
 			(embedded_fonts no)
 		)
@@ -4960,28 +5017,28 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U_TIA4"
-				(at 3.302 -3.302 0)
+			(property "Reference" "U_TIA2"
+				(at 5.842 3.302 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
-						(size 1 1)
+						(size 1.27 1.27)
 					)
 				)
 			)
 			(property "Value" "OPA380AIDR MPD"
-				(at 7.112 2.794 0)
+				(at 10.922 -2.794 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
-						(size 1 1)
+						(size 1.27 1.27)
 					)
 				)
 			)
 			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-				(at -200 258 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -4992,7 +5049,7 @@
 				)
 			)
 			(property "Datasheet" ""
-				(at -200 258 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -5027,6 +5084,25 @@
 				)
 			)
 			(symbol "OPA380_5_1_1"
+				(pin no_connect line
+					(at -6.35 -3.81 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
 				(pin input line
 					(at -6.35 -1.27 0)
 					(length 2.54)
@@ -5081,6 +5157,25 @@
 						)
 					)
 				)
+				(pin no_connect line
+					(at -6.35 -5.08 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
 				(pin output line
 					(at 6.35 0 180)
 					(length 2.54)
@@ -5110,6 +5205,25 @@
 						)
 					)
 					(number "7"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at -6.35 -6.35 0)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 0.762 0.762)
+							)
+						)
+					)
+					(number "8"
 						(effects
 							(font
 								(size 0.762 0.762)
@@ -6982,12 +7096,6 @@
 		(uuid "898b0f08-a1ad-4cea-9b68-41f3f58f5d16")
 	)
 	(junction
-		(at 382.27 212.09)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8f0a62ac-0738-4e62-9256-93a8e2cd7d94")
-	)
-	(junction
 		(at 82.55 210.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7326,16 +7434,6 @@
 			(type default)
 		)
 		(uuid "1d6cc04c-174e-4734-883b-8b3e254b2629")
-	)
-	(wire
-		(pts
-			(xy 382.27 209.55) (xy 382.27 212.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1e8c3693-c00c-452a-96c3-4ca158e1499f")
 	)
 	(wire
 		(pts
@@ -8369,16 +8467,6 @@
 	)
 	(wire
 		(pts
-			(xy 382.27 212.09) (xy 387.35 212.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6ef4d165-06f9-402f-b643-cefb41c3a785")
-	)
-	(wire
-		(pts
 			(xy 388.62 128.27) (xy 388.62 130.81)
 		)
 		(stroke
@@ -8819,7 +8907,7 @@
 	)
 	(wire
 		(pts
-			(xy 382.27 212.09) (xy 382.27 224.79)
+			(xy 382.27 209.55) (xy 382.27 224.79)
 		)
 		(stroke
 			(width 0)
@@ -20303,6 +20391,15 @@
 		(pin "7"
 			(uuid "1c6ce993-e676-4661-813c-4bd3e8c295ea")
 		)
+		(pin "8"
+			(uuid "71dcf520-ed2e-4e01-b616-0fba3f61994b")
+		)
+		(pin "5"
+			(uuid "a4d91f27-7cac-4fa8-9a8e-50e7dbdeeac2")
+		)
+		(pin "1"
+			(uuid "5dcf256e-3558-4d1b-adda-91b2212f4ea0")
+		)
 		(instances
 			(project "CH_Card"
 				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
@@ -21680,84 +21777,6 @@
 			(project "CH_Card"
 				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
 					(reference "C152")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 387.35 215.9 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp yes)
-		(uuid "67191493-3bb3-47ab-9b8d-dd7c075fe4b3")
-		(property "Reference" "R62"
-			(at 387.858 215.392 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "DNP Rtrim (shunt scale)"
-			(at 387.604 217.17 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 387.35 215.9 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 387.35 215.9 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 387.35 215.9 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a854911c-3667-4faa-b96e-7e65d4fa59f9")
-		)
-		(pin "2"
-			(uuid "4113b67f-c7e7-4ac1-b302-b6e89dda59c2")
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "R62")
 					(unit 1)
 				)
 			)
@@ -27388,7 +27407,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 542.29 53.34 0)
+			(at 545.338 36.576 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27433,6 +27452,15 @@
 		)
 		(pin "3"
 			(uuid "caa94001-032b-4593-81ef-8a746e71b7b6")
+		)
+		(pin "1"
+			(uuid "84c32d41-7a75-451e-86fb-d522c9a67271")
+		)
+		(pin "8"
+			(uuid "81571fab-968c-4f0d-9918-0d90048c7b96")
+		)
+		(pin "5"
+			(uuid "502dc228-04be-41c0-9a9c-04512be88359")
 		)
 		(instances
 			(project "CH_Card"
