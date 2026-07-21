@@ -52,8 +52,8 @@
         "zones": {
           "border_display_style": 2,
           "border_hatch_pitch": 0.5,
-          "corner_radius": 0.0,
-          "corner_smoothing": 0,
+          "corner_radius": 1.0,
+          "corner_smoothing": 2,
           "fill_mode": 0,
           "hatch_gap": 1.5,
           "hatch_orientation": 0.0,
@@ -162,7 +162,7 @@
         "min_track_width": 0.2,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -671,7 +671,7 @@
         "uuid": "6bfa46d8-531a-4f26-aa02-52b35e1f56cf"
       }
     ],
-    "used_designators": "J2-8,H1-6",
+    "used_designators": "R1,J2-8,H1-6,C1,D1-3",
     "variants": []
   },
   "sheets": [

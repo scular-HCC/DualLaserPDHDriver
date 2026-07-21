@@ -113,7 +113,7 @@
       <div class="kpi"><b>±2.5 A</b><span>TEC per channel</span></div>
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
     </div>
-    <div class="rev">Manual Rev 1.1 &nbsp;·&nbsp; 2026-07-19 &nbsp;·&nbsp; DualLaserPDHDriver</div>
+    <div class="rev">Manual Rev 1.2 &nbsp;·&nbsp; 2026-07-21 &nbsp;·&nbsp; DualLaserPDHDriver</div>
   </div>
 </header>
 
@@ -666,14 +666,30 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <li><b>Rail distribution.</b> Every rail buses across all eight slots as one island; the heavy
     TEC and ±18 V rails are doubled onto both copper layers and heavily via-stitched (287 vias) to
     reach ~10 A ampacity and hold the loop drop under ~0.35 V at 6 A.</li>
-    <li><b>Ground star.</b> <code>GND</code> is one plane; <code>PGND_TEC</code> is kept isolated,
-    honoring the single star point at the pm6V output. The DGND↔GND tie is made here.</li>
+    <li><b>Ground architecture — two grounds, one bond.</b> The system runs two separate ground
+    nets: <code>GND</code> (analog / signal / logic return, shared by every card and the ±18 V, ±5 V
+    and logic rails) as one plane, and <code>PGND_TEC</code> (the ±6 V TEC-supply return) as a second,
+    deliberately separate plane. <code>PGND_TEC</code> is <em>galvanically isolated</em> at source
+    because pm6V is transformer-fed from its own ±9 Vac secondary — it shares no rail with system
+    ground. The two planes are joined at <b>exactly one point, here on the backplane</b>, next to the
+    pm6V slot, by the single-point bond below. That tie is mandatory: without it the isolated TEC domain
+    floats, and the ±15 V-referenced TEC current-sense (INA828) and H-bridge control op-amps on the CH
+    card would see an undefined input common-mode and mis-read or clip.</li>
     <li><b>Signals.</b> I²C (SDA/SCL), the two bused analog pairs (ERR1/2, MOD1/2), VREF_MID, and
     the wired-OR FAULT_n run to every slot. Geographic-address pins are <em>not</em> bused: each slot
     hard-wires its own GA code to <code>3V3</code>/<code>GND</code> to give the card its identity — the
     two laser-card slots being the exception, where GA is left open for the CH card's on-card jumpers
     (see <a href="#arch">§4.2</a>).</li>
   </ul>
+  <div class="tip"><b>Single-point ground bond — fit at one place only.</b> <code>GND</code> and
+  <code>PGND_TEC</code> are tied together by three parts in parallel, placed on the backplane next to
+  the pm6V slot: <b>R1 — 0 Ω net-tie</b> (the DC reference, the only strictly required part);
+  <b>C1 — 100 nF</b> (shunts HF common-mode across the bond); and <b>D3 — SMAJ5.0CA</b> (bidirectional
+  5 V TVS, clamps startup / fault transients between the domains). Populate this network at
+  <em>exactly one</em> location — a second GND↔PGND_TEC tie anywhere in the system forms a ground loop.
+  The bond carries only op-amp bias / leakage current: the TEC load current loops entirely within the
+  ±6 V / <code>PGND_TEC</code> domain and never returns through it, which is why the reference is a
+  low-impedance link rather than a resistor.</div>
   <div class="tip"><b>Placement.</b> Put the pm6V (TEC source) slot adjacent to the CH consumer slots
   to keep the TEC-rail IR drop under ~0.1 V. Decoupling lives on the cards (HF bypass at each IC);
   the only backplane cap worth adding is a bulk electrolytic at the TEC-rail entry to stiffen the
