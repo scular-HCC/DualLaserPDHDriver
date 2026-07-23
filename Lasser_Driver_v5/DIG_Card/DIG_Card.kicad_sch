@@ -586,7 +586,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Amplifier_Operational:MCP6002-xMC"
+		(symbol "Amplifier_Operational:MCP6002-xSN"
 			(pin_names
 				(offset 0.127)
 			)
@@ -606,7 +606,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "MCP6002-xMC"
+			(property "Value" "MCP6002-xSN"
 				(at 0 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -682,7 +682,7 @@
 					)
 				)
 			)
-			(symbol "MCP6002-xMC_1_1"
+			(symbol "MCP6002-xSN_1_1"
 				(polyline
 					(pts
 						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
@@ -750,7 +750,7 @@
 					)
 				)
 			)
-			(symbol "MCP6002-xMC_2_1"
+			(symbol "MCP6002-xSN_2_1"
 				(polyline
 					(pts
 						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
@@ -818,7 +818,7 @@
 					)
 				)
 			)
-			(symbol "MCP6002-xMC_3_1"
+			(symbol "MCP6002-xSN_3_1"
 				(pin power_in line
 					(at -2.54 -7.62 90)
 					(length 3.81)
@@ -848,25 +848,6 @@
 						)
 					)
 					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -2.54 -7.62 90)
-					(length 3.81)
-					(hide yes)
-					(name "V-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -13150,7 +13131,7 @@
 		)
 		(uuid "7998f103-dc1d-4e11-98d8-4964009aa111")
 	)
-	(label "MCLK3"
+	(label "MCLK3_S"
 		(at 384.81 335.28 0)
 		(effects
 			(font
@@ -13510,16 +13491,6 @@
 		)
 		(uuid "a88e7f52-9354-4204-aa3c-a346363a05a2")
 	)
-	(label "VM_N_U28A__"
-		(at 708.66 1120.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "aa6e8f32-b1b7-4d41-8d81-52c2b47cf189")
-	)
 	(label "N_C90_Pad2"
 		(at 297.18 259.08 180)
 		(effects
@@ -13690,7 +13661,7 @@
 		)
 		(uuid "c24e48cd-6957-4a8c-a23e-22cca678be7b")
 	)
-	(label "MCLK2"
+	(label "MCLK2_S"
 		(at 384.81 331.47 0)
 		(effects
 			(font
@@ -13879,16 +13850,6 @@
 			(justify left)
 		)
 		(uuid "e2ce1b6d-b00d-4861-b583-bdd666e1e125")
-	)
-	(label "VM_N_D21_K"
-		(at 758.19 416.56 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e60c35d6-6020-4652-86ec-95c3ce41e923")
 	)
 	(label "VM_N_R102_Pad1"
 		(at 654.05 417.83 0)
@@ -25109,7 +25070,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Amplifier_Operational:MCP6002-xMC")
+		(lib_id "Amplifier_Operational:MCP6002-xSN")
 		(at 684.53 60.96 0)
 		(unit 2)
 		(body_style 1)
@@ -25129,7 +25090,7 @@
 				)
 			)
 		)
-		(property "Value" "MCP6002-xMC"
+		(property "Value" "MCP6002-xSN"
 			(at 691.134 64.77 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25176,9 +25137,6 @@
 		)
 		(pin "4"
 			(uuid "aeccf562-013d-44eb-ba6d-91e688217517")
-		)
-		(pin "9"
-			(uuid "e2cae9d4-e92d-4be8-ac0b-a2e53c5bc03b")
 		)
 		(pin "7"
 			(uuid "99242ecf-c0e5-46a4-8615-b86568048f43")
@@ -25935,7 +25893,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Amplifier_Operational:MCP6002-xMC")
+		(lib_id "Amplifier_Operational:MCP6002-xSN")
 		(at 378.46 55.88 0)
 		(unit 3)
 		(body_style 1)
@@ -25955,7 +25913,7 @@
 				)
 			)
 		)
-		(property "Value" "MCP6002-xMC"
+		(property "Value" "MCP6002-xSN"
 			(at 380.746 56.642 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -26020,9 +25978,6 @@
 		)
 		(pin "2"
 			(uuid "a996eae3-e630-49cf-95c5-80f99d12267f")
-		)
-		(pin "9"
-			(uuid "2b54d915-f7e1-4c5d-97af-ae065ededa46")
 		)
 		(instances
 			(project "DIG_Card"
@@ -27546,7 +27501,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Amplifier_Operational:MCP6002-xMC")
+		(lib_id "Amplifier_Operational:MCP6002-xSN")
 		(at 684.53 48.26 0)
 		(unit 1)
 		(body_style 1)
@@ -27566,7 +27521,7 @@
 				)
 			)
 		)
-		(property "Value" "MCP6002-xMC"
+		(property "Value" "MCP6002-xSN"
 			(at 691.642 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27628,9 +27583,6 @@
 		)
 		(pin "6"
 			(uuid "c1c0350f-87f3-40e7-a3d3-22edd493bda6")
-		)
-		(pin "9"
-			(uuid "25dae781-e0ef-467e-b2aa-a994c1741e70")
 		)
 		(pin "3"
 			(uuid "f28cfcc7-b4ed-4f3a-a1ad-372e1c9f86c0")
@@ -36930,4 +36882,200 @@
 		)
 	)
 	(embedded_fonts no)
+	(label "MCLK2_S"
+		(at 394.97 320.0 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dff0354c-cfb6-4f42-82a4-da5b461d9c98")
+	)
+	(label "MCLK2"
+		(at 402.59 320.0 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b0bd5727-4a01-432e-8834-ca17abfe7c05")
+	)
+	(label "MCLK3_S"
+		(at 394.97 340.0 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2325a026-2f48-4deb-9727-7cae53077cde")
+	)
+	(label "MCLK3"
+		(at 402.59 340.0 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f7d92b16-9f91-40d2-acf5-6a2abca20d36")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 398.78 320.0 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "de5b5005-ac67-4c1e-ad30-5e2c522952fb")
+		(property "Reference" "R316"
+			(at 398.78 320.0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33R MCLK2 series"
+			(at 406.4 322.286 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 398.78 320.0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.78 320.0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 320.0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "107f42a3-0437-4136-b5c5-666886cd37ff")
+		)
+		(pin "2"
+			(uuid "64899859-1aa1-4e0d-8904-33de25a6f33d")
+		)
+		(instances
+			(project "DIG_Card"
+				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
+					(reference "R316")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 398.78 340.0 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7a5be465-dd2c-42eb-904b-0183d7a0a12a")
+		(property "Reference" "R317"
+			(at 398.78 340.0 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33R MCLK3 series"
+			(at 406.4 342.286 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 398.78 340.0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.78 340.0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 340.0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "79173421-18d0-4f90-984f-476b2e84b73c")
+		)
+		(pin "2"
+			(uuid "2f762b34-9ee4-4f84-aee3-9d2fa49d1a0e")
+		)
+		(instances
+			(project "DIG_Card"
+				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
+					(reference "R317")
+					(unit 1)
+				)
+			)
+		)
+	)
 )
