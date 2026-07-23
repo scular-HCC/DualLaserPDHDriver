@@ -54104,6 +54104,18 @@
 			(justify left)
 		)
 	)
+	(gr_text "HEATSINK ISSUE (Q7-Q10): 657-10ABPE DOES NOT FIT THE TO-264 (channel ~16mm < 20mm device).\nUPDATE to clip-on heatsink OMNI-UNI-PF-38 + OMNI-UC clip (Wakefield-Vette; DK 345-1600-ND / 345-1493-ND).\nClip mount: existing 25.4mm pin holes go unused. Trialing before permanent change."
+		(at 55.5 154 0)
+		(layer "Cmts.User")
+		(uuid "c0ffee00-1111-4222-8333-444455556666")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify left)
+		)
+	)
 	(segment
 		(start 128.4 136.4)
 		(end 110.44 136.4)
