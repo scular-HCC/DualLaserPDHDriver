@@ -2484,7 +2484,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector:Conn_Coaxial_x2_Isolated"
+		(symbol "Connector:Conn_Coaxial"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -2504,7 +2504,7 @@
 					)
 				)
 			)
-			(property "Value" "Conn_Coaxial_x2_Isolated"
+			(property "Value" "Conn_Coaxial"
 				(at 2.921 0 90)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2547,7 +2547,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA"
+			(property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2558,7 +2558,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO*"
+			(property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2569,7 +2569,7 @@
 					)
 				)
 			)
-			(symbol "Conn_Coaxial_x2_Isolated_0_1"
+			(symbol "Conn_Coaxial_0_1"
 				(polyline
 					(pts
 						(xy -2.54 0) (xy -0.508 0)
@@ -2630,11 +2630,11 @@
 					)
 				)
 			)
-			(symbol "Conn_Coaxial_x2_Isolated_1_1"
+			(symbol "Conn_Coaxial_1_1"
 				(pin passive line
 					(at -5.08 0 0)
 					(length 2.54)
-					(name "In1"
+					(name "In"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2652,7 +2652,7 @@
 				(pin passive line
 					(at 0 -5.08 90)
 					(length 2.54)
-					(name "Ext1"
+					(name "Ext"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2660,44 +2660,6 @@
 						)
 					)
 					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "Conn_Coaxial_x2_Isolated_2_1"
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "In2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -5.08 90)
-					(length 2.54)
-					(name "Ext2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -7583,12 +7545,6 @@
 		(uuid "0f2cdc63-dfd1-41c6-82c1-81cbbab52f9a")
 	)
 	(junction
-		(at 171.45 284.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "11dc0f40-1adc-4edc-a6f0-33c79bb20e2f")
-	)
-	(junction
 		(at 528.32 461.01)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -8271,10 +8227,6 @@
 		(uuid "310b915f-4c1d-4ec9-a897-12cbc7d2d08b")
 	)
 	(no_connect
-		(at 256.54 252.73)
-		(uuid "35e13a74-7481-4524-84ab-cae410fd000d")
-	)
-	(no_connect
 		(at 156.21 209.55)
 		(uuid "3fc42ccb-2864-423b-96a2-e714b4bac534")
 	)
@@ -8305,10 +8257,6 @@
 	(no_connect
 		(at 236.22 165.1)
 		(uuid "762fc945-9983-413d-b753-06063d358ac6")
-	)
-	(no_connect
-		(at 251.46 247.65)
-		(uuid "80f64c86-fdc3-4a6b-949c-3d8a985d2fc2")
 	)
 	(no_connect
 		(at 156.21 212.09)
@@ -9014,6 +8962,16 @@
 	)
 	(wire
 		(pts
+			(xy 190.5 303.53) (xy 190.5 299.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c4ebbef-3b0e-4de3-9c51-e0c4985cacd1")
+	)
+	(wire
+		(pts
 			(xy 797.56 403.86) (xy 793.75 403.86)
 		)
 		(stroke
@@ -9134,7 +9092,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 284.48) (xy 171.45 284.48)
+			(xy 168.91 284.48) (xy 190.5 284.48)
 		)
 		(stroke
 			(width 0)
@@ -9211,6 +9169,16 @@
 			(type default)
 		)
 		(uuid "3cd923c3-771e-4c1c-8d7b-aaa969c2d697")
+	)
+	(wire
+		(pts
+			(xy 231.14 222.25) (xy 242.57 222.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3dbf3c7d-52e5-4093-8cc2-a75f58496e2f")
 	)
 	(wire
 		(pts
@@ -9664,7 +9632,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 299.72) (xy 190.28 299.72)
+			(xy 190.5 303.53) (xy 190.28 303.53)
 		)
 		(stroke
 			(width 0)
@@ -9984,7 +9952,7 @@
 	)
 	(wire
 		(pts
-			(xy 171.45 284.48) (xy 171.45 290.83)
+			(xy 172.72 281.94) (xy 172.72 289.56)
 		)
 		(stroke
 			(width 0)
@@ -10674,6 +10642,16 @@
 	)
 	(wire
 		(pts
+			(xy 172.72 297.18) (xy 172.72 294.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "880ef7ee-d386-48cc-8d1a-bac5b6dfbc0f")
+	)
+	(wire
+		(pts
 			(xy 715.01 560.07) (xy 707.39 560.07)
 		)
 		(stroke
@@ -10911,16 +10889,6 @@
 			(type default)
 		)
 		(uuid "959d44b0-f889-47fe-b493-4a7da494cbd6")
-	)
-	(wire
-		(pts
-			(xy 196.85 222.25) (xy 213.36 222.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9639725b-7c7c-425e-8422-5bdf75bf5587")
 	)
 	(wire
 		(pts
@@ -11314,6 +11282,16 @@
 	)
 	(wire
 		(pts
+			(xy 196.85 222.25) (xy 223.52 222.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b3787739-d175-4f05-b757-db193105c1c6")
+	)
+	(wire
+		(pts
 			(xy 34.29 157.48) (xy 48.26 157.48)
 		)
 		(stroke
@@ -11624,16 +11602,6 @@
 	)
 	(wire
 		(pts
-			(xy 171.45 284.48) (xy 190.5 284.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c4f72252-e336-453c-98b8-a47aaa1e3d95")
-	)
-	(wire
-		(pts
 			(xy 810.26 250.19) (xy 831.85 250.19)
 		)
 		(stroke
@@ -11914,7 +11882,7 @@
 	)
 	(wire
 		(pts
-			(xy 320.04 326.39) (xy 320.04 325.12)
+			(xy 320.04 330.2) (xy 320.04 325.12)
 		)
 		(stroke
 			(width 0)
@@ -15601,7 +15569,7 @@
 			)
 		)
 	)
-	(global_label "1V8_CLK"
+	(global_label "1V8"
 		(shape passive)
 		(at 289.56 320.04 180)
 		(fields_autoplaced yes)
@@ -15792,7 +15760,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 320.04 326.39 180)
+		(at 320.04 330.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -15801,7 +15769,7 @@
 		)
 		(uuid "49165d2b-09cd-4ff7-92fb-1ebee9a0e78c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 320.04 326.39 90)
+			(at 320.04 330.2 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15933,7 +15901,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 190.28 299.72 270)
+		(at 190.28 303.53 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -15942,7 +15910,7 @@
 		)
 		(uuid "4cc1b33f-c81d-45c9-a8cc-c732a041d0a9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 190.28 299.72 0)
+			(at 190.28 303.53 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16289,7 +16257,7 @@
 	)
 	(global_label "3V3"
 		(shape passive)
-		(at 213.36 222.25 0)
+		(at 242.57 222.25 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -16299,7 +16267,7 @@
 		)
 		(uuid "6337046d-4ad2-450a-aeac-4461a0b64101")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 213.36 222.25 0)
+			(at 242.57 222.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16960,6 +16928,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+	)
+	(global_label "1V8_CLK"
+		(shape passive)
+		(at 349.25 320.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "88be88a8-3f61-4db2-a03d-ced414166111")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 349.25 320.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 	)
@@ -17811,6 +17801,28 @@
 			)
 		)
 	)
+	(global_label "3V3_OSC"
+		(shape passive)
+		(at 172.72 281.94 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bd8e0fa7-7d1c-444f-9eaf-b290307d9420")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 172.72 281.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "MOD1_FILT"
 		(shape passive)
 		(at 330.2 63.5 0)
@@ -18497,7 +18509,7 @@
 	)
 	(global_label "GND"
 		(shape passive)
-		(at 171.45 295.91 270)
+		(at 172.72 297.18 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -18506,7 +18518,7 @@
 		)
 		(uuid "ea4e6c8b-246a-4ae8-a6b4-aa31ca8d66aa")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 171.45 295.91 0)
+			(at 172.72 297.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20263,6 +20275,84 @@
 			(project "DIG_Card"
 				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
 					(reference "VM_C85")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 227.33 222.25 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "123f47a3-96e0-4677-be3d-e4d59b1a0f8a")
+		(property "Reference" "R114"
+			(at 227.33 222.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100"
+			(at 227.076 224.282 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 227.33 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 227.33 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 227.33 222.25 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7b507a72-4361-4b25-bcdc-25c15f5d3b94")
+		)
+		(pin "2"
+			(uuid "1c43fe09-6e85-497c-8450-971e83a0b6a9")
+		)
+		(instances
+			(project "DIG_Card"
+				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
+					(reference "R114")
 					(unit 1)
 				)
 			)
@@ -23515,7 +23605,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Conn_Coaxial_x2_Isolated")
+		(lib_id "Connector:Conn_Coaxial")
 		(at 256.54 259.08 0)
 		(mirror y)
 		(unit 1)
@@ -23568,8 +23658,9 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
 			(at 256.54 259.08 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23581,14 +23672,8 @@
 		(pin "1"
 			(uuid "a691bbb0-7644-4b70-a159-34e72019a4d7")
 		)
-		(pin "3"
-			(uuid "df2a6a35-667f-4355-bda6-d998774f673d")
-		)
 		(pin "2"
 			(uuid "4d3287bf-f4d3-48e9-a585-4a024d958319")
-		)
-		(pin "4"
-			(uuid "b8c635d8-41e5-4fab-9050-04e470f780c9")
 		)
 		(instances
 			(project "DIG_Card"
@@ -24104,6 +24189,88 @@
 			(project "DIG_Card"
 				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
 					(reference "U44")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_Coaxial")
+		(at 139.7 55.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "44264078-bdb2-4433-821d-008d393cbf1c")
+		(property "Reference" "J302B1"
+			(at 143.51 54.9031 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_Coaxial"
+			(at 143.51 57.4431 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_Coaxial:SMA_BAT_Wireless_BWSMA-KWE-Z001"
+			(at 139.7 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 139.7 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
+			(at 139.7 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "9c4c8b8c-db4f-4051-b29c-4e6ac760e7db")
+		)
+		(pin "1"
+			(uuid "56776fe8-1f45-4c34-b891-abaac17deba7")
+		)
+		(instances
+			(project "DIG_Card"
+				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
+					(reference "J302B1")
 					(unit 1)
 				)
 			)
@@ -24671,7 +24838,7 @@
 			)
 		)
 		(property "Value" "100nF U42 1V8"
-			(at 324.866 324.38 0)
+			(at 328.168 326.136 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -33313,90 +33480,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Conn_Coaxial_x2_Isolated")
-		(at 256.54 247.65 0)
-		(unit 2)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "d15cfac8-0e2f-4e96-b729-7ca5f9349833")
-		(property "Reference" "J2"
-			(at 260.604 246.888 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10MHz Ref SMA"
-			(at 266.446 249.428 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_Coaxial:SMA_BAT_Wireless_BWSMA-KWE-Z001"
-			(at 256.54 247.65 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 256.54 247.65 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 256.54 247.65 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c6ae9783-9b19-49d9-80f4-cbf8015662eb")
-		)
-		(pin "2"
-			(uuid "669d523a-17c5-4655-a6d4-469f071e7228")
-		)
-		(pin "3"
-			(uuid "11fbec59-cd3a-4dc1-b03a-6c52b63639c4")
-		)
-		(pin "4"
-			(uuid "8fb2722c-215c-4483-88f4-e8317e59542a")
-		)
-		(instances
-			(project "DIG_Card"
-				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
-					(reference "J2")
-					(unit 2)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 280.67 289.56 90)
 		(unit 1)
@@ -34242,7 +34325,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 171.45 293.37 0)
+		(at 172.72 292.1 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -34252,7 +34335,7 @@
 		(dnp no)
 		(uuid "e02bfb3b-56d9-4a71-8d4e-21cf91f72c11")
 		(property "Reference" "C313"
-			(at 176.276 292.87 0)
+			(at 177.546 291.6 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -34262,7 +34345,7 @@
 			)
 		)
 		(property "Value" "1uF Y1 3V3_OSC"
-			(at 180.34 295.402 0)
+			(at 181.61 294.132 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -34272,7 +34355,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 171.45 293.37 0)
+			(at 172.72 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -34283,7 +34366,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 171.45 293.37 0)
+			(at 172.72 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -34294,7 +34377,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 171.45 293.37 0)
+			(at 172.72 292.1 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -34304,7 +34387,7 @@
 			)
 		)
 		(property "MPN" "CC0805KKX7R8BB105"
-			(at 171.45 293.37 0)
+			(at 172.72 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -34315,7 +34398,7 @@
 			)
 		)
 		(property "Manufacturer" "YAGEO"
-			(at 171.45 293.37 0)
+			(at 172.72 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35493,7 +35576,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Conn_Coaxial_x2_Isolated")
+		(lib_id "Connector:Conn_Coaxial")
 		(at 139.7 35.56 0)
 		(unit 1)
 		(body_style 1)
@@ -35505,23 +35588,25 @@
 		(fields_autoplaced yes)
 		(uuid "f03fde03-5ad8-4d12-a9b2-352510752ea8")
 		(property "Reference" "J302"
-			(at 139.7 30.48 0)
+			(at 143.51 34.5831 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "LO1/LO2 out SMA"
-			(at 139.7 40.64 0)
+		(property "Value" "LO1 out SMA"
+			(at 143.51 37.1231 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Connector_Coaxial:SMA_BAT_Wireless_BWSMA-KWE-Z001"
@@ -35546,8 +35631,9 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
 			(at 139.7 35.56 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -35561,12 +35647,6 @@
 		)
 		(pin "2"
 			(uuid "75ff2ac3-c046-4f49-bf11-e716142f85fe")
-		)
-		(pin "3"
-			(uuid "aa637330-4a8f-4609-bcbd-4c1a567f0490")
-		)
-		(pin "4"
-			(uuid "4c1601cb-6e35-44c9-9ddb-ce1427b77aa1")
 		)
 		(instances
 			(project "DIG_Card"
@@ -36081,91 +36161,6 @@
 				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
 					(reference "R307")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial_x2_Isolated")
-		(at 139.7 55.88 0)
-		(unit 2)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f4c38671-97e9-40d8-acad-906b8d7b76e3")
-		(property "Reference" "J302"
-			(at 139.7 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "LO1/LO2 out SMA"
-			(at 139.7 60.96 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_Coaxial:SMA_BAT_Wireless_BWSMA-KWE-Z001"
-			(at 139.7 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 139.7 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 139.7 55.88 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "bcaf428a-0156-475b-88bd-97e082776cc1")
-		)
-		(pin "4"
-			(uuid "00d8eb32-6c01-41be-a71f-0f99f97f9dc8")
-		)
-		(pin "1"
-			(uuid "08103477-bb2a-488e-8fd7-534d4464c948")
-		)
-		(pin "3"
-			(uuid "ca0bde4e-0e17-4996-a5f9-31143a093ed1")
-		)
-		(instances
-			(project "DIG_Card"
-				(path "/ba312f5e-b1e5-475d-8676-33718a7f94d0"
-					(reference "J302")
-					(unit 2)
 				)
 			)
 		)

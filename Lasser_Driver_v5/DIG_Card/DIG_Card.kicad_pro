@@ -52,8 +52,8 @@
         "zones": {
           "border_display_style": 2,
           "border_hatch_pitch": 0.5,
-          "corner_radius": 0.0,
-          "corner_smoothing": 0,
+          "corner_radius": 1.0,
+          "corner_smoothing": 2,
           "fill_mode": 0,
           "hatch_gap": 1.5,
           "hatch_orientation": 0.0,
@@ -66,7 +66,7 @@
           "pad_connection": 1,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
-          "thermal_relief_spoke_width": 0.5
+          "thermal_relief_spoke_width": 0.35
         }
       },
       "diff_pair_dimensions": [],
@@ -842,7 +842,7 @@
         "uuid": "ba312f5e-b1e5-475d-8676-33718a7f94d0"
       }
     ],
-    "used_designators": "H1-2,C92",
+    "used_designators": "R114",
     "variants": []
   },
   "sheets": [
