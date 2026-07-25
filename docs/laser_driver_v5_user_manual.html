@@ -136,6 +136,7 @@
     <li><a href="#afe">AFE card (detection)</a></li>
     <li><a href="#software">Software operation</a></li>
     <li><a href="#bringup">Installation &amp; bring-up</a></li>
+    <li><a href="#testing">Testing &amp; test points</a></li>
     <li><a href="#uncertainty">Measurement uncertainty budget</a></li>
     <li><a href="#specs">Specifications</a></li>
     <li><a href="#schematics">Simplified schematics</a></li>
@@ -717,10 +718,29 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     are buffered by OPA192 unity-gain followers (U301/U302) and driven onto the bus through 47 Ω
     series (R306/R307); an RC reconstruction-filter footprint (R314/R315 + C310/C311) sits ahead of
     each buffer, fitted 0 Ω / DNP by default.</li>
-    <li><b>Clock (CDCE913 + 10 MHz oscillator)</b> and an LMV7219 comparator front end supplying the
-    reference/10 MHz distribution; its 2.2 kΩ pull-ups are the system's only I²C bus pull-ups. The
-    10 MHz is also buffered (U303, 74LVC1G125) and driven through a 33 Ω source-termination (R311)
-    onto backplane pin <code>c20</code> so downstream cards can be made clock-coherent later.</li>
+    <li><b>Clock generation</b> — a 10 MHz reference feeds a CDCE913 PLL (U42). The reference is
+    selected by an SN74LVC1G3157 analog mux (U41) between the on-card oscillator Y1
+    (ASE-10.000MHZ-LC-T, input <code>B1</code>) and the front-panel <code>J2</code> SMA, which reaches
+    input <code>B2</code> AC-coupled through C89 and a 1 kΩ series (R107) behind a 50 Ω termination
+    (R104). Selection is meant to be <em>automatic</em>: a second tap off J2 drives an envelope
+    detector (C90 / R108 / D24 / C91 / R109) into an LMV7219 comparator (U40) against an 87 mV
+    threshold (R105 1 M / R106 27 k, 2 MΩ hysteresis via R110), whose output drives the mux select
+    pin — external reference present ⇒ switch away from Y1. <b>See the erratum below: as drawn this
+    detector cannot trip, so the card always runs on Y1.</b></li>
+    <li><b>Clock distribution</b> — the CDCE913 produces three outputs: <code>MCLK1</code> 25 MHz to
+    the channel-1 DDS pair (U34/U35), <code>MCLK2</code> 25 MHz through a 33 Ω source termination
+    (R316) to the channel-2 pair (U38/U39), and <code>MCLK3</code> through R317 33 Ω to Teensy pin D9
+    as the FreqCount reference. The selected 10 MHz is separately buffered (U303, 74LVC1G125) and
+    driven through a 33 Ω source termination (R311) onto backplane pin <code>c20</code>, so
+    downstream cards can be made clock-coherent later. The clock section runs on its own filtered
+    supplies, <code>3V3_OSC</code> and <code>1V8_CLK</code>, each behind a 600 Ω @100 MHz ferrite
+    (FB301/FB302). The 2.2 kΩ pull-ups on this sheet (R112/R113) are the system's only I²C bus
+    pull-ups.</li>
+    <li><b>Front-panel LO outputs</b> — the two phase-set reference DDS channels leave the card on
+    their own SMAs: U35 → R312 49.9 Ω → <code>J302</code> (<code>LO1_OUT</code>) and U38 → R313
+    49.9 Ω → <code>J302B1</code> (<code>LO2_OUT</code>). These jumper by coax on the front panel to
+    the <a href="#afe">AFE card's</a> LO inputs, which is how the demodulator reference crosses
+    between cards — it is <em>not</em> carried on the backplane.</li>
     <li><b>Voltage monitor</b> block windowing the low-voltage rails and the ±6V_TEC blades
     (present in every slot). Each comparator node is diode-OR'd (D303–D311, Schottky) onto the
     shared <code>FAULT_n</code> line, so a rail dropping out of window trips the supervisor rather
@@ -740,6 +760,24 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="warn"><b>Assembly:</b> the Teensy 4.1 is powered from <code>+5V</code> at VIN (not the
   3V3 rail). <b>Cut the VUSB↔VIN pad</b> on the underside of the Teensy before installing — otherwise
   plugging in a USB cable for programming back-drives the crate-wide <code>+5V</code> rail.</div>
+  <div class="warn"><b>Erratum — external 10 MHz reference select is inert (D24 reversed).</b>
+  The envelope detector feeding comparator U40 is built around D24 (BAV99, common-anode symbol) with
+  its <b>anode</b> on the detector node and its cathode toward the signal. That makes it a
+  <em>negative</em>-peak detector: the detector node can only be pulled below ground, while the U40
+  threshold sits at <b>+87 mV</b>. The comparator therefore never trips, its output stays LOW, and
+  since <code>S</code>=LOW selects <code>B1</code> on the '3157, <b>the mux is permanently latched to
+  the local oscillator Y1</b>. The card runs correctly on its internal 10 MHz — this fails safe — but
+  the front-panel <code>J2</code> reference input does nothing. <b>Fix:</b> reverse D24 so the
+  cathode faces the detector node (a positive-peak detector), after which any external drive above
+  roughly 0.4 V<sub>pp</sub> selects <code>B2</code>. Until then, treat <code>J2</code> as
+  unpopulated and expect TP302 to equal TP301 under all conditions
+  (<a href="#testing">§15.4</a> step 6).</div>
+  <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
+  (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
+  <b>ENIG</b> finish. The F.Cu↔In1 core is deliberately thin (0.0994 mm) so the two front-panel LO
+  outputs can run as ≈50 Ω microstrip on a 0.158 mm trace — the <code>RF50</code> net class, which
+  also carries 0.5 mm clearance. Other classes: <code>Power</code> 0.5 mm, <code>Clock</code> 0.3 mm,
+  <code>RF</code> 0.3 mm, <code>Default</code> 0.25 mm.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -1090,8 +1128,308 @@ Active IP: 192.168.10.50</pre>
 </section>
 
 <!-- ============================================================= -->
+<section id="testing">
+  <h2 class="sec"><span class="num">15</span> Testing &amp; test points</h2>
+  <p>The DIG card carries a bank of <b>20 dedicated test points (TP301–TP320)</b> that make the whole
+  clock chain, every supply rail, and the voltage-monitor thresholds probeable without lifting a
+  component or clipping onto a fine-pitch pin. This section documents each one, where it sits, and the
+  measurements to make at bring-up.</p>
+
+  <div class="grid2">
+    <div class="note"><b>Equipment</b>
+      <ul style="margin-bottom:0">
+        <li>DMM, 4½-digit or better (rail and reference checks).</li>
+        <li>Oscilloscope ≥100 MHz with a <b>10:1 probe</b> (clock nodes).</li>
+        <li>Frequency counter — ideally on the same 10 MHz house reference.</li>
+        <li>Spring-ground clip for the probe (use the THT ground points).</li>
+      </ul></div>
+    <div class="tip"><b>Test-point styles</b>
+      <ul style="margin-bottom:0">
+        <li><b>TP301–TP314</b> — 1.0 mm SMD pads. Signal and rail taps; probe with a fine tip or
+        spring probe.</li>
+        <li><b>TP315–TP320</b> — 1.5 mm plated THT pads (0.7 mm drill), all <code>GND</code>. Sized to
+        take a scope ground spring or a soldered wire loop.</li>
+        <li>Every pad is silkscreened with its net name on the top side.</li>
+      </ul></div>
+  </div>
+
+  <h3>15.1 Test-point reference</h3>
+  <table>
+    <thead><tr><th>TP</th><th>Net</th><th>Node / what it taps</th><th>Expected</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Clock chain</b></td></tr>
+      <tr><td><b>TP301</b></td><td><code>N_U41_B1</code></td><td>Y1 local 10 MHz oscillator output → mux input B1</td><td>10.000 MHz, 3.3 V CMOS</td></tr>
+      <tr><td><b>TP302</b></td><td><code>N_U41_A</code></td><td>U41 mux common — the <em>selected</em> reference, into CDCE913 and the bus buffer</td><td>10.000 MHz</td></tr>
+      <tr><td><b>TP303</b></td><td><code>CLK10M_BUF</code></td><td>U303 (74LVC1G125) buffer output, ahead of R311 33 Ω → backplane <code>c20</code></td><td>10.000 MHz, 3.3 V</td></tr>
+      <tr><td><b>TP304</b></td><td><code>MCLK1</code></td><td>CDCE913 output → DDS pair U34 / U35</td><td>25.000 MHz</td></tr>
+      <tr><td><b>TP305</b></td><td><code>MCLK2</code></td><td>CDCE913 output via R316 33 Ω → DDS pair U38 / U39</td><td>25.000 MHz</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Clock-local supplies</b> (ferrite-isolated, so they can be checked separately from the bulk rails)</td></tr>
+      <tr><td><b>TP306</b></td><td><code>3V3_OSC</code></td><td>Y1 supply, after ferrite FB301 (600 Ω @100 MHz)</td><td>3.30 V ±5 %</td></tr>
+      <tr><td><b>TP307</b></td><td><code>1V8_CLK</code></td><td>CDCE913 core supply, after ferrite FB302</td><td>1.80 V ±5 %</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Supply rails &amp; references</b></td></tr>
+      <tr><td><b>TP308</b></td><td><code>3V3</code></td><td>Logic rail (from backplane a18)</td><td>3.30 V ±5 %</td></tr>
+      <tr><td><b>TP309</b></td><td><code>+5V</code></td><td>+5 V rail (a16); also feeds the Teensy V<sub>IN</sub></td><td>5.00 V ±5 %</td></tr>
+      <tr><td><b>TP310</b></td><td><code>1V8</code></td><td>1.8 V rail (a19)</td><td>1.80 V ±5 %</td></tr>
+      <tr><td><b>TP311</b></td><td><code>5Vref</code></td><td>Precision reference from the pm1p8V LTC6655-5 (b15)</td><td>5.000 V ±1.3 mV</td></tr>
+      <tr><td><b>TP312</b></td><td><code>VREF_MID</code></td><td>Analog mid-reference (b16)</td><td>2.500 V ±3 mV</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Voltage-monitor window thresholds</b></td></tr>
+      <tr><td><b>TP313</b></td><td><code>VHI_Buf</code></td><td>Buffered upper comparator threshold → all LM339 monitors</td><td>1.319 V</td></tr>
+      <tr><td><b>TP314</b></td><td><code>VLO_Buf</code></td><td>Buffered lower comparator threshold → all LM339 monitors</td><td>1.193 V</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Ground</b> — THT, for probe ground springs</td></tr>
+      <tr><td><b>TP315–TP320</b></td><td><code>GND</code></td><td>Six points: at the clock cluster (315, 316, 318), the reference/monitor area (317, 319), and the board's lower-right (320)</td><td>0 V</td></tr>
+    </tbody>
+  </table>
+  <div class="tip"><b>Always ground close to what you probe.</b> Six ground points exist so that a
+  clock measurement can use a ground within a few millimetres of the signal pad. Probing TP304 with a
+  ground lead reaching to the far corner of the board will show ringing and overshoot that the circuit
+  does not actually have.</div>
+
+  <h3>15.2 Where the test points attach</h3>
+  <figure>
+  <svg class="sch" viewBox="0 0 900 502" role="img" aria-label="DIG card test point locations in the clock chain and reference divider">
+    <text class="ttl" x="16" y="20">CLOCK CHAIN — TP301…TP307</text>
+    <!-- Y1 local oscillator -->
+    <rect class="cmp" x="30" y="74" width="86" height="42" rx="4"/>
+    <text class="ref" x="73" y="92" text-anchor="middle">Y1</text><text class="sub" x="73" y="106" text-anchor="middle">10 MHz OSC</text>
+    <line class="w" x1="116" y1="95" x2="196" y2="95"/>
+    <!-- TP301 -->
+    <line class="w" x1="150" y1="95" x2="150" y2="72"/><circle class="j" cx="150" cy="68" r="5"/>
+    <text class="ref" x="150" y="58" text-anchor="middle">TP301</text>
+    <!-- 3V3_OSC supply + FB301 + TP306 -->
+    <text class="net" x="16" y="150">3V3</text><line class="w" x1="46" y1="146" x2="62" y2="146"/>
+    <rect class="cmp" x="62" y="140" width="24" height="12" rx="1.5"/><text class="sub" x="74" y="166" text-anchor="middle">FB301</text>
+    <line class="w" x1="86" y1="146" x2="130" y2="146"/><line class="w" x1="130" y1="146" x2="130" y2="116"/>
+    <line class="w" x1="112" y1="146" x2="112" y2="176"/><circle class="j" cx="112" cy="180" r="5"/>
+    <text class="ref" x="112" y="196" text-anchor="middle">TP306</text><text class="sub" x="112" y="209" text-anchor="middle">3V3_OSC</text>
+    <!-- external ref path: signal into B2, presence-detect into SELECT -->
+    <text class="net" x="16" y="250">J2 SMA</text><line class="w" x1="62" y1="246" x2="112" y2="246"/>
+    <text class="sub" x="62" y="234">50 Ω term</text>
+    <circle class="j" cx="112" cy="246" r="3"/>
+    <!-- upper branch: AC-coupled straight into mux input B2 -->
+    <line class="w" x1="112" y1="246" x2="112" y2="266"/>
+    <line class="w" x1="112" y1="266" x2="130" y2="266"/>
+    <line class="w" x1="130" y1="256" x2="130" y2="276"/><line class="w" x1="136" y1="256" x2="136" y2="276"/>
+    <text class="sub" x="133" y="250" text-anchor="middle">C89</text>
+    <line class="w" x1="136" y1="266" x2="152" y2="266"/>
+    <rect class="cmp" x="152" y="260" width="24" height="12" rx="1.5"/>
+    <text class="sub" x="164" y="288" text-anchor="middle">R107 1k</text>
+    <line class="w" x1="176" y1="266" x2="196" y2="266"/>
+    <!-- lower branch: envelope detector + comparator drives SELECT -->
+    <line class="w" x1="112" y1="246" x2="112" y2="316"/>
+    <line class="w" x1="112" y1="316" x2="128" y2="316"/>
+    <rect class="cmp" x="128" y="300" width="116" height="32" rx="4"/>
+    <text class="ref" x="186" y="314" text-anchor="middle">U40</text>
+    <text class="sub" x="186" y="326" text-anchor="middle">ext-ref presence detect</text>
+    <line class="w" x1="244" y1="316" x2="262" y2="316"/>
+    <line class="w" x1="262" y1="316" x2="262" y2="276"/>
+    <text class="sub" x="276" y="300">S (select)</text>
+    <!-- U41 mux -->
+    <rect class="cmp" x="196" y="76" width="72" height="200" rx="5"/>
+    <text class="ref" x="232" y="166" text-anchor="middle">U41</text><text class="sub" x="232" y="182" text-anchor="middle">2:1 MUX</text>
+    <text class="sub" x="204" y="100">B1</text><text class="sub" x="204" y="264">B2</text><text class="sub" x="256" y="204">A</text>
+    <!-- mux out -->
+    <line class="w" x1="268" y1="176" x2="352" y2="176"/>
+    <line class="w" x1="300" y1="176" x2="300" y2="150"/><circle class="j" cx="300" cy="146" r="5"/>
+    <text class="ref" x="300" y="136" text-anchor="middle">TP302</text>
+    <!-- branch down to buffer -->
+    <line class="w" x1="330" y1="176" x2="330" y2="330"/><circle class="j" cx="330" cy="176" r="3"/>
+    <line class="w" x1="330" y1="330" x2="360" y2="330"/>
+    <!-- CDCE913 -->
+    <rect class="cmp" x="352" y="96" width="96" height="132" rx="5"/>
+    <text class="ref" x="400" y="152" text-anchor="middle">U42</text><text class="sub" x="400" y="168" text-anchor="middle">CDCE913 PLL</text>
+    <!-- 1V8_CLK + FB302 + TP307 -->
+    <text class="net" x="352" y="52">1V8</text><line class="w" x1="382" y1="48" x2="398" y2="48"/>
+    <rect class="cmp" x="398" y="42" width="24" height="12" rx="1.5"/><text class="sub" x="410" y="34" text-anchor="middle">FB302</text>
+    <line class="w" x1="422" y1="48" x2="448" y2="48"/><line class="w" x1="448" y1="48" x2="448" y2="96"/>
+    <line class="w" x1="436" y1="48" x2="436" y2="74"/><circle class="j" cx="436" cy="78" r="5"/>
+    <text class="ref" x="470" y="76" text-anchor="middle">TP307</text><text class="sub" x="478" y="89" text-anchor="middle">1V8_CLK</text>
+    <!-- MCLK1 -->
+    <line class="w" x1="448" y1="124" x2="640" y2="124"/><text class="net" x="512" y="116">MCLK1 25 MHz</text>
+    <line class="w" x1="596" y1="124" x2="596" y2="100"/><circle class="j" cx="596" cy="96" r="5"/>
+    <text class="ref" x="596" y="86" text-anchor="middle">TP304</text>
+    <rect class="cmp" x="640" y="104" width="104" height="40" rx="4"/><text class="sub" x="692" y="128" text-anchor="middle">DDS U34 · U35</text>
+    <!-- MCLK2 -->
+    <line class="w" x1="448" y1="204" x2="520" y2="204"/>
+    <rect class="cmp" x="520" y="198" width="26" height="12" rx="1.5"/><text class="sub" x="533" y="192" text-anchor="middle">R316 33Ω</text>
+    <line class="w" x1="546" y1="204" x2="640" y2="204"/><text class="net" x="452" y="224">MCLK2 25 MHz</text>
+    <line class="w" x1="596" y1="204" x2="596" y2="234"/><circle class="j" cx="596" cy="238" r="5"/>
+    <text class="ref" x="596" y="254" text-anchor="middle">TP305</text>
+    <rect class="cmp" x="640" y="184" width="104" height="40" rx="4"/><text class="sub" x="692" y="208" text-anchor="middle">DDS U38 · U39</text>
+    <!-- buffer path -->
+    <polygon class="cmp" points="360,310 360,350 396,330"/><text class="sub" x="356" y="304">U303 buffer</text>
+    <line class="w" x1="396" y1="330" x2="470" y2="330"/>
+    <line class="w" x1="434" y1="330" x2="434" y2="356"/><circle class="j" cx="434" cy="360" r="5"/>
+    <text class="ref" x="434" y="376" text-anchor="middle">TP303</text><text class="sub" x="434" y="389" text-anchor="middle">CLK10M_BUF</text>
+    <rect class="cmp" x="470" y="324" width="26" height="12" rx="1.5"/><text class="sub" x="483" y="318" text-anchor="middle">R311 33Ω</text>
+    <line class="w" x1="496" y1="330" x2="600" y2="330"/><text class="net" x="606" y="334">→ backplane c20</text>
+
+    <!-- reference divider -->
+    <g transform="translate(0,62)">
+    <text class="ttl" x="16" y="330">MONITOR THRESHOLDS</text>
+    <text class="net" x="16" y="360">5Vref</text><line class="w" x1="60" y1="356" x2="86" y2="356"/>
+    <line class="w" x1="86" y1="356" x2="86" y2="366"/>
+    <rect class="cmp" x="80" y="366" width="12" height="20" rx="1.5"/><text class="sub" x="74" y="380" text-anchor="end">29.4k</text>
+    <line class="w" x1="86" y1="386" x2="86" y2="396"/><circle class="j" cx="86" cy="396" r="3"/>
+    <line class="w" x1="86" y1="396" x2="150" y2="396"/><text class="ref" x="176" y="392" text-anchor="middle">TP313</text><text class="sub" x="176" y="405" text-anchor="middle">VHI 1.319 V</text>
+    <line class="w" x1="86" y1="396" x2="86" y2="404"/>
+    <rect class="cmp" x="80" y="404" width="12" height="14" rx="1.5"/><text class="sub" x="74" y="415" text-anchor="end">1k</text>
+    <line class="w" x1="86" y1="418" x2="86" y2="424"/><circle class="j" cx="86" cy="424" r="3"/>
+    <line class="w" x1="86" y1="424" x2="230" y2="424"/><text class="ref" x="256" y="420" text-anchor="middle">TP314</text><text class="sub" x="256" y="433" text-anchor="middle">VLO 1.193 V</text>
+    <text class="sub" x="400" y="400">(both buffered by MCP6002 → LM339 window comparators)</text>
+    </g>
+  </svg>
+  <figcaption><b>Fig 15.1 — Test points in the clock chain and threshold divider.</b> The local 10 MHz
+  oscillator Y1 (TP301) drives mux input B1; the front-panel J2 reference reaches input B2
+  AC-coupled through C89 and R107 behind a 50 Ω termination. U40 is <em>not</em> in the signal path —
+  it is an envelope detector plus comparator that senses whether an external reference is present and
+  drives the mux <b>select</b> pin. (As built this detector cannot trip, so B1 is always selected —
+  see the erratum in <a href="#dig">§10</a>.) The selected reference appears at TP302 and feeds the
+  CDCE913 PLL and the bus buffer in parallel. The PLL's two 25 MHz outputs (TP304, TP305) clock the
+  two DDS pairs, and the buffered 10 MHz (TP303) leaves for backplane pin c20. TP306/TP307 sit
+  <em>after</em> the ferrites FB301/FB302, so they read the clock's own filtered supplies rather than
+  the bulk rails. Bottom: the 5Vref divider that sets the monitor window, tapped at
+  TP313/TP314.</figcaption>
+  </figure>
+
+  <h3>15.3 Physical location on the board</h3>
+  <figure>
+  <svg class="sch" viewBox="0 0 900 600" role="img" aria-label="DIG card top view showing test point placement">
+    <!-- board -->
+    <rect class="cmp" x="40" y="40" width="820" height="512" rx="3"/>
+    <text class="sub" x="450" y="568" text-anchor="middle">DIG card, component (top) side — 160 × 100 mm · TP positions plotted to scale from the layout</text>
+    <!-- landmarks -->
+    <rect x="40" y="450" width="30" height="95" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="78" y="500">J301 DIN → backplane</text>
+    <rect x="826" y="99" width="34" height="26" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="820" y="117" text-anchor="end">J2 10 MHz ref SMA (in)</text>
+    <rect x="826" y="188" width="34" height="26" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="820" y="184" text-anchor="end">J302B1 LO2 out</text>
+    <rect x="826" y="277" width="34" height="26" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="820" y="295" text-anchor="end">J302 LO1 out</text>
+    <rect x="700" y="430" width="150" height="112" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="775" y="492" text-anchor="middle">Teensy 4.1</text>
+    <rect x="250" y="440" width="130" height="100" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text class="sub" x="315" y="494" text-anchor="middle">TFT</text>
+    <!-- region: clock cluster -->
+    <rect x="480" y="150" width="300" height="120" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text class="sub" x="630" y="144" text-anchor="middle">CLOCK / DDS CLUSTER (Y1 · U41 · U303 · U42 · 4× AD9833)</text>
+    <!-- region: monitor -->
+    <rect x="95" y="85" width="240" height="95" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text class="sub" x="215" y="79" text-anchor="middle">VOLTAGE MONITOR</text>
+    <!-- TEST POINTS: clock group -->
+    <circle class="j" cx="512" cy="176" r="5"/><text class="sub" x="504" y="170" text-anchor="end">308</text>
+    <circle class="j" cx="533" cy="183" r="5"/><text class="sub" x="541" y="178">306</text>
+    <circle class="j" cx="560" cy="211" r="5"/><text class="sub" x="552" y="207" text-anchor="end">301</text>
+    <circle class="j" cx="567" cy="227" r="5"/><text class="sub" x="575" y="233">303</text>
+    <circle class="j" cx="598" cy="254" r="5"/><text class="sub" x="606" y="259">310</text>
+    <circle class="j" cx="637" cy="193" r="5"/><text class="sub" x="629" y="188" text-anchor="end">302</text>
+    <circle class="j" cx="648" cy="193" r="5"/><text class="sub" x="656" y="189">307</text>
+    <circle class="j" cx="678" cy="194" r="5"/><text class="sub" x="678" y="215" text-anchor="middle">304</text>
+    <circle class="j" cx="723" cy="198" r="5"/><text class="sub" x="716" y="219" text-anchor="end">305</text>
+    <!-- rails / refs -->
+    <circle class="j" cx="464" cy="105" r="5"/><text class="sub" x="464" y="97" text-anchor="middle">309</text>
+    <circle class="j" cx="132" cy="106" r="5"/><text class="sub" x="132" y="98" text-anchor="middle">311</text>
+    <circle class="j" cx="284" cy="122" r="5"/><text class="sub" x="284" y="114" text-anchor="middle">313</text>
+    <circle class="j" cx="266" cy="152" r="5"/><text class="sub" x="266" y="170" text-anchor="middle">314</text>
+    <circle class="j" cx="121" cy="324" r="5"/><text class="sub" x="121" y="316" text-anchor="middle">312</text>
+    <!-- grounds: hollow -->
+    <circle cx="628" cy="167" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="628" y="159" text-anchor="middle">315</text>
+    <circle cx="739" cy="202" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="747" y="207">316</text>
+    <circle cx="178" cy="243" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="178" y="235" text-anchor="middle">317</text>
+    <circle cx="571" cy="245" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="563" y="252" text-anchor="end">318</text>
+    <circle cx="193" cy="443" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="193" y="435" text-anchor="middle">319</text>
+    <circle cx="743" cy="362" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="743" y="354" text-anchor="middle">320</text>
+    <!-- legend -->
+    <circle class="j" cx="60" cy="591" r="5"/><text class="sub" x="72" y="596">signal / rail pad (1.0 mm SMD)</text>
+    <circle cx="330" cy="591" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="342" y="596">GND (1.5 mm THT)</text>
+  </svg>
+  <figcaption><b>Fig 15.2 — Test-point placement, top view.</b> Numbers are the TP3xx suffix. The
+  clock and DDS test points cluster together in the upper right so the whole chain can be walked with
+  one probe and a nearby ground (TP315, TP316, TP318). The reference and monitor taps (TP311–TP314,
+  ground TP317/TP319) sit on the left near the voltage-monitor block, and TP320 grounds the
+  lower-right corner near the Teensy.</figcaption>
+  </figure>
+
+  <h3>15.4 Board-level test procedure</h3>
+  <p>Run these in order on a newly assembled DIG card. Steps 1–2 are done with the card powered from
+  the backplane but with the Teensy held in reset (or not yet fitted).</p>
+  <ol>
+    <li><b>Rails, unloaded.</b> With a DMM on any ground TP, check TP309 (+5 V), TP308 (3V3), TP310
+    (1V8). All three must be within ±5 % <em>before</em> anything else is trusted.</li>
+    <li><b>Clock-local supplies.</b> TP306 = 3.30 V and TP307 = 1.80 V. Because these sit after
+    FB301/FB302, a reading that is correct at TP308/TP310 but low or absent here points at the ferrite
+    or its bypass, not at the backplane.</li>
+    <li><b>References.</b> TP311 = 5.000 V (this is the metrology reference — if it is off, every DAC
+    set-point on every card is off with it) and TP312 = 2.500 V. Verify TP312 ≈ TP311/2, since it is a
+    ratiometric divider.</li>
+    <li><b>Monitor window.</b> TP313 = 1.319 V, TP314 = 1.193 V, and TP313 &gt; TP314. Both derive
+    from 5Vref, so confirm step 3 first — a wrong 5Vref moves both thresholds and will make healthy
+    rails read as faults.</li>
+    <li><b>Local oscillator.</b> Scope TP301: a clean 10.000 MHz, 3.3 V p-p square. Confirm frequency
+    on the counter.</li>
+    <li><b>Reference select.</b> With no external reference connected, TP302 must match TP301 — the
+    mux has selected the local oscillator. <b>On the board as built this is the only state you can
+    reach:</b> the U40 presence detector cannot trip (D24 reversed, see the erratum in
+    <a href="#dig">§10</a>), so applying a source to J2 changes nothing at TP302. Verify that the
+    reading is unchanged with and without an external source — that is the expected behaviour today,
+    not a fault. Once D24 is corrected, feeding J2 with ≳0.4 V<sub>pp</sub> at 10 MHz should switch
+    TP302 to the external signal; note it will then appear as the AC-coupled external waveform
+    through R107, <em>not</em> as a 3.3 V CMOS square, because the '3157 is an analog switch that
+    passes its input rather than re-squaring it.</li>
+    <li><b>Buffered clock out.</b> TP303 = 10.000 MHz. This is the signal that leaves for backplane
+    <code>c20</code>, so a good reading here plus a bad one at another card points at the backplane,
+    not at DIG.</li>
+    <li><b>PLL outputs.</b> TP304 and TP305 = 25.000 MHz. These only appear once firmware has
+    programmed the CDCE913, so run this step after the Teensy is fitted and booted. Both must be
+    present — TP304 clocks the U34/U35 DDS pair and TP305 the U38/U39 pair; a dead one means half the
+    channels have no modulation or LO.</li>
+    <li><b>Frequency accuracy.</b> On the counter, TP303 and TP304/TP305 should be exactly 1:2.5.
+    Any offset traces to the reference itself, not to the PLL.</li>
+  </ol>
+  <div class="warn"><b>Probing the clock nodes.</b> Use a 10:1 probe with the shortest possible
+  ground. A 1:1 probe (typically ~100 pF) hung on TP302 or TP304 loads the node enough to distort the
+  edge and can pull the CDCE913 out of lock — if the PLL drops when you probe, suspect the probe
+  before the board. TP304/TP305 are series-damped nets; measure at the test pad, not at the DDS
+  pin.</div>
+
+  <h3>15.5 Fault localisation</h3>
+  <table>
+    <thead><tr><th>Symptom</th><th>Check</th><th>Likely cause</th></tr></thead>
+    <tbody>
+      <tr><td>No DDS output on either channel pair</td><td>TP304 / TP305</td><td>CDCE913 unprogrammed (I²C) or 1V8_CLK missing — check TP307</td></tr>
+      <tr><td>Only one channel pair dead</td><td>the other of TP304 / TP305</td><td>That branch's series resistor or DDS supply — the PLL itself is fine</td></tr>
+      <tr><td>No clock anywhere</td><td>TP301, then TP302</td><td>Good at 301, dead at 302 → mux U41 or its select; dead at both → Y1 or TP306 supply</td></tr>
+      <tr><td>Clock good on DIG, absent on other cards</td><td>TP303</td><td>Good here → R311 or the backplane <code>c20</code> trace, not this card</td></tr>
+      <tr><td>Voltage monitor reports false faults</td><td>TP313 / TP314, then TP311</td><td>Thresholds shifted because 5Vref is off, or a divider resistor is wrong</td></tr>
+      <tr><td>All set-points off by a common factor</td><td>TP311</td><td>5Vref out of tolerance — everything ratios against it</td></tr>
+      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td><b>Expected on the current build</b> — D24 is reversed so U40 never selects the external leg (<a href="#dig">§10</a> erratum). Not a fault to chase.</td></tr>
+      <tr><td><code>freq</code> readings wrong or zero</td><td>Teensy D9 (no test pad)</td><td>CDCE913 <code>MCLK3</code> output or its 33 Ω series R317 — this is the FreqCount reference, independent of TP304/TP305</td></tr>
+      <tr><td>PLL unlocks when probed</td><td>—</td><td>Probe loading; switch to 10:1 and re-check</td></tr>
+    </tbody>
+  </table>
+
+  <h3>15.6 System-level checks</h3>
+  <p>Once the card passes the above, the remaining verification is functional and is driven from the
+  firmware interfaces (<a href="#software">§13</a>):</p>
+  <ul>
+    <li><b>Enumeration</b> — on boot the controller reports its slot address and each card's I²C ACK.
+    Every expected card must acknowledge.</li>
+    <li><b>Telemetry sanity</b> — <code>s</code> should show plausible TEC temperatures and laser
+    currents with the lasers parked; an NTC reading pinned at a rail means an open or shorted sensor.</li>
+    <li><b>Fault path</b> — confirm that a deliberately asserted card fault pulls the shared
+    <code>FAULT_n</code> line and that the controller localises it to the right card.</li>
+    <li><b>Discriminator</b> — with modulation enabled, sweeping a laser across a fringe must produce
+    a bipolar <code>ERRn</code> that crosses zero at line centre. No zero crossing means the demod
+    phase needs calibrating (<code>cal1</code> / <code>cal2</code>).</li>
+    <li><b>Lock</b> — <code>lock1</code> should progress SEARCH → ACQUIRE → LOCKED unaided, settling
+    to an ERR RMS in the few-milli range with the servo-health bar high.</li>
+  </ul>
+  <a class="backtop" href="#intro">▲ top</a>
+</section>
+
+<!-- ============================================================= -->
 <section id="uncertainty">
-  <h2 class="sec"><span class="num">15</span> Measurement uncertainty budget</h2>
+  <h2 class="sec"><span class="num">16</span> Measurement uncertainty budget</h2>
   <p>This section quantifies how well the instrument measures its intended quantity — the differential
   temperature <code>ΔT = T<sub>B</sub> − T<sub>A</sub></code>, read out as the laser beat frequency
   <code>Δν = S·ΔT</code>. It follows the GUM approach (Type A statistical + Type B modelled
@@ -1105,7 +1443,7 @@ Carrier ν<sub>0</sub> = c/λ = 193.4 THz&nbsp; (λ = 1550 nm) &nbsp;·&nbsp; li
 Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every contributor is kept in Hz with a kelvin twin (÷ S).
   </div>
 
-  <h3>15.1 Why the ratio cancels the slow terms</h3>
+  <h3>16.1 Why the ratio cancels the slow terms</h3>
   <p>Both rings sit on one die and are read through the same chain, so any error that is <b>slow
   compared with the 60 s window and common to both arms</b> subtracts out of the beat: timebase aging,
   common-mode thermal leakage (ε·ΔT<sub>common</sub>), strain/mount creep, and slow drift of the
@@ -1113,7 +1451,7 @@ Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every 
   not enter the result. What survives is only the fast, in-band content between ≈1/τ<sub>window</sub>
   and the loop bandwidth.</p>
 
-  <h3>15.2 Within-window budget at τ = 60 s</h3>
+  <h3>16.2 Within-window budget at τ = 60 s</h3>
   <p>Two lock schemes are compared: the kHz <b>dither</b> lock and the MHz <b>RF</b> analog-derivative
   lock this hardware runs. Values are 1σ on Δν at 60 s.</p>
   <table>
@@ -1130,7 +1468,7 @@ Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every 
     </tbody>
   </table>
 
-  <h4>15.2.1 How each value is derived</h4>
+  <h4>16.2.1 How each value is derived</h4>
   <p>Every contributor is modeled as a single Allan power law and read out at the 60 s window:</p>
   <div class="formula">
 σ(τ) = a · τ<sup>μ</sup>&nbsp; (a = the 1 s coefficient, Hz)&nbsp; · &nbsp;slope μ: white-FM −½, flicker 0, random-walk +½<br>
@@ -1183,7 +1521,7 @@ value at 60 s = a · 60<sup>μ</sup>&nbsp; · &nbsp;kelvin twin = Hz ÷ S = Hz �
   </ul>
 
   <div class="note"><b>Cancelled terms</b> <span class="sub">(random-walk · μ = +½; slow and common,
-  so removed by the ratio — §15.1).</span> Each grows as a·√60 toward the window, which is why they
+  so removed by the ratio — §16.1).</span> Each grows as a·√60 toward the window, which is why they
   are the <em>largest</em> raw terms yet contribute nothing to the result:
   <ul style="margin-bottom:0">
     <li><b>RAM slow drift</b> — slow random-walk of the RAM; a ≈ 50 Hz → 50·√60 = <b>387 Hz (194 nK)</b>.</li>
@@ -1193,7 +1531,7 @@ value at 60 s = a · 60<sup>μ</sup>&nbsp; · &nbsp;kelvin twin = Hz ÷ S = Hz �
     <li><b>Strain / mount creep</b> — differential mount/strain relaxation; a ≈ 20 Hz → <b>155 Hz (77 nK)</b>.</li>
   </ul>
   Without ratiometric cancellation these would dominate and push the beat past ~750 nK by 600 s (dashed
-  curves, Fig 15.1).</div>
+  curves, Fig 16.1).</div>
 
   <p><b>Combined rows.</b> The surviving (kept) contributors are independent, so they add in
   quadrature; the expanded uncertainty applies the k = 2 coverage factor:</p>
@@ -1209,13 +1547,13 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
 
   <figure>
     <img src="img/allan_uncertainty.png" alt="Allan deviation of the beat frequency vs averaging time">
-    <figcaption><b>Fig 15.1 — Beat-frequency Allan deviation.</b> Solid = ratiometric (slow common
+    <figcaption><b>Fig 16.1 — Beat-frequency Allan deviation.</b> Solid = ratiometric (slow common
     terms cancelled); dashed = without cancellation, where the slow terms re-enter as a random-walk
     upturn. The RF lock (blue) sits near ~11 nK across the window; the dither lock (teal) near
     ~42 nK. The right axis is equivalent differential temperature; the 60 s spec point is marked.</figcaption>
   </figure>
 
-  <h3>15.3 σ versus averaging time</h3>
+  <h3>16.3 σ versus averaging time</h3>
   <table>
     <thead><tr><th>τ [s]</th><th>Dither σ(Δν)</th><th>Dither σ(ΔT)</th><th>RF σ(Δν)</th><th>RF σ(ΔT)</th></tr></thead>
     <tbody>
@@ -1243,7 +1581,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
 
 <!-- ============================================================= -->
 <section id="specs">
-  <h2 class="sec"><span class="num">16</span> Specifications</h2>
+  <h2 class="sec"><span class="num">17</span> Specifications</h2>
   <table>
     <thead><tr><th>Item</th><th>Specification</th></tr></thead>
     <tbody>
@@ -1276,16 +1614,16 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
 
 <!-- ============================================================= -->
 <section id="schematics">
-  <h2 class="sec"><span class="num">17</span> Simplified schematics</h2>
+  <h2 class="sec"><span class="num">18</span> Simplified schematics</h2>
   <p>One functional schematic per board. These show the <b>main elements and signal/power flow only</b>
   — supply pins to op-amps, decoupling and bypass capacitors, pull-ups, and bias trivia are omitted
   for clarity. Reference designators follow the as-drawn schematics; consult the KiCad source for the
   complete, exact circuit.</p>
 
   <!-- ===== AC BOARD ===== -->
-  <h3>17.1 AC Board <span class="sub">— mains entry (<a href="#ac">§05</a>)</span></h3>
+  <h3>18.1 AC Board <span class="sub">— mains entry (<a href="#ac">§05</a>)</span></h3>
   <figure>
-  <svg class="sch" viewBox="0 0 900 260" role="img" aria-label="AC board simplified schematic">
+  <svg class="sch" viewBox="0 0 900 270" role="img" aria-label="AC board simplified schematic">
     <rect class="cmp" x="24" y="96" width="104" height="74" rx="4"/>
     <text x="76" y="126" text-anchor="middle">MAINS</text>
     <text class="sub" x="76" y="144" text-anchor="middle">IEC · F1 2 A</text>
@@ -1334,13 +1672,13 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <line class="w" x1="470" y1="256" x2="560" y2="256"/><text class="net" x="566" y="260">−9Vac</text>
     <text class="sub" x="690" y="238">→ pm6V (±6 V TEC card)</text>
   </svg>
-  <figcaption><b>Fig 17.1.</b> Mains in through the fused IEC inlet and inrush thermistor TH1; the
+  <figcaption><b>Fig 18.1.</b> Mains in through the fused IEC inlet and inrush thermistor TH1; the
   two chassis transformers T1/T2 produce the ±18 Vac and ±9 Vac secondaries (each with a center tap
   that becomes the DC-card ground). Secondaries wire off-board to the power cards.</figcaption>
   </figure>
 
   <!-- ===== pm22V ===== -->
-  <h3>17.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§06</a>)</span></h3>
+  <h3>18.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§06</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm22V simplified schematic">
     <!-- inputs -->
@@ -1408,7 +1746,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <line class="w" x1="470" y1="210" x2="780" y2="210"/><text class="net" x="686" y="204">−18V → J6</text>
     <text class="sub" x="482" y="230">R9 0.47Ω</text>
   </svg>
-  <figcaption><b>Fig 17.2.</b> Bridge D1 feeds the two RAW reservoirs (C9/C10); their midpoint is the
+  <figcaption><b>Fig 18.2.</b> Bridge D1 feeds the two RAW reservoirs (C9/C10); their midpoint is the
   transformer center-tap ground. Each rail's pass MOSFET (Q1 N-ch / Q2 P-ch) is a source-follower:
   R6/R7 (100 kΩ) pull the gate toward the raw rail while a 470 nF soft-start capacitor
   <b>references the gate to ground</b> — so the gate, and therefore the output, is a heavily filtered,
@@ -1417,7 +1755,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
   </figure>
 
   <!-- ===== pm6V ===== -->
-  <h3>17.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§07</a>)</span></h3>
+  <h3>18.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§07</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm6V simplified schematic">
     <!-- input + bridge -->
@@ -1478,7 +1816,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="560" y="300">V_KA = 1.225·(1+60.4/15) ≈ 6.16 V</text>
     <text class="sub" x="560" y="316">→ base −2V_be → +6 V (D10/D_CP1 track)</text>
   </svg>
-  <figcaption><b>Fig 17.3.</b> Positive rail of the discrete V<sub>be</sub>-tracking regulator (the
+  <figcaption><b>Fig 18.3.</b> Positive rail of the discrete V<sub>be</sub>-tracking regulator (the
   negative rail mirrors it: Q4, Q7∥Q8 MJL21193, U12). Bridge D7 and the reservoir bank feed the
   soft-start FET Q3 — its gate pulled to the raw rail by R22 (Zener clamp omitted) — whose source is
   the pass rail into the paralleled TO-264 Darlingtons Q9∥Q10 (each with its own 0.1 Ω emitter
@@ -1488,7 +1826,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
   </figure>
 
   <!-- ===== pm1p8V ===== -->
-  <h3>17.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§08</a>)</span></h3>
+  <h3>18.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§08</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm1p8V rail tree schematic">
     <text class="net" x="24" y="40">+18V</text><line class="w" x1="24" y1="52" x2="24" y2="330"/>
@@ -1554,15 +1892,15 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
       <line class="w" x1="420" y1="310" x2="470" y2="310"/><text class="net" x="476" y="314">+5V_LASER</text>
     </g>
   </svg>
-  <figcaption><b>Fig 17.4.</b> The rail tree: the ±18 V bus feeds a rugged first regulator (TPS7A39
+  <figcaption><b>Fig 18.4.</b> The rail tree: the ±18 V bus feeds a rugged first regulator (TPS7A39
   or a 78xx/79xx) that drops the bulk voltage, then an ultra-low-noise LDO polishes each rail. The
   LTC6655-5 sets the 5.000 V metrology reference.</figcaption>
   </figure>
 
   <!-- ===== BACKPLANE ===== -->
-  <h3>17.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§09</a>)</span></h3>
+  <h3>18.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§09</a>)</span></h3>
   <figure>
-  <svg class="sch" viewBox="0 0 900 320" role="img" aria-label="Backplane bus schematic">
+  <svg class="sch" viewBox="0 0 900 338" role="img" aria-label="Backplane bus schematic">
     <!-- bus rails -->
     <line class="wt" x1="40" y1="40" x2="860" y2="40"/><text class="net" x="40" y="32">+18V / −18V / ±15V / +5V / 3V3 / 1V8 / 5Vref / VREF_MID</text>
     <line class="w" x1="40" y1="120" x2="860" y2="120"/><text class="net" x="40" y="112">SDA · SCL · ERR1/2 · MOD1/2 · FAULT_n</text>
@@ -1592,22 +1930,22 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="430" y="150">GA pins NOT bused — per-slot code</text>
     <text class="sub" x="430" y="166">(laser slots open for jumpers)</text>
   </svg>
-  <figcaption><b>Fig 17.5.</b> Passive backplane: every rail (top: logic/analog; bottom: the isolated
+  <figcaption><b>Fig 18.5.</b> Passive backplane: every rail (top: logic/analog; bottom: the isolated
   high-current TEC rails) buses across all eight identical slots; the signal group carries I²C, the
   two bused analog pairs, and the wired-OR fault line. Each slot hard-wires its own geographic-address
   code — except the laser-card slots, which leave GA open for the CH card's jumpers.</figcaption>
   </figure>
 
   <!-- ===== DIG ===== -->
-  <h3>17.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§10</a>)</span></h3>
+  <h3>18.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§10</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 320" role="img" aria-label="DIG card schematic">
     <rect class="cmp" x="60" y="120" width="130" height="90" rx="6"/><text class="ref" x="125" y="160" text-anchor="middle">Teensy 4.1</text><text class="sub" x="125" y="178" text-anchor="middle">supervisor</text>
     <!-- clock -->
     <rect class="cmp" x="60" y="40" width="80" height="40" rx="4"/><text class="ref" x="100" y="58" text-anchor="middle">CDCE913</text><text class="sub" x="100" y="72" text-anchor="middle">10→25 MHz</text>
-    <rect class="cmp" x="0" y="46" width="46" height="28" rx="3"/><text class="sub" x="23" y="64" text-anchor="middle">10 MHz</text><line class="w" x1="46" y1="60" x2="60" y2="60"/>
+    <rect class="cmp" x="0" y="46" width="46" height="28" rx="3"/><text class="sub" x="23" y="64" text-anchor="middle">Y1 10 MHz</text><text class="sub" x="23" y="90" text-anchor="middle">(+J2 sel)</text><line class="w" x1="46" y1="60" x2="60" y2="60"/>
     <line class="w" x1="100" y1="80" x2="100" y2="105"/><line class="w" x1="100" y1="105" x2="125" y2="105"/><line class="w" x1="125" y1="105" x2="125" y2="120"/><text class="sub" x="106" y="98">I²C</text>
-    <line class="w" x1="140" y1="60" x2="360" y2="60"/><text class="net" x="205" y="54">25 MHz MCLK</text>
+    <line class="w" x1="140" y1="60" x2="360" y2="60"/><text class="net" x="205" y="54">MCLK1 · MCLK2 — 25 MHz</text>
     <!-- DDS block -->
     <rect class="cmp" x="360" y="40" width="150" height="120" rx="6"/><text class="ref" x="435" y="64" text-anchor="middle">4× AD9833</text>
     <text class="sub" x="435" y="84" text-anchor="middle">2 DRIVE + 2 REF</text>
@@ -1629,16 +1967,19 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <!-- backplane conn -->
     <line class="w" x1="800" y1="30" x2="800" y2="300"/><text class="sub" x="806" y="300">J → backplane</text>
   </svg>
-  <figcaption><b>Fig 17.6.</b> The Teensy 4.1 supervises over SPI/I²C. The CDCE913 turns the 10 MHz
-  reference into the 25 MHz clock shared by all four AD9833 DDS (two drive, two phase-set reference).
+  <figcaption><b>Fig 18.6.</b> The Teensy 4.1 supervises over SPI/I²C. The CDCE913 turns the selected
+  10 MHz reference into two independent 25 MHz outputs — <code>MCLK1</code> for the channel-1 DDS pair
+  and <code>MCLK2</code> for the channel-2 pair (a third output clocks the Teensy's frequency counter).
+  Of the four AD9833, two generate the modulation drives and two the phase-set references.
   The two modulation drives are buffered by OPA192 followers onto the bused MOD lines; the two
-  phase-set references go to the front-panel LO SMAs. The Teensy owns the I²C bus and the wired-OR
+  phase-set references leave on their own front-panel SMAs (J302, J302B1) and jumper by coax to the
+  AFE card. The Teensy owns the I²C bus and the wired-OR
   <code>FAULT_n</code>, reads the conditioned analog <code>ERR</code> lines, and drives the front-panel
   TFT.</figcaption>
   </figure>
 
   <!-- ===== CH ===== -->
-  <h3>17.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§11</a>)</span></h3>
+  <h3>18.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§11</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 380" role="img" aria-label="CH card schematic">
     <text class="ttl" x="20" y="26">LASER CONSTANT-CURRENT LOOP</text>
@@ -1701,7 +2042,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="600" y="184">GA jumper → CH1 vs CH2</text>
     <text class="sub" x="600" y="204">readback: laser IMON, TEC IMON, NTC</text>
   </svg>
-  <figcaption><b>Fig 17.7.</b> Top — the laser current loop: the DAC set-point is divided ×201 into the
+  <figcaption><b>Fig 18.7.</b> Top — the laser current loop: the DAC set-point is divided ×201 into the
   OPA192 (U23) non-inverting input; the amp drives the DMN3404L (Q17) low-side sink pulling current
   from +5V_LASER through the DFB laser, and the 0.25 Ω Kelvin sense (R79) feeds back to the inverting
   input. RF modulation is injected onto the laser line through the bias-tee choke (never the gate);
@@ -1713,7 +2054,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
   </figure>
 
   <!-- ===== AFE ===== -->
-  <h3>17.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§12</a>)</span></h3>
+  <h3>18.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§12</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 250" role="img" aria-label="AFE card schematic">
     <!-- PD -->
@@ -1754,7 +2095,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="600" y="150">FGA01FC PDs are fiber-coupled,</text>
     <text class="sub" x="600" y="168">off-board on screw terminals.</text>
   </svg>
-  <figcaption><b>Fig 17.8.</b> One detection channel: the fiber-coupled InGaAs photodiode drives an
+  <figcaption><b>Fig 18.8.</b> One detection channel: the fiber-coupled InGaAs photodiode drives an
   OPA859 wideband transimpedance amp (R<sub>f</sub> 8 kΩ); an AD835 analog multiplier demodulates it
   against the ×3-buffered phase-set reference from the DDS; the low-pass leaves the baseband error, which an OPA192 buffers
   onto the bused <code>ERR</code> line. A tap digitizes PD level on the ADS1115. Channel 2 is

@@ -39370,7 +39370,7 @@
 				)
 			)
 		)
-		(property "Value" "VHI_Buf"
+		(property "Value" "VHI"
 			(at 398.78000000000003 409.92 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -39466,7 +39466,7 @@
 				)
 			)
 		)
-		(property "Value" "VLO_Buf"
+		(property "Value" "VLO"
 			(at 414.02000000000004 409.92 0)
 			(show_name no)
 			(do_not_autoplace no)
