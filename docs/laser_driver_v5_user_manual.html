@@ -725,8 +725,8 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     (R104). Selection is meant to be <em>automatic</em>: a second tap off J2 drives an envelope
     detector (C90 / R108 / D24 / C91 / R109) into an LMV7219 comparator (U40) against an 87 mV
     threshold (R105 1 M / R106 27 k, 2 MΩ hysteresis via R110), whose output drives the mux select
-    pin — external reference present ⇒ switch away from Y1. <b>See the erratum below: as drawn this
-    detector cannot trip, so the card always runs on Y1.</b></li>
+    pin. Connect a reference to J2 and the card switches to it; remove it and the card falls back to
+    Y1. Nothing in firmware is involved — the changeover is pure hardware.</li>
     <li><b>Clock distribution</b> — the CDCE913 produces three outputs: <code>MCLK1</code> 25 MHz to
     the channel-1 DDS pair (U34/U35), <code>MCLK2</code> 25 MHz through a 33 Ω source termination
     (R316) to the channel-2 pair (U38/U39), and <code>MCLK3</code> through R317 33 Ω to Teensy pin D9
@@ -760,17 +760,12 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="warn"><b>Assembly:</b> the Teensy 4.1 is powered from <code>+5V</code> at VIN (not the
   3V3 rail). <b>Cut the VUSB↔VIN pad</b> on the underside of the Teensy before installing — otherwise
   plugging in a USB cable for programming back-drives the crate-wide <code>+5V</code> rail.</div>
-  <div class="warn"><b>Erratum — external 10 MHz reference select is inert (D24 reversed).</b>
-  The envelope detector feeding comparator U40 is built around D24 (BAV99, common-anode symbol) with
-  its <b>anode</b> on the detector node and its cathode toward the signal. That makes it a
-  <em>negative</em>-peak detector: the detector node can only be pulled below ground, while the U40
-  threshold sits at <b>+87 mV</b>. The comparator therefore never trips, its output stays LOW, and
-  since <code>S</code>=LOW selects <code>B1</code> on the '3157, <b>the mux is permanently latched to
-  the local oscillator Y1</b>. The card runs correctly on its internal 10 MHz — this fails safe — but
-  the front-panel <code>J2</code> reference input does nothing. <b>Fix:</b> reverse D24 so the
-  cathode faces the detector node (a positive-peak detector), after which any external drive above
-  roughly 0.4 V<sub>pp</sub> selects <code>B2</code>. Until then, treat <code>J2</code> as
-  unpopulated and expect TP302 to equal TP301 under all conditions
+  <div class="note"><b>Early-board note — D24 orientation.</b> The presence detector only works if
+  D24 (BAV99) has its <b>cathode</b> on the detector node, making it a positive-peak detector. Fitted
+  the other way round it detects negative peaks, the node can never rise to the +87 mV threshold, and
+  U40 stays LOW — which selects <code>B1</code>, latching the card to Y1 forever. The card still runs
+  correctly on its internal oscillator, so the only symptom is that <code>J2</code> does nothing.
+  If an external reference has no effect, check D24 before suspecting the mux or the source
   (<a href="#testing">§15.4</a> step 6).</div>
   <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
   (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
@@ -1282,8 +1277,7 @@ Active IP: 192.168.10.50</pre>
   oscillator Y1 (TP301) drives mux input B1; the front-panel J2 reference reaches input B2
   AC-coupled through C89 and R107 behind a 50 Ω termination. U40 is <em>not</em> in the signal path —
   it is an envelope detector plus comparator that senses whether an external reference is present and
-  drives the mux <b>select</b> pin. (As built this detector cannot trip, so B1 is always selected —
-  see the erratum in <a href="#dig">§10</a>.) The selected reference appears at TP302 and feeds the
+  drives the mux <b>select</b> pin. The selected reference appears at TP302 and feeds the
   CDCE913 PLL and the bus buffer in parallel. The PLL's two 25 MHz outputs (TP304, TP305) clock the
   two DDS pairs, and the buffered 10 MHz (TP303) leaves for backplane pin c20. TP306/TP307 sit
   <em>after</em> the ferrites FB301/FB302, so they read the clock's own filtered supplies rather than
@@ -1368,14 +1362,13 @@ Active IP: 192.168.10.50</pre>
     <li><b>Local oscillator.</b> Scope TP301: a clean 10.000 MHz, 3.3 V p-p square. Confirm frequency
     on the counter.</li>
     <li><b>Reference select.</b> With no external reference connected, TP302 must match TP301 — the
-    mux has selected the local oscillator. <b>On the board as built this is the only state you can
-    reach:</b> the U40 presence detector cannot trip (D24 reversed, see the erratum in
-    <a href="#dig">§10</a>), so applying a source to J2 changes nothing at TP302. Verify that the
-    reading is unchanged with and without an external source — that is the expected behaviour today,
-    not a fault. Once D24 is corrected, feeding J2 with ≳0.4 V<sub>pp</sub> at 10 MHz should switch
-    TP302 to the external signal; note it will then appear as the AC-coupled external waveform
-    through R107, <em>not</em> as a 3.3 V CMOS square, because the '3157 is an analog switch that
-    passes its input rather than re-squaring it.</li>
+    mux has selected the local oscillator. Now feed J2 with ≳0.4 V<sub>pp</sub> at 10 MHz and confirm
+    TP302 follows the external source; disconnect it and confirm TP302 reverts to Y1. This exercises
+    both mux legs and the U40 presence detector in one step. Expect the external-mode waveform to
+    look different: the '3157 is an analog switch that passes its input rather than re-squaring it,
+    so TP302 shows the AC-coupled external signal through R107, <em>not</em> a 3.3 V CMOS square. If
+    the external source has no effect at all, check D24's orientation (<a href="#dig">§10</a>) before
+    suspecting the mux or your source.</li>
     <li><b>Buffered clock out.</b> TP303 = 10.000 MHz. This is the signal that leaves for backplane
     <code>c20</code>, so a good reading here plus a bad one at another card points at the backplane,
     not at DIG.</li>
@@ -1402,7 +1395,7 @@ Active IP: 192.168.10.50</pre>
       <tr><td>Clock good on DIG, absent on other cards</td><td>TP303</td><td>Good here → R311 or the backplane <code>c20</code> trace, not this card</td></tr>
       <tr><td>Voltage monitor reports false faults</td><td>TP313 / TP314, then TP311</td><td>Thresholds shifted because 5Vref is off, or a divider resistor is wrong</td></tr>
       <tr><td>All set-points off by a common factor</td><td>TP311</td><td>5Vref out of tolerance — everything ratios against it</td></tr>
-      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td><b>Expected on the current build</b> — D24 is reversed so U40 never selects the external leg (<a href="#dig">§10</a> erratum). Not a fault to chase.</td></tr>
+      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td>U40 never asserts select — D24 fitted backwards (<a href="#dig">§10</a>), source below ~0.4 V<sub>pp</sub>, or the C90/R108 detector leg open</td></tr>
       <tr><td><code>freq</code> readings wrong or zero</td><td>Teensy D9 (no test pad)</td><td>CDCE913 <code>MCLK3</code> output or its 33 Ω series R317 — this is the FreqCount reference, independent of TP304/TP305</td></tr>
       <tr><td>PLL unlocks when probed</td><td>—</td><td>Probe loading; switch to 10:1 and re-check</td></tr>
     </tbody>
