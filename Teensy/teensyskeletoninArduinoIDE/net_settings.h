@@ -9,7 +9,7 @@
 // Changes written with net_settings_save() survive power cycles.
 // ============================================================
 
-#define NET_MAGIC       0x50444833UL   // 'P','D','H','3' — bump when struct changes
+#define NET_MAGIC       0x50444834UL   // 'P','D','H','4' — bump when struct changes
 #define NET_EEPROM_ADDR 0              // byte offset in EEPROM
 
 struct NetSettings {
@@ -22,6 +22,7 @@ struct NetSettings {
   bool     demo_mode;    // runtime demo flag — toggled by 'demo on/off'
   float    rf_omega[2];  // per-channel modulation Ω (Hz)  — survives power cycle
   float    rf_phase[2];  // per-channel demod phase (deg)  — set by phaseN / calN
+  uint16_t err_null[2];  // AFE ERR offset-null DAC codes   — set by nullN
 };
 
 // Default values used when EEPROM is blank or magic is wrong.
@@ -31,6 +32,9 @@ struct NetSettings {
 #define NET_DEFAULT_GATEWAY   {192, 168, 1, 1}
 #define NET_DEFAULT_HOSTNAME  "dual-pdh"
 #define NET_DEFAULT_DEMO      DEMO_MODE_DEFAULT
+// Midscale == the AD5696R RSTSEL power-up state, so a blank EEPROM
+// leaves the AFE exactly where the hardware already parked it.
+#define NET_DEFAULT_ERR_NULL  AFE_NULL_CODE_MID
 
 // Load from EEPROM; fills defaults and saves if magic invalid.
 void net_settings_load(NetSettings& s);

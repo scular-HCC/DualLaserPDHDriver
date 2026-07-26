@@ -18,6 +18,9 @@ extern float g_rf_phase[2];
 void rf_set_omega(int i, float hz);
 void rf_set_phase(int i, float deg);
 void rf_phase_cal(int i, Print& out);
+extern uint16_t g_err_null[2];
+void err_null_cal(int i, Print& out);
+void err_null_set(int i, uint16_t code);
 
 // ============================================================
 // JSON status generator
@@ -82,6 +85,7 @@ void comms_json_status(Print& out,
     out.print(F(",\"athr\":")); out.print(ch[i].acquire_threshold, 5);
     out.print(F(",\"omega\":")); out.print(g_rf_omega[i], 0);
     out.print(F(",\"phase\":")); out.print(g_rf_phase[i], 1);
+    out.print(F(",\"null\":"));  out.print(g_err_null[i]);
     out.print('}');
   }
   out.print(F("]}"));
@@ -204,6 +208,24 @@ void comms_process(const String& line, Print& out,
   if (line == "cal1") { rf_phase_cal(0, out); return; }
   if (line == "cal2") { rf_phase_cal(1, out); return; }
 
+  // ---- AFE ERR offset null: null1 / null2 ------------------
+  // Nulls the demodulator pedestal (AD835 offset + LO feedthrough).
+  // Block the light first — see err_null_cal().
+  if (line == "null1") { err_null_cal(0, out); return; }
+  if (line == "null2") { err_null_cal(1, out); return; }
+
+  // ---- manual null code: nullset1 <code> / nullset2 <code> --
+  if (line.startsWith("nullset1 ") || line.startsWith("nullset2 ")) {
+    int idx = line[7] - '1';
+    int c;
+    if (sscanf(line.c_str()+9, "%d", &c)==1 && c>=0 && c<=65535) {
+      err_null_set(idx, (uint16_t)c);
+      out.print(F("CH")); out.print(idx+1);
+      out.print(F(" ERR null code -> ")); out.println(c);
+    } else out.println(F("Usage: nullset1 <0-65535>"));
+    return;
+  }
+
   // ---- legacy: set BOTH Ω the same (kept for compatibility) -
   if (line.startsWith("dither ")) {
     float hz;
@@ -235,6 +257,17 @@ void comms_process(const String& line, Print& out,
     out.print(F(" PD1=")); out.print(a.pd_lvl_v[0], 3);
     out.print(F(" PD2=")); out.print(a.pd_lvl_v[1], 3);
     out.println();
+    // ERR in volts against the 2.5 V zero, plus the null DAC state.
+    for (int i = 0; i < 2; i++) {
+      int raw = analogRead(i == 0 ? PIN_LOCK1_IN : PIN_LOCK2_IN);
+      out.print(F("  ERR")); out.print(i+1);
+      out.print(F(" = ")); out.print(raw * (ADC_REF_V / ADC_MAX), 4);
+      out.print(F(" V  (zero = ")); out.print(ERR_CENTER_V, 3);
+      out.print(F(" V, offset ")); 
+      out.print((raw - ERR_MID_COUNTS) * (ADC_REF_V / ADC_MAX) * 1e3f, 2);
+      out.print(F(" mV)  null="));  out.print(g_err_null[i]);
+      out.println(afe_null_present() ? F("") : F("  [DAC NOT PRESENT]"));
+    }
     return;
   }
 
@@ -381,6 +414,9 @@ void comms_process(const String& line, Print& out,
     out.println(F("  phase1 <deg>         — CH1 demod phase (reference DDS)"));
     out.println(F("  phase2 <deg>         — CH2 demod phase"));
     out.println(F("  cal1 / cal2          — auto-calibrate demod phase"));
+    out.println(F("  null1 / null2        — auto-null ERR offset (BLOCK THE LIGHT)"));
+    out.println(F("  nullset1 <code>      — set ERR null DAC code by hand (0-65535)"));
+    out.println(F("  nullset2 <code>      — same, CH2"));
     out.println(F("  thresh1 lock acq     — CH1 capture/loss thresholds"));
     out.println(F("  thresh2 lock acq     — CH2 thresholds"));
     out.println(F("  p1 kp ki kd          — CH1 PID gains (LEGACY: servo is analog)"));

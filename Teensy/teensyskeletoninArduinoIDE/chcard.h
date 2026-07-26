@@ -13,6 +13,8 @@
 //   PCA9538  : IO0 LOCK_EN (out), IO1 HB_FAULT (in, active-low)
 // AFE card:
 //   ADS1115  : AIN0 PD1_LVL, AIN1 PD2_LVL
+//   AD5696R  : DAC A = ERR1 offset null, DAC B = ERR2 offset null
+//              (injects into VB1/VB2 via R146/R147 100k)
 //
 // DAC/expander writes are cached — repeated calls with the same value
 // generate NO I2C traffic (backplane noise rule: bus static in lock).
@@ -52,6 +54,21 @@ void chcard_set_lock_en(int i, bool run);
 // H-bridge fault on card i (PCA9538 IO1, active-low). Query only after
 // the shared FAULT_n line asserts. Returns true = fault.
 bool chcard_fault(int i);
+
+// ---- AFE ERR offset-null DAC (AD5696R at I2C_AD5696_AFE) ----------
+// Push the stored null codes to the AFE and confirm the DAC is present.
+// Returns true if the DAC ACKed. Call once at boot, after Wire.begin().
+bool afe_null_init(const uint16_t code[2]);
+
+// Set channel i's null code (i = 0 -> ERR1/VOUTA, 1 -> ERR2/VOUTB).
+// Write-on-change, so calling it every tick costs nothing on the bus.
+void afe_write_null_dac(int i, uint16_t code);
+
+// Last code successfully written (AFE_NULL_CODE_MID before any write).
+uint16_t afe_null_code(int i);
+
+// False if the last write to the null DAC did not ACK.
+bool afe_null_present();
 
 // Non-blocking telemetry round robin — call at TELEM_PERIOD_MS.
 // Collects the previous ADS1115 conversion and starts the next one.

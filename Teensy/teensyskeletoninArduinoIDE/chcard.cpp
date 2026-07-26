@@ -9,10 +9,18 @@ static const uint8_t ADS_ADDR[2] = { I2C_ADS1115_CH1, I2C_ADS1115_CH2 };
 static const uint8_t DAC_ADDR[2] = { I2C_AD5696_CH1,  I2C_AD5696_CH2  };
 static const uint8_t EXP_ADDR[2] = { I2C_PCA9538_CH1, I2C_PCA9538_CH2 };
 
+static const uint8_t AFE_NULL_DAC[2] = { AFE_NULL_DAC_CH1, AFE_NULL_DAC_CH2 };
+
 // Cached last-written values → no I2C traffic unless something changes.
 static int32_t s_las_code[2] = { -1, -1 };
 static int32_t s_tec_code[2] = { -1, -1 };
 static int8_t  s_lock_en[2]  = { -1, -1 };
+
+// AFE ERR offset-null DAC. Seeded to the RSTSEL power-up state so the
+// cached value matches the hardware before the first write.
+static uint16_t s_null_code[2] = { AFE_NULL_CODE_MID, AFE_NULL_CODE_MID };
+static int32_t  s_null_sent[2] = { -1, -1 };
+static bool     s_null_ok      = false;
 
 static ChCardMon s_mon[2] = {{NAN, NAN, NAN, NAN, false}, {NAN, NAN, NAN, NAN, false}};
 static AfeMon    s_afe    = {{NAN, NAN}, false};
@@ -52,6 +60,29 @@ void chcard_set_midscale_all() {
     chcard_write_tec_dac(i, TEC_DAC_ZERO_CODE);   // 0 A, not midscale
   }
 }
+
+// ---- AFE ERR offset-null DAC --------------------------------------
+bool afe_null_init(const uint16_t code[2]) {
+  s_null_ok = true;                 // afe_write_null_dac() clears it on NAK
+  for (int i = 0; i < 2; i++) {
+    s_null_sent[i] = -1;            // force the write even if the code matches
+    afe_write_null_dac(i, code[i]);
+  }
+  return s_null_ok;
+}
+
+void afe_write_null_dac(int i, uint16_t code) {
+  if (s_null_sent[i] == (int32_t)code) return;
+  if (ad5696_write(I2C_AD5696_AFE, AFE_NULL_DAC[i], code)) {
+    s_null_sent[i] = code;
+    s_null_code[i] = code;
+  } else {
+    s_null_ok = false;
+  }
+}
+
+uint16_t afe_null_code(int i) { return s_null_code[i]; }
+bool     afe_null_present()   { return s_null_ok;      }
 
 void chcard_set_lock_en(int i, bool run) {
   if (s_lock_en[i] == (int8_t)run) return;

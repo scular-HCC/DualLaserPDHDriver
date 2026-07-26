@@ -91,8 +91,16 @@ static float    s_tec_i[2]       = {0.0f, 0.0f};
 static uint16_t s_tec_dac[2]     = {TEC_DAC_ZERO_CODE, TEC_DAC_ZERO_CODE}; // desired setpoint (default 0 A)
 static float    s_tec_lim_fac[2] = {1.0f, 1.0f};                 // 1.0 = no limiting
 
+// Normalised PDH error. Zero error is ERR_CENTER_V (= VREF_MID), NOT
+// half the ADC range — the AFE output stage is referenced to the
+// backplane mid rail. Scaled by the positive headroom so |e| = 1 at
+// the point the ADC clips, and clamped so a far-off-resonance negative
+// excursion (which has 3x more headroom) cannot skew err_rms.
 static inline float adc_to_error(int raw) {
-  return (raw - ADC_MID) / (float)ADC_MID;
+  float e = (raw - ERR_MID_COUNTS) / ERR_SPAN_COUNTS;
+  if (e >  1.0f) e =  1.0f;
+  if (e < -1.0f) e = -1.0f;
+  return e;
 }
 
 // v5: monitors arrive as VOLTS from the per-card ADS1115s.
@@ -229,13 +237,107 @@ void rf_phase_cal(int i, Print& out) {
     long acc = 0;
     for (int k = 0; k < PHASE_CAL_SAMPLES; k++) acc += analogRead(in_pin);
     float mean = (float)acc / PHASE_CAL_SAMPLES;
-    float mag  = fabsf(mean - ADC_MID);
+    float mag  = fabsf(mean - ERR_MID_COUNTS);   // discriminator size about VREF_MID
     out.print(F("  ")); out.print(p); out.print(F(" deg  |e|=")); out.println(mag, 1);
     if (mag > best_mag) { best_mag = mag; best_p = p; }
   }
   rf_set_phase(i, (float)best_p);
   out.print(F("CH")); out.print(i + 1);
   out.print(F(" demod phase -> ")); out.print(best_p); out.println(F(" deg (verify lock polarity)"));
+}
+
+// ============================================================
+// AFE ERR offset null (AD5696R at 0x0E, replaces RV201/RV202)
+//
+// What gets nulled is the demodulator PEDESTAL — AD835 output offset
+// plus LO->W feedthrough — which is present whenever the LO runs and
+// there is no optical error signal. So the light MUST be blocked (or
+// the laser parked well off resonance) before calibrating: with a real
+// discriminator signal present this would null the signal itself and
+// walk the lock point, which is exactly the failure mode the hardware
+// injection resistors were sized to keep bounded.
+// ============================================================
+uint16_t g_err_null[2] = { AFE_NULL_CODE_MID, AFE_NULL_CODE_MID };
+
+static void persist_err_null() {
+  NetSettings ns;
+  net_settings_load(ns);
+  ns.err_null[0] = g_err_null[0];  ns.err_null[1] = g_err_null[1];
+  net_settings_save(ns);
+}
+
+// Average the raw ERR ADC for this channel, after letting the VB node settle.
+static float err_mean_counts(uint8_t pin) {
+  delay(NULL_CAL_SETTLE_MS);
+  long acc = 0;
+  for (int k = 0; k < NULL_CAL_SAMPLES; k++) acc += analogRead(pin);
+  return (float)acc / NULL_CAL_SAMPLES;
+}
+
+// Apply a null code by hand (bring-up / manual override).
+void err_null_set(int i, uint16_t code) {
+  g_err_null[i] = code;
+  afe_write_null_dac(i, code);
+  persist_err_null();
+}
+
+// 16-step successive approximation on the null DAC. ERR rises
+// monotonically with code (VOUTA/B -> VB -> non-inverting DC path),
+// so keep each trial bit whenever the reading is still at or below the
+// 2.5 V target; that converges on the largest code with ERR <= target.
+void err_null_cal(int i, Print& out) {
+  uint8_t pin = (i == 0) ? PIN_LOCK1_IN : PIN_LOCK2_IN;
+
+  if (ch[i].state == LOCK_LOCKED || ch[i].state == LOCK_ACQUIRE) {
+    out.print(F("CH")); out.print(i + 1);
+    out.println(F(" is locked/acquiring — run stopN or holdN first."));
+    return;
+  }
+  if (!afe_null_present()) {
+    out.println(F("AFE null DAC (0x0E) did not ACK — check the AFE card."));
+    return;
+  }
+
+  set_integrator(i, false);                 // hold the analog servo throughout
+  out.print(F("CH")); out.print(i + 1);
+  out.println(F(" ERR offset null — BLOCK THE LIGHT (or park off resonance)."));
+
+  // Confirm the pedestal is actually inside the DAC's authority before
+  // searching; if it is not, SAR would silently converge on an endpoint.
+  afe_write_null_dac(i, 0);
+  float lo_v = err_mean_counts(pin);
+  afe_write_null_dac(i, 0xFFFF);
+  float hi_v = err_mean_counts(pin);
+  out.print(F("  span: code 0 -> ")); out.print(lo_v, 1);
+  out.print(F(" counts, code 65535 -> ")); out.print(hi_v, 1);
+  out.print(F(" counts (target ")); out.print(ERR_MID_COUNTS, 1); out.println(F(")"));
+
+  if (!(lo_v <= ERR_MID_COUNTS && hi_v >= ERR_MID_COUNTS)) {
+    afe_write_null_dac(i, g_err_null[i]);   // leave the old code in place
+    out.println(F("  FAILED: pedestal outside DAC range. Check LO drive, that the"));
+    out.println(F("  light is blocked, and R141/R143 (8.25k) / R146/R147 (100k)."));
+    return;
+  }
+
+  uint16_t code = 0;
+  for (int b = 15; b >= 0; b--) {
+    uint16_t trial = code | (uint16_t)(1u << b);
+    afe_write_null_dac(i, trial);
+    if (err_mean_counts(pin) <= ERR_MID_COUNTS) code = trial;
+  }
+
+  afe_write_null_dac(i, code);
+  float resid = err_mean_counts(pin) - ERR_MID_COUNTS;
+  g_err_null[i] = code;
+  persist_err_null();
+
+  out.print(F("CH")); out.print(i + 1);
+  out.print(F(" null code -> ")); out.print(code);
+  out.print(F("  residual ")); out.print(resid, 2); out.print(F(" counts ("));
+  out.print(resid * (ADC_REF_V / ADC_MAX) * 1e3f, 2); out.println(F(" mV at ERR)"));
+  if (fabsf(resid) > NULL_CAL_TOL_COUNTS)
+    out.println(F("  WARNING: residual above tolerance — noisy input or drifting pedestal."));
+  out.println(F("  Saved to EEPROM. Unblock the light before locking."));
 }
 
 // Optional slow integrator off-load (anti-windup). Trims the DC setpoint to
@@ -383,6 +485,10 @@ void setup() {
                       : (i == 0 ? RF_OMEGA1_HZ : RF_OMEGA2_HZ);
       float p = ns.rf_phase[i];
       g_rf_phase[i] = (isfinite(p) && p >= -360.0f && p <= 360.0f) ? p : 0.0f;
+      // ERR offset-null codes. Any uint16_t is a legal DAC code and the
+      // injection network bounds the worst case, so there is nothing to
+      // clamp — a blank EEPROM already defaults to midscale.
+      g_err_null[i] = ns.err_null[i];
     }
     g_dither_freq = g_rf_omega[0];
   }
@@ -416,6 +522,17 @@ void setup() {
   uint8_t cards = chcard_init_all();
   Serial.print(F("CH card 1 (I2C): ")); Serial.println((cards & 1) ? F("OK") : F("NOT FOUND"));
   Serial.print(F("CH card 2 (I2C): ")); Serial.println((cards & 2) ? F("OK") : F("NOT FOUND"));
+
+  // AFE ERR offset-null DAC: restore the saved codes. Until this write
+  // the hardware sits at its RSTSEL midscale power-up state, which is
+  // the design centre — so a missing AFE degrades to a fixed offset
+  // rather than an undefined one.
+  if (afe_null_init(g_err_null)) {
+    Serial.print(F("AFE null DAC (I2C 0x0E): OK  codes "));
+    Serial.print(g_err_null[0]); Serial.print('/'); Serial.println(g_err_null[1]);
+  } else {
+    Serial.println(F("AFE null DAC (I2C 0x0E): NOT FOUND — ERR offsets untrimmed"));
+  }
 
   // ── Mode-specific channel init ─────────────────────────────
   if (g_demo_mode) {

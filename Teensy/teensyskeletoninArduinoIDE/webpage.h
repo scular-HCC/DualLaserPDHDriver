@@ -68,6 +68,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);min-height:100vh
 .stat .v{font-family:var(--m);font-size:16px;line-height:1.1;color:var(--ink)}
 .stat .u{font-size:9px;color:var(--dim)}
 .stat.hl .v{color:inherit}
+.stat.wide{grid-column:1/-1;display:flex;align-items:center;gap:9px}
+.stat.wide .kv{flex:0 0 auto}
+.nul-t{position:relative;flex:1;height:5px;background:#0a1019;border-radius:3px}
+.nul-f{height:100%;border-radius:3px;transition:width .25s}
+.nul-m{position:absolute;left:50%;top:-1px;width:1px;height:7px;background:var(--mu)}
 /* ---- servo bar ---- */
 .srv{background:var(--p2);border:1px solid var(--rule);border-radius:3px;padding:4px 7px;display:flex;align-items:center;gap:7px;margin-bottom:8px}
 .srv-l{font-size:9px;letter-spacing:.6px;color:var(--mu);text-transform:uppercase}
@@ -265,6 +270,16 @@ function makeSVG(st,scan,peak,accent,sc,rms){
 }
 
 function ff(v,d){return(v==null||isNaN(v))?'---':v.toFixed(d);}
+// ERR offset-null DAC position within its 16-bit span. The bar shows how
+// much trim authority is left; the tick is midscale (= the AD5696R RSTSEL
+// power-up state, i.e. 'never calibrated'). Amber inside 10% of either end
+// means the AFE pedestal has nearly outrun the DAC — recalibrate or check
+// the LO drive before it clips.
+function nulPct(v){return(v==null||isNaN(v))?0:Math.max(0,Math.min(100,v/65535*100));}
+function nulCol(v){
+  if(v==null||isNaN(v))return'var(--mu)';
+  return(v<6554||v>58982)?'var(--ac)':'var(--sw)';
+}
 
 // ---- channel render ----
 function renderCh(c){
@@ -299,6 +314,13 @@ function renderCh(c){
     <div class="stat"><div class="k">ERR RMS</div><div class="v" style="font-size:13px">${ff(c.rms,5)}</div></div>
     <div class="stat"><div class="k">MOD Ω</div><div class="v">${ff(c.omega/1e6,3)}<span class="u"> MHz</span></div></div>
     <div class="stat"><div class="k">DEMOD φ</div><div class="v">${ff(c.phase,0)}<span class="u"> °</span></div></div>
+    <div class="stat wide" style="color:${nulCol(c.null)}">
+      <div class="kv"><div class="k">ERR NULL</div><div class="v">${c.null==null?'---':c.null}</div></div>
+      <div class="nul-t">
+        <div class="nul-f" style="width:${nulPct(c.null)}%;background:currentColor"></div>
+        <div class="nul-m"></div>
+      </div>
+    </div>
   </div>
   <div class="srv">
     <span class="srv-l">SERVO</span>
@@ -337,6 +359,18 @@ function renderSettings(data){
     <button class="fr-apply" onclick="applyRF(${c.n})">Apply</button></div>
   <div class="fr"><label></label>
     <button class="fr-apply" style="width:100%" onclick="calPhase(${c.n})">⊙ Auto-cal demod φ</button></div>
+  <hr class="set-divider">
+  <h4 style="color:${CC[c.n-1]};margin-top:6px">CH${c.n} — ERR Offset Null <span style="font-size:9px;color:var(--mu)">(saved to EEPROM)</span></h4>
+  <div class="fr"><label>DAC code</label><input id="nl${c.n}" value="${c.null==null?'':c.null}">
+    <button class="fr-apply" onclick="applyNull(${c.n})">Apply</button></div>
+  <div class="fr"><label></label>
+    <button class="fr-apply" style="width:100%" onclick="calNull(${c.n})">⊙ Auto-null ERR offset</button></div>
+  <div style="font-size:9px;color:var(--mu);line-height:1.4;margin-top:4px">
+    Nulls the demodulator pedestal (AD835 offset + LO feedthrough).
+    <b style="color:var(--ac)">Block the light</b> — or park the laser well off
+    resonance — first, or this nulls the discriminator signal itself and walks
+    the lock point.
+  </div>
 </div>`).join('');
 }
 
@@ -347,6 +381,17 @@ function applyPID(n){
 function applyThr(n){cmd(`thresh${n} ${V('lt'+n)} ${V('at'+n)}`);}
 function applyRF(n){cmd(`omega${n} ${V('om'+n)}`);cmd(`phase${n} ${V('ph'+n)}`);}
 function calPhase(n){cmd(`cal${n}`);}
+function applyNull(n){const v=V('nl'+n);if(v!=='')cmd(`nullset${n} ${v}`);}
+function calNull(n){
+  if(!confirm(`CH${n} ERR offset null.
+
+Block the light (or park the laser well off `
+    +`resonance) BEFORE continuing — otherwise the discriminator signal itself gets `
+    +`nulled and the lock point walks.
+
+The channel must not be locked. Proceed?`))return;
+  cmd(`null${n}`);
+}
 function V(id){return document.getElementById(id).value.trim();}
 
 // ---- network settings ----

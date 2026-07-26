@@ -61,6 +61,8 @@
 //   ADS1115 ADDR <- GA0; AD5696R base 00011|A1|A0 (verified vs
 //   ADI Rev E ds); PCA9538 base 0x70|A1<<1|A0.  The AFE ADS1115
 //   straps ADDR->SDA on-card (0x4A), outside the CH 0x48/0x49 range.
+//   The AFE also carries its own AD5696R (ERR offset null) strapped
+//   A1=VLOGIC, A0=GND -> 0x0E, i.e. the next code after CH1/CH2.
 // ============================================================
 #define I2C_CDCE913_ADDR     0x65          // fixed, on the DIG card
 #define I2C_ADS1115_CH1      0x48          // CH laser-1 card (GA0 = 0, JP101 fitted)
@@ -68,6 +70,7 @@
 #define I2C_ADS1115_AFE      0x4A          // AFE card (ADDR -> SDA)
 #define I2C_AD5696_CH1       0x0C          // base 0x0C | GA0
 #define I2C_AD5696_CH2       0x0D
+#define I2C_AD5696_AFE       0x0E          // AFE ERR offset-null DAC (A1=1, A0=0)
 #define I2C_PCA9538_CH1      0x70          // base 0x70 | GA1<<1 | GA0
 #define I2C_PCA9538_CH2      0x71
 
@@ -127,8 +130,11 @@
 // backplane c13/c14):
 #define PIN_LOCK1_IN      A10  // pin 24 — CH1 baseband error (ERR1_BUS)
 #define PIN_LOCK2_IN      A11  // pin 25 — CH2 baseband error (ERR2_BUS)
-// FLAG: ERRn_BUS still reaches these pins unconditioned, as in v3 —
-// verify level/offset against the 3V3 ADC range during bring-up.
+// DIG card conditioning (traced from DIG_Card.kicad_sch, rev C as fabbed):
+//   ERRn_BUS -> R303/R304 3k3 series -> ERRn_ADC -> A10/A11,
+//   with C303/C304 1n to GND and a BAT54S (D301/D302) clamping the ADC
+//   node to GND / 3V3.  SERIES resistor only — there is NO divider, so
+//   the Teensy sees ERRn_BUS one-for-one.
 
 // ============================================================
 // ADC / DAC constants
@@ -138,6 +144,52 @@
 #define ADC_MID           (ADC_MAX / 2)
 #define ADC_REF_V         3.3f
 #define DAC_MID_CODE      0x8000u
+
+// ============================================================
+// ERR (baseband PDH error) scaling — AFE card rev with the inverting
+// x4.99 output stage.  ERRn_BUS is NOT centred on half the ADC range:
+// the AFE stage is referenced to the backplane VREF_MID rail, so zero
+// error sits at 2.5 V.  Using ADC_MID here (the pre-AFE-rework
+// assumption) reports a nulled channel as e = +0.515.
+//
+// Headroom is ASYMMETRIC because the ADC only reaches 3.3 V:
+//   positive: 3.3 - 2.5 = 0.8 V  (= 160 mV pre-gain, /4.99)  <- limiting
+//   negative: 2.5 - 0.0 = 2.5 V
+// Normalising by the positive headroom makes |e| = 1 exactly at the
+// clip point, so the existing lock/acquire thresholds keep their
+// meaning and stay symmetric.  adc_to_error() clamps to +/-1.
+// ============================================================
+#define ERR_CENTER_V      2.5f            // VREF_MID (buffered 5Vref/2, pm1p8V U21)
+#define ERR_MID_COUNTS    (ERR_CENTER_V / ADC_REF_V * ADC_MAX)          // ~3102
+#define ERR_SPAN_COUNTS   ((ADC_REF_V - ERR_CENTER_V) / ADC_REF_V * ADC_MAX)  // ~993
+#define ERR_GAIN_VV       4.99f           // AFE R138/R118 = 49.9k/10k (inverting)
+
+// ============================================================
+// AFE automatic ERR offset null (AD5696R at I2C_AD5696_AFE).
+// Replaces the old RV201/RV202 trimpots.  VOUTA/VOUTB inject into the
+// VB1/VB2 nodes through R146/R147 100k, so the passive divider still
+// dominates: the full 0..2.5 V DAC span moves ERRn_BUF over roughly
+// 1.98..2.97 V and a dead or unwritten DAC parks ERR at ~2.48 V rather
+// than slamming a rail into the CH servo.  RSTSEL is tied to VLOGIC,
+// so the DAC powers up at midscale = the design centre.
+//
+// What is being nulled is the demodulator PEDESTAL: AD835 output offset
+// plus LO->W feedthrough.  Both exist whenever the LO is running and
+// there is no optical error signal, so the calibration must be run with
+// the light blocked or the laser parked well off resonance.
+// ============================================================
+#define AFE_NULL_DAC_CH1     0x1          // AD5696 VOUTA -> VB1 -> ERR1
+#define AFE_NULL_DAC_CH2     0x2          // AD5696 VOUTB -> VB2 -> ERR2
+#define AFE_NULL_CODE_MID    0x8000u      // == the RSTSEL power-up state
+#define AFE_NULL_V_PER_CODE  15.1e-6f     // (2.97-1.98)/65536 V at ERRn_BUF
+
+// Null search: 16-step successive approximation.  Settling is set by the
+// VB node (C247/C248 100nF against ~5.5k Thevenin, tau ~0.55 ms); 10 ms
+// is ~18 tau, i.e. settled well past 16-bit resolution.  Whole sweep is
+// ~200 ms per channel.
+#define NULL_CAL_SETTLE_MS   10
+#define NULL_CAL_SAMPLES     64
+#define NULL_CAL_TOL_COUNTS  2.0f         // |residual| accepted, ADC counts
 
 // ============================================================
 // NTC thermistor (beta equation) — tune to your parts

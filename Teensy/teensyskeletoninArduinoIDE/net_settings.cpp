@@ -16,6 +16,7 @@ static void fill_defaults(NetSettings& s) {
   s.demo_mode = NET_DEFAULT_DEMO;
   s.rf_omega[0] = RF_OMEGA1_HZ;  s.rf_omega[1] = RF_OMEGA2_HZ;
   s.rf_phase[0] = RF_PHASE1_DEG; s.rf_phase[1] = RF_PHASE2_DEG;
+  s.err_null[0] = NET_DEFAULT_ERR_NULL; s.err_null[1] = NET_DEFAULT_ERR_NULL;
 }
 
 void net_settings_load(NetSettings& s) {

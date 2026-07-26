@@ -365,7 +365,8 @@ As built (AFE card): R<sub>f</sub> = 8 kΩ, C<sub>f</sub> = 1 pF, referenced to 
   0.25 ppm)</b>, RC-filtered to ~16 Hz before it reaches the DACs, so reference noise is ≈1.6 µV p-p.
   Each signal card digitizes locally over I²C — a 16-bit DAC (AD5696R/MCP4728 class) makes the
   set-points and an ADS1115 reads the monitors — rather than busing dozens of raw analog lines across
-  the backplane. Only two analog signals per channel are bused: the demodulated error
+  the backplane. The AFE carries a DAC of its own for the same reason: rather than a trimpot an
+  operator has to revisit, its ERR offset is nulled by firmware and stored (<a href="#software">§13.8</a>). Only two analog signals per channel are bused: the demodulated error
   (<code>ERRn</code>, driven by the AFE) and the modulation drive (<code>MODn</code>, driven by the
   DIG DDS).</p>
   <div class="tip"><b>Noise rule.</b> I²C is static when idle, so firmware runs a "quiet mode"
@@ -478,9 +479,15 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   laser 1) and one has it open (laser 2). Leave JP102/JP103 fitted on both — they are spare address
   bits for future expansion. Never install two CH cards with the same JP101 setting: both would
   answer at the same I²C addresses <em>and</em> fight over the same ERR/MOD bus pair.</div>
-  <p><b>Other cards.</b> The DIG card is the bus master and needs no address. The AFE card's ADC is
-  address-strapped on-card (ADDR→SDA, 0x4A), deliberately outside the CH cards' 0x48/0x49 range;
-  where AFE/DIG carry GA jumpers they follow the same fitted-=-0 convention.</p>
+  <p><b>Other cards.</b> The DIG card is the bus master and needs no address. The AFE card carries
+  two devices, both hard-strapped on-card with no jumper to mis-set: its <b>ADS1115 monitor ADC</b>
+  ties ADDR→SDA for <b>0x4A</b>, and its <b>AD5696R offset-null DAC</b> ties A1→VLOGIC and A0→GND for
+  <b>0x0E</b> — the next code after the two CH-card DACs. Both sit deliberately outside the CH cards'
+  ranges. Where AFE/DIG carry GA jumpers they follow the same fitted-=-0 convention.</p>
+  <div class="note"><b>The AFE DAC is not interchangeable with the CH DACs.</b> All three are
+  AD5696Rs, but the CH cards tie the <code>GAIN</code> pin to VLOGIC (gain 2, 0–5 V span) while the
+  AFE ties it to GND (gain 1, <b>0–2.5 V span</b>). The same code word therefore means a different
+  output voltage on the two cards.</div>
 
   <h3>4.3 Fault handling</h3>
   <p><code>FAULT_n</code> (b20) is an open-drain wired-OR line any card can pull low. On assertion the
@@ -766,7 +773,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   U40 stays LOW — which selects <code>B1</code>, latching the card to Y1 forever. The card still runs
   correctly on its internal oscillator, so the only symptom is that <code>J2</code> does nothing.
   If an external reference has no effect, check D24 before suspecting the mux or the source
-  (<a href="#testing">§15.4</a> step 6).</div>
+  (<a href="#testing">§15.5</a> step 6).</div>
   <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
   (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
   <b>ENIG</b> finish. The F.Cu↔In1 core is deliberately thin (0.0994 mm) so the two front-panel LO
@@ -864,9 +871,17 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     output against the buffered phase-set reference, followed by the 2-pole post-mix RC filters.
     Chosen over an RF mixer for lowest noise at the 2–2.5 MHz demod frequency — no switching offset,
     no harmonic folding (<a href="#theory">§3.4</a>).</li>
-    <li><b>Error buffers</b> — OPA192 unity followers + 47 Ω series drive the demodulated
-    <code>ERR1/ERR2</code> onto the backplane; PD levels are tapped through 10 k/100 n RC into an
-    on-card ADS1115 for the Teensy to monitor.</li>
+    <li><b>Error output stage</b> — OPA192 (U202/U203) in an <b>inverting ×4.99</b> configuration
+    referenced to the <code>VB</code> node rather than a unity follower, so the demodulated error is
+    both amplified and level-shifted to sit on <b>VREF_MID (2.500 V)</b> at zero error. A 47 Ω series
+    resistor drives <code>ERR1/ERR2</code> onto the backplane. That level shift is what lets the DIG
+    card's unipolar 0–3.3 V Teensy ADC read a bipolar error signal.</li>
+    <li><b>Automatic ERR offset null</b> — an AD5696R quad 16-bit I²C DAC (U206, address <b>0x0E</b>)
+    injects into the two <code>VB</code> nodes through 100 kΩ resistors, trimming out the demodulator
+    pedestal under firmware control. This replaces the manual RV201/RV202 trimpots of the earlier
+    revision (<a href="#software">§13.8</a>).</li>
+    <li><b>PD level monitor</b> — PD levels are tapped through 10 k/100 n RC into an on-card ADS1115
+    (0x4A) for the Teensy to monitor.</li>
     <li><b>Front panel</b> — dual isolated right-angle SMA for the LO / reference inputs.</li>
   </ul>
   <h4>Interaction</h4>
@@ -993,7 +1008,8 @@ $ curl http://dual-pdh.local/api/status
 { "t":45231, "pll":1, "refclk":25.000, "ip":"192.168.1.200",
   "ch":[ { "n":1, "st":"LOCKED", "rms":0.00312, "temp":24.52, "ima":138.2,
            "teci":1.843, "tlim":1.000, "hbf":0, "setp":52.30, "qual":0.844,
-           "kp":0.08, "ki":0.50, "kd":0.00, "lthr":0.02, "athr":0.10 },
+           "kp":0.08, "ki":0.50, "kd":0.00, "lthr":0.02, "athr":0.10,
+           "omega":2000000, "phase":90.0, "null":34160 },
          { "n":2, "st":"SEARCH", ... } ] }</pre>
 
   <h3>13.3 Command reference</h3>
@@ -1010,11 +1026,14 @@ $ curl http://dual-pdh.local/api/status
       <tr><td><code>omega1</code> / <code>omega2 &lt;hz&gt;</code></td><td>Set that channel's modulation Ω (100 kHz–3.5 MHz); reprograms drive + reference DDS phase-coherently. Not saved to EEPROM.</td></tr>
       <tr><td><code>phase1</code> / <code>phase2 &lt;deg&gt;</code></td><td>Set demod phase live (reference DDS PHASE0, 0–360°) for maximum discriminator slope.</td></tr>
       <tr><td><code>cal1</code> / <code>cal2</code></td><td>Auto-calibrate demod phase: step 0–360°, pick the phase that maximises the error signal. Park on a shoulder first; verify lock polarity (add 180° if the servo runs away).</td></tr>
+      <tr><td><code>null1</code> / <code>null2</code></td><td>Auto-null the AFE ERR offset for that channel (§13.8). <b>Block the light first.</b> Refuses if the channel is LOCKED or ACQUIRING. Result is saved to EEPROM.</td></tr>
+      <tr><td><code>nullset1</code> / <code>nullset2 &lt;code&gt;</code></td><td>Write the ERR offset-null DAC code by hand (0–65535) and save it. For bring-up or to restore a known value.</td></tr>
       <tr><td><code>thresh1</code> / <code>thresh2 &lt;lock&gt; &lt;acq&gt;</code></td><td>Set the lock and acquire thresholds.</td></tr>
       <tr><td><code>p1</code> / <code>p2 &lt;kp&gt; &lt;ki&gt; &lt;kd&gt;</code></td><td>Set PID gains (used by the supervisor / logging path).</td></tr>
       <tr><td><code>s</code> / <code>status</code></td><td>Human-readable telemetry dump for both channels.</td></tr>
       <tr><td><code>d</code></td><td>Detailed diagnostic dump: raw monitor volts (NTC/LAS/TEC/MPD),
-      per-channel optical power <code>POPTn</code> (mW), and AFE PD levels.</td></tr>
+      per-channel optical power <code>POPTn</code> (mW), AFE PD levels, and per-channel
+      <code>ERRn</code> in volts against the 2.5 V zero with its offset-null DAC code.</td></tr>
       <tr><td><code>netinfo</code> / <code>netset</code> / <code>netreset</code></td><td>Network configuration (see §13.5).</td></tr>
       <tr><td><code>demo on</code> / <code>demo off</code></td><td>Enter/leave hardware-simulation mode (see §13.6).</td></tr>
       <tr><td><code>help</code></td><td>List all commands.</td></tr>
@@ -1069,8 +1088,8 @@ Active IP: 192.168.10.50</pre>
   <ul>
     <li><b>Enumerates cards by I²C probe</b> at boot: each card self-identifies through its on-card
     address jumpers (<a href="#arch">§4.2</a>), so the controller simply probes the known address set
-    (CH1 0x48/0x0C/0x70, CH2 0x49/0x0D/0x71, AFE 0x4A) and confirms each expected card ACKs. There
-    are no slot straps to read.</li>
+    (CH1 0x48/0x0C/0x70, CH2 0x49/0x0D/0x71, AFE 0x4A ADC + 0x0E offset-null DAC) and confirms each
+    expected card ACKs. There are no slot straps to read.</li>
     <li><b>Sets operating points</b> via each card's on-board DAC (channel A = laser, B = TEC) with
     cached write-on-change, so an unchanged set-point generates zero bus traffic.</li>
     <li><b>Reads telemetry</b> (laser IMON, TEC IMON, NTC, PD levels) from the on-card ADS1115s at
@@ -1082,12 +1101,56 @@ Active IP: 192.168.10.50</pre>
   <div class="note">The full pin and I²C address map (CDCE913 0x65; per-channel ADS1115 / DAC / GPIO)
   is in <code>config.h</code> and <code>TeensyFirmwareAssumptions.txt</code>. Build under Teensyduino
   before flashing.</div>
-  <div class="warn"><b>Firmware address map needs one swap.</b> <code>config.h</code> still assigns
-  channel 1 = GA0 = 1 (0x49/0x0D/0x71), a leftover of the old slot-strap plan. The ADG419 mux truth
-  table (IN = 0 → S1 = ERR1/MOD1, verified against the datasheet) fixes the hardware convention as
-  <b>channel 1 = GA0 = 0</b> (0x48/0x0C/0x70), i.e. JP101 fitted. Swap the CH1/CH2 address constants
-  in <code>config.h</code> before first flash; also note GA readback pins 14/15/16 no longer carry
-  slot straps.</div>
+  <div class="note"><b>Address convention — resolved.</b> The ADG419 mux truth table
+  (IN = 0 → S1 = ERR1/MOD1, verified against the datasheet) fixes the hardware convention as
+  <b>channel 1 = GA0 = 0</b> (0x48/0x0C/0x70), i.e. JP101 fitted. <code>config.h</code> now matches,
+  so the CH1/CH2 constant swap an earlier revision of this manual called for is no longer needed —
+  do not apply it. GA readback pins 14/15/16 no longer carry slot straps.</div>
+  <h3>13.8 ERR offset null (automatic)</h3>
+  <p>The AD835 demodulator has an output offset of its own (±25 mV typical, ±75 mV worst case), and
+  the local-oscillator drive leaks a little energy straight through to the output. Together these
+  form a <b>DC pedestal</b> on <code>ERRn</code> that the ×4.99 output stage multiplies to as much as
+  ±374 mV. Because the CH-card servo drives the laser until <code>ERR</code> equals VREF_MID, a
+  pedestal is indistinguishable from a real error and simply displaces the lock point.</p>
+  <p>The pedestal drifts with temperature and with LO level, so the trimpots of the earlier revision
+  needed periodic re-adjustment. They are gone, replaced by the AD5696R at <b>0x0E</b>: firmware
+  sweeps the DAC until the measured error sits on VREF_MID, then stores the code in EEPROM.</p>
+  <table class="pinref">
+    <thead><tr><th>Property</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Adjustment range at <code>ERRn</code></td><td>1.98 – 2.97 V (≈ ±0.49 V about 2.5 V)</td></tr>
+      <tr><td>Equivalent pedestal range (pre-gain)</td><td>≈ ±98 mV — covers the AD835 worst case</td></tr>
+      <tr><td>Resolution</td><td>15 µV per code at <code>ERRn</code> (16-bit DAC)</td></tr>
+      <tr><td>Achieved residual</td><td>≈ ±0.2 mV, limited by the 12-bit Teensy ADC, not the DAC</td></tr>
+      <tr><td>Power-up state</td><td>Midscale (RSTSEL→VLOGIC) = 2.48 V, the design centre</td></tr>
+      <tr><td>Persistence</td><td>Codes saved to EEPROM, restored at boot</td></tr>
+      <tr><td>Test points</td><td>TP427 / TP428 (DAC outputs), TP429 / TP430 (spare DAC channels)</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>Block the light before nulling.</b> What is being cancelled is the pedestal
+  that exists <em>in the absence of an optical error signal</em>. Run <code>null1</code> /
+  <code>null2</code> with the beam blocked, or with the laser parked well off resonance. Calibrating
+  against a live discriminator nulls the signal itself and walks the lock point, and nothing in
+  software can detect that mistake. The channel must also not be LOCKED or ACQUIRING — the command
+  refuses if it is.</div>
+  <pre><span class="cm"># block the beam first</span>
+&gt; null1
+CH1 ERR offset null — BLOCK THE LIGHT (or park off resonance).
+  span: code 0 -&gt; 2463.1 counts, code 65535 -&gt; 3691.4 counts (target 3102.3)
+CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
+  Saved to EEPROM. Unblock the light before locking.</pre>
+  <p>The routine first drives the DAC to both endpoints to confirm the pedestal actually lies inside
+  the trim range. If it does not, it <b>aborts and leaves the previous code untouched</b> rather than
+  silently converging on an endpoint — a failure that would otherwise surface much later as a bad
+  lock. An out-of-range report points at LO drive level, an unblocked beam, or a wrong resistor value
+  in the VB network.</p>
+  <p>The web dashboard shows the live code on each channel card as a position bar within the DAC
+  span, with a tick at midscale. The bar turns <b>amber</b> when the code is within 10 % of either
+  end — the early warning that the pedestal has nearly outrun the available trim.</p>
+  <div class="note"><b>Injection, not direct drive.</b> The DAC feeds the VB nodes through 100 kΩ, so
+  the passive divider still dominates the node. A DAC that is dead, absent, or never written leaves
+  <code>ERR</code> at ≈2.48 V — half a volt from centre — instead of driving a rail into the CH
+  servo. That is deliberate: the failure mode is a small fixed offset, not a runaway.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -1112,8 +1175,15 @@ Active IP: 192.168.10.50</pre>
     parked, confirm TEC servo reaches setpoint and NTC reads plausibly.</li>
     <li><b>Laser enable.</b> Only after PGOOD/power-good and with fiber safely terminated, allow
     firmware to ramp the laser DAC from 0. Confirm IMON tracks command.</li>
-    <li><b>Lock.</b> Bring up modulation (DIG DDS), verify the AFE produces a bipolar discriminator
-    (<code>ERRn</code>) as the laser is swept across a fringe, then close the PI lock.</li>
+    <li><b>Null the ERR offset.</b> With modulation running but the <b>beam blocked</b>, run
+    <code>null1</code> and <code>null2</code>. Each reports the code it found and the residual; both
+    should settle within a fraction of a millivolt. An out-of-range report means the pedestal exceeds
+    the trim range — check LO drive and that the beam really is blocked before going further
+    (<a href="#software">§13.8</a>). The codes are stored in EEPROM, so this is a once-per-build step
+    rather than a routine one.</li>
+    <li><b>Lock.</b> Unblock the beam. Verify the AFE produces a bipolar discriminator
+    (<code>ERRn</code> swinging either side of 2.5 V) as the laser is swept across a fringe, then
+    close the PI lock.</li>
   </ol>
   <div class="warn"><b>Bench diagnostic reminders.</b> A shorted bridge or AC-on-a-DC-pad does
   <em>not</em> show when probing each raw rail to ground (you just charge that rail's cap) — probe
@@ -1125,10 +1195,13 @@ Active IP: 192.168.10.50</pre>
 <!-- ============================================================= -->
 <section id="testing">
   <h2 class="sec"><span class="num">15</span> Testing &amp; test points</h2>
-  <p>The DIG card carries a bank of <b>20 dedicated test points (TP301–TP320)</b> that make the whole
-  clock chain, every supply rail, and the voltage-monitor thresholds probeable without lifting a
-  component or clipping onto a fine-pitch pin. This section documents each one, where it sits, and the
-  measurements to make at bring-up.</p>
+  <p>Two cards carry dedicated test-point banks: the <b>DIG card, TP301–TP320 (20 points)</b> covering
+  the clock chain, every supply rail and the voltage-monitor thresholds; and the <b>AFE card,
+  TP401–TP430 (30 points)</b> covering the whole detection path from photodiode bias to the error
+  output. Together they make every node worth probing reachable without lifting a component or
+  clipping onto a fine-pitch pin — which matters most on the AFE, whose OPA859 (WSON-8) and ADS1115
+  (MSOP-10) are the finest-pitch parts in the instrument. This section documents each point, where it
+  sits, and the measurements to make at bring-up.</p>
 
   <div class="grid2">
     <div class="note"><b>Equipment</b>
@@ -1140,15 +1213,15 @@ Active IP: 192.168.10.50</pre>
       </ul></div>
     <div class="tip"><b>Test-point styles</b>
       <ul style="margin-bottom:0">
-        <li><b>TP301–TP314</b> — 1.0 mm SMD pads. Signal and rail taps; probe with a fine tip or
-        spring probe.</li>
-        <li><b>TP315–TP320</b> — 1.5 mm plated THT pads (0.7 mm drill), all <code>GND</code>. Sized to
-        take a scope ground spring or a soldered wire loop.</li>
+        <li><b>Signal / rail taps</b> — 1.0 mm SMD pads (DIG TP301–TP314; AFE TP401–TP422 and
+        TP427–TP430). Probe with a fine tip or spring probe.</li>
+        <li><b>Grounds</b> — 1.5 mm plated THT pads, 0.7 mm drill (DIG TP315–TP320; AFE
+        TP423–TP426). Sized to take a scope ground spring or a soldered wire loop.</li>
         <li>Every pad is silkscreened with its net name on the top side.</li>
       </ul></div>
   </div>
 
-  <h3>15.1 Test-point reference</h3>
+  <h3>15.1 DIG card test-point reference</h3>
   <table>
     <thead><tr><th>TP</th><th>Net</th><th>Node / what it taps</th><th>Expected</th></tr></thead>
     <tbody>
@@ -1179,7 +1252,79 @@ Active IP: 192.168.10.50</pre>
   ground lead reaching to the far corner of the board will show ringing and overshoot that the circuit
   does not actually have.</div>
 
-  <h3>15.2 Where the test points attach</h3>
+
+  <h3>15.2 AFE card test-point reference</h3>
+  <p>Thirty points, <b>TP401–TP430</b>, following the signal from the photodiode bias through the
+  transimpedance amplifier, the demodulator and its local oscillator, to the error output and the
+  offset-null DAC. Both channels are instrumented identically, so any measurement can be compared
+  channel-to-channel — which is usually the fastest way to localise a fault on this card.</p>
+  <table>
+    <thead><tr><th>TP</th><th>Net</th><th>Node / what it taps</th><th>Expected</th></tr></thead>
+    <tbody>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Photodiode bias</b></td></tr>
+      <tr><td><b>TP415</b></td><td><code>PD_BIAS_12V</code></td><td>LT3042 output (U1) — the ultra-low-noise PD bias rail</td><td>12.0 V, &lt;1 mV<sub>rms</sub> noise</td></tr>
+      <tr><td><b>TP416</b></td><td><code>PD1_BIAS_K</code></td><td>PD1 cathode, after the 100 Ω series R_S1 (J202 pin 2)</td><td>12.0 V dark; −100 µV per µA of photocurrent</td></tr>
+      <tr><td><b>TP417</b></td><td><code>PD2_BIAS_K</code></td><td>PD2 cathode, after R_S2 (J203 pin 2)</td><td>as TP416</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Transimpedance stage</b> — the TIA is single-supply and referenced to VREF_TIA, so its output sits <em>high</em> in the dark and swings <em>down</em> with light</td></tr>
+      <tr><td><b>TP401</b></td><td><code>TIA1_OUT</code></td><td>OPA859 U30 output, R<sub>f</sub> 8.06 kΩ</td><td>3.336 V dark; −8.06 mV per µA; floor ≈1.15 V (V<sub>OL</sub>) at ≈271 µA</td></tr>
+      <tr><td><b>TP402</b></td><td><code>TIA2_OUT</code></td><td>OPA859 U31 output</td><td>as TP401</td></tr>
+      <tr><td><b>TP412</b></td><td><code>VREF_TIA</code></td><td>Local TIA reference, 5Vref ÷ (R132 49.9 k / R133 100 k)</td><td>3.336 V</td></tr>
+      <tr><td><b>TP413</b></td><td><code>VREF_TIA_1</code></td><td>Per-channel filtered island at U30 pin 4 (R130 100 Ω + C239 100 nF)</td><td>3.336 V, ≈16 kHz corner</td></tr>
+      <tr><td><b>TP414</b></td><td><code>VREF_TIA_2</code></td><td>Same for U31</td><td>3.336 V</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Demodulator — RF and LO ports</b> (both AC-coupled and biased to GND through 10 kΩ, so all four sit at 0 V DC)</td></tr>
+      <tr><td><b>TP403</b></td><td><code>RF1_IN</code></td><td>AD835 U45 X1, after C94 10 nF from TIA1_OUT</td><td>0 V DC; Ω sideband riding on it</td></tr>
+      <tr><td><b>TP404</b></td><td><code>RF2_IN</code></td><td>AD835 U46 X1, after C95</td><td>as TP403</td></tr>
+      <tr><td><b>TP405</b></td><td><code>LO1_BUF</code></td><td>OPA820 U204 output — the ×3 buffered reference (1 + R124 2 k / R125 1 k)</td><td>0 V DC, ≤ ±1 V<sub>pk</sub> at Ω</td></tr>
+      <tr><td><b>TP406</b></td><td><code>LO2_BUF</code></td><td>OPA820 U205 output</td><td>as TP405</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Error path</b></td></tr>
+      <tr><td><b>TP407</b></td><td><code>ERR1_DEM</code></td><td>AD835 U45 W — raw multiplier output, before the 2-pole filter</td><td>0 V ± pedestal (±25 mV typ, ±75 mV max)</td></tr>
+      <tr><td><b>TP408</b></td><td><code>ERR2_DEM</code></td><td>AD835 U46 W</td><td>as TP407</td></tr>
+      <tr><td><b>TP409</b></td><td><code>ERR1_BUF</code></td><td>OPA192 U202 output — inverting ×4.99, referenced to VB1; ahead of R217 47 Ω to the bus</td><td><b>2.500 V at zero error</b> once nulled; usable 2.5 V +0.8 / −2.5 V</td></tr>
+      <tr><td><b>TP410</b></td><td><code>ERR2_BUF</code></td><td>OPA192 U203 output</td><td>as TP409</td></tr>
+      <tr><td><b>TP411</b></td><td><code>VREF_MID</code></td><td>Backplane mid-reference (b16) — the zero-error datum both channels are built on</td><td>2.500 V ±3 mV</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Offset-null DAC</b> (AD5696R U206, 0x0E — see <a href="#software">§13.8</a>)</td></tr>
+      <tr><td><b>TP427</b></td><td><code>DAC_VB1</code></td><td>VOUTA → R146 100 kΩ → VB1</td><td>0–2.5 V; ≈1.30 V after a successful <code>null1</code>; 1.25 V unwritten</td></tr>
+      <tr><td><b>TP428</b></td><td><code>DAC_VB2</code></td><td>VOUTB → R147 100 kΩ → VB2</td><td>as TP427</td></tr>
+      <tr><td><b>TP429</b></td><td><code>DAC_SPARE_C</code></td><td>VOUTC, unused — a spare 16-bit analog output</td><td>1.25 V (midscale power-up)</td></tr>
+      <tr><td><b>TP430</b></td><td><code>DAC_SPARE_D</code></td><td>VOUTD, unused</td><td>1.25 V</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Supply rails</b></td></tr>
+      <tr><td><b>TP418</b> / <b>TP419</b></td><td><code>+15V</code> / <code>-15V</code></td><td>OPA192 error-stage rails (a13 / a14)</td><td>±15 V ±5 %, equal and opposite</td></tr>
+      <tr><td><b>TP420</b> / <b>TP421</b></td><td><code>+5V</code> / <code>-5V</code></td><td>OPA859 / AD835 / OPA820 rails (a16 / a17)</td><td>±5 V ±5 %</td></tr>
+      <tr><td><b>TP422</b></td><td><code>3V3_DIG</code></td><td>ADS1115 and DAC logic supply, after R216 10 Ω</td><td>3.30 V ±5 %</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Ground</b> — THT, for probe ground springs</td></tr>
+      <tr><td><b>TP423–TP426</b></td><td><code>GND</code></td><td>Four points, one per cluster: TIA, demodulator, error output, digital</td><td>0 V</td></tr>
+    </tbody>
+  </table>
+  <div class="tip"><b>Deliberately absent: the TIA summing nodes.</b> There is no test point on
+  <code>PD1_IN</code>/<code>PD2_IN</code>. A pad's stray capacitance there lands directly across the
+  1 pF feedback capacitor that compensates the transimpedance loop — a probe would detune the very
+  thing you were trying to measure. Infer the summing node from TP401/TP402 instead. Also absent by
+  design: SDA/SCL, <code>ERRn_BUS</code> and <code>FAULT_n</code> (reach them at the DIN blade or on
+  the DIG card), and <code>LOn_REF</code> (probe at the DIG-card SMA).</div>
+
+  <h4>AFE bring-up order</h4>
+  <ol>
+    <li><b>Rails first, card out of the LO path.</b> TP418–TP422, then TP415 — the LT3042 must reach
+    12.0 V before any photodiode is connected.</li>
+    <li><b>References.</b> TP411 = 2.500 V and TP412 = 3.336 V. TP413/TP414 must match TP412; a
+    difference means an open R130/R131 and a floating TIA input reference.</li>
+    <li><b>TIA, dark.</b> TP401/TP402 should read 3.336 V with the fibers dark, i.e. the same as
+    TP412. Illuminate and confirm the output falls — <em>down</em> is correct here. If either sits at
+    ≈1.15 V it is saturated: too much light, or a short across R<sub>f</sub>.</li>
+    <li><b>LO.</b> With the DIG DDS running, TP405/TP406 should show a clean sine at Ω, ≤ ±1 V peak
+    and centred on 0 V. Amplitude much below ±1 V costs discriminator slope directly.</li>
+    <li><b>Pedestal.</b> Block the light and read TP407/TP408. Anything inside ±75 mV is normal
+    AD835 offset plus LO feedthrough. Much more than that points at LO overdrive.</li>
+    <li><b>Null and verify.</b> Still blocked, run <code>null1</code>/<code>null2</code>
+    (<a href="#software">§13.8</a>); TP427/TP428 will move to wherever the search lands. Confirm
+    TP409/TP410 then sit at 2.500 V — this is the single most useful check on the card, because it
+    is the datum the CH servo locks to.</li>
+    <li><b>Discriminator.</b> Unblock, sweep the laser across a fringe, and confirm TP409/TP410 swing
+    <em>both sides</em> of 2.500 V. A one-sided swing means the demod phase is wrong — run
+    <code>cal1</code>/<code>cal2</code>.</li>
+  </ol>
+
+  <h3>15.3 Where the test points attach</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 502" role="img" aria-label="DIG card test point locations in the clock chain and reference divider">
     <text class="ttl" x="16" y="20">CLOCK CHAIN — TP301…TP307</text>
@@ -1285,7 +1430,7 @@ Active IP: 192.168.10.50</pre>
   TP313/TP314.</figcaption>
   </figure>
 
-  <h3>15.3 Physical location on the board</h3>
+  <h3>15.4 Physical location on the board</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 600" role="img" aria-label="DIG card top view showing test point placement">
     <!-- board -->
@@ -1344,7 +1489,7 @@ Active IP: 192.168.10.50</pre>
   lower-right corner near the Teensy.</figcaption>
   </figure>
 
-  <h3>15.4 Board-level test procedure</h3>
+  <h3>15.5 Board-level test procedure</h3>
   <p>Run these in order on a newly assembled DIG card. Steps 1–2 are done with the card powered from
   the backplane but with the Teensy held in reset (or not yet fitted).</p>
   <ol>
@@ -1385,7 +1530,7 @@ Active IP: 192.168.10.50</pre>
   before the board. TP304/TP305 are series-damped nets; measure at the test pad, not at the DDS
   pin.</div>
 
-  <h3>15.5 Fault localisation</h3>
+  <h3>15.6 Fault localisation</h3>
   <table>
     <thead><tr><th>Symptom</th><th>Check</th><th>Likely cause</th></tr></thead>
     <tbody>
@@ -1401,7 +1546,7 @@ Active IP: 192.168.10.50</pre>
     </tbody>
   </table>
 
-  <h3>15.6 System-level checks</h3>
+  <h3>15.7 System-level checks</h3>
   <p>Once the card passes the above, the remaining verification is functional and is driven from the
   firmware interfaces (<a href="#software">§13</a>):</p>
   <ul>
@@ -1586,6 +1731,8 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
       <tr><td>Stability (60 s Allan)</td><td>≈ 40 nK (dither) → target 4–11 nK (RF lock), RAM-limited</td></tr>
       <tr><td>Modulation Ω</td><td>~1–3 MHz, 4× AD9833 DDS (25 MHz clock)</td></tr>
       <tr><td>Voltage reference</td><td>LTC6655-5, 5.000 V, 0.25 ppm, ~1.6 µV p-p</td></tr>
+      <tr><td>Error signal <code>ERRn</code></td><td>Bipolar about VREF_MID 2.500 V; AFE gain ×4.99; usable ADC window 2.5 V +0.8 / −2.5 V</td></tr>
+      <tr><td>ERR offset null</td><td>Automatic, AD5696R 16-bit at 0x0E; ±0.49 V range, 15 µV/code, ≈±0.2 mV residual, saved to EEPROM</td></tr>
       <tr><td>Regulated rails</td><td>±15 V, ±5 V, 5 Vref, 3V3, 1V8, +5V_LASER, ±6V_TEC, ±18 V bus</td></tr>
       <tr><td>Controller</td><td>Teensy 4.1, I²C backplane, geographic addressing</td></tr>
       <tr><td>Mechanical</td><td>3U / 84 HP subrack, 8× DIN 41612 Type M slots, 10 HP pitch</td></tr>
@@ -2049,7 +2196,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
   <!-- ===== AFE ===== -->
   <h3>18.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§12</a>)</span></h3>
   <figure>
-  <svg class="sch" viewBox="0 0 900 250" role="img" aria-label="AFE card schematic">
+  <svg class="sch" viewBox="0 0 900 272" role="img" aria-label="AFE card schematic">
     <!-- PD -->
     <text class="net" x="20" y="94">PD (InGaAs)</text>
     <line class="w" x1="30" y1="110" x2="70" y2="110"/>
@@ -2073,13 +2220,25 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <!-- LPF -->
     <rect class="cmp" x="320" y="98" width="26" height="24" rx="3"/><text class="sub" x="333" y="92" text-anchor="middle">LPF</text><text class="sub" x="333" y="140" text-anchor="middle">~50 kHz</text>
     <line class="w" x1="346" y1="110" x2="362" y2="110"/><line class="w" x1="362" y1="110" x2="362" y2="98"/><line class="w" x1="362" y1="98" x2="380" y2="98"/>
-    <!-- buffer (unity follower) -->
-    <polygon class="cmp" points="380,86 380,134 424,110"/><text class="sub" x="386" y="80">OPA192</text>
-    <text x="386" y="102">+</text><text x="386" y="126">−</text>
-    <line class="w" x1="424" y1="110" x2="450" y2="110"/><circle class="j" cx="438" cy="110" r="3"/>
-    <line class="w" x1="438" y1="110" x2="438" y2="150"/><line class="w" x1="438" y1="150" x2="362" y2="150"/><line class="w" x1="362" y1="150" x2="362" y2="122"/><line class="w" x1="362" y1="122" x2="380" y2="122"/>
-    <rect class="cmp" x="450" y="104" width="24" height="12" rx="1.5"/><text class="sub" x="462" y="100" text-anchor="middle">47Ω</text>
-    <line class="w" x1="474" y1="110" x2="560" y2="110"/><text class="net" x="566" y="114">ERR1 → bus</text>
+    <!-- output stage: inverting x4.99, referenced to VB -->
+    <line class="w" x1="356" y1="110" x2="356" y2="98"/>
+    <rect class="cmp" x="356" y="92" width="30" height="12" rx="1.5"/><text class="sub" x="371" y="88" text-anchor="middle">Ri 10k</text>
+    <line class="w" x1="386" y1="98" x2="400" y2="98"/><circle class="j" cx="393" cy="98" r="3"/>
+    <line class="w" x1="393" y1="98" x2="393" y2="64"/>
+    <rect class="cmp" x="393" y="58" width="34" height="12" rx="1.5"/><text class="sub" x="410" y="54" text-anchor="middle">Rf 49.9k</text>
+    <line class="w" x1="427" y1="64" x2="460" y2="64"/><line class="w" x1="460" y1="64" x2="460" y2="110"/>
+    <polygon class="cmp" points="400,86 400,134 444,110"/><text class="sub" x="406" y="80">OPA192</text>
+    <text x="406" y="102">−</text><text x="406" y="126">+</text>
+    <line class="w" x1="444" y1="110" x2="480" y2="110"/><circle class="j" cx="460" cy="110" r="3"/>
+    <rect class="cmp" x="480" y="104" width="24" height="12" rx="1.5"/><text class="sub" x="492" y="100" text-anchor="middle">47Ω</text>
+    <line class="w" x1="504" y1="110" x2="560" y2="110"/><text class="net" x="566" y="114">ERR1 → bus</text>
+    <text class="sub" x="566" y="130">(zero error = VREF_MID)</text>
+    <!-- VB node: VREF_MID plus the DAC offset trim -->
+    <line class="w" x1="400" y1="122" x2="372" y2="122"/><line class="w" x1="372" y1="122" x2="372" y2="155"/>
+    <rect class="cmp" x="366" y="155" width="12" height="26" rx="1.5"/><text class="sub" x="384" y="173">100k</text>
+    <line class="w" x1="372" y1="181" x2="372" y2="206"/>
+    <rect class="cmp" x="326" y="206" width="92" height="26" rx="4"/><text class="sub" x="372" y="223" text-anchor="middle">AD5696R 0x0E</text>
+    <text class="sub" x="372" y="250" text-anchor="middle">VB = VREF_MID + trim</text>
     <!-- PD level tap -->
     <line class="w" x1="180" y1="110" x2="180" y2="180"/><rect class="cmp" x="200" y="200" width="90" height="30" rx="4"/><text class="sub" x="245" y="220" text-anchor="middle">ADS1115</text>
     <line class="w" x1="180" y1="180" x2="245" y2="180"/><line class="w" x1="245" y1="180" x2="245" y2="200"/><text class="sub" x="252" y="176">PD level</text>
@@ -2087,11 +2246,17 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     <text class="sub" x="600" y="98">PD2 → OPA859 → AD835 → ERR2</text>
     <text class="sub" x="600" y="150">FGA01FC PDs are fiber-coupled,</text>
     <text class="sub" x="600" y="168">off-board on screw terminals.</text>
+    <text class="sub" x="600" y="200">ERR offset is auto-nulled by the</text>
+    <text class="sub" x="600" y="218">DAC (null1/null2) — no trimpot.</text>
   </svg>
   <figcaption><b>Fig 18.8.</b> One detection channel: the fiber-coupled InGaAs photodiode drives an
   OPA859 wideband transimpedance amp (R<sub>f</sub> 8 kΩ); an AD835 analog multiplier demodulates it
-  against the ×3-buffered phase-set reference from the DDS; the low-pass leaves the baseband error, which an OPA192 buffers
-  onto the bused <code>ERR</code> line. A tap digitizes PD level on the ADS1115. Channel 2 is
+  against the ×3-buffered phase-set reference from the DDS; the low-pass leaves the baseband error,
+  which an OPA192 amplifies <b>×4.99 inverting</b> onto the bused <code>ERR</code> line. The stage is
+  referenced to <code>VB</code>, not ground, so zero error sits at VREF_MID (2.500 V) — that level
+  shift is what lets the DIG card's unipolar ADC read a bipolar signal. An AD5696R at 0x0E injects
+  into <code>VB</code> through 100 kΩ to null the demodulator pedestal automatically
+  (<a href="#software">§13.8</a>). A tap digitizes PD level on the ADS1115. Channel 2 is
   identical.</figcaption>
   </figure>
 
