@@ -652,6 +652,21 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <li><b>VREF_MID</b> (2.500 V, from a 0.1% ratiometric divider off 5Vref buffered by an OPA192) is
     the analog mid-supply the TIAs and TEC virtual-grounds reference.</li>
   </ul>
+  <div class="danger"><b>Fabbed v5 cards: U21 (the VREF_MID buffer) is built to a wrong symbol
+  pinout — rework before trusting any lock.</b> The <code>LT1028_2</code> symbol embedded in the v5
+  schematic numbers the OPA192 SOT-23-5 as 1=OUT, <b>2=IN−</b>, 3=IN+, <b>4=V−</b>, 5=V+, but the real
+  part is 1=OUT, <b>2=V−</b>, 3=IN+, <b>4=IN−</b>, 5=V+. The drawing is logically a correct unity-gain
+  buffer, but as fabbed the feedback from pin 1 lands on the <b>V− pin</b> and −15 V lands on the
+  <b>IN− pin</b> — U21 has no negative supply and its inverting input is clamped at −15 V, so its
+  output slams to the positive rail. <code>VREF_MID</code> is generated <em>only</em> here and bused to
+  every slot on b16, so every VREF_MID-referenced stage in the crate — both TEC virtual grounds, the
+  AFE ×4.99 level shift, the CH-card integrator datum — rests on it. <b>Rework:</b> lift U21 pins 2
+  and 4 clear of their lands and cross them with two short wires — pin 2 to the pad-4 land (−15 V),
+  pin 4 to the pad-2 land (the R50 feedback node). <b>Verify after rework:</b> <code>TP411</code> /
+  backplane b16 must read <b>2.500 V ±3 mV</b> (<a href="#testing">§15</a>) with the card loaded; check
+  this before commissioning anything downstream. Corrected in
+  <code>Lasser_Driver_v6/pm1p8V_pm5V_5Vref_5Vlaser</code> (schematic; the two U21 traces still need
+  re-routing in that layout).</div>
   <div class="warn"><b>Grounding decision.</b> <code>DGND</code> (the ±9 Vac-CT, TEC-only return) is
   deliberately kept <em>off</em> this card; <code>GND</code> is the single logic+analog ground here.
   The single-point <code>DGND↔GND</code> tie is made at the backplane star, at power entry, so the
@@ -814,6 +829,23 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     connector family as the reference mount's socket (Maiman LDM-BUTTERFLY, ZIF socket, 3 A rated,
     Würth 61301421821). The harness cable itself is sourced separately (see the wire-gauge note).</li>
   </ul>
+  <div class="danger"><b>Fabbed v5 cards: U24 PDH integrator has positive feedback — rework before
+  powering a laser.</b> On the v5 layout the OPA192 <code>U24</code> has its inputs reversed: the
+  summing node (R92 <i>Ri</i> 10 k from <code>ERRn</code>, R94 <i>Rp</i> 1 k from the C76 integrator
+  cap) lands on <b>pin 3 (IN+)</b> and <code>VREF_MID</code> on <b>pin 4 (IN−)</b>. That is positive
+  feedback — and because C76 is an open circuit at DC there is no DC feedback path at all, so U24
+  latches hard against a rail. This is a laser-safety item, not a cosmetic one: U24 reaches the laser
+  set-point node through R96 10 k + R67 1 k ≈ <b>11 kΩ</b> while the commanded set-point
+  <code>VOUT_LAS</code> arrives through R66 <b>200 kΩ</b>, giving U24 roughly <b>18× the authority
+  over laser current that the DAC has</b>. A latched U24 does not merely fail to lock; it drives the
+  laser current hard toward a rail. <b>Rework:</b> lift U24 pins 3 and 4 clear of their lands and
+  cross them with two short wires — pin 3 to the pad-4 land (<code>VREF_MID</code>), pin 4 to the
+  pad-3 land (the R92/R94 summing node). Nothing else on the card changes.
+  <b>Verify after rework:</b> with the card powered and no laser fitted, U24 pin 1 must sit near
+  <code>VREF_MID</code> = <b>2.500 V</b> — not parked at +15 V or −15 V. Then inject a small DC offset
+  onto <code>ERRn</code>: pin 1 should <em>ramp</em> (integrate) and reverse its ramp direction when
+  the offset reverses. A pin 1 that sits against a supply rail and ignores <code>ERRn</code> means the
+  rework did not take. Corrected in <code>Lasser_Driver_v6/CH_Card</code> (schematic and layout).</div>
   <div class="warn"><b>Harness wire gauge — the TEC pair carries real current.</b> TEC+ (pin 1) and
   TEC− (pin 14) carry up to <b>2.5 A</b>; the laser (pins 10/11) is ≤100 mA and the rest is µA–mA.
   Use <b>24 AWG stranded</b> for the harness — do <em>not</em> use thin 28 AWG flat ribbon, which is
