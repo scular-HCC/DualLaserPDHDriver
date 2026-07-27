@@ -1,33 +1,33 @@
 Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint,Description
 2,132203,Amphenol RF,"AFE_Card J204,J205",SMA jack R/A,SMA_Amphenol_132203-12_Horizontal,"SMA PCB right-angle jack 50ohm, LO1/LO2 ref input (J204/J205 - now two discrete jacks)"
-2,1729131,Phoenix Contact,"AFE_Card J202,J203","MKDS 1,5/3-5,08",TerminalBlock_MKDS_3_P5.08mm,"3-pos PCB screw terminal 5.08mm side-entry, PD pigtail (J202/203); same as AC board"
 1,374144-E,TE Connectivity,AFE_Card J1,DIN41612 M 3x8+8,DIN41612_M_3x8+8,DIN41612 Type M 24sig+8pwr R/A male backplane conn (J1)
 1,AD5696RARUZ,Analog Devices,AFE_Card U206,AD5696R,TSSOP-16,"Quad 16-bit I2C DAC at 0x0E (A1=VLOGIC,A0=GND), int 2.5V ref, GAIN=GND -> 0..2.5V; automatic ERR offset null via R146/R147 (U206)"
 2,AD835ARZ,Analog Devices,"AFE_Card U45,U46",AD835,SOIC-8,"250MHz 4-quadrant multiplier, PDH demodulator (U45/46)"
 1,ADS1115IDGSR,Texas Instruments,AFE_Card U201,ADS1115,VSSOP-10,"16-bit 4ch I2C ADC at 0x4A (ADDR->SDA), differential PD level monitor (U201)"
 1,C0805C105K5RACTU,Kemet,AFE_Card C241,1uF,C_0805,MLCC 1uF 50V X7R 0805 (VREF_MID local bulk)
-11,C0805C106K3PACTU,Kemet,"AFE_Card C215,C223,C226,C228,C229,C231,C232,C242,C243,C244,C252",10uF,C_0805,"MLCC 10uF 25V X5R 0805 (rail bulk +/-5V, +/-15V, I2C-3V3, VREF_TIA)"
+10,C0805C106K3PACTU,Kemet,"AFE_Card C215,C223,C226,C228,C229,C231,C232,C242,C243,C252",10uF,C_0805,"MLCC 10uF 25V X5R 0805 (rail bulk +/-5V, +/-15V, I2C-3V3, VREF_TIA)"
 2,C0805C475K3RACTU,Kemet,"AFE_Card C1,C2",4.7uF,C_0805,MLCC 4.7uF 25V X7R 0805 (LT3042 SET soft-start + output)
 2,C0805C680J5GACTU,Kemet,"AFE_Card C98,C99",68pF C0G,C_0805,"MLCC 68pF 50V C0G 0805 (ERR stage 2nd pole, across Rf C98/99)"
 2,CL21B102KBANNNC,Samsung,"AFE_Card C96,C97",1nF,C_0805,MLCC 1nF 50V X7R 0805 (ERR filter 1st pole C96/97)
 2,CL21B103KBANNNC,Samsung,"AFE_Card C94,C95",10nF,C_0805,MLCC 10nF 50V X7R 0805 (TIA->mixer RF AC-couple C94/95)
-32,CL21B104KBCNNNC,Samsung,"AFE_Card C213,C214,C216,C217,C218,C219,C220,C221,C222,C224,C225,C227,C230,C233,C234,C235,C236,C237,C238,C239,C240,C245,C246,C247,C248,C249,C250,C251,C253,C254,C_K1,C_K2",100nF,C_0805,MLCC 100nF 50V X7R 0805 (decoupling + coupling + PD level + VB bypass)
+30,CL21B104KBCNNNC,Samsung,"AFE_Card C213,C214,C216,C217,C218,C219,C220,C221,C222,C224,C225,C227,C230,C233,C234,C235,C236,C237,C238,C247,C248,C249,C250,C251,C253,C254,C255,C256,C_K1,C_K2",100nF,C_0805,MLCC 100nF 50V X7R 0805 (decoupling + coupling + PD level + VB bypass)
 2,CRCW08051K00FKEA,Vishay Dale,"AFE_Card R125,R128",1.00k,R_0805,Res 1.00k 1% 0805 (LO buffer Rg; Av=1+Rf/Rg=3)
 1,ERA-6AEB124V,Panasonic,AFE_Card R2,120k 0.1%,R_0805,Res 120k 0.1% 0805 (LT3042 SET -> 12V PD bias)
 1,ERJ-6ENF3573V,Panasonic,AFE_Card R144,357k,R_0805,Res 357k 1% 0805 (LT3042 PGFB divider top; PG trips at 11.0V)
 2,GRM1555C1H1R0CA01D,Murata,"AFE_Card C78,C79",1pF C0G,C_0402,MLCC 1.0pF 50V C0G 0402 (TIA feedback Cf C78/79)
-1,LT3042EMSE#PBF,Analog Devices,AFE_Card U1,LT3042,MSOP-12-EP,"Ultralow-noise LDO, SET=120k->12V PD bias (U1)"
-2,OPA192IDBVR,Texas Instruments,"AFE_Card U202,U203",OPA192,SOT-23-5,"Precision op-amp, ERR inverting x4.99 level-shift output stage (U202/203)"
+1,LT3042EMSE#PBF,Analog Devices,AFE_Card U1,LT3042,MSOP-10-EP,"Ultralow-noise LDO, SET=120k->12V PD bias (U1)"
+2,OPA192IDBVR,Texas Instruments,"AFE_Card U202,U203",OPA192,SOT-23-5,"Precision op-amp, ERR inverting x5.02 level-shift output stage (U202/203)"
+2,OPA814DBVR,Texas Instruments,"AFE_Card U30,U31",OPA814,SOT-23-5,"250MHz GBW JFET-input op-amp, PD transimpedance TIA (U30/31). Ground-referenced on +/-5V: the +/-5V CM ceiling is +2.1V so the old 3.336V VREF_TIA was out of range"
 2,OPA820IDBVR,Texas Instruments,"AFE_Card U204,U205",OPA820,SOT-23-5,"240MHz VFB op-amp, LO x3 buffer +/-5V (U204/205)"
-2,OPA859IDSGR,Texas Instruments,"AFE_Card U30,U31",OPA859,SON-8,"1.8GHz unity-gain-stable (compensated) FET-input amp, PD transimpedance TIA (U30/31)"
-3,RC0805FR-07100KL,Yageo,"AFE_Card R133,R146,R147",100k,R_0805,Res 100k 1% 0805 (VREF_TIA bottom leg -> 3.336V TIA reference)
-6,RC0805FR-07100RL,Yageo,"AFE_Card R130,R131,R211,R212,R_S1,R_S2",100R,R_0805,Res 100R 1% 0805 (I2C series R211/212; VREF_TIA RC R130/131; PD bias R_S1/2)
-15,RC0805FR-0710KL,Yageo,"AFE_Card R118,R119,R120,R121,R122,R123,R126,R129,R134,R135,R136,R137,R145,R213,R214",10k,R_0805,"Res 10k 1% 0805 (AD835 X/Y bias, LO bias, ERR stage Ri, ADC dividers, PG bot)"
+2,RC0805FR-07100KL,Yageo,"AFE_Card R146,R147",100k,R_0805,Res 100k 1% 0805 (VREF_TIA bottom leg -> 3.336V TIA reference)
+4,RC0805FR-07100RL,Yageo,"AFE_Card R211,R212,R_S1,R_S2",100R,R_0805,Res 100R 1% 0805 (I2C series R211/212; VREF_TIA RC R130/131; PD bias R_S1/2)
+11,RC0805FR-0710KL,Yageo,"AFE_Card R120,R121,R122,R123,R126,R129,R134,R135,R145,R213,R214",10k,R_0805,"Res 10k 1% 0805 (AD835 X/Y bias, LO bias, ADC dividers, PG bot)"
 1,RC0805FR-0710RL,Yageo,AFE_Card R216,10R,R_0805,Res 10R 1% 0805 (I2C-3V3 filter R216)
 2,RC0805FR-072KL,Yageo,"AFE_Card R124,R127",2.00k,R_0805,"Res 2.00k 1% 0805 (LO buffer Rf, gain set)"
-2,RC0805FR-073K3L,Yageo,"AFE_Card R116,R117",3.3k,R_0805,Res 3.3k 1% 0805 (ERR filter 1st pole R116/117)
+2,RC0805FR-073K3L,Yageo,"AFE_Card R116,R117",3.3k,R_0805,Res 3.3k 1% 0805 (ERR filter 1st pole R116/117; also the upper half of the ERR stage Ri = 3.3k+6.65k = 9.95k)
 2,RC0805FR-0747RL,Yageo,"AFE_Card R217,R218",47R,R_0805,Res 47R 1% 0805 (ERR bus series R217/218)
-5,RC0805FR-0749K9L,Yageo,"AFE_Card R132,R138,R139,R140,R142",49.9k,R_0805,Res 49.9k 1% 0805 (ERR stage Rf R138/139 -> Av=-4.99; VREF_TIA top; VB dividers)
+4,RC0805FR-0749K9L,Yageo,"AFE_Card R138,R139,R140,R142",49.9k,R_0805,Res 49.9k 1% 0805 (ERR stage Rf R138/139 -> Av=-5.02 into Ri=9.95k; VB dividers)
 1,RC0805FR-076K04L,Yageo,AFE_Card R1,6.04k,R_0805,Res 6.04k 1% 0805 (LT3042 ILIM ~21mA)
+2,RC0805FR-076K65L,Yageo,"AFE_Card R118,R119",6.65k,R_0805,Res 6.65k 1% 0805 (ERR stage Ri lower half R118/119; C96/97 shunt the R116/R118 junction to GND so both are in the DC path - 10k here would give Av=-3.75 and put 2.500V out of null range)
 2,RC0805FR-078K06L,Yageo,"AFE_Card R100,R101",8.06k,R_0805,Res 8.06k 1% 0805 (TIA Rf R100/101; sch says 8k -> 8.06k nearest E96)
 2,RC0805FR-078K25L,Yageo,"AFE_Card R141,R143",8.25k,R_0805,Res 8.25k 1% 0805 (VB divider bottom; centres ERR on VREF_MID at DAC midscale)

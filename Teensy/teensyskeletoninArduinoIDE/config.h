@@ -147,13 +147,13 @@
 
 // ============================================================
 // ERR (baseband PDH error) scaling — AFE card rev with the inverting
-// x4.99 output stage.  ERRn_BUS is NOT centred on half the ADC range:
+// x5.02 output stage.  ERRn_BUS is NOT centred on half the ADC range:
 // the AFE stage is referenced to the backplane VREF_MID rail, so zero
 // error sits at 2.5 V.  Using ADC_MID here (the pre-AFE-rework
 // assumption) reports a nulled channel as e = +0.515.
 //
 // Headroom is ASYMMETRIC because the ADC only reaches 3.3 V:
-//   positive: 3.3 - 2.5 = 0.8 V  (= 160 mV pre-gain, /4.99)  <- limiting
+//   positive: 3.3 - 2.5 = 0.8 V  (= 159 mV pre-gain, /5.02)  <- limiting
 //   negative: 2.5 - 0.0 = 2.5 V
 // Normalising by the positive headroom makes |e| = 1 exactly at the
 // clip point, so the existing lock/acquire thresholds keep their
@@ -162,7 +162,8 @@
 #define ERR_CENTER_V      2.5f            // VREF_MID (buffered 5Vref/2, pm1p8V U21)
 #define ERR_MID_COUNTS    (ERR_CENTER_V / ADC_REF_V * ADC_MAX)          // ~3102
 #define ERR_SPAN_COUNTS   ((ADC_REF_V - ERR_CENTER_V) / ADC_REF_V * ADC_MAX)  // ~993
-#define ERR_GAIN_VV       4.99f           // AFE R138/R118 = 49.9k/10k (inverting)
+#define ERR_GAIN_VV       5.02f           // AFE R138/(R116+R118) = 49.9k/9.95k (inverting);
+                                          // R116 3.3k is in the DC path, C96 shunts the junction
 
 // ============================================================
 // AFE automatic ERR offset null (AD5696R at I2C_AD5696_AFE).
