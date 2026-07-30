@@ -24434,7 +24434,7 @@
 			)
 		)
 		(property "Value" "1V8_CLK"
-			(at 0.05 -3.85 90)
+			(at 0.4 -3.85 90)
 			(layer "F.SilkS")
 			(uuid "38cd906b-8d09-421e-bb29-81e4328eb220")
 			(effects
@@ -31095,7 +31095,7 @@
 			)
 		)
 		(property "Value" "N_U41_A"
-			(at -0.05 -3.9 90)
+			(at 0.05 -3.35 90)
 			(layer "F.SilkS")
 			(uuid "8beb9122-e1c3-40f2-b285-5068f7b409d5")
 			(effects
