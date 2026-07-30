@@ -23,7 +23,7 @@ struct DispModel {
   float      refclk_mhz;
   LockState  state[2];
   DispChannel ch[2];
-  bool       hbridge_fault[2];  // true = OPA551 Flag asserted (active-low input LOW)
+  bool       hbridge_fault[2];  // true = OPA551 Flag asserted (IO1 HIGH from rev D)
 };
 
 void display_init(Adafruit_ILI9341 &tft);

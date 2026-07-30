@@ -17298,7 +17298,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Optical:PD_TO46_FGA01FC_3pin"
+		(property "Footprint" "Optical:PD_FGA01FC_EdgeBracket"
 			(at 323.85 30.48 0)
 			(hide yes)
 			(show_name no)
@@ -22593,7 +22593,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Optical:PD_TO46_FGA01FC_3pin"
+		(property "Footprint" "Optical:PD_FGA01FC_EdgeBracket"
 			(at 325.12 109.22 0)
 			(hide yes)
 			(show_name no)

@@ -14,7 +14,20 @@ static const uint8_t AFE_NULL_DAC[2] = { AFE_NULL_DAC_CH1, AFE_NULL_DAC_CH2 };
 // Cached last-written values → no I2C traffic unless something changes.
 static int32_t s_las_code[2] = { -1, -1 };
 static int32_t s_tec_code[2] = { -1, -1 };
-static int8_t  s_lock_en[2]  = { -1, -1 };
+
+// PCA9538 OUTPUT register shadow. IO0 = LOCK_EN and IO3 = TEC_EN are BOTH
+// outputs, so the register has to be written from a shadow byte — a bare
+// write of one bit would clobber the other. Init 0x00 matches the reset
+// state written by chcard_init_all(): integrator held, TEC bridge off.
+#define EXP_LOCK_EN 0x01
+#define EXP_TEC_EN  0x08
+static uint8_t s_out[2] = { 0x00, 0x00 };
+
+static void exp_set_bit(int i, uint8_t mask, bool on) {
+  uint8_t v = on ? (uint8_t)(s_out[i] | mask) : (uint8_t)(s_out[i] & ~mask);
+  if (v == s_out[i]) return;                       // cached: no I2C traffic
+  if (pca9538_write_reg(EXP_ADDR[i], PCA9538_REG_OUTPUT, v)) s_out[i] = v;
+}
 
 // AFE ERR offset-null DAC. Seeded to the RSTSEL power-up state so the
 // cached value matches the hardware before the first write.
@@ -34,10 +47,11 @@ static uint8_t s_afe_seen  = 0;
 uint8_t chcard_init_all() {
   uint8_t ok = 0;
   for (int i = 0; i < 2; i++) {
-    // IO0 = LOCK_EN output (init LOW = integrator HELD), rest inputs.
+    // IO0 = LOCK_EN, IO3 = TEC_EN, both outputs and both init LOW
+    // (integrator HELD, TEC bridge OFF). CONFIG 0xF6 = 0b11110110.
     bool a = pca9538_write_reg(EXP_ADDR[i], PCA9538_REG_OUTPUT, 0x00);
-    bool b = pca9538_write_reg(EXP_ADDR[i], PCA9538_REG_CONFIG, 0xFE);
-    s_lock_en[i] = 0;
+    bool b = pca9538_write_reg(EXP_ADDR[i], PCA9538_REG_CONFIG, 0xF6);
+    s_out[i] = 0x00;
     if (a && b) ok |= (1 << i);
   }
   chcard_set_midscale_all();
@@ -85,16 +99,25 @@ uint16_t afe_null_code(int i) { return s_null_code[i]; }
 bool     afe_null_present()   { return s_null_ok;      }
 
 void chcard_set_lock_en(int i, bool run) {
-  if (s_lock_en[i] == (int8_t)run) return;
-  // IO0 = LOCK_EN; other outputs unused (register bit 0 only).
-  if (pca9538_write_reg(EXP_ADDR[i], PCA9538_REG_OUTPUT, run ? 0x01 : 0x00))
-    s_lock_en[i] = (int8_t)run;
+  exp_set_bit(i, EXP_LOCK_EN, run);
+}
+
+void chcard_set_tec_en(int i, bool on) {
+  exp_set_bit(i, EXP_TEC_EN, on);
+}
+
+bool chcard_tec_en(int i) {
+  return (s_out[i] & EXP_TEC_EN) != 0;
 }
 
 bool chcard_fault(int i) {
   int16_t v = pca9538_read_reg(EXP_ADDR[i], PCA9538_REG_INPUT);
   if (v < 0) return false;          // unreachable card ≠ fault here
-  return (v & 0x02) == 0;           // IO1 active-low
+  // IO1 is active-HIGH: the OPA551 Flag pin is a current SOURCE (<50 nA when
+  // healthy, 80 uA min in thermal shutdown) into R49 33k to GND, so the node
+  // sits near 0 V normally and above VIH only on a fault. It was wired as a
+  // pull-up before rev D, which read HIGH in both states.
+  return (v & 0x02) != 0;
 }
 
 void chcard_poll(int i) {

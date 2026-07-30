@@ -523,6 +523,18 @@ void setup() {
   Serial.print(F("CH card 1 (I2C): ")); Serial.println((cards & 1) ? F("OK") : F("NOT FOUND"));
   Serial.print(F("CH card 2 (I2C): ")); Serial.println((cards & 2) ? F("OK") : F("NOT FOUND"));
 
+  // The TEC bridge comes out of reset DISABLED (R121 pulldown on IO3 holds
+  // U108 forcing the setpoint to TEC_VZERO = 0 A). Release it only now that
+  // the setpoint DAC has been parked at the zero-current code above — the
+  // order matters, since enabling first would run the bridge at whatever
+  // the DAC's zero-scale reset state commands (-1.34 A of heating).
+  for (int i = 0; i < 2; i++) {
+    if (!(cards & (1 << i))) continue;
+    chcard_set_tec_en(i, true);
+    Serial.print(F("CH card ")); Serial.print(i + 1);
+    Serial.println(F(": TEC bridge ENABLED (setpoint parked at 0 A)"));
+  }
+
   // AFE ERR offset-null DAC: restore the saved codes. Until this write
   // the hardware sits at its RSTSEL midscale power-up state, which is
   // the design centre — so a missing AFE degrades to a fixed offset
@@ -549,6 +561,26 @@ void setup() {
   network_init();
   loopTimer = 0;
   Serial.println(F("Ready. Type 'help' for commands."));
+}
+
+// Read one CH card's H-bridge fault LEVEL (PCA9538 IO1, active-HIGH from
+// rev D), latch it into disp, and log only on a change. Returns the level.
+//
+// This must be a LEVEL poll, not a FAULT_n edge response: the expander's
+// ~INT is cleared by the very act of reading its input register, so it
+// physically cannot hold FAULT_n low for the duration of a fault the way the
+// AFE (LT3042 PG, ADS1115 ALERT) and the DIG voltage monitor do. Deriving the
+// latched state from "FAULT_n is low" made a thermal shutdown self-clear one
+// tick after it asserted, and made the amp's RECOVERY edge look like a fault
+// from some other card.
+static bool hb_fault_update(int i) {
+  bool f = chcard_fault(i);
+  if (f != disp.hbridge_fault[i]) {
+    disp.hbridge_fault[i] = f;
+    Serial.print(F("CH")); Serial.print(i + 1);
+    Serial.print(F(" H-BRIDGE FAULT: ")); Serial.println(f ? F("ASSERTED") : F("cleared"));
+  }
+  return f;
 }
 
 // ============================================================
@@ -585,26 +617,19 @@ void loop() {
     tec_limit_step(0);
     tec_limit_step(1);
 
-    // Shared FAULT_n (open-drain wired-OR, active-low). On assertion,
-    // query each CH card's expander to identify the source; the line
-    // staying low keeps the faults latched in disp.
+    // Shared FAULT_n (open-drain wired-OR, active-low) is an ATTENTION signal
+    // only — see hb_fault_update() for why it cannot be treated as a level.
+    // React promptly to an assertion EDGE by identifying the source; the
+    // latched per-card state comes from the 10 Hz level poll further down.
     bool line_low = (digitalRead(PIN_FAULT_N) == LOW);
     static bool prev_line_low = false;
-    if (line_low != prev_line_low) {
-      prev_line_low = line_low;
-      bool fault0 = line_low && chcard_fault(0);
-      bool fault1 = line_low && chcard_fault(1);
-      if (line_low && !fault0 && !fault1)
+    if (line_low && !prev_line_low) {
+      bool fault0 = hb_fault_update(0);
+      bool fault1 = hb_fault_update(1);
+      if (!fault0 && !fault1)
         Serial.println(F("FAULT_n asserted by a non-CH card (check AFE/expander wiring)"));
-      if (fault0 != disp.hbridge_fault[0]) {
-        disp.hbridge_fault[0] = fault0;
-        Serial.print(F("CH1 H-BRIDGE FAULT: ")); Serial.println(fault0 ? F("ASSERTED") : F("cleared"));
-      }
-      if (fault1 != disp.hbridge_fault[1]) {
-        disp.hbridge_fault[1] = fault1;
-        Serial.print(F("CH2 H-BRIDGE FAULT: ")); Serial.println(fault1 ? F("ASSERTED") : F("cleared"));
-      }
     }
+    prev_line_low = line_low;
     control_step(0, s_err[0], dt);
     control_step(1, s_err[1], dt);
   }
@@ -622,6 +647,12 @@ void loop() {
         chcard_poll(1);
         afe_poll();
       }
+      // H-bridge fault is a LEVEL on IO1, so it has to be polled. Deliberately
+      // NOT gated on `acquiring`: this is one register read per card versus the
+      // ADS1115 round robin's start+read, and an output stage in thermal
+      // shutdown outranks the bus-quiet rule.
+      hb_fault_update(0);
+      hb_fault_update(1);
       for (int i = 0; i < 2; i++) {
         const ChCardMon& m = chcard_mon(i);
         s_laser_i[i]  = isnan(m.las_imon_v) ? 0.0f : m.las_imon_v * LASER_IMON_MA_PER_V;

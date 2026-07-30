@@ -290,8 +290,17 @@
 // ============================================================
 // H-Bridge / card faults — v5: the OPA551 Flag lands on each CH
 // card's PCA9538 IO1; the expander's ~INT drives the shared FAULT_n
-// line (PIN_FAULT_N above). On FAULT_n LOW the supervisor queries
-// each card's expander to identify the source (chcard_fault()).
+// line (PIN_FAULT_N above).
+//
+// rev D: IO1 is ACTIVE-HIGH. The Flag pin is a current SOURCE (<50 nA
+// healthy, 80 uA min in thermal shutdown) into R49 33k to GND, with D23
+// clamping to 3V3. Before rev D it was wired as a pull-up and read HIGH
+// in both states, so a fault could never be seen.
+//
+// IO1 is polled as a LEVEL at 10 Hz (hb_fault_update()); FAULT_n is only
+// an attention edge, because reading the expander's input register clears
+// its ~INT and releases the line — unlike the AFE (LT3042 PG, ADS1115
+// ALERT) and the DIG voltage monitor, which hold FAULT_n low as levels.
 // (v3 PIN_HBRIDGE_FAULT1/2 on 31/32 are gone; 32 is free GPIO.)
 // ============================================================
 

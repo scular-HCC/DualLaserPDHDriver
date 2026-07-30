@@ -10,7 +10,8 @@
 // Per CH card (i = 0 laser 1, i = 1 laser 2):
 //   AD5696R  : DAC A = laser setpoint, DAC B = TEC setpoint
 //   ADS1115  : AIN0 LAS_IMON, AIN1 TEC_IMON, AIN2 MPD_MON, AIN3 NTC
-//   PCA9538  : IO0 LOCK_EN (out), IO1 HB_FAULT (in, active-low)
+//   PCA9538  : IO0 LOCK_EN (out), IO1 HB_FAULT (in, active-HIGH from rev D),
+//              IO3 TEC_EN (out, rev D; low = bridge forced to 0 A)
 // AFE card:
 //   ADS1115  : AIN0 PD1_LVL, AIN1 PD2_LVL
 //   AD5696R  : DAC A = ERR1 offset null, DAC B = ERR2 offset null
@@ -51,7 +52,17 @@ void chcard_set_midscale_all();
 // Write-on-change; safe to call every control tick.
 void chcard_set_lock_en(int i, bool run);
 
-// H-bridge fault on card i (PCA9538 IO1, active-low). Query only after
+// TEC H-bridge enable via PCA9538 IO3. true = RUN, false = U108 forces the
+// setpoint to TEC_VZERO = 0 A. R121 10k holds IO3 low while the expander's
+// IOs are still high-Z inputs, so the bridge is OFF from power-on and stays
+// off if this is never called — no DAC reset state can express "0 A", since
+// a unipolar DAC needs a nonzero code for zero current.
+void chcard_set_tec_en(int i, bool on);
+
+// Current TEC_EN state from the output-register shadow (no I2C traffic).
+bool chcard_tec_en(int i);
+
+// H-bridge fault on card i (PCA9538 IO1, active-HIGH). Query only after
 // the shared FAULT_n line asserts. Returns true = fault.
 bool chcard_fault(int i);
 

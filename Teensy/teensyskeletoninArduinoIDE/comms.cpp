@@ -226,6 +226,31 @@ void comms_process(const String& line, Print& out,
     return;
   }
 
+  // ---- TEC bridge enable: tec1 / tec2 [on|off] -------------
+  // Low forces the setpoint to TEC_VZERO through U108, which the current
+  // loop servos to 0 A. Bare "tec1" queries. Bring-up wants the bridge off
+  // while TEC_VZERO and the two bridge nodes are checked with a meter.
+  if (line == "tec1" || line == "tec2") {
+    int idx = line[3] - '1';
+    out.print(F("CH")); out.print(idx+1);
+    out.print(F(" TEC bridge: "));
+    out.println(chcard_tec_en(idx) ? F("ENABLED") : F("DISABLED (setpoint forced to 0 A)"));
+    return;
+  }
+  if (line.startsWith("tec1 ") || line.startsWith("tec2 ")) {
+    int idx = line[3] - '1';
+    String arg = line.substring(5);
+    arg.trim();
+    if (arg == "on" || arg == "off") {
+      bool on = (arg == "on");
+      chcard_set_tec_en(idx, on);
+      out.print(F("CH")); out.print(idx+1);
+      out.print(F(" TEC bridge -> "));
+      out.println(on ? F("ENABLED") : F("DISABLED (setpoint forced to 0 A)"));
+    } else out.println(F("Usage: tec1 on|off   (bare 'tec1' queries)"));
+    return;
+  }
+
   // ---- legacy: set BOTH Ω the same (kept for compatibility) -
   if (line.startsWith("dither ")) {
     float hz;
@@ -268,6 +293,10 @@ void comms_process(const String& line, Print& out,
       out.print(F(" mV)  null="));  out.print(g_err_null[i]);
       out.println(afe_null_present() ? F("") : F("  [DAC NOT PRESENT]"));
     }
+    out.print(F("  TEC bridge: CH1 "));
+    out.print(chcard_tec_en(0) ? F("ENABLED") : F("DISABLED"));
+    out.print(F("   CH2 "));
+    out.println(chcard_tec_en(1) ? F("ENABLED") : F("DISABLED"));
     return;
   }
 
@@ -417,6 +446,8 @@ void comms_process(const String& line, Print& out,
     out.println(F("  null1 / null2        — auto-null ERR offset (BLOCK THE LIGHT)"));
     out.println(F("  nullset1 <code>      — set ERR null DAC code by hand (0-65535)"));
     out.println(F("  nullset2 <code>      — same, CH2"));
+    out.println(F("  tec1 on|off          — CH1 TEC bridge (off = forced to 0 A)"));
+    out.println(F("  tec2 on|off          — same, CH2  (bare 'tec1' queries)"));
     out.println(F("  thresh1 lock acq     — CH1 capture/loss thresholds"));
     out.println(F("  thresh2 lock acq     — CH2 thresholds"));
     out.println(F("  p1 kp ki kd          — CH1 PID gains (LEGACY: servo is analog)"));
