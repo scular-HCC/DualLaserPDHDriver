@@ -7191,12 +7191,6 @@
 		(uuid "4afdbc81-30a5-4394-be16-e5be8911ec1a")
 	)
 	(junction
-		(at 241.3 184.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4c75762d-844b-4bed-9740-bb98d360ade1")
-	)
-	(junction
 		(at 271.78 275.59)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7465,12 +7459,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d86cd227-4043-40d8-b595-a00d7311e519")
-	)
-	(junction
-		(at 241.3 207.01)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "de783f1d-317e-49ab-9c17-55ee9ac41ece")
 	)
 	(junction
 		(at 309.88 218.44)
@@ -7919,16 +7907,6 @@
 			(type default)
 		)
 		(uuid "23d429a3-42c8-42a6-aaaa-c301a263f3f0")
-	)
-	(wire
-		(pts
-			(xy 241.3 184.15) (xy 248.92 184.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2449afa7-36e6-40e9-a3e4-ad8a8b6a62e5")
 	)
 	(wire
 		(pts
@@ -9162,7 +9140,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 184.15) (xy 241.3 184.15)
+			(xy 237.49 184.15) (xy 248.92 184.15)
 		)
 		(stroke
 			(width 0)
@@ -9959,16 +9937,6 @@
 			(type default)
 		)
 		(uuid "a05968e6-336b-4af6-8371-c5f029300974")
-	)
-	(wire
-		(pts
-			(xy 241.3 184.15) (xy 241.3 207.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a0967797-5c67-4ace-9ede-6ae69bbfe3ad")
 	)
 	(wire
 		(pts
@@ -11649,6 +11617,16 @@
 			(justify left)
 		)
 		(uuid "09dc3a5e-e6b4-41dd-8a24-2dba414e2989")
+	)
+	(label "N_U19_INM"
+		(at 241.3 209.55 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0b284e34-6053-4eba-8fed-6108b504259b")
 	)
 	(label "TEC_EN"
 		(at 240.03 160.02 270)
@@ -31726,7 +31704,7 @@
 		(dnp no)
 		(uuid "d3d4e895-6f03-4429-894b-b65b7caafa08")
 		(property "Reference" "C118"
-			(at 53.594 117.348 0)
+			(at 49.784 115.316 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31736,7 +31714,7 @@
 			)
 		)
 		(property "Value" "100nF decouple expander"
-			(at 63.754 121.92 0)
+			(at 53.848 119.38 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

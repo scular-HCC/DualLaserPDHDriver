@@ -124,7 +124,7 @@
       <div class="kpi"><b>±2.5 A</b><span>TEC per channel</span></div>
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
     </div>
-    <div class="rev">Manual Rev 1.3 &nbsp;·&nbsp; 2026-07-29 &nbsp;·&nbsp; DualLaserPDHDriver</div>
+    <div class="rev">Manual Rev 1.4 &nbsp;·&nbsp; 2026-07-31 &nbsp;·&nbsp; DualLaserPDHDriver</div>
   </div>
 </header>
 
@@ -1035,7 +1035,8 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="pm1p8">
   <div class="card-hd"><span class="tag">POWER</span><h2 class="sec" style="margin:0"><span class="num">09</span> pm1p8V — low-voltage rail card</h2></div>
-  <p><code>Lasser_Driver_v5/pm1p8V_pm5V_5Vref_5Vlaser</code>. This card turns the raw ±18 V bus into
+  <p><code>Lasser_Driver_v6/pm1p8V_pm5V_5Vref_5Vlaser</code> (v5 is the superseded, fabbed
+  revision — the only difference is the U21 fix below). This card turns the raw ±18 V bus into
   <b>every precise low-voltage rail</b> the analog and digital sections need — roughly 9 W total, with
   clip heatsinks on the hot TO-220 pre-regulators. All rails are two- or three-stage linear
   cascades: a rugged first regulator drops the bulk voltage, then an ultra-low-noise LDO polishes it.</p>
@@ -1076,9 +1077,10 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   and 4 clear of their lands and cross them with two short wires — pin 2 to the pad-4 land (−15 V),
   pin 4 to the pad-2 land (the R50 feedback node). <b>Verify after rework:</b> <code>TP411</code> /
   backplane b16 must read <b>2.500 V ±3 mV</b> (<a href="#testing">§16</a>) with the card loaded; check
-  this before commissioning anything downstream. Corrected in
-  <code>Lasser_Driver_v6/pm1p8V_pm5V_5Vref_5Vlaser</code> (schematic; the two U21 traces still need
-  re-routing in that layout).</div>
+  this before commissioning anything downstream. <b>Fully corrected in
+  <code>Lasser_Driver_v6/pm1p8V_pm5V_5Vref_5Vlaser</code></b> — schematic <em>and</em> layout: U21
+  now has pin 2 on −15 V and pin 4 on the R50 feedback node, and the board reports 0 schematic-parity
+  issues and 0 unconnected pads. The rework above applies only to already-fabbed v5 cards.</div>
   <div class="warn"><b>Grounding decision.</b> <code>DGND</code> (the ±9 Vac-CT, TEC-only return) is
   deliberately kept <em>off</em> this card; <code>GND</code> is the single logic+analog ground here.
   The single-point <code>DGND↔GND</code> tie is made at the backplane star, at power entry, so the
@@ -1086,6 +1088,16 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="danger"><b>Negative-regulator pinout.</b> LM79xx parts (7905/7908) put GND=pin1,
   IN=pin2, OUT=pin3 and their tab is at the negative <em>output</em>, not ground — always use an
   insulating washer to any grounded heatsink.</div>
+  <div class="tip"><b>No test points on this card.</b> Unlike the DIG, AFE and CH cards
+  (<a href="#testing">§16</a>), the pm1p8V card carries <b>no dedicated test pads</b> — there is
+  nothing to probe by TP number here. Every rail it produces is instead brought out on the DIN
+  blades and is reachable at the consuming card's own test points: <code>5Vref</code> at DIG
+  <code>TP311</code> / AFE <code>TP412</code> / CH <code>TP524</code>, <code>VREF_MID</code> at DIG
+  <code>TP312</code> / AFE <code>TP411</code> / CH <code>TP523</code>, <code>3V3</code> and
+  <code>1V8</code> at DIG <code>TP308</code>/<code>TP310</code>, <code>±15 V</code> at AFE
+  <code>TP418</code>/<code>TP419</code>, and <code>+5V_LASER</code> at CH <code>TP525</code>. If a
+  rail measures wrong at a consumer, probe the regulator output pin or the J6 blade directly on this
+  card. Adding a pad per rail would make bring-up easier and is worth considering on any respin.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -1141,7 +1153,21 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="dig">
   <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">11</span> DIG card — controller</h2></div>
-  <p><code>Lasser_Driver_v5/DIG_Card</code>. The digital/supervisory card and the bus master.</p>
+  <p><code>Lasser_Driver_v6/DIG_Card</code> (v5 is the superseded revision). The digital/supervisory
+  card and the bus master.</p>
+  <div class="note"><p style="margin:0"><b>What v6 changed on this card.</b> Three fixes, all in the
+  clock section:</p>
+  <ol style="margin:8px 0 0 18px">
+    <li><b>D24 was reversed</b>, which left the external-reference detector unable to trip and
+    latched the mux permanently to the local oscillator. The diode is now the right way round, so
+    the <code>J2</code> input works — see the note below for what this means on a v5 board.</li>
+    <li><b>R110 (comparator hysteresis) 2 MΩ → 10 MΩ.</b> At 2 MΩ the hysteresis step was about
+    157 mV against an 87 mV threshold — larger than the threshold itself, so once the detector
+    tripped high it could never release. 10 MΩ gives roughly 33 mV, so the detector latches on with
+    a reference present and cleanly lets go when it is removed.</li>
+    <li><b>R318 33 Ω added in series with <code>MCLK1</code>.</b> That output was the one PLL clock
+    leaving the CDCE913 unterminated; all three now match.</li>
+  </ol></div>
   <h4>Function</h4>
   <ul>
     <li><b>Teensy 4.1</b> (600 MHz Cortex-M7) supervisor + front-panel TFT (CR2013-MI2120). It runs
@@ -1158,13 +1184,13 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     input <code>B2</code> AC-coupled through C89 and a 1 kΩ series (R107) behind a 50 Ω termination
     (R104). Selection is meant to be <em>automatic</em>: a second tap off J2 drives an envelope
     detector (C90 / R108 / D24 / C91 / R109) into an LMV7219 comparator (U40) against an 87 mV
-    threshold (R105 1 M / R106 27 k, 2 MΩ hysteresis via R110), whose output drives the mux select
-    pin. Connect a reference to J2 and the card switches to it; remove it and the card falls back to
-    Y1. Nothing in firmware is involved — the changeover is pure hardware.</li>
-    <li><b>Clock distribution</b> — the CDCE913 produces three outputs: <code>MCLK1</code> 25 MHz to
-    the channel-1 DDS pair (U34/U35), <code>MCLK2</code> 25 MHz through a 33 Ω source termination
-    (R316) to the channel-2 pair (U38/U39), and <code>MCLK3</code> through R317 33 Ω to Teensy pin D9
-    as the FreqCount reference. The selected 10 MHz is separately buffered (U303, 74LVC1G125) and
+    threshold (R105 1 M / R106 27 k, 10 MΩ hysteresis via R110 ≈ 33 mV), whose output drives the mux
+    select pin. Connect a reference to J2 and the card switches to it; remove it and the card falls
+    back to Y1. Nothing in firmware is involved — the changeover is pure hardware.</li>
+    <li><b>Clock distribution</b> — the CDCE913 produces three outputs, each through its own 33 Ω
+    source termination: <code>MCLK1</code> 25 MHz via <b>R318</b> to the channel-1 DDS pair
+    (U34/U35), <code>MCLK2</code> 25 MHz via R316 to the channel-2 pair (U38/U39), and
+    <code>MCLK3</code> via R317 to Teensy pin D9 as the FreqCount reference. The selected 10 MHz is separately buffered (U303, 74LVC1G125) and
     driven through a 33 Ω source termination (R311) onto backplane pin <code>c20</code>, so
     downstream cards can be made clock-coherent later. The clock section runs on its own filtered
     supplies, <code>3V3_OSC</code> and <code>1V8_CLK</code>, each behind a 600 Ω @100 MHz ferrite
@@ -1197,13 +1223,15 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="warn"><b>Assembly:</b> the Teensy 4.1 is powered from <code>+5V</code> at VIN (not the
   3V3 rail). <b>Cut the VUSB↔VIN pad</b> on the underside of the Teensy before installing — otherwise
   plugging in a USB cable for programming back-drives the crate-wide <code>+5V</code> rail.</div>
-  <div class="note"><b>Early-board note — D24 orientation.</b> The presence detector only works if
-  D24 (BAV99) has its <b>cathode</b> on the detector node, making it a positive-peak detector. Fitted
-  the other way round it detects negative peaks, the node can never rise to the +87 mV threshold, and
-  U40 stays LOW — which selects <code>B1</code>, latching the card to Y1 forever. The card still runs
-  correctly on its internal oscillator, so the only symptom is that <code>J2</code> does nothing.
-  If an external reference has no effect, check D24 before suspecting the mux or the source
-  (<a href="#testing">§16.6</a> step 6).</div>
+  <div class="warn"><b>v5 boards only — D24 orientation.</b> The presence detector only works if
+  D24 (BAV99) has its <b>cathode</b> on the detector node, making it a positive-peak detector. On v5
+  it is fitted the other way round, so it detects negative peaks, the node can never rise to the
+  +87 mV threshold, and U40 stays LOW — which selects <code>B1</code>, latching the card to Y1
+  forever. The card still runs correctly on its internal oscillator, so the only symptom is that
+  <code>J2</code> does nothing; it fails safe. <b>v6 has the diode the right way round</b> (together
+  with the R110 hysteresis change, which was the second half of the same problem). On a v5 board,
+  either reverse D24 or treat <code>J2</code> as unpopulated and expect TP302 to follow TP301 under
+  all conditions (<a href="#testing">§16.6</a> step 6).</div>
   <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
   (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
   <b>ENIG</b> finish. The F.Cu↔In1 core is deliberately thin (0.0994 mm) so the two front-panel LO
@@ -1216,7 +1244,10 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="ch">
   <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">12</span> CH card ×2 — laser channel</h2></div>
-  <p><code>Lasser_Driver_v6/CH_Card</code> (v5 is the superseded, fabbed revision).
+  <p><code>Lasser_Driver_v6/CH_Card</code> (v5 is the superseded, fabbed revision). Two identical
+  cards, one per laser. Each is a complete channel: laser current driver, TEC bridge, readback, and
+  the front-panel laser-head connector. Which channel a card <em>is</em> comes from its on-card
+  address jumpers (<a href="#arch">§5.2</a>).</p>
   <div class="warn"><p style="margin:0"><b>Rev&nbsp;D (2026-07-28) &mdash; what changed, and why v5
   boards are not simply reworkable.</b> A full review found five defects inherited from v3, all
   present on the fabbed v5 cards:</p>
@@ -1237,11 +1268,14 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <p style="margin:8px 0 0">Also added: <b>U108</b> TEC power-up disable, 470&nbsp;&Omega; gate
   resistors, the ADS1115 <code>ALERT</code> tied into <code>FAULT_n</code>, and 30 test points.
   Items 1 and 2 need parts and connections that do not exist on a v5 board, so <b>plan on fabbing
-  v6 rather than reworking v5</b>.</p></div>
- Two identical cards, one per laser. Each is a complete
-  channel: laser current driver, TEC bridge, readback, and the front-panel laser-head connector.
-  Which channel a card <em>is</em> comes from its on-card address jumpers
-  (<a href="#arch">§5.2</a>).</p>
+  v6 rather than reworking v5</b>.</p>
+  <p style="margin:8px 0 0"><b>Status:</b> v6 is fab-ready. The board reports <b>0 schematic-parity
+  issues, 0 unconnected pads</b> and a single DRC error — the J1 edge keepout, which is deliberate
+  mechanical intent. One late catch worth knowing about if you are reading an older netlist: the
+  item-3 fix was initially wired to U19's <em>non-inverting</em> input, which would have made it
+  positive feedback and latched the bridge to a rail. It now correctly lands on
+  <code>N_U19_INM</code>; if you ever re-derive this loop, confirm that net has four nodes
+  (R133, C171, TP503, U19 pin 4) and not one.</p></div>
   <h4>On-card blocks</h4>
   <ul>
     <li><b>Laser ACC driver</b> — OPA192 (SOT-23-5) driving a DMN3404L logic-level FET current sink
@@ -1763,7 +1797,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td><b>TP301</b></td><td><code>N_U41_B1</code></td><td>Y1 local 10 MHz oscillator output → mux input B1</td><td>10.000 MHz, 3.3 V CMOS</td></tr>
       <tr><td><b>TP302</b></td><td><code>N_U41_A</code></td><td>U41 mux common — the <em>selected</em> reference, into CDCE913 and the bus buffer</td><td>10.000 MHz</td></tr>
       <tr><td><b>TP303</b></td><td><code>CLK10M_BUF</code></td><td>U303 (74LVC1G125) buffer output, ahead of R311 33 Ω → backplane <code>c20</code></td><td>10.000 MHz, 3.3 V</td></tr>
-      <tr><td><b>TP304</b></td><td><code>MCLK1</code></td><td>CDCE913 output → DDS pair U34 / U35</td><td>25.000 MHz</td></tr>
+      <tr><td><b>TP304</b></td><td><code>MCLK1</code></td><td>CDCE913 output via R318 33 Ω → DDS pair U34 / U35 (R318 is new in v6; on v5 this output was unterminated)</td><td>25.000 MHz</td></tr>
       <tr><td><b>TP305</b></td><td><code>MCLK2</code></td><td>CDCE913 output via R316 33 Ω → DDS pair U38 / U39</td><td>25.000 MHz</td></tr>
       <tr><td colspan="4" style="background:var(--panel2)"><b>Clock-local supplies</b> (ferrite-isolated, so they can be checked separately from the bulk rails)</td></tr>
       <tr><td><b>TP306</b></td><td><code>3V3_OSC</code></td><td>Y1 supply, after ferrite FB301 (600 Ω @100 MHz)</td><td>3.30 V ±5 %</td></tr>
@@ -1842,6 +1876,123 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   design: SDA/SCL, <code>ERRn_BUS</code> and <code>FAULT_n</code> (reach them at the DIN blade or on
   the DIG card), and <code>LOn_REF</code> (probe at the DIG-card SMA).</div>
 
+  <figure>
+  <svg class="sch" viewBox="0 0 900 476" role="img" aria-label="AFE card test points along the detection chain">
+    <text class="ttl" x="16" y="16">DETECTION CHAIN — channel 1 shown; channel 2 is identical</text>
+
+    <!-- PD bias row -->
+    <rect class="cmp" x="16" y="52" width="80" height="40" rx="4"/>
+    <text class="ref" x="56" y="70" text-anchor="middle">U1</text><text class="sub" x="56" y="84" text-anchor="middle">LT3042 +12 V</text>
+    <line class="w" x1="96" y1="72" x2="130" y2="72"/>
+    <line class="w" x1="112" y1="72" x2="112" y2="50"/><circle class="j" cx="112" cy="46" r="5"/>
+    <text class="ref" x="112" y="36" text-anchor="middle">TP415</text>
+    <rect class="cmp" x="130" y="66" width="28" height="12" rx="1.5"/><text class="sub" x="144" y="92" text-anchor="middle">100 Ω</text>
+    <line class="w" x1="158" y1="72" x2="200" y2="72"/>
+    <line class="w" x1="180" y1="72" x2="180" y2="50"/><circle class="j" cx="180" cy="46" r="5"/>
+    <text class="ref" x="180" y="36" text-anchor="middle">TP416</text>
+    <rect class="cmp" x="200" y="52" width="72" height="40" rx="4"/>
+    <text class="sub" x="236" y="70" text-anchor="middle">PD1</text><text class="sub" x="236" y="84" text-anchor="middle">(fiber)</text>
+    <line class="w" x1="272" y1="72" x2="306" y2="72"/>
+
+    <!-- TIA -->
+    <rect class="cmp" x="306" y="46" width="104" height="52" rx="4"/>
+    <text class="ref" x="358" y="64" text-anchor="middle">U30 OPA814</text>
+    <text class="sub" x="358" y="78" text-anchor="middle">TIA, R<tspan font-size="9">f</tspan> 8.06 k</text>
+    <text class="sub" x="358" y="92" text-anchor="middle">IN+ on GND</text>
+    <line class="w" x1="410" y1="72" x2="470" y2="72"/>
+    <line class="w" x1="438" y1="72" x2="438" y2="50"/><circle class="j" cx="438" cy="46" r="5"/>
+    <text class="ref" x="438" y="36" text-anchor="middle">TP401</text>
+    <circle class="j" cx="462" cy="72" r="3"/>
+    <!-- AC couple into demod -->
+    <line class="w" x1="470" y1="62" x2="470" y2="82"/><line class="w" x1="476" y1="62" x2="476" y2="82"/>
+    <text class="sub" x="473" y="56" text-anchor="middle">C94</text>
+    <line class="w" x1="476" y1="72" x2="540" y2="72"/>
+    <line class="w" x1="510" y1="72" x2="510" y2="50"/><circle class="j" cx="510" cy="46" r="5"/>
+    <text class="ref" x="510" y="36" text-anchor="middle">TP403</text>
+
+    <!-- LO row -->
+    <rect class="cmp" x="16" y="118" width="80" height="40" rx="4"/>
+    <text class="sub" x="56" y="136" text-anchor="middle">LO SMA</text><text class="sub" x="56" y="150" text-anchor="middle">from DIG</text>
+    <line class="w" x1="96" y1="138" x2="150" y2="138"/>
+    <rect class="cmp" x="150" y="118" width="96" height="40" rx="4"/>
+    <text class="ref" x="198" y="136" text-anchor="middle">U204 OPA820</text><text class="sub" x="198" y="150" text-anchor="middle">×3 buffer</text>
+    <line class="w" x1="246" y1="138" x2="540" y2="138"/>
+    <line class="w" x1="330" y1="138" x2="330" y2="168"/><circle class="j" cx="330" cy="172" r="5"/>
+    <text class="ref" x="330" y="188" text-anchor="middle">TP405</text><text class="sub" x="330" y="202" text-anchor="middle">≤ ±1 V<tspan font-size="9">pk</tspan></text>
+
+    <!-- demodulator -->
+    <rect class="cmp" x="540" y="46" width="94" height="112" rx="5"/>
+    <text class="ref" x="587" y="92" text-anchor="middle">U45</text>
+    <text class="sub" x="587" y="106" text-anchor="middle">AD835</text>
+    <text class="sub" x="587" y="120" text-anchor="middle">demod</text>
+    <line class="w" x1="634" y1="102" x2="682" y2="102"/>
+    <line class="w" x1="660" y1="102" x2="660" y2="76"/><circle class="j" cx="660" cy="72" r="5"/>
+    <text class="ref" x="660" y="62" text-anchor="middle">TP407</text><text class="sub" x="660" y="46" text-anchor="middle">pedestal ≤ ±75 mV</text>
+
+    <!-- filter + output stage -->
+    <rect class="cmp" x="682" y="82" width="96" height="40" rx="4"/>
+    <text class="sub" x="730" y="98" text-anchor="middle">R116 3k3 · C96 1n</text>
+    <text class="sub" x="730" y="112" text-anchor="middle">R118 6.65 k</text>
+    <line class="w" x1="778" y1="102" x2="800" y2="102"/>
+    <polygon class="cmp" points="800,78 800,126 842,102"/>
+    <text class="sub" x="800" y="70" text-anchor="middle">U202 OPA192</text>
+    <text x="806" y="90" font-size="12">−</text><text x="806" y="120" font-size="12">+</text>
+    <line class="w" x1="842" y1="102" x2="870" y2="102"/>
+    <line class="w" x1="858" y1="102" x2="858" y2="132"/><circle class="j" cx="858" cy="136" r="5"/>
+    <text class="ref" x="858" y="152" text-anchor="middle">TP409</text><text class="sub" x="858" y="166" text-anchor="middle">→ ERR bus</text>
+
+    <!-- VB datum band -->
+    <text class="ttl" x="16" y="236">ERROR-STAGE DATUM &amp; OFFSET NULL</text>
+    <text class="net" x="16" y="272">VREF_MID</text>
+    <line class="w" x1="86" y1="268" x2="120" y2="268"/>
+    <line class="w" x1="103" y1="268" x2="103" y2="292"/><circle class="j" cx="103" cy="296" r="5"/>
+    <text class="ref" x="103" y="312" text-anchor="middle">TP411</text>
+    <rect class="cmp" x="120" y="262" width="34" height="12" rx="1.5"/><text class="sub" x="137" y="256" text-anchor="middle">R140 49.9k</text>
+    <line class="w" x1="154" y1="268" x2="230" y2="268"/><circle class="j" cx="230" cy="268" r="3"/>
+    <text class="net" x="230" y="252" text-anchor="middle">VB1 → U202 IN+</text>
+    <line class="w" x1="230" y1="268" x2="230" y2="288"/>
+    <rect class="cmp" x="224" y="288" width="12" height="26" rx="1.5"/><text class="sub" x="244" y="304">R141 8.25k</text>
+    <line class="w" x1="230" y1="314" x2="230" y2="330"/>
+    <line class="w" x1="218" y1="330" x2="242" y2="330"/><line class="w" x1="222" y1="336" x2="238" y2="336"/>
+    <line class="w" x1="230" y1="268" x2="330" y2="268"/>
+    <rect class="cmp" x="330" y="262" width="34" height="12" rx="1.5"/><text class="sub" x="347" y="256" text-anchor="middle">R146 100k</text>
+    <line class="w" x1="364" y1="268" x2="420" y2="268"/>
+    <line class="w" x1="392" y1="268" x2="392" y2="292"/><circle class="j" cx="392" cy="296" r="5"/>
+    <text class="ref" x="392" y="312" text-anchor="middle">TP427</text>
+    <rect class="cmp" x="420" y="248" width="104" height="40" rx="4"/>
+    <text class="ref" x="472" y="266" text-anchor="middle">U206 AD5696R</text><text class="sub" x="472" y="280" text-anchor="middle">0x0E, 0–2.5 V</text>
+
+    <!-- PD level band -->
+    <text class="net" x="580" y="252">TIA1_OUT</text>
+    <line class="w" x1="646" y1="268" x2="668" y2="268"/>
+    <rect class="cmp" x="668" y="262" width="30" height="12" rx="1.5"/><text class="sub" x="683" y="256" text-anchor="middle">R213 10k</text>
+    <line class="w" x1="698" y1="268" x2="742" y2="268"/><circle class="j" cx="742" cy="268" r="3"/>
+    <line class="w" x1="742" y1="268" x2="742" y2="292"/><circle class="j" cx="742" cy="296" r="5"/>
+    <text class="ref" x="742" y="312" text-anchor="middle">TP413</text><text class="sub" x="742" y="326" text-anchor="middle">2.500 V dark</text>
+    <rect class="cmp" x="762" y="262" width="30" height="12" rx="1.5"/><text class="sub" x="777" y="256" text-anchor="middle">R134 10k</text>
+    <line class="w" x1="742" y1="268" x2="762" y2="268"/>
+    <line class="w" x1="792" y1="268" x2="828" y2="268"/>
+    <line class="w" x1="812" y1="268" x2="812" y2="292"/><circle class="j" cx="812" cy="296" r="5"/>
+    <text class="ref" x="812" y="312" text-anchor="middle">TP412</text>
+    <text class="net" x="832" y="272">5Vref</text>
+
+    <!-- rails strip -->
+    <text class="ttl" x="16" y="386">SUPPLY &amp; GROUND PADS</text>
+    <text class="sub" x="16" y="410">TP418 +15 V · TP419 −15 V (OPA192 error stage) · TP420 +5 V · TP421 −5 V (OPA814 / AD835 / OPA820)</text>
+    <text class="sub" x="16" y="428">TP422 3V3_DIG (ADS1115 + DAC logic) · TP423–TP426 GND, through-hole, one per cluster</text>
+    <text class="sub" x="16" y="450">Channel 2 uses the next number in each pair: TP402 TIA2_OUT · TP404 RF2_IN · TP406 LO2_BUF</text>
+    <text class="sub" x="16" y="466">TP408 ERR2_DEM · TP410 ERR2_BUF · TP414 PD2_LVL · TP417 PD2_BIAS_K</text>
+  </svg>
+  <figcaption><b>Fig 16.1 — Where the AFE test points attach.</b> The detection chain runs left to
+  right: the LT3042 bias (TP415) reaches the photodiode cathode through a 100 Ω filter (TP416); the
+  OPA814 transimpedance stage sits at TP401, where a dark channel reads <b>0 V</b> and light drives
+  the output negative; C94 strips the DC before the AD835 (TP403), which demodulates against the
+  ×3-buffered LO (TP405). The raw multiplier output is TP407, and after the two-pole filter and the
+  inverting output stage the finished error signal is TP409. Below: the <code>VB1</code> node that
+  sets the zero-error datum, tapped at TP411 and TP427, and the level divider that re-centres the
+  bipolar TIA output onto 2.500 V for the ADS1115 (TP413, TP412).</figcaption>
+  </figure>
+
   <h4>AFE bring-up order</h4>
   <ol>
     <li><b>Rails first, card out of the LO path.</b> TP418–TP422, then TP415 — the LT3042 must reach
@@ -1907,6 +2058,135 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td><code>TP527&ndash;TP530</code></td><td><code>GND</code></td><td>Four through-hole pads so a scope ground spring can clip on.</td></tr>
     </tbody>
   </table>
+  <figure>
+  <svg class="sch" viewBox="0 0 900 580" role="img" aria-label="CH card test points along the TEC current loop and the laser ACC loop">
+    <text class="ttl" x="16" y="14">TEC CURRENT LOOP — the rev-D antiphase bridge</text>
+
+    <!-- setpoint -->
+    <rect class="cmp" x="16" y="52" width="76" height="40" rx="4"/>
+    <text class="ref" x="54" y="70" text-anchor="middle">DAC</text><text class="sub" x="54" y="84" text-anchor="middle">VOUT_TEC</text>
+    <line class="w" x1="92" y1="72" x2="124" y2="72"/>
+    <rect class="cmp" x="124" y="66" width="30" height="12" rx="1.5"/><text class="sub" x="139" y="60" text-anchor="middle">R44 4.99k</text>
+    <line class="w" x1="154" y1="72" x2="214" y2="72"/><circle class="j" cx="214" cy="72" r="3"/>
+    <line class="w" x1="214" y1="72" x2="214" y2="90"/>
+    <rect class="cmp" x="208" y="90" width="12" height="24" rx="1.5"/><text class="sub" x="226" y="106">R45 20k</text>
+    <line class="w" x1="214" y1="114" x2="214" y2="134"/>
+    <line class="w" x1="214" y1="128" x2="258" y2="128"/><circle class="j" cx="262" cy="128" r="5"/>
+    <text class="ref" x="272" y="124">TP501</text><text class="sub" x="272" y="137">TEC_VZERO</text>
+    <!-- U19 -->
+    <line class="w" x1="214" y1="72" x2="240" y2="72"/><line class="w" x1="240" y1="72" x2="240" y2="60"/><line class="w" x1="240" y1="60" x2="262" y2="60"/>
+    <polygon class="cmp" points="262,42 262,102 306,72"/>
+    <text class="ref" x="262" y="38">U19</text>
+    <text x="268" y="64" font-size="12">+</text><text x="268" y="94" font-size="12">−</text>
+    <line class="w" x1="262" y1="88" x2="184" y2="88"/>
+    <line class="w" x1="184" y1="88" x2="184" y2="240"/>
+    <circle class="j" cx="184" cy="150" r="5"/>
+    <text class="ref" x="176" y="146" text-anchor="end">TP503</text><text class="sub" x="176" y="159" text-anchor="end">N_U19_INM</text>
+    <line class="w" x1="306" y1="72" x2="360" y2="72"/><circle class="j" cx="330" cy="72" r="3"/>
+    <line class="w" x1="330" y1="72" x2="330" y2="48"/><circle class="j" cx="330" cy="44" r="5"/>
+    <text class="ref" x="330" y="34" text-anchor="middle">TP502</text>
+    <!-- leg 2: direct buffer -->
+    <rect class="cmp" x="360" y="52" width="78" height="40" rx="4"/>
+    <text class="ref" x="399" y="70" text-anchor="middle">U21</text><text class="sub" x="399" y="84" text-anchor="middle">buffer</text>
+    <line class="w" x1="438" y1="72" x2="620" y2="72"/>
+    <line class="w" x1="500" y1="72" x2="500" y2="48"/><circle class="j" cx="500" cy="44" r="5"/>
+    <text class="ref" x="500" y="34" text-anchor="middle">TP505</text>
+    <text class="sub" x="560" y="64" text-anchor="middle">R56/R59 470 Ω</text>
+    <!-- leg 1: inverter + buffer -->
+    <line class="w" x1="330" y1="72" x2="330" y2="132"/><line class="w" x1="330" y1="132" x2="360" y2="132"/>
+    <rect class="cmp" x="360" y="112" width="78" height="40" rx="4"/>
+    <text class="ref" x="399" y="130" text-anchor="middle">U106</text><text class="sub" x="399" y="144" text-anchor="middle">inverter</text>
+    <line class="w" x1="438" y1="132" x2="474" y2="132"/><circle class="j" cx="448" cy="132" r="3"/>
+    <line class="w" x1="448" y1="132" x2="448" y2="160"/><circle class="j" cx="448" cy="164" r="5"/>
+    <text class="ref" x="448" y="180" text-anchor="middle">TP504</text>
+    <rect class="cmp" x="474" y="126" width="28" height="12" rx="1.5"/><text class="sub" x="488" y="120" text-anchor="middle">R132</text>
+    <line class="w" x1="502" y1="132" x2="520" y2="132"/>
+    <rect class="cmp" x="520" y="112" width="72" height="40" rx="4"/>
+    <text class="ref" x="556" y="130" text-anchor="middle">U107</text><text class="sub" x="556" y="144" text-anchor="middle">buffer</text>
+    <line class="w" x1="592" y1="132" x2="620" y2="132"/>
+    <line class="w" x1="606" y1="132" x2="606" y2="160"/><circle class="j" cx="606" cy="164" r="5"/>
+    <text class="ref" x="606" y="180" text-anchor="middle">TP506</text>
+    <!-- bridge legs -->
+    <rect class="cmp" x="620" y="52" width="120" height="40" rx="4"/>
+    <text class="sub" x="680" y="70" text-anchor="middle">leg 2 — Q17/Q18</text><text class="sub" x="680" y="84" text-anchor="middle">N_Q17_S</text>
+    <rect class="cmp" x="620" y="112" width="120" height="40" rx="4"/>
+    <text class="sub" x="680" y="130" text-anchor="middle">leg 1 — Q13/Q14</text><text class="sub" x="680" y="144" text-anchor="middle">N_Q13_S</text>
+    <line class="w" x1="740" y1="72" x2="776" y2="72"/><circle class="j" cx="780" cy="72" r="5"/>
+    <text class="ref" x="792" y="68">TP508</text>
+    <line class="w" x1="740" y1="132" x2="776" y2="132"/><circle class="j" cx="780" cy="132" r="5"/>
+    <text class="ref" x="792" y="128">TP507</text>
+
+    <!-- sense / return -->
+    <text class="ttl" x="16" y="216">CURRENT SENSE &amp; RETURN — this is what closes the loop</text>
+    <rect class="cmp" x="620" y="240" width="140" height="40" rx="4"/>
+    <text class="sub" x="690" y="258" text-anchor="middle">R63 / R65</text><text class="sub" x="690" y="272" text-anchor="middle">0.1 Ω shunts</text>
+    <line class="w" x1="780" y1="132" x2="780" y2="260"/><line class="w" x1="780" y1="260" x2="760" y2="260"/>
+    <line class="w" x1="620" y1="260" x2="586" y2="260"/>
+    <circle class="j" cx="582" cy="252" r="5"/><text class="ref" x="572" y="248" text-anchor="end">TP509</text><text class="sub" x="572" y="261" text-anchor="end">TEC_BTF_P</text>
+    <circle class="j" cx="582" cy="274" r="5"/><text class="ref" x="572" y="278" text-anchor="end">TP510</text><text class="sub" x="572" y="291" text-anchor="end">TEC_BTF_N</text>
+    <line class="w" x1="576" y1="260" x2="470" y2="260"/>
+    <rect class="cmp" x="360" y="240" width="110" height="40" rx="4"/>
+    <text class="ref" x="415" y="258" text-anchor="middle">U32 INA828</text><text class="sub" x="415" y="272" text-anchor="middle">G = 7.20</text>
+    <line class="w" x1="360" y1="260" x2="300" y2="260"/><circle class="j" cx="330" cy="260" r="5"/>
+    <text class="ref" x="330" y="292" text-anchor="middle">TP511</text><text class="sub" x="330" y="306" text-anchor="middle">TEC_IMON</text>
+    <rect class="cmp" x="252" y="254" width="34" height="12" rx="1.5"/><text class="sub" x="269" y="248" text-anchor="middle">R133 10k</text>
+    <line class="w" x1="252" y1="260" x2="184" y2="260"/>
+    <line class="w" x1="184" y1="240" x2="184" y2="260"/>
+    <text class="sub" x="16" y="300">C171 100 nF from U19 OUT back to IN−</text>
+    <text class="sub" x="16" y="314">makes this a 159 Hz integrator</text>
+
+    <!-- laser loop -->
+    <text class="ttl" x="16" y="338">LASER ACC LOOP — full scale 90.5 mA</text>
+    <rect class="cmp" x="16" y="372" width="76" height="40" rx="4"/>
+    <text class="ref" x="54" y="390" text-anchor="middle">DAC</text><text class="sub" x="54" y="404" text-anchor="middle">VOUT_LAS</text>
+    <line class="w" x1="92" y1="392" x2="130" y2="392"/>
+    <line class="w" x1="111" y1="392" x2="111" y2="366"/><circle class="j" cx="111" cy="362" r="5"/>
+    <text class="ref" x="111" y="356" text-anchor="middle">TP512</text>
+    <rect class="cmp" x="130" y="386" width="32" height="12" rx="1.5"/><text class="sub" x="146" y="380" text-anchor="middle">R66 200k</text>
+    <line class="w" x1="162" y1="392" x2="240" y2="392"/><circle class="j" cx="240" cy="392" r="3"/>
+    <line class="w" x1="240" y1="392" x2="240" y2="366"/><circle class="j" cx="240" cy="362" r="5"/>
+    <text class="ref" x="240" y="356" text-anchor="middle">TP513</text>
+    <line class="w" x1="240" y1="392" x2="240" y2="412"/>
+    <rect class="cmp" x="234" y="412" width="12" height="24" rx="1.5"/><text class="sub" x="252" y="428">R67 909R</text>
+    <line class="w" x1="240" y1="436" x2="240" y2="450"/>
+    <line class="w" x1="228" y1="450" x2="252" y2="450"/><line class="w" x1="232" y1="456" x2="248" y2="456"/>
+    <text class="sub" x="16" y="424">R96 7.5M from U24 · R134 15M to −5 V</text>
+    <text class="sub" x="16" y="438">both land on this node</text>
+    <polygon class="cmp" points="300,368 300,416 344,392"/>
+    <text class="ref" x="300" y="360">U22</text>
+    <line class="w" x1="240" y1="392" x2="300" y2="392"/>
+    <line class="w" x1="344" y1="392" x2="386" y2="392"/>
+    <rect class="cmp" x="386" y="372" width="70" height="40" rx="4"/>
+    <text class="ref" x="421" y="390" text-anchor="middle">Q19</text><text class="sub" x="421" y="404" text-anchor="middle">sink</text>
+    <line class="w" x1="456" y1="392" x2="520" y2="392"/><circle class="j" cx="490" cy="392" r="3"/>
+    <line class="w" x1="490" y1="392" x2="490" y2="366"/><circle class="j" cx="490" cy="362" r="5"/>
+    <text class="ref" x="490" y="356" text-anchor="middle">TP514</text><text class="sub" x="490" y="340" text-anchor="middle">N_Q19_S</text>
+    <rect class="cmp" x="520" y="386" width="34" height="12" rx="1.5"/><text class="sub" x="537" y="380" text-anchor="middle">R81 0.25Ω</text>
+    <line class="w" x1="554" y1="392" x2="574" y2="392"/>
+    <line class="w" x1="562" y1="392" x2="586" y2="392"/><line class="w" x1="566" y1="398" x2="582" y2="398"/>
+    <rect class="cmp" x="620" y="372" width="110" height="40" rx="4"/>
+    <text class="ref" x="675" y="390" text-anchor="middle">U28 INA828</text><text class="sub" x="675" y="404" text-anchor="middle">G = 103.7</text>
+    <line class="w" x1="490" y1="392" x2="490" y2="440"/><line class="w" x1="490" y1="440" x2="620" y2="440"/><line class="w" x1="620" y1="440" x2="620" y2="412"/>
+    <line class="w" x1="730" y1="392" x2="790" y2="392"/><circle class="j" cx="768" cy="392" r="5"/>
+    <text class="ref" x="768" y="364" text-anchor="middle">TP515</text><text class="sub" x="768" y="380" text-anchor="middle">LAS_IMON</text>
+
+    <!-- static pads -->
+    <text class="ttl" x="16" y="490">REMAINING PADS — static levels, no signal path to trace</text>
+    <text class="sub" x="16" y="512">TP516 N_U24_OUT (PDH integrator, idles at 2.500 V) · TP517 BTF_LASER · TP518 MPD_MON · TP519 NTC_A</text>
+    <text class="sub" x="16" y="530">TP520 TEC_EN (3V3 = bridge live) · TP521 OPA551 flag · TP522 LOCK_EN · TP526 VZERO_SET 1.202 V</text>
+    <text class="sub" x="16" y="548">TP523 VREF_MID 2.500 V · TP524 5Vref 5.000 V · TP525 +5V_LASER · TP527–TP530 GND, through-hole</text>
+  </svg>
+  <figcaption><b>Fig 16.2 — Where the CH test points attach.</b> Top: the TEC current loop. The DAC
+  setpoint is scaled by R44/R45 onto U19's non-inverting input, and U19's output (TP502) fans out two
+  ways — directly through U21 to one bridge leg (TP505) and through the U106 inverter and U107 buffer
+  to the other (TP504, TP506). That <b>antiphase</b> drive is what rev D added; on a v5 board both
+  legs moved together. The bridge nodes are TP507/TP508, the Peltier terminals TP509/TP510, and the
+  0.1 Ω shunts feed U32 to produce <code>TEC_IMON</code> (TP511), which returns through R133 to
+  U19's inverting input — the pad at TP503. Bottom: the laser loop, where the DAC (TP512) is divided
+  onto the summing node (TP513) that now has a real ground leg, U22 drives Q19, and the 0.25 Ω sense
+  (TP514) is amplified by U28 into <code>LAS_IMON</code> (TP515).</figcaption>
+  </figure>
+
   <div class="note"><p style="margin:0"><b>Deliberately not instrumented.</b> The U24 PI summing
   node (<code>N_U24_INP</code>, with C76 1&nbsp;nF) and the two MPD transimpedance inverting inputs
   (<code>N_U_TIA1_IN_</code> / <code>N_U_TIA2_IN_</code>) have no pads: a pad's stray capacitance
@@ -1919,7 +2199,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   <em>opposite</em> TP505, and TP511 must rise above 1.20&nbsp;V. Only then bring the laser up,
   watching TP513 against TP514.</p></div>
 
-  <h3>16.4 Where the test points attach</h3>
+  <h3>16.4 Where the DIG test points attach</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 502" role="img" aria-label="DIG card test point locations in the clock chain and reference divider">
     <text class="ttl" x="16" y="20">CLOCK CHAIN — TP301…TP307</text>
@@ -1979,7 +2259,9 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <line class="w" x1="436" y1="48" x2="436" y2="74"/><circle class="j" cx="436" cy="78" r="5"/>
     <text class="ref" x="470" y="76" text-anchor="middle">TP307</text><text class="sub" x="478" y="89" text-anchor="middle">1V8_CLK</text>
     <!-- MCLK1 -->
-    <line class="w" x1="448" y1="124" x2="640" y2="124"/><text class="net" x="512" y="116">MCLK1 25 MHz</text>
+    <line class="w" x1="448" y1="124" x2="520" y2="124"/>
+    <rect class="cmp" x="520" y="118" width="26" height="12" rx="1.5"/><text class="sub" x="533" y="112" text-anchor="middle">R318 33Ω</text>
+    <line class="w" x1="546" y1="124" x2="640" y2="124"/><text class="net" x="452" y="144">MCLK1 25 MHz</text>
     <line class="w" x1="596" y1="124" x2="596" y2="100"/><circle class="j" cx="596" cy="96" r="5"/>
     <text class="ref" x="596" y="86" text-anchor="middle">TP304</text>
     <rect class="cmp" x="640" y="104" width="104" height="40" rx="4"/><text class="sub" x="692" y="128" text-anchor="middle">DDS U34 · U35</text>
@@ -2013,7 +2295,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <text class="sub" x="400" y="400">(both buffered by MCP6002 → LM339 window comparators)</text>
     </g>
   </svg>
-  <figcaption><b>Fig 16.1 — Test points in the clock chain and threshold divider.</b> The local 10 MHz
+  <figcaption><b>Fig 16.3 — Where the DIG test points attach.</b> The local 10 MHz
   oscillator Y1 (TP301) drives mux input B1; the front-panel J2 reference reaches input B2
   AC-coupled through C89 and R107 behind a 50 Ω termination. U40 is <em>not</em> in the signal path —
   it is an envelope detector plus comparator that senses whether an external reference is present and
@@ -2025,7 +2307,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   TP313/TP314.</figcaption>
   </figure>
 
-  <h3>16.5 Physical location on the board</h3>
+  <h3>16.5 Physical location of the DIG test points</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 600" role="img" aria-label="DIG card top view showing test point placement">
     <!-- board -->
@@ -2077,7 +2359,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <circle class="j" cx="60" cy="591" r="5"/><text class="sub" x="72" y="596">signal / rail pad (1.0 mm SMD)</text>
     <circle cx="330" cy="591" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="342" y="596">GND (1.5 mm THT)</text>
   </svg>
-  <figcaption><b>Fig 16.2 — Test-point placement, top view.</b> Numbers are the TP3xx suffix. The
+  <figcaption><b>Fig 16.4 — DIG test-point placement, top view.</b> Numbers are the TP3xx suffix. The
   clock and DDS test points cluster together in the upper right so the whole chain can be walked with
   one probe and a nearby ground (TP315, TP316, TP318). The reference and monitor taps (TP311–TP314,
   ground TP317/TP319) sit on the left near the voltage-monitor block, and TP320 grounds the
@@ -2135,7 +2417,8 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td>Clock good on DIG, absent on other cards</td><td>TP303</td><td>Good here → R311 or the backplane <code>c20</code> trace, not this card</td></tr>
       <tr><td>Voltage monitor reports false faults</td><td>TP313 / TP314, then TP311</td><td>Thresholds shifted because 5Vref is off, or a divider resistor is wrong</td></tr>
       <tr><td>All set-points off by a common factor</td><td>TP311</td><td>5Vref out of tolerance — everything ratios against it</td></tr>
-      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td>U40 never asserts select — D24 fitted backwards (<a href="#dig">§11</a>), source below ~0.4 V<sub>pp</sub>, or the C90/R108 detector leg open</td></tr>
+      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td>U40 never asserts select — on a <b>v5</b> board this is expected (D24 backwards, <a href="#dig">§11</a>); on v6 suspect a source below ~0.4 V<sub>pp</sub> or an open C90/R108 detector leg</td></tr>
+      <tr><td>Mux stays on the external leg after the source is unplugged</td><td>TP302 vs TP301</td><td>Hysteresis too large — check R110 is <b>10 MΩ</b> and not the v5 value of 2 MΩ</td></tr>
       <tr><td><code>freq</code> readings wrong or zero</td><td>Teensy D9 (no test pad)</td><td>CDCE913 <code>MCLK3</code> output or its 33 Ω series R317 — this is the FreqCount reference, independent of TP304/TP305</td></tr>
       <tr><td>PLL unlocks when probed</td><td>—</td><td>Probe loading; switch to 10:1 and re-check</td></tr>
     </tbody>
@@ -2900,7 +3183,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
 </section>
 
 <footer>
-  <p><b>Dual-Laser PDH Driver — User Manual</b>, Rev 1.3 (2026-07-29).<br>
+  <p><b>Dual-Laser PDH Driver — User Manual</b>.<br>
   Generated for the <code>DualLaserPDHDriver</code> project.
   Derived figures follow the as-drawn schematics and design references; where a stage is
   still marked "await measurement" (final Ω, TEC endpoint calibration) treat the stated numbers as

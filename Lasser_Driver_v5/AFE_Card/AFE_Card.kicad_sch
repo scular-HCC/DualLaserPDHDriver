@@ -9437,6 +9437,54 @@
 			)
 		)
 	)
+	(global_label "GND"
+		(shape passive)
+		(at 181.61 58.42 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7fe6f743-3155-4607-b363-4070a23aee73")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 181.61 64.1644 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "+15V"
+		(shape passive)
+		(at 181.61 53.34 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "80744be8-4027-48b0-bc4e-287e67ea4d09")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 181.61 46.3861 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
 	(global_label "-15V"
 		(shape passive)
 		(at 38.1 157.48 90)
@@ -10276,6 +10324,30 @@
 	)
 	(global_label "GND"
 		(shape passive)
+		(at 172.72 58.42 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ad967100-d9eb-45de-9482-cbf37b2230ca")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 172.72 64.1644 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
 		(at 471.17 76.2 270)
 		(fields_autoplaced yes)
 		(effects
@@ -10719,6 +10791,30 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+	)
+	(global_label "+15V"
+		(shape passive)
+		(at 172.72 53.34 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c16cf5cb-2876-47d0-a48b-42e0ad2f572a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 172.72 46.3861 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -12289,6 +12385,84 @@
 			(project "AFE_Card"
 				(path "/aea8c1fe-1f71-404a-96b1-61eee8d30a13"
 					(reference "TP403")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 172.72 55.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1ef983e3-b870-4f36-9d3e-59dda4b26381")
+		(property "Reference" "C257"
+			(at 178.308 55.118 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10uF LT3042 IN bulk"
+			(at 183.134 57.658 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 172.72 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 172.72 55.88 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "499fb255-33ef-4680-8d5d-9e0c428a03fb")
+		)
+		(pin "1"
+			(uuid "37d3f8e2-49e3-476d-97ae-0f54102a32de")
+		)
+		(instances
+			(project "AFE_Card"
+				(path "/aea8c1fe-1f71-404a-96b1-61eee8d30a13"
+					(reference "C257")
 					(unit 1)
 				)
 			)
@@ -15770,7 +15944,7 @@
 				)
 			)
 		)
-		(property "Value" "LO5 ref SMA"
+		(property "Value" "LO2 ref SMA"
 			(at 83.82 299.466 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16975,7 +17149,7 @@
 				)
 			)
 		)
-		(property "Value" "LO4 ref SMA"
+		(property "Value" "LO1 ref SMA"
 			(at 45.974 298.704 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19387,6 +19561,84 @@
 			(project "AFE_Card"
 				(path "/aea8c1fe-1f71-404a-96b1-61eee8d30a13"
 					(reference "C225")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 181.61 55.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "bfb8ce72-580f-4362-85b6-51f57838a59d")
+		(property "Reference" "C258"
+			(at 187.198 55.118 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF LT3042 IN"
+			(at 192.024 57.658 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 181.61 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 181.61 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 181.61 55.88 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "fa26c2d4-88ed-4a32-b9b0-e39d8108e9cd")
+		)
+		(pin "1"
+			(uuid "8ecd6a74-2c3c-4190-928e-fb8e932954e7")
+		)
+		(instances
+			(project "AFE_Card"
+				(path "/aea8c1fe-1f71-404a-96b1-61eee8d30a13"
+					(reference "C258")
 					(unit 1)
 				)
 			)
