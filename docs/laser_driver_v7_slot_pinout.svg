@@ -1,0 +1,187 @@
+<svg width="100%" viewBox="0 0 680 792" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Laser Driver v7 universal slot pinout, DIN 41612 Type C 96-way</title>
+<desc>Every rail owns a whole column spanning rows a, b and c. Signals sit only in rows a and c, with ground interleaved along each row and a solid ground row b between them, so no signal is adjacent to another signal in either axis.</desc>
+<style>
+.pin-bg{fill:none}
+text{font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.t{fill:#141b28}
+.ts{fill:#4c5a72}
+.th{fill:#141b28;font-weight:600}
+.tec rect{fill:#f7dfc4;stroke:#c2762a}
+.supply rect{fill:#ded9f8;stroke:#6f61c7}
+.rail rect{fill:#cfeee3;stroke:#2b8f74}
+.sig rect{fill:#d5e7fb;stroke:#2c74c4}
+.gnd rect{fill:#e2e7f0;stroke:#95a3bb}
+rect{stroke-width:1}
+.spare rect{fill:none;stroke:#95a3bb;stroke-dasharray:4 3}
+.rule{stroke:#95a3bb;stroke-opacity:.5}
+@media (prefers-color-scheme: dark){
+ .t{fill:#e7ecf5} .ts{fill:#9fb0c8} .th{fill:#e7ecf5}
+ .tec rect{fill:#4a3418;stroke:#c2762a}
+ .supply rect{fill:#2e2a52;stroke:#8b7ae8}
+ .rail rect{fill:#173d33;stroke:#3fae8f}
+ .sig rect{fill:#152c47;stroke:#3d8fe0}
+ .gnd rect{fill:#232c3e;stroke:#5a6880}
+ .spare rect{stroke:#5a6880}
+ .rule{stroke:#5a6880}
+}
+</style>
+<text class="th" x="168" y="30" text-anchor="middle">a</text>
+<text class="th" x="342" y="30" text-anchor="middle">b</text>
+<text class="th" x="516" y="30" text-anchor="middle">c</text>
+<text class="ts" x="70" y="30" text-anchor="end">col</text>
+<line class="rule" x1="8" y1="40" x2="600" y2="40"/>
+<text class="ts" x="70" y="78" text-anchor="end">1-2</text>
+<text class="ts" x="610" y="78">TEC</text>
+<g class="tec"><rect x="84" y="64" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="78">+6V_TEC</text></g>
+<text class="ts" x="588" y="78" text-anchor="end">whole column &#215;6</text>
+<text class="ts" x="70" y="102" text-anchor="end">3-4</text>
+<g class="tec"><rect x="84" y="88" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="102">PGND_TEC</text></g>
+<text class="ts" x="588" y="102" text-anchor="end">whole column &#215;6</text>
+<text class="ts" x="70" y="126" text-anchor="end">5-6</text>
+<g class="tec"><rect x="84" y="112" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="126">-6V_TEC</text></g>
+<text class="ts" x="588" y="126" text-anchor="end">whole column &#215;6</text>
+<text class="ts" x="70" y="150" text-anchor="end">7</text>
+<text class="ts" x="610" y="150">SUPPLY</text>
+<g class="supply"><rect x="84" y="136" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="150">+18V</text></g>
+<text class="ts" x="588" y="150" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="174" text-anchor="end">8</text>
+<g class="gnd"><rect x="84" y="160" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="174">GND</text></g>
+<text class="ts" x="588" y="174" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="198" text-anchor="end">9</text>
+<g class="supply"><rect x="84" y="184" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="198">-18V</text></g>
+<text class="ts" x="588" y="198" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="222" text-anchor="end">10</text>
+<g class="gnd"><rect x="84" y="208" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="222">GND</text></g>
+<text class="ts" x="588" y="222" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="246" text-anchor="end">11</text>
+<text class="ts" x="610" y="246">RAILS</text>
+<g class="rail"><rect x="84" y="232" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="246">+15V</text></g>
+<text class="ts" x="588" y="246" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="270" text-anchor="end">12</text>
+<g class="rail"><rect x="84" y="256" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="270">-15V</text></g>
+<text class="ts" x="588" y="270" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="294" text-anchor="end">13</text>
+<g class="rail"><rect x="84" y="280" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="294">+5V</text></g>
+<text class="ts" x="588" y="294" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="318" text-anchor="end">14</text>
+<g class="rail"><rect x="84" y="304" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="318">-5V</text></g>
+<text class="ts" x="588" y="318" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="342" text-anchor="end">15</text>
+<g class="rail"><rect x="84" y="328" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="342">+5V_LASER</text></g>
+<text class="ts" x="588" y="342" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="366" text-anchor="end">16</text>
+<g class="rail"><rect x="84" y="352" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="366">3V3</text></g>
+<text class="ts" x="588" y="366" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="390" text-anchor="end">17</text>
+<g class="rail"><rect x="84" y="376" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="390">1V8</text></g>
+<text class="ts" x="588" y="390" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="414" text-anchor="end">18-19</text>
+<g class="gnd"><rect x="84" y="400" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="414">GND</text></g>
+<text class="ts" x="588" y="414" text-anchor="end">whole column &#215;6</text>
+<text class="ts" x="70" y="438" text-anchor="end">20</text>
+<text class="ts" x="610" y="438">SIGNALS</text>
+<g class="sig"><rect x="84" y="424" width="168" height="20" rx="3"/>
+<text class="t" x="168" y="438" text-anchor="middle">5Vref</text></g>
+<g class="gnd"><rect x="258" y="424" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="438" text-anchor="middle">GND</text></g>
+<g class="sig"><rect x="432" y="424" width="168" height="20" rx="3"/>
+<text class="t" x="516" y="438" text-anchor="middle">ERR1_BUS</text></g>
+<text class="ts" x="70" y="462" text-anchor="end">21</text>
+<g class="gnd"><rect x="84" y="448" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="462">GND</text></g>
+<text class="ts" x="588" y="462" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="486" text-anchor="end">22</text>
+<g class="sig"><rect x="84" y="472" width="168" height="20" rx="3"/>
+<text class="t" x="168" y="486" text-anchor="middle">VREF_MID</text></g>
+<g class="gnd"><rect x="258" y="472" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="486" text-anchor="middle">GND</text></g>
+<g class="sig"><rect x="432" y="472" width="168" height="20" rx="3"/>
+<text class="t" x="516" y="486" text-anchor="middle">ERR2_BUS</text></g>
+<text class="ts" x="70" y="510" text-anchor="end">23</text>
+<g class="gnd"><rect x="84" y="496" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="510">GND</text></g>
+<text class="ts" x="588" y="510" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="534" text-anchor="end">24</text>
+<g class="sig"><rect x="84" y="520" width="168" height="20" rx="3"/>
+<text class="t" x="168" y="534" text-anchor="middle">FAULT_n</text></g>
+<g class="gnd"><rect x="258" y="520" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="534" text-anchor="middle">GND</text></g>
+<g class="sig"><rect x="432" y="520" width="168" height="20" rx="3"/>
+<text class="t" x="516" y="534" text-anchor="middle">MOD1_BUS</text></g>
+<text class="ts" x="70" y="558" text-anchor="end">25</text>
+<g class="gnd"><rect x="84" y="544" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="558">GND</text></g>
+<text class="ts" x="588" y="558" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="582" text-anchor="end">26</text>
+<g class="sig"><rect x="84" y="568" width="168" height="20" rx="3"/>
+<text class="t" x="168" y="582" text-anchor="middle">SDA_BUS</text></g>
+<g class="gnd"><rect x="258" y="568" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="582" text-anchor="middle">GND</text></g>
+<g class="sig"><rect x="432" y="568" width="168" height="20" rx="3"/>
+<text class="t" x="516" y="582" text-anchor="middle">MOD2_BUS</text></g>
+<text class="ts" x="70" y="606" text-anchor="end">27</text>
+<g class="gnd"><rect x="84" y="592" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="606">GND</text></g>
+<text class="ts" x="588" y="606" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="630" text-anchor="end">28</text>
+<g class="sig"><rect x="84" y="616" width="168" height="20" rx="3"/>
+<text class="t" x="168" y="630" text-anchor="middle">SCL_BUS</text></g>
+<g class="gnd"><rect x="258" y="616" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="630" text-anchor="middle">GND</text></g>
+<g class="sig"><rect x="432" y="616" width="168" height="20" rx="3"/>
+<text class="t" x="516" y="630" text-anchor="middle">CLK10M_BUS</text></g>
+<text class="ts" x="70" y="654" text-anchor="end">29</text>
+<g class="gnd"><rect x="84" y="640" width="516" height="20" rx="3"/>
+<text class="t" x="96" y="654">GND</text></g>
+<text class="ts" x="588" y="654" text-anchor="end">whole column &#215;3</text>
+<text class="ts" x="70" y="678" text-anchor="end">30</text>
+<text class="ts" x="610" y="678">SPARE</text>
+<g class="spare"><rect x="84" y="664" width="168" height="20" rx="3"/>
+<text class="ts" x="168" y="678" text-anchor="middle">SPARE_A30</text></g>
+<g class="gnd"><rect x="258" y="664" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="678" text-anchor="middle">GND</text></g>
+<g class="spare"><rect x="432" y="664" width="168" height="20" rx="3"/>
+<text class="ts" x="516" y="678" text-anchor="middle">SPARE_C30</text></g>
+<text class="ts" x="70" y="702" text-anchor="end">31</text>
+<g class="spare"><rect x="84" y="688" width="168" height="20" rx="3"/>
+<text class="ts" x="168" y="702" text-anchor="middle">SPARE_A31</text></g>
+<g class="gnd"><rect x="258" y="688" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="702" text-anchor="middle">GND</text></g>
+<g class="spare"><rect x="432" y="688" width="168" height="20" rx="3"/>
+<text class="ts" x="516" y="702" text-anchor="middle">SPARE_C31</text></g>
+<text class="ts" x="70" y="726" text-anchor="end">32</text>
+<g class="spare"><rect x="84" y="712" width="168" height="20" rx="3"/>
+<text class="ts" x="168" y="726" text-anchor="middle">SPARE_A32</text></g>
+<g class="gnd"><rect x="258" y="712" width="168" height="20" rx="3"/>
+<text class="t" x="342" y="726" text-anchor="middle">GND</text></g>
+<g class="spare"><rect x="432" y="712" width="168" height="20" rx="3"/>
+<text class="ts" x="516" y="726" text-anchor="middle">SPARE_C32</text></g>
+<g class="tec"><rect x="84" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="104" y="765">TEC power</text>
+<g class="supply"><rect x="180" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="200" y="765">raw supply</text>
+<g class="rail"><rect x="276" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="296" y="765">derived rails</text>
+<g class="sig"><rect x="372" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="392" y="765">signal</text>
+<g class="gnd"><rect x="468" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="488" y="765">GND</text>
+<g class="spare"><rect x="564" y="754" width="14" height="14" rx="3"/></g>
+<text class="ts" x="584" y="765">spare</text>
+</svg>
