@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "display",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5500",
+        "--directory",
+        "display"
+      ],
+      "port": 5500
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5501",
+        "--directory",
+        "docs"
+      ],
+      "port": 5501
+    }
+  ]
+}

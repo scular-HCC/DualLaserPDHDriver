@@ -24714,7 +24714,7 @@
 				)
 			)
 		)
-		(property "Value" "Butterfly harness header - Wurth WR-PHD 2x7 (mates LDM-BUTTERFLY)"
+		(property "Value" "Butterfly daughter-card stacking header - Samtec TSW-107-21-G-D (30.99mm post)"
 			(at 222.25 43.434 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24735,7 +24735,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://suddendocs.samtec.com/catalog_english/tsw_th.pdf"
 			(at 222.25 29.21 0)
 			(hide yes)
 			(show_name no)
@@ -24746,7 +24746,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "2x7 0.100in square-post header, lead style -21: 30.99mm mating post, 36.32mm OAL, pin tip 33.53mm above the board face. Carries the butterfly/DFB daughter card. Mates ESQ-107-12-G-D (11.05mm body, 2.29mm tail) at a 40mm board-to-board gap set by M3 x 40mm standoffs (Wurth 970400324 brass): insertion depth 4.58mm, Samtec spec 3.68-6.35mm. Standoffs set the gap and carry the daughter-card + heat-spreader mass - the pins are signal only. 5.2-6.3 A per pin."
 			(at 222.25 29.21 0)
 			(show_name no)
 			(do_not_autoplace no)

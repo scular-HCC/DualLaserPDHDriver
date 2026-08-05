@@ -2,7 +2,7 @@
 	(version 20260206)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
-	(descr "DIN41612 type M right-angle male, 24 signal + 8 plated power pads P1-P8 on B-row (ERNI 374144, 10A solder, plated hole 3.1mm). From ERNI Cat E004045 drilling plan.")
+	(descr "DIN41612 type M right-angle male, 24 signal + 8 plated power pads P1-P8 on B-row (ERNI 374144, 10A solder, plated hole 3.1mm). From ERNI Cat E004045 drilling plan. NOTE: the housing ships with the 24 signal contacts loaded and the 8 power positions as EMPTY CAVITIES - the power contacts are a SEPARATE line item (ERNI 594170-E, 10A right-angle PCB solder, is the part this 3.1mm hole is drawn for). Same for Harting Type M. A larger contact will not fit: do not substitute a 20A/40A PCB-tail part without redrawing these pads.")
 	(tags "DIN 41612 IEC 60603 M")
 	(property "Reference" "REF**"
 		(at -5.08 1 0)

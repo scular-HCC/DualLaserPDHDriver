@@ -125,7 +125,7 @@
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
       <div class="kpi"><b>96-way</b><span>DIN 41612 Type C slot</span></div>
     </div>
-    <div class="rev">Manual Rev 2.0 &nbsp;·&nbsp; 2026-08-01 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
+    <div class="rev">Manual Rev 2.1 &nbsp;·&nbsp; 2026-08-05 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
   </div>
 </header>
 
@@ -146,6 +146,7 @@
     <li><a href="#backplane">Backplane</a></li>
     <li><a href="#dig">DIG card (controller)</a></li>
     <li><a href="#ch">CH card ×2 (channel)</a></li>
+    <li><a href="#btf">BTF card ×2 (laser daughter card)</a></li>
     <li><a href="#afe">AFE card (detection)</a></li>
     <li><a href="#software">Software operation</a></li>
     <li><a href="#bringup">Installation &amp; bring-up</a></li>
@@ -182,6 +183,19 @@
   Eurocards on a passive backplane, so that channels, detection, and each power rail are separately
   serviceable and any card fits any slot. The remainder of this manual documents each card and the
   theory that ties them together.</div>
+
+  <figure>
+    <img src="img/instrument-3d-render.png" alt="3D render of the assembled instrument: a 3U subrack
+    populated with the power and signal Eurocards on a passive backplane" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--line)">
+    <figcaption><b>Fig 1.1 — The assembled instrument.</b> All of the cards described in this manual
+    live in one 3U / 84 HP subrack, plugged into the passive backplane at the rear. Reading left to
+    right: the mains-entry and power cards, with their bulk reservoir capacitors and heatsinked pass
+    devices, occupy the left-hand slots; the signal cards — DIG, the two CH channels and AFE — sit to
+    their right, and the remaining slots are spare. Keeping the high-current linear supplies at one
+    end and the precision analog at the other is deliberate: it is the simplest way to keep TEC
+    return current and transformer field away from the detection chain
+    (<a href="#arch">§05</a>).</figcaption>
+  </figure>
 
   <table>
     <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
@@ -512,7 +526,7 @@ GBWP 250 MHz ⇒ C<sub>f(flat)</sub> = 0.66 pF, Butterworth f<sub>−3dB</sub> =
   <ul style="margin:8px 0 0 0">
     <li><b>Dark offset.</b> 0.235 nA through R<sub>f</sub> is <b>1.9 µV</b> — two orders below the
     OPA814's own V<sub>OS</sub> (250 µV max). The "TP401/TP402 read 0 V dark, within a few millivolts"
-    check in <a href="#bringup">§16.2</a> is testing amplifier offset, not the detector. A dark reading
+    check in <a href="#bringup">§17.2</a> is testing amplifier offset, not the detector. A dark reading
     of millivolts means an offset or a light leak, never dark current.</li>
     <li><b>Noise.</b> Dark shot noise is <b>0.0087 pA/√Hz</b> against 1.43 pA/√Hz of R<sub>f</sub>
     Johnson noise — 165× below the floor, contributing 0.002 % in quadrature. Total input-referred
@@ -544,7 +558,7 @@ GBWP 250 MHz ⇒ C<sub>f(flat)</sub> = 0.66 pF, Butterworth f<sub>−3dB</sub> =
   laser set-point to close the lock.</p>
 
   <figure>
-    <img src="pi_loop_filter.svg" alt="PI loop filter schematic" style="background:#fff">
+    <img src="img/pi_loop_filter.svg" alt="PI loop filter schematic" style="background:#fff">
     <figcaption><b>Fig 3.1 — Analog PI loop filter.</b> The demodulated error enters a
     proportional-plus-integral servo; an ADG419 analog switch across the integrator capacitor is the
     hold/run control (<code>LOCKn_EN</code>): held open during sweep/acquire, closed to run the loop
@@ -557,7 +571,7 @@ GBWP 250 MHz ⇒ C<sub>f(flat)</sub> = 0.66 pF, Butterworth f<sub>−3dB</sub> =
   Each signal card digitizes locally over I²C — a 16-bit DAC (AD5696R/MCP4728 class) makes the
   set-points and an ADS1115 reads the monitors — rather than busing dozens of raw analog lines across
   the backplane. The AFE carries a DAC of its own for the same reason: rather than a trimpot an
-  operator has to revisit, its ERR offset is nulled by firmware and stored (<a href="#software">§14.8</a>). Only two analog signals per channel are bused: the demodulated error
+  operator has to revisit, its ERR offset is nulled by firmware and stored (<a href="#software">§15.8</a>). Only two analog signals per channel are bused: the demodulated error
   (<code>ERRn</code>, driven by the AFE) and the modulation drive (<code>MODn</code>, driven by the
   DIG DDS).</p>
   <div class="tip"><b>Noise rule.</b> I²C is static when idle, so firmware runs a "quiet mode"
@@ -602,7 +616,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   measurand: it holds two lasers on two resonances, and the quantity you actually record — the optical
   beat between them — is formed in fiber and counted by external equipment. Understanding where the
   boundary falls matters, because the terms that dominate the error budget in
-  <a href="#uncertainty">§17</a> live out here, in optics the instrument cannot correct for.</p>
+  <a href="#uncertainty">§18</a> live out here, in optics the instrument cannot correct for.</p>
 
   <h3>4.1 The optical chain end to end</h3>
   <figure>
@@ -737,7 +751,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   matter</b>: the scale factor S is a property of the silicon, not of anything that needs calibrating,
   so the instrument never needs an absolute reference or a traceable frequency standard. Second, the
   figure of merit is <b>within-window stability</b>, not accuracy — how quietly the beat sits over a
-  ~60 s window. That is why <a href="#uncertainty">§17</a> is built around an Allan deviation at
+  ~60 s window. That is why <a href="#uncertainty">§18</a> is built around an Allan deviation at
   τ ≈ 60 s rather than a conventional accuracy budget, and why terms that drift slowly relative to
   that window are listed as <em>cancelling</em>.</p>
   <p>Detecting the two lasers on one photodiode is what turns an optical-frequency difference into
@@ -784,7 +798,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   <div class="note"><b>Check the power before connecting the detector.</b> Measure at the mixer output
   with a power meter and confirm it is below 18 mW with both channels running at full drive — not just
   at the operating point. A sweep during acquisition
-  (<a href="#software">§14</a>) can transiently put a ring on resonance at maximum laser current,
+  (<a href="#software">§15</a>) can transiently put a ring on resonance at maximum laser current,
   which is exactly when the through arm is brightest. Add a fixed attenuator if the margin is thin;
   the detector is easier to protect than to replace.</div>
 
@@ -802,7 +816,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
 
   <h3>4.6 What good looks like</h3>
   <p>With the optics assembled and both channels locked, expect the following. Both channels report
-  <code>LOCKED</code> with a small, stationary error signal (<a href="#software">§14</a>). The beat on
+  <code>LOCKED</code> with a small, stationary error signal (<a href="#software">§15</a>). The beat on
   the counter is a single clean tone, not a wandering or multi-valued reading — a jumpy count usually
   means one laser is mode-hopping rather than that the temperature is moving. Breathing on the die
   should move the beat by megahertz and it should settle back, which confirms end-to-end sensitivity
@@ -813,7 +827,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   and the DIG card already brings a buffered 10 MHz out to backplane pin <code>c20</code>
   (<a href="#dig">§11</a>). A shared reference removes the counter's own drift from the measurement;
   with a common timebase the contribution is negligible, which is why
-  <a href="#uncertainty">§17</a> lists it near zero.</div>
+  <a href="#uncertainty">§18</a> lists it near zero.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -1305,7 +1319,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   AFE error-stage level shift and its ADC datum, the CH-card integrator datum — rests on it. <b>Rework:</b> lift U21 pins 2
   and 4 clear of their lands and cross them with two short wires — pin 2 to the pad-4 land (−15 V),
   pin 4 to the pad-2 land (the R50 feedback node). <b>Verify after rework:</b> <code>TP411</code> /
-  backplane b16 must read <b>2.500 V ±3 mV</b> (<a href="#testing">§16</a>) with the card loaded; check
+  backplane b16 must read <b>2.500 V ±3 mV</b> (<a href="#testing">§17</a>) with the card loaded; check
   this before commissioning anything downstream. <b>Fully corrected in
   <code>Laser_Driver_v7/pm1p8V_pm5V_5Vref_5Vlaser</code></b> — schematic <em>and</em> layout: U21
   now has pin 2 on −15 V and pin 4 on the R50 feedback node, and the board reports 0 schematic-parity
@@ -1318,7 +1332,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   IN=pin2, OUT=pin3 and their tab is at the negative <em>output</em>, not ground — always use an
   insulating washer to any grounded heatsink.</div>
   <div class="tip"><b>No test points on this card.</b> Unlike the DIG, AFE and CH cards
-  (<a href="#testing">§16</a>), the pm1p8V card carries <b>no dedicated test pads</b> — there is
+  (<a href="#testing">§17</a>), the pm1p8V card carries <b>no dedicated test pads</b> — there is
   nothing to probe by TP number here. Every rail it produces is instead brought out on the DIN
   blades and is reachable at the consuming card's own test points: <code>5Vref</code> at DIG
   <code>TP311</code> / AFE <code>TP412</code> / CH <code>TP524</code>, <code>VREF_MID</code> at DIG
@@ -1441,14 +1455,14 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   the CH channels, reads the demodulated <code>ERR1/ERR2</code> into the Teensy ADC, owns the shared
   <code>FAULT_n</code> line, and provides the geographic-address logic reference. Those error lines
   arrive already amplified ×5.02 and level-shifted by the AFE card's inverting output stage onto a
-  positive zero-error datum (<a href="#afe">§13</a>) — that shift is what makes a bipolar error
+  positive zero-error datum (<a href="#afe">§14</a>) — that shift is what makes a bipolar error
   readable by this card's positive-only ADC, and it is why the DIG card needed no change after
   fabrication. Each error input is then conditioned at the Teensy pin — a 3.3 kΩ series
   + 1 nF shunt RC with a BAT54S clamp to 3V3/GND (R303/R304, C303/C304, D301/D302) — since the
   Teensy 4.1 ADC is neither 5 V- nor negative-tolerant. Freed monitor/enable pins from the old point-to-point design migrate to per-card
   I²C GPIO.</p>
   <div class="note">Teensy pin/I²C maps are in <code>Teensy/…/config.h</code> and mirror the DIG card
-  net names (GA0/1/2 = D14/D15/D16, FAULT_n = D31, I²C on D18/D19). See <a href="#software">§14</a>.</div>
+  net names (GA0/1/2 = D14/D15/D16, FAULT_n = D31, I²C on D18/D19). See <a href="#software">§15</a>.</div>
   <div class="warn"><b>Assembly:</b> the Teensy 4.1 is powered from <code>+5V</code> at VIN (not the
   3V3 rail). <b>Cut the VUSB↔VIN pad</b> on the underside of the Teensy before installing — otherwise
   plugging in a USB cable for programming back-drives the crate-wide <code>+5V</code> rail.</div>
@@ -1460,7 +1474,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <code>J2</code> does nothing; it fails safe. <b>v6 has the diode the right way round</b> (together
   with the R110 hysteresis change, which was the second half of the same problem). On a v5 board,
   either reverse D24 or treat <code>J2</code> as unpopulated and expect TP302 to follow TP301 under
-  all conditions (<a href="#testing">§16.6</a> step 6).</div>
+  all conditions (<a href="#testing">§17.6</a> step 6).</div>
   <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
   (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
   <b>ENIG</b> finish. The F.Cu↔In1 core is deliberately thin (0.0994 mm) so the two front-panel LO
@@ -1516,18 +1530,21 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     — see the note below.</li>
     <li><b>Readback</b> — laser IMON and TEC IMON via INA828 instrumentation amps, the internal
     monitor-photodiode TIA (both a fault detector and an NTC-compensated optical-power reading,
-    <a href="#software">§14</a>), and the 10 kΩ NTC, all digitized on-card by an ADS1115.</li>
+    <a href="#software">§15</a>), and the 10 kΩ NTC, all digitized on-card by an ADS1115.</li>
     <li><b>Digitization &amp; interface</b> — J1 universal DIN, AD5696R DAC on +5 V with gain ×2 for a
     0–5 V set-point span (matching the ÷201 laser and TEC scalers), ADS1115 (monitors), PCA9538 GPIO
     (LOCK_EN / HB fault), and ADG419 muxes that select <code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>
     from the JP101 address jumper.</li>
-    <li><b>Laser-head harness</b> — the DFB1550LP 14-pin butterfly (laser diode, TEC, NTC and internal
-    monitor photodiode all in one package) does <em>not</em> mount on the card. It clamps into an
-    off-board butterfly mount with an integrated heatsink (the TEC dumps up to ≈2 A of heat), and a
-    short <b>14-way harness of 24 AWG stranded wire (~12 in / 30 cm)</b> connects that mount to the
-    card. The board header <code>J_BTF1</code> is a Würth WR-PHD 2×7 pin header (61301421121), the same
-    connector family as the reference mount's socket (Maiman LDM-BUTTERFLY, ZIF socket, 3 A rated,
-    Würth 61301421821). The harness cable itself is sourced separately (see the wire-gauge note).</li>
+    <li><b>Laser interface — the BTF stack</b> — the DFB1550LP 14-pin butterfly (laser diode, TEC,
+    NTC and internal monitor photodiode all in one package) does <em>not</em> mount on this card; its
+    TEC dumps up to ≈2 A of heat and needs a spreader that will not fit among the precision analog
+    stages. On v7 it rides on a <a href="#btf">BTF daughter card (§13)</a> stacked ≈40 mm above this
+    one. <code>J_BTF1</code> is a <b>Samtec TSW-107-21-G-D</b> long-post 2×7 header whose pins reach
+    33.53 mm above the board face; the BTF card's ESQ-107-12-G-D socket drops over them, and four
+    M3 × 40 mm standoffs set the gap and carry the load. The header is wired in <b>butterfly pin
+    order</b>, so the daughter card is a straight 1:1 pass-through with no pin map to get wrong.
+    This replaces the flying 24 AWG harness and off-board mount of the v5/v6 cards, removing the
+    hand-built cable and its reversed-connector failure mode entirely.</li>
   </ul>
   <div class="danger"><b>Fabbed v5 cards: U24 PDH integrator has positive feedback — rework before
   powering a laser.</b> On the v5 layout the OPA192 <code>U24</code> has its inputs reversed: the
@@ -1546,18 +1563,13 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   onto <code>ERRn</code>: pin 1 should <em>ramp</em> (integrate) and reverse its ramp direction when
   the offset reverses. A pin 1 that sits against a supply rail and ignores <code>ERRn</code> means the
   rework did not take. Corrected in <code>Laser_Driver_v7/CH_Card</code> (schematic and layout).</div>
-  <div class="warn"><b>Harness wire gauge — the TEC pair carries real current.</b> TEC+ (pin 1) and
-  TEC− (pin 14) carry up to <b>2.5 A</b>; the laser (pins 10/11) is ≤100 mA and the rest is µA–mA.
-  Use <b>24 AWG stranded</b> for the harness — do <em>not</em> use thin 28 AWG flat ribbon, which is
-  rated ~1 A/conductor and would overheat and drop excessive voltage on the TEC lines (eroding the
-  ±6 V TEC headroom). Keep the run short. If you must use ribbon, double or triple up the TEC
-  conductors onto the spare pins (6/7/8/9/12), bussed at <em>both</em> ends.</div>
-  <div class="warn"><b>Verify pin order before first light.</b> A reversed harness reverse-biases the
-  laser die (≤2 V rated) and the monitor PD. A plain 2×7 header is not foolproof against a 180° flip,
-  and the mount is itself pin-for-pin user-configurable — so observe the <code>J_BTF1</code> pin-1
-  marking when building the cable, and <b>confirm butterfly pin <i>N</i> → <code>J_BTF1</code> pin
-  <i>N</i> end-to-end with a meter</b> (TEC+ 1, PD anode 3, PD
-  cathode 4, LD anode 10, LD cathode 11, TEC− 14) before installing the laser.</div>
+  <div class="warn"><b>Mating the BTF stack.</b> The TEC pair (butterfly pins 1 and 14) carries up to
+  <b>2.5 A</b> across the board-to-board connector; the laser (pins 10/11) is ≤100 mA and the rest is
+  µA–mA. The Samtec pins are rated well above this, so current is not the concern — <b>seating
+  is</b>. Fit all four M3 standoffs before mating, press the stack down square, and confirm it is
+  fully home: the specified insertion window is only 2.67 mm wide, and a partially mated connector
+  can open the TEC circuit in service, stranding the laser at temperature with no control loop. Do
+  not use the header alone to hold the card. Full stack detail is in <a href="#btf">§13</a>.</div>
   <div class="warn"><b>TEC H-bridge heatsinks (HS1–HS4).</b> The linear bridge burns the difference
   between the ±6 V rails and the Peltier voltage — up to ≈10 W in a single FET at full 2.5 A cooling,
   and any of the four can be the hot one depending on drive polarity. Each FET (Q13/Q14/Q17/Q18)
@@ -1585,8 +1597,114 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 </section>
 
 <!-- ============================================================= -->
+<section id="btf">
+  <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">13</span> BTF card — butterfly laser daughter card</h2></div>
+  <p><code>Laser_Driver_v7/BTF_Card</code>. A small mezzanine board that carries the DFB butterfly
+  laser and stacks directly above its CH card. It replaces the flying 14-way harness of the earlier
+  revisions: instead of a cable running from the card to an off-board laser mount, the laser now sits
+  on its own PCB about 40 mm above the CH card, connected by a single board-to-board stack.</p>
+
+  <h4>Why the laser moved onto a card</h4>
+  <p>A butterfly package cannot mount on the CH card itself — its TEC dumps up to ≈2 A of heat and
+  needs a substantial spreader, which will not fit among the precision analog stages. The earlier
+  answer was an off-board mount plus a 24 AWG harness, but that puts a hand-built cable carrying
+  2.5 A of TEC current and the laser's own bias in series with everything, with a reversed-connector
+  failure mode that destroys the diode. Stacking the laser on a daughter card removes the cable
+  entirely: the connection becomes a keyed board-to-board mate, the pin order is fixed in copper, and
+  the current path is short and paralleled across header pins.</p>
+
+  <h4>On-card contents</h4>
+  <ul>
+    <li><b>ZIF socket pair</b> — JZ1 (Azimuth 5253-100-7S) and JZ2 (5253-100-7R) take the butterfly's
+    two 7-lead rows. The laser <em>drops in</em>; it is never soldered, so a failed or upgraded diode
+    is swapped without touching the board.</li>
+    <li><b>LD1 — the laser itself</b>, present in the design only as a mechanical placement outline
+    (<code>DFB1550LP_Butterfly14_Mech</code>). It has no pads, which is why the board reports
+    14 schematic-parity items; that is expected, not a fault (see the note below).</li>
+    <li><b>J1 — ESQ-107-12-G-D</b> 2×7 socket, the stack connection down to the CH card.</li>
+    <li><b>JP1 — laser shorting shunt</b> across <code>LD_A</code>/<code>LD_K</code>. Fitted, it
+    clamps the diode against handling ESD. <b>It must be removed before the laser is driven.</b></li>
+    <li><b>H1–H4</b> — four M3 mounting holes for the standoffs that actually carry the stack.</li>
+  </ul>
+
+  <h4>It is a pure pass-through</h4>
+  <p>There is no active circuitry on this card and no components other than the connectors: every net
+  runs straight from a ZIF contact to the matching pin of J1, in <b>butterfly pin order</b>, so
+  <b>J1 pin <i>N</i> is butterfly pin <i>N</i></b>. That is deliberate — the CH card's
+  <code>J_BTF1</code> was already wired in butterfly order, so no translation is needed anywhere and
+  there is no pin map to get wrong.</p>
+  <table>
+    <thead><tr><th>Net</th><th>Butterfly / J1 pin</th><th>ZIF contact</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><code>TEC_P</code></td><td>1</td><td>JZ1-1</td><td>TEC +, up to 2.5 A</td></tr>
+      <tr><td><code>NTC_A</code></td><td>2</td><td>JZ1-2</td><td>Thermistor</td></tr>
+      <tr><td><code>MPD_A</code></td><td>3</td><td>JZ1-3</td><td>Monitor photodiode anode</td></tr>
+      <tr><td><code>MPD_K</code></td><td>4</td><td>JZ1-4</td><td>Monitor photodiode cathode</td></tr>
+      <tr><td><code>NTC_GND</code></td><td>5</td><td>JZ1-5</td><td>Thermistor return</td></tr>
+      <tr><td><code>LD_A</code></td><td>10</td><td>JZ2-5</td><td>Laser anode (also JP1-1)</td></tr>
+      <tr><td><code>LD_K</code></td><td>11</td><td>JZ2-4</td><td>Laser cathode (also JP1-2)</td></tr>
+      <tr><td><code>CASE</code></td><td>13</td><td>JZ2-2</td><td>Package case</td></tr>
+      <tr><td><code>TEC_N</code></td><td>14</td><td>JZ2-1</td><td>TEC −</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)">Pins 6, 7, 8, 9 and 12 are the butterfly's no-connects and are left unconnected on both sides.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Note the JZ2 numbering.</b> JZ1 runs with the butterfly (contact 1 = pin 1),
+  but JZ2 is the <em>reverse</em> half of the pair, so its contacts count the other way: JZ2-1 is
+  butterfly 14, JZ2-2 is 13, JZ2-4 is 11, JZ2-5 is 10. This is a property of the 7S/7R socket pair,
+  not an error — but it is the thing to check first if a continuity test comes out mirrored.</div>
+
+  <h4>The mechanical stack</h4>
+  <p>The stack height is set by the <b>standoffs, not by the connector</b>. The CH card carries a
+  Samtec <b>TSW-107-21-G-D</b> long-post header whose pins reach 33.53 mm above the board face; this
+  card's <b>ESQ-107-12-G-D</b> socket drops over them. Samtec specify 3.68–6.35 mm of insertion — a
+  window only 2.67 mm wide, and that window is the real constraint on the design.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Part</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Header (CH card)</td><td>Samtec TSW-107-21-G-D</td><td>Pin tip 33.53 mm above board</td></tr>
+      <tr><td>Socket (this card)</td><td>Samtec ESQ-107-12-G-D</td><td>11.05 mm body, 2.29 mm tail</td></tr>
+      <tr><td>Standoff ×4</td><td>M3 × 40 mm brass (Würth 970400324)</td><td>Board gap <b>40 mm</b>, insertion <b>4.58 mm</b> — mid-spec</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>The standoffs carry the load, and they are also a heat path.</b> Do not rely
+  on the header to hold the card: four M3 × 40 mm standoffs set the gap and take the mechanical
+  stress, and the connector only makes contact. Use <b>brass or steel, not aluminium</b> — they are a
+  secondary conduction path from the laser block down into the CH card. Fit all four before mating,
+  and mate the stack square: the 2.67 mm insertion window leaves no room to cock the card over.</div>
+  <div class="note"><b>Slot budget.</b> A 40 mm stack occupies roughly two 4 HP slots in the 3U
+  subrack, so a populated CH + BTF pair is wider than a bare CH card. Plan the slot allocation
+  accordingly (<a href="#arch">§5.1</a>) — this is the main mechanical consequence of moving the
+  laser inboard.</div>
+
+  <h4>Board &amp; status</h4>
+  <p><b>54.15 × 75 mm, 2 layers.</b> The two ZIF sockets sit on a 28.81 mm centre-to-centre pitch,
+  which gives 1.70 mm of clearance between the package body and the socket faces and 9.67 mm of lead
+  engagement in each socket — comfortably past the 3.81 mm Azimuth minimum. DRC: <b>0 unconnected</b>,
+  4 minor items (one 0.16 mm clearance against a 0.2 mm rule, three silkscreen).</p>
+  <div class="note"><b>Why this board reports 14 schematic-parity items.</b> LD1 is the laser, and
+  the laser is never soldered to anything — it lives in the ZIF sockets. Its footprint is therefore a
+  pad-less mechanical outline used only to place the package and check clearances, so KiCad finds no
+  pad for any of the symbol's 14 pins. All 14 parity messages come from that one part and are
+  expected. Every net that matters is carried by JZ1, JZ2 and J1, and those report clean.</div>
+
+  <h4>Interaction</h4>
+  <p>The BTF card connects only to its CH card, and it is the reason
+  <code>Laser_Driver_v7/CH_Card</code> exists as a separate revision: <code>J_BTF1</code> changed from
+  the ribbon-harness header to the Samtec long-post part, so <b>a BTF card will not mate with a v6 or
+  earlier CH card</b>. Two BTF cards are required, one per channel. Everything the card carries —
+  laser current, TEC drive, thermistor and monitor photodiode — is generated and read on the CH card
+  (<a href="#ch">§12</a>); this board adds no signal conditioning of its own.</p>
+  <div class="danger"><b>Before first light.</b> Remove JP1. With the shunt fitted the laser is
+  shorted and will not lase; with it removed the diode is exposed, so treat the card as ESD-sensitive
+  from that moment on. Confirm the stack is seated and the standoffs are tight before applying
+  power — a partially mated connector can open the TEC circuit mid-operation, which strands the laser
+  at temperature with no control loop.</div>
+  <a class="backtop" href="#intro">▲ top</a>
+</section>
+
+<!-- ============================================================= -->
 <section id="afe">
-  <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">13</span> AFE card — analog detection front end</h2></div>
+  <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">14</span> AFE card — analog detection front end</h2></div>
   <p><code>Laser_Driver_v7/AFE_Card</code>. The shared detection card for both channels: it turns the
   two ring-transmission photocurrents into two clean, demodulated lock errors.</p>
   <h4>On-card blocks</h4>
@@ -1643,7 +1761,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <li><b>Automatic ERR offset null</b> — an AD5696R quad 16-bit I²C DAC (U206, address <b>0x0E</b>)
     injects into the two <code>VB</code> nodes through 100 kΩ resistors, trimming out the demodulator
     pedestal under firmware control. This replaces the manual RV201/RV202 trimpots of the earlier
-    revision (<a href="#software">§14.8</a>).</li>
+    revision (<a href="#software">§15.8</a>).</li>
     <li><b>PD level monitor</b> — because the TIA output is now bipolar, the level tap re-centres it
     before digitizing: R213/R214 10 kΩ from each TIA output and R134/R135 10 kΩ up to
     <code>5Vref</code> form a two-resistor average, so <code>PDn_LVL</code> =
@@ -1683,7 +1801,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 
 <!-- ============================================================= -->
 <section id="software">
-  <h2 class="sec"><span class="num">14</span> Software operation</h2>
+  <h2 class="sec"><span class="num">15</span> Software operation</h2>
   <p>The instrument runs an embedded controller on the <a href="#dig">DIG card's</a> Teensy 4.1
   (<code>Teensy/teensyskeletoninArduinoIDE/</code>). The controller is a <b>supervisor</b>: it
   programs the DDS modulation, sweeps each laser to acquire resonance, hands the fast loop to the
@@ -1710,7 +1828,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
       </ul></div>
   </div>
 
-  <h3>14.1 Lock state machine</h3>
+  <h3>15.1 Lock state machine</h3>
   <p>Each channel runs an independent six-state machine; both are identical apart from their DAC/ADC
   index, so CH1 can be LOCKED while CH2 is still SEARCHing. The automatic progression
   <code>SEARCH → ACQUIRE → LOCKED</code> needs no further commands once <code>lock1</code>/<code>lock2</code>
@@ -1732,21 +1850,21 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 
   <figure>
     <img src="img/screen-board.png" alt="TFT display in several lock states">
-    <figcaption><b>Fig 14.1 — Front-panel TFT (320×240), several states.</b> Top: IDLE (flat
+    <figcaption><b>Fig 15.1 — Front-panel TFT (320×240), several states.</b> Top: IDLE (flat
     baseline) and COARSE SWEEP (filled Lorentzian transmission peak with a moving blue scan-marker and
     a dashed green located-peak marker). Bottom: LOCK LOST (RELOCK) and MANUAL. The bar shows a green
     PLL-lock dot, the 25 MHz reference clock, and per-channel TEC temperature, laser current, set-point
     %, and ERR RMS. The display is read-only — all control is over the CLI or web.</figcaption>
   </figure>
 
-  <h3>14.2 Web dashboard</h3>
+  <h3>15.2 Web dashboard</h3>
   <p>Point any browser at <code>http://dual-pdh.local</code> (mDNS) or the device IP. The page is
   served from the Teensy's flash — no internet, CDN, or files required — and polls
   <code>/api/status</code> every 500 ms. Its trace renderer matches the TFT exactly.</p>
 
   <figure>
     <img src="img/web-01-main.png" alt="Main web dashboard">
-    <figcaption><b>Fig 14.2 — Main dashboard.</b> CH1 (teal) LOCKED with a tight in-lock noise trace;
+    <figcaption><b>Fig 15.2 — Main dashboard.</b> CH1 (teal) LOCKED with a tight in-lock noise trace;
     CH2 (amber) in SEARCH with the sweep marker tracking across the transmission peak. Each channel
     panel carries TEC temp, laser current, set-point, ERR RMS, a servo-health bar, and per-channel
     Sweep+Lock / Hold / Break / Stop buttons. <b>RUN BOTH</b> starts both channels on a shared
@@ -1756,13 +1874,13 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="figrow">
     <figure>
       <img src="img/web-03-acquire.png" alt="Dashboard during acquire">
-      <figcaption><b>Fig 14.3 — ACQUIRE.</b> The dispersive discriminator S-curve is overlaid on the
+      <figcaption><b>Fig 15.3 — ACQUIRE.</b> The dispersive discriminator S-curve is overlaid on the
       transmission peak as the loop captures resonance; ERR RMS falls and the servo-health bar
       climbs.</figcaption>
     </figure>
     <figure>
       <img src="img/web-02-both-locked.png" alt="Dashboard both channels locked">
-      <figcaption><b>Fig 14.4 — Both LOCKED.</b> Tight in-lock traces on both channels, servo health
+      <figcaption><b>Fig 15.4 — Both LOCKED.</b> Tight in-lock traces on both channels, servo health
       ~94–96 %, ERR RMS in the 0.003 range — the normal operating condition.</figcaption>
     </figure>
   </div>
@@ -1770,14 +1888,14 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="figrow">
     <figure>
       <img src="img/web-06-settings.png" alt="Settings and PID tuning panel">
-      <figcaption><b>Fig 14.5 — Settings &amp; PID tuning.</b> Per-channel K<sub>p</sub>/K<sub>i</sub>/K<sub>d</sub>
+      <figcaption><b>Fig 15.5 — Settings &amp; PID tuning.</b> Per-channel K<sub>p</sub>/K<sub>i</sub>/K<sub>d</sub>
       and lock/acquire thresholds, each with an <em>Apply</em> button that issues the matching
       <code>p1</code>/<code>thresh1</code> command. The Global section sets the modulation
       frequency.</figcaption>
     </figure>
     <figure>
       <img src="img/web-07-network.png" alt="Network configuration panel">
-      <figcaption><b>Fig 14.6 — Network configuration.</b> Demo-mode toggle and all Ethernet settings
+      <figcaption><b>Fig 15.6 — Network configuration.</b> Demo-mode toggle and all Ethernet settings
       (DHCP/Static, IP, subnet, gateway, hostname). Changes are written to EEPROM on <em>Save &amp;
       Restart Ethernet</em> — no reflash.</figcaption>
     </figure>
@@ -1801,7 +1919,7 @@ $ curl http://dual-pdh.local/api/status
            "omega":2000000, "phase":90.0, "null":34160 },
          { "n":2, "st":"SEARCH", ... } ] }</pre>
 
-  <h3>14.3 Command reference</h3>
+  <h3>15.3 Command reference</h3>
   <p>Commands are identical on serial, Telnet, and the web console. The channel index is
   <code>1</code> or <code>2</code>.</p>
   <table>
@@ -1815,7 +1933,7 @@ $ curl http://dual-pdh.local/api/status
       <tr><td><code>omega1</code> / <code>omega2 &lt;hz&gt;</code></td><td>Set that channel's modulation Ω (100 kHz–3.5 MHz); reprograms drive + reference DDS phase-coherently. Not saved to EEPROM.</td></tr>
       <tr><td><code>phase1</code> / <code>phase2 &lt;deg&gt;</code></td><td>Set demod phase live (reference DDS PHASE0, 0–360°) for maximum discriminator slope.</td></tr>
       <tr><td><code>cal1</code> / <code>cal2</code></td><td>Auto-calibrate demod phase: step 0–360°, pick the phase that maximises the error signal. Park on a shoulder first; verify lock polarity (add 180° if the servo runs away).</td></tr>
-      <tr><td><code>null1</code> / <code>null2</code></td><td>Auto-null the AFE ERR offset for that channel (§14.8). <b>Block the light first.</b> Refuses if the channel is LOCKED or ACQUIRING. Result is saved to EEPROM.</td></tr>
+      <tr><td><code>null1</code> / <code>null2</code></td><td>Auto-null the AFE ERR offset for that channel (§15.8). <b>Block the light first.</b> Refuses if the channel is LOCKED or ACQUIRING. Result is saved to EEPROM.</td></tr>
       <tr><td><code>nullset1</code> / <code>nullset2 &lt;code&gt;</code></td><td>Write the ERR offset-null DAC code by hand (0–65535) and save it. For bring-up or to restore a known value.</td></tr>
       <tr><td><code>tec1</code> / <code>tec2 on|off</code></td><td>Enable or disable that channel's
       TEC bridge. <code>off</code> forces the setpoint to <code>TEC_VZERO</code> through U108, i.e.
@@ -1827,8 +1945,8 @@ $ curl http://dual-pdh.local/api/status
       <tr><td><code>d</code></td><td>Detailed diagnostic dump: raw monitor volts (NTC/LAS/TEC/MPD),
       per-channel optical power <code>POPTn</code> (mW), AFE PD levels, and per-channel
       <code>ERRn</code> in volts against the 2.5 V zero with its offset-null DAC code.</td></tr>
-      <tr><td><code>netinfo</code> / <code>netset</code> / <code>netreset</code></td><td>Network configuration (see §14.5).</td></tr>
-      <tr><td><code>demo on</code> / <code>demo off</code></td><td>Enter/leave hardware-simulation mode (see §14.6).</td></tr>
+      <tr><td><code>netinfo</code> / <code>netset</code> / <code>netreset</code></td><td>Network configuration (see §15.5).</td></tr>
+      <tr><td><code>demo on</code> / <code>demo off</code></td><td>Enter/leave hardware-simulation mode (see §15.6).</td></tr>
       <tr><td><code>help</code></td><td>List all commands.</td></tr>
     </tbody>
   </table>
@@ -1843,7 +1961,7 @@ CH1 demod phase -&gt; 180 deg (verify lock polarity)
 CH1 LOCKED rms=0.00312 temp=24.5°C I=138.2mA TEC=0.831A(lim=1.00) setp=52.3%
 CH2 SEARCH rms=0.41800 temp=23.9°C I=138.0mA TEC=0.021A(lim=1.00) setp=50.0%</pre>
 
-  <h3>14.4 Protection</h3>
+  <h3>15.4 Protection</h3>
   <ul>
     <li><b>TEC software current limit.</b> Inside the 1 kHz loop each channel reads its TEC IMON,
     converts to amps via the INA828 scaling, and smoothly backs off the TEC DAC when current exceeds
@@ -1859,7 +1977,7 @@ CH2 SEARCH rms=0.41800 temp=23.9°C I=138.0mA TEC=0.021A(lim=1.00) setp=50.0%</p
     these OR into the shared <code>FAULT_n</code> line so the supervisor parks lasers and TECs safe.</li>
   </ul>
 
-  <h3>14.5 Network configuration</h3>
+  <h3>15.5 Network configuration</h3>
   <p>The controller uses the Teensy 4.1's built-in 10/100 Ethernet (QNEthernet) — DHCP with a static
   fallback of <code>192.168.1.200/24</code>, reachable as <code>dual-pdh.local</code> over mDNS.
   Settings persist in EEPROM and only change on an explicit command.</p>
@@ -1872,7 +1990,7 @@ Active IP: 192.168.10.50</pre>
   <p class="pinref">Find the IP from the serial boot banner, or type <code>netinfo</code>. Hostnames are
   alphanumeric + hyphen, 1–31 chars.</p>
 
-  <h3>14.6 Demo mode</h3>
+  <h3>15.6 Demo mode</h3>
   <p><code>demo on</code> runs a built-in hardware simulation: <code>demo_update()</code> writes
   live animated state so the TFT, web dashboard, Telnet, and USB serial show a full sweep→lock cycle
   <em>indistinguishable from real operation</em> — no PDH hardware required. It is ideal for training,
@@ -1880,7 +1998,7 @@ Active IP: 192.168.10.50</pre>
   one-click <em>Switch to real hardware</em> button. <code>demo off</code> resets the DAC to a safe
   value and re-initialises both channels.</p>
 
-  <h3>14.7 Backplane integration &amp; addressing</h3>
+  <h3>15.7 Backplane integration &amp; addressing</h3>
   <p>On the card-cage backplane the controller is also the I²C bus master. It:</p>
   <ul>
     <li><b>Enumerates cards by I²C probe</b> at boot: each card self-identifies through its on-card
@@ -1903,7 +2021,7 @@ Active IP: 192.168.10.50</pre>
   <b>channel 1 = GA0 = 0</b> (0x48/0x0C/0x70), i.e. JP101 fitted. <code>config.h</code> now matches,
   so the CH1/CH2 constant swap an earlier revision of this manual called for is no longer needed —
   do not apply it. GA readback pins 14/15/16 no longer carry slot straps.</div>
-  <h3>14.8 ERR offset null (automatic)</h3>
+  <h3>15.8 ERR offset null (automatic)</h3>
   <p>The AD835 demodulator has an output offset of its own (±25 mV typical, ±75 mV worst case), and
   the local-oscillator drive leaks a little energy straight through to the output. Together these
   form a <b>DC pedestal</b> on <code>ERRn</code> that the ×5.02 output stage multiplies to as much as
@@ -1953,7 +2071,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
 
 <!-- ============================================================= -->
 <section id="bringup">
-  <h2 class="sec"><span class="num">15</span> Installation &amp; bring-up</h2>
+  <h2 class="sec"><span class="num">16</span> Installation &amp; bring-up</h2>
   <ol>
     <li><b>Mechanical.</b> Fit the backplane into the subrack; install two card guides per slot.
     Isolate the backplane from the chassis with the nylon shoulder washers.</li>
@@ -1976,7 +2094,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <code>null1</code> and <code>null2</code>. Each reports the code it found and the residual; both
     should settle within a fraction of a millivolt. An out-of-range report means the pedestal exceeds
     the trim range — check LO drive and that the beam really is blocked before going further
-    (<a href="#software">§14.8</a>). The codes are stored in EEPROM, so this is a once-per-build step
+    (<a href="#software">§15.8</a>). The codes are stored in EEPROM, so this is a once-per-build step
     rather than a routine one.</li>
     <li><b>Lock.</b> Unblock the beam. Verify the AFE produces a bipolar discriminator
     (<code>ERRn</code> swinging either side of 2.5 V) as the laser is swept across a fringe, then
@@ -1991,7 +2109,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
 
 <!-- ============================================================= -->
 <section id="testing">
-  <h2 class="sec"><span class="num">16</span> Testing &amp; test points</h2>
+  <h2 class="sec"><span class="num">17</span> Testing &amp; test points</h2>
   <p>Two cards carry dedicated test-point banks: the <b>DIG card, TP301–TP320 (20 points)</b> covering
   the clock chain, every supply rail and the voltage-monitor thresholds; and the <b>AFE card,
   TP401–TP427 (27 points)</b> covering the whole detection path from photodiode bias to the error
@@ -2018,7 +2136,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       </ul></div>
   </div>
 
-  <h3>16.1 DIG card test-point reference</h3>
+  <h3>17.1 DIG card test-point reference</h3>
   <table>
     <thead><tr><th>TP</th><th>Net</th><th>Node / what it taps</th><th>Expected</th></tr></thead>
     <tbody>
@@ -2050,7 +2168,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   does not actually have.</div>
 
 
-  <h3>16.2 AFE card test-point reference</h3>
+  <h3>17.2 AFE card test-point reference</h3>
   <p>Twenty-seven points, <b>TP401–TP427</b>, following the signal from the photodiode bias through
   the transimpedance amplifier, the demodulator and its local oscillator, to the error output and the
   offset-null DAC. Both channels are instrumented identically, so any measurement can be compared
@@ -2085,10 +2203,10 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td colspan="4" style="background:var(--panel2)"><b>Error path</b></td></tr>
       <tr><td><b>TP407</b></td><td><code>ERR1_DEM</code></td><td>AD835 U45 W — raw multiplier output, before the 2-pole filter</td><td>0 V ± pedestal (±25 mV typ, ±75 mV max)</td></tr>
       <tr><td><b>TP408</b></td><td><code>ERR2_DEM</code></td><td>AD835 U46 W</td><td>as TP407</td></tr>
-      <tr><td><b>TP409</b></td><td><code>ERR1_BUF</code></td><td>OPA192 U202 output — inverting, DC gain −49.9 k/9.95 k = −5.02, referenced to VB1; ahead of R217 47 Ω to the bus</td><td>At zero error: <b>≈2.49 V</b> at DAC midscale, trimmable 1.99–2.99 V (see the <a href="#afe">§13</a> note)</td></tr>
+      <tr><td><b>TP409</b></td><td><code>ERR1_BUF</code></td><td>OPA192 U202 output — inverting, DC gain −49.9 k/9.95 k = −5.02, referenced to VB1; ahead of R217 47 Ω to the bus</td><td>At zero error: <b>≈2.49 V</b> at DAC midscale, trimmable 1.99–2.99 V (see the <a href="#afe">§14</a> note)</td></tr>
       <tr><td><b>TP410</b></td><td><code>ERR2_BUF</code></td><td>OPA192 U203 output</td><td>as TP409</td></tr>
       <tr><td><b>TP411</b></td><td><code>VREF_MID</code></td><td>Backplane mid-reference (b16) — feeds the VB dividers and the ADS1115 negative inputs</td><td>2.500 V ±3 mV</td></tr>
-      <tr><td colspan="4" style="background:var(--panel2)"><b>Offset-null DAC</b> (AD5696R U206, 0x0E, GAIN pin grounded ⇒ 0–2.5 V span — see <a href="#software">§14.8</a>)</td></tr>
+      <tr><td colspan="4" style="background:var(--panel2)"><b>Offset-null DAC</b> (AD5696R U206, 0x0E, GAIN pin grounded ⇒ 0–2.5 V span — see <a href="#software">§15.8</a>)</td></tr>
       <tr><td><b>TP427</b></td><td><code>DAC_VB1</code></td><td>VOUTA → R146 100 kΩ → VB1. The only DAC output with a pad; VOUTB and the two spares have none.</td><td>0–2.5 V; 1.25 V unwritten (midscale power-up)</td></tr>
       <tr><td colspan="4" style="background:var(--panel2)"><b>Supply rails</b></td></tr>
       <tr><td><b>TP418</b> / <b>TP419</b></td><td><code>+15V</code> / <code>-15V</code></td><td>OPA192 error-stage rails (a13 / a14)</td><td>±15 V ±5 %, equal and opposite</td></tr>
@@ -2212,7 +2330,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <text class="sub" x="16" y="450">Channel 2 uses the next number in each pair: TP402 TIA2_OUT · TP404 RF2_IN · TP406 LO2_BUF</text>
     <text class="sub" x="16" y="466">TP408 ERR2_DEM · TP410 ERR2_BUF · TP414 PD2_LVL · TP417 PD2_BIAS_K</text>
   </svg>
-  <figcaption><b>Fig 16.1 — Where the AFE test points attach.</b> The detection chain runs left to
+  <figcaption><b>Fig 17.1 — Where the AFE test points attach.</b> The detection chain runs left to
   right: the LT3042 bias (TP415) reaches the photodiode cathode through a 100 Ω filter (TP416); the
   OPA814 transimpedance stage sits at TP401, where a dark channel reads <b>0 V</b> and light drives
   the output negative; C94 strips the DC before the AD835 (TP403), which demodulates against the
@@ -2239,17 +2357,17 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <li><b>Pedestal.</b> Block the light and read TP407/TP408. Anything inside ±75 mV is normal
     AD835 offset plus LO feedthrough. Much more than that points at LO overdrive.</li>
     <li><b>Null and verify.</b> Still blocked, run <code>null1</code>/<code>null2</code>
-    (<a href="#software">§14.8</a>); TP427 will move to wherever the channel-1 search lands (channel 2
+    (<a href="#software">§15.8</a>); TP427 will move to wherever the channel-1 search lands (channel 2
     has no pad — infer it from TP410). Confirm TP409/TP410 then sit at <b>2.50 V ±10 mV</b> —
     the single most useful check here, because that datum is exactly what the CH servo compares
     against. If the null instead drives TP427 to full scale while TP410 is still climbing, the stage
-    gain is wrong: check that R118/R119 are <b>6.65 kΩ</b> and not 10 kΩ (<a href="#afe">§13</a>).</li>
+    gain is wrong: check that R118/R119 are <b>6.65 kΩ</b> and not 10 kΩ (<a href="#afe">§14</a>).</li>
     <li><b>Discriminator.</b> Unblock, sweep the laser across a fringe, and confirm TP409/TP410 swing
     <em>both sides</em> of whatever datum step 6 established. A one-sided swing means the demod phase
     is wrong — run <code>cal1</code>/<code>cal2</code>.</li>
   </ol>
 
-  <h3>16.3 CH card test-point reference</h3>
+  <h3>17.3 CH card test-point reference</h3>
   <p>Thirty pads, <b>TP501&ndash;TP530</b>, on both CH cards. The card carried none before rev&nbsp;D,
   which mattered because almost every node below is new or newly re-scaled &mdash; the second gate
   buffer, the corrected P-channel orientation, the current-mode feedback and the rebuilt laser
@@ -2405,7 +2523,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <text class="sub" x="16" y="530">TP520 TEC_EN (3V3 = bridge live) · TP521 OPA551 flag · TP522 LOCK_EN · TP526 VZERO_SET 1.202 V</text>
     <text class="sub" x="16" y="548">TP523 VREF_MID 2.500 V · TP524 5Vref 5.000 V · TP525 +5V_LASER · TP527–TP530 GND, through-hole</text>
   </svg>
-  <figcaption><b>Fig 16.2 — Where the CH test points attach.</b> Top: the TEC current loop. The DAC
+  <figcaption><b>Fig 17.2 — Where the CH test points attach.</b> Top: the TEC current loop. The DAC
   setpoint is scaled by R44/R45 onto U19's non-inverting input, and U19's output (TP502) fans out two
   ways — directly through U21 to one bridge leg (TP505) and through the U106 inverter and U107 buffer
   to the other (TP504, TP506). That <b>antiphase</b> drive is what rev D added; on a v5 board both
@@ -2428,7 +2546,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   <em>opposite</em> TP505, and TP511 must rise above 1.20&nbsp;V. Only then bring the laser up,
   watching TP513 against TP514.</p></div>
 
-  <h3>16.4 Where the DIG test points attach</h3>
+  <h3>17.4 Where the DIG test points attach</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 502" role="img" aria-label="DIG card test point locations in the clock chain and reference divider">
     <text class="ttl" x="16" y="20">CLOCK CHAIN — TP301…TP307</text>
@@ -2524,7 +2642,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <text class="sub" x="400" y="400">(both buffered by MCP6002 → LM339 window comparators)</text>
     </g>
   </svg>
-  <figcaption><b>Fig 16.3 — Where the DIG test points attach.</b> The local 10 MHz
+  <figcaption><b>Fig 17.3 — Where the DIG test points attach.</b> The local 10 MHz
   oscillator Y1 (TP301) drives mux input B1; the front-panel J2 reference reaches input B2
   AC-coupled through C89 and R107 behind a 50 Ω termination. U40 is <em>not</em> in the signal path —
   it is an envelope detector plus comparator that senses whether an external reference is present and
@@ -2536,7 +2654,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   TP313/TP314.</figcaption>
   </figure>
 
-  <h3>16.5 Physical location of the DIG test points</h3>
+  <h3>17.5 Physical location of the DIG test points</h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 600" role="img" aria-label="DIG card top view showing test point placement">
     <!-- board -->
@@ -2588,14 +2706,14 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     <circle class="j" cx="60" cy="591" r="5"/><text class="sub" x="72" y="596">signal / rail pad (1.0 mm SMD)</text>
     <circle cx="330" cy="591" r="5" fill="none" stroke="var(--muted)" stroke-width="2"/><text class="sub" x="342" y="596">GND (1.5 mm THT)</text>
   </svg>
-  <figcaption><b>Fig 16.4 — DIG test-point placement, top view.</b> Numbers are the TP3xx suffix. The
+  <figcaption><b>Fig 17.4 — DIG test-point placement, top view.</b> Numbers are the TP3xx suffix. The
   clock and DDS test points cluster together in the upper right so the whole chain can be walked with
   one probe and a nearby ground (TP315, TP316, TP318). The reference and monitor taps (TP311–TP314,
   ground TP317/TP319) sit on the left near the voltage-monitor block, and TP320 grounds the
   lower-right corner near the Teensy.</figcaption>
   </figure>
 
-  <h3>16.6 Board-level test procedure</h3>
+  <h3>17.6 Board-level test procedure</h3>
   <p>Run these in order on a newly assembled DIG card. Steps 1–2 are done with the card powered from
   the backplane but with the Teensy held in reset (or not yet fitted).</p>
   <ol>
@@ -2636,7 +2754,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   before the board. TP304/TP305 are series-damped nets; measure at the test pad, not at the DDS
   pin.</div>
 
-  <h3>16.7 Fault localisation</h3>
+  <h3>17.7 Fault localisation</h3>
   <table>
     <thead><tr><th>Symptom</th><th>Check</th><th>Likely cause</th></tr></thead>
     <tbody>
@@ -2653,9 +2771,9 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     </tbody>
   </table>
 
-  <h3>16.8 System-level checks</h3>
+  <h3>17.8 System-level checks</h3>
   <p>Once the card passes the above, the remaining verification is functional and is driven from the
-  firmware interfaces (<a href="#software">§14</a>):</p>
+  firmware interfaces (<a href="#software">§15</a>):</p>
   <ul>
     <li><b>Enumeration</b> — on boot the controller reports its slot address and each card's I²C ACK.
     Every expected card must acknowledge.</li>
@@ -2674,7 +2792,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
 
 <!-- ============================================================= -->
 <section id="uncertainty">
-  <h2 class="sec"><span class="num">17</span> Measurement uncertainty budget</h2>
+  <h2 class="sec"><span class="num">18</span> Measurement uncertainty budget</h2>
   <p>This section quantifies how well the instrument measures its intended quantity — the differential
   temperature <code>ΔT = T<sub>B</sub> − T<sub>A</sub></code>, read out as the laser beat frequency
   <code>Δν = S·ΔT</code>. It follows the GUM approach (Type A statistical + Type B modelled
@@ -2688,7 +2806,7 @@ Carrier ν<sub>0</sub> = c/λ = 193.4 THz&nbsp; (λ = 1550 nm) &nbsp;·&nbsp; li
 Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every contributor is kept in Hz with a kelvin twin (÷ S).
   </div>
 
-  <h3>17.1 Why the ratio cancels the slow terms</h3>
+  <h3>18.1 Why the ratio cancels the slow terms</h3>
   <p>Both rings sit on one die and are read through the same chain, so any error that is <b>slow
   compared with the 60 s window and common to both arms</b> subtracts out of the beat: timebase aging,
   common-mode thermal leakage (ε·ΔT<sub>common</sub>), strain/mount creep, and slow drift of the
@@ -2696,7 +2814,7 @@ Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every 
   not enter the result. What survives is only the fast, in-band content between ≈1/τ<sub>window</sub>
   and the loop bandwidth.</p>
 
-  <h3>17.2 Within-window budget at τ = 60 s</h3>
+  <h3>18.2 Within-window budget at τ = 60 s</h3>
   <p>Two lock schemes are compared: the kHz <b>dither</b> lock and the MHz <b>RF</b> analog-derivative
   lock this hardware runs. Values are 1σ on Δν at 60 s.</p>
   <table>
@@ -2713,7 +2831,7 @@ Sensitivity S = dν/dT ≈ 2 GHz/K&nbsp; ⇒ &nbsp;1 nK ↔ 2 Hz of beat. Every 
     </tbody>
   </table>
 
-  <h4>17.2.1 How each value is derived</h4>
+  <h4>18.2.1 How each value is derived</h4>
   <p>Every contributor is modeled as a single Allan power law and read out at the 60 s window:</p>
   <div class="formula">
 σ(τ) = a · τ<sup>μ</sup>&nbsp; (a = the 1 s coefficient, Hz)&nbsp; · &nbsp;slope μ: white-FM −½, flicker 0, random-walk +½<br>
@@ -2770,7 +2888,7 @@ value at 60 s = a · 60<sup>μ</sup>&nbsp; · &nbsp;kelvin twin = Hz ÷ S = Hz �
   </ul>
 
   <div class="note"><b>Cancelled terms</b> <span class="sub">(random-walk · μ = +½; slow and common,
-  so removed by the ratio — §17.1).</span> Each grows as a·√60 toward the window, which is why they
+  so removed by the ratio — §18.1).</span> Each grows as a·√60 toward the window, which is why they
   are the <em>largest</em> raw terms yet contribute nothing to the result:
   <ul style="margin-bottom:0">
     <li><b>RAM slow drift</b> — slow random-walk of the RAM; a ≈ 50 Hz → 50·√60 = <b>387 Hz (194 nK)</b>.</li>
@@ -2780,7 +2898,7 @@ value at 60 s = a · 60<sup>μ</sup>&nbsp; · &nbsp;kelvin twin = Hz ÷ S = Hz �
     <li><b>Strain / mount creep</b> — differential mount/strain relaxation; a ≈ 20 Hz → <b>155 Hz (77 nK)</b>.</li>
   </ul>
   Without ratiometric cancellation these would dominate and push the beat past ~750 nK by 600 s (dashed
-  curves, Fig 17.1).</div>
+  curves, Fig 18.1).</div>
 
   <p><b>Combined rows.</b> The surviving (kept) contributors are independent, so they add in
   quadrature; the expanded uncertainty applies the k = 2 coverage factor:</p>
@@ -2796,13 +2914,13 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
 
   <figure>
     <img src="img/allan_uncertainty.png" alt="Allan deviation of the beat frequency vs averaging time">
-    <figcaption><b>Fig 17.1 — Beat-frequency Allan deviation.</b> Solid = ratiometric (slow common
+    <figcaption><b>Fig 18.1 — Beat-frequency Allan deviation.</b> Solid = ratiometric (slow common
     terms cancelled); dashed = without cancellation, where the slow terms re-enter as a random-walk
     upturn. The RF lock (blue) sits near ~11 nK across the window; the dither lock (teal) near
     ~42 nK. The right axis is equivalent differential temperature; the 60 s spec point is marked.</figcaption>
   </figure>
 
-  <h3>17.3 σ versus averaging time</h3>
+  <h3>18.3 σ versus averaging time</h3>
   <table>
     <thead><tr><th>τ [s]</th><th>Dither σ(Δν)</th><th>Dither σ(ΔT)</th><th>RF σ(Δν)</th><th>RF σ(ΔT)</th></tr></thead>
     <tbody>
@@ -2814,7 +2932,7 @@ U (k = 2, ≈95 %) = 2·u<sub>c</sub> = 166 Hz (83 nK) dither&nbsp;·&nbsp;44 Hz
     </tbody>
   </table>
 
-  <h3>17.4 Voltage twin — the budget as µV/V</h3>
+  <h3>18.4 Voltage twin — the budget as µV/V</h3>
   <p>Used as a <b>voltmeter</b>, the instrument's response to the applied voltage is <b>square law</b>,
   ν = k<sub>1</sub>·V², calibrated at <b>14 GHz of beat change over a 2 V full scale</b> ⇒
   k<sub>1</sub> = 3.5 GHz/V². What converts an uncertainty is the <em>slope</em>, not the chord — at
@@ -2856,13 +2974,13 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   <div class="note">The full model — acronyms, the snapshot budget, power-law Allan slopes, and
   interactive what-if sliders — is the <a href="../UncertaintyBudget/laser_driver_v3_uncertainty_budget.ipynb">uncertainty-budget notebook</a>.
   The figures above were computed from it (S = 2 GHz/K, ε = 10<sup>−4</sup> same-die match); the µV/V
-  twin of §17.4 is its §8, including the full-scale penalty table.</div>
+  twin of §18.4 is its §8, including the full-scale penalty table.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
 <!-- ============================================================= -->
 <section id="specs">
-  <h2 class="sec"><span class="num">18</span> Specifications</h2>
+  <h2 class="sec"><span class="num">19</span> Specifications</h2>
   <table>
     <thead><tr><th>Item</th><th>Specification</th></tr></thead>
     <tbody>
@@ -2873,10 +2991,10 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
       <tr><td>Beat sensitivity S</td><td>≈ 2 GHz/K (differential)</td></tr>
       <tr><td>Stability (60 s Allan)</td><td>≈ 40 nK (dither) → target 4–11 nK (RF lock), RAM-limited</td></tr>
       <tr><td>Voltage readout (square law)</td><td>14 GHz over 2 V full scale ⇒ k<sub>1</sub> = 3.5 GHz/V², slope 14 GHz/V at FS</td></tr>
-      <tr><td>Voltage uncertainty U (k = 2, 60 s)</td><td>1.5×10<sup>−3</sup> µV/V (3.1 nV) at 2 V FS, RF lock; 5.9×10<sup>−4</sup> µV/V if RAM cancels (<a href="#uncertainty">§17.4</a>) — degrades 1/V absolute, 1/V² relative</td></tr>
+      <tr><td>Voltage uncertainty U (k = 2, 60 s)</td><td>1.5×10<sup>−3</sup> µV/V (3.1 nV) at 2 V FS, RF lock; 5.9×10<sup>−4</sup> µV/V if RAM cancels (<a href="#uncertainty">§18.4</a>) — degrades 1/V absolute, 1/V² relative</td></tr>
       <tr><td>Modulation Ω</td><td>~1–3 MHz, 4× AD9833 DDS (25 MHz clock)</td></tr>
       <tr><td>Voltage reference</td><td>LTC6655-5, 5.000 V, 0.25 ppm, ~1.6 µV p-p</td></tr>
-      <tr><td>Error signal <code>ERRn</code></td><td>Bipolar about the AFE zero-error datum; AFE DC gain ×5.02 inverting; datum nominally ≈2.49 V, trimmable 1.99–2.99 V (<a href="#afe">§13</a>)</td></tr>
+      <tr><td>Error signal <code>ERRn</code></td><td>Bipolar about the AFE zero-error datum; AFE DC gain ×5.02 inverting; datum nominally ≈2.49 V, trimmable 1.99–2.99 V (<a href="#afe">§14</a>)</td></tr>
       <tr><td>ERR offset null</td><td>Automatic, AD5696R 16-bit at 0x0E; ±0.49 V range, 15 µV/code, ≈±0.2 mV residual, saved to EEPROM</td></tr>
       <tr><td>Regulated rails</td><td>±15 V, ±5 V, 5 Vref, 3V3, 1V8, +5V_LASER, ±6V_TEC, ±18 V bus</td></tr>
       <tr><td>Controller</td><td>Teensy 4.1, I²C backplane, on-card jumper addressing</td></tr>
@@ -2899,14 +3017,14 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
 
 <!-- ============================================================= -->
 <section id="schematics">
-  <h2 class="sec"><span class="num">19</span> Simplified schematics</h2>
+  <h2 class="sec"><span class="num">20</span> Simplified schematics</h2>
   <p>One functional schematic per board. These show the <b>main elements and signal/power flow only</b>
   — supply pins to op-amps, decoupling and bypass capacitors, pull-ups, and bias trivia are omitted
   for clarity. Reference designators follow the as-drawn schematics; consult the KiCad source for the
   complete, exact circuit.</p>
 
   <!-- ===== AC BOARD ===== -->
-  <h3>19.1 AC Board <span class="sub">— mains entry (<a href="#ac">§06</a>)</span></h3>
+  <h3>20.1 AC Board <span class="sub">— mains entry (<a href="#ac">§06</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 270" role="img" aria-label="AC board simplified schematic">
     <rect class="cmp" x="24" y="96" width="104" height="74" rx="4"/>
@@ -2957,13 +3075,13 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <line class="w" x1="470" y1="256" x2="560" y2="256"/><text class="net" x="566" y="260">−9Vac</text>
     <text class="sub" x="690" y="238">→ pm6V (±6 V TEC card)</text>
   </svg>
-  <figcaption><b>Fig 19.1.</b> Mains in through the fused IEC inlet and inrush thermistor TH1; the
+  <figcaption><b>Fig 20.1.</b> Mains in through the fused IEC inlet and inrush thermistor TH1; the
   two chassis transformers T1/T2 produce the ±18 Vac and ±9 Vac secondaries (each with a center tap
   that becomes the DC-card ground). Secondaries wire off-board to the power cards.</figcaption>
   </figure>
 
   <!-- ===== pm22V ===== -->
-  <h3>19.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§07</a>)</span></h3>
+  <h3>20.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§07</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm22V simplified schematic">
     <!-- inputs -->
@@ -3031,7 +3149,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <line class="w" x1="470" y1="210" x2="780" y2="210"/><text class="net" x="686" y="204">−18V → J6</text>
     <text class="sub" x="482" y="230">R9 0.47Ω</text>
   </svg>
-  <figcaption><b>Fig 19.2.</b> Bridge D1 feeds the two RAW reservoirs (C9/C10); their midpoint is the
+  <figcaption><b>Fig 20.2.</b> Bridge D1 feeds the two RAW reservoirs (C9/C10); their midpoint is the
   transformer center-tap ground. Each rail's pass MOSFET (Q1 N-ch / Q2 P-ch) is a source-follower:
   R6/R7 (100 kΩ) pull the gate toward the raw rail while a 470 nF soft-start capacitor
   <b>references the gate to ground</b> — so the gate, and therefore the output, is a heavily filtered,
@@ -3040,7 +3158,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== pm6V ===== -->
-  <h3>19.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§08</a>)</span></h3>
+  <h3>20.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§08</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm6V simplified schematic">
     <!-- input + bridge -->
@@ -3101,7 +3219,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <text class="sub" x="560" y="300">V_KA = 1.225·(1+60.4/15) ≈ 6.16 V</text>
     <text class="sub" x="560" y="316">→ base −2V_be → +6 V (D10/D_CP1 track)</text>
   </svg>
-  <figcaption><b>Fig 19.3.</b> Positive rail of the discrete V<sub>be</sub>-tracking regulator (the
+  <figcaption><b>Fig 20.3.</b> Positive rail of the discrete V<sub>be</sub>-tracking regulator (the
   negative rail mirrors it: Q4, Q7∥Q8 MJL21193, U12). Bridge D7 and the reservoir bank feed the
   soft-start FET Q3 — its gate pulled to the raw rail by R22 (Zener clamp omitted) — whose source is
   the pass rail into the paralleled TO-264 Darlingtons Q9∥Q10 (each with its own 0.1 Ω emitter
@@ -3111,7 +3229,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== pm1p8V ===== -->
-  <h3>19.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§09</a>)</span></h3>
+  <h3>20.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§09</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm1p8V rail tree schematic">
     <text class="net" x="24" y="40">+18V</text><line class="w" x1="24" y1="52" x2="24" y2="330"/>
@@ -3177,13 +3295,13 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
       <line class="w" x1="420" y1="310" x2="470" y2="310"/><text class="net" x="476" y="314">+5V_LASER</text>
     </g>
   </svg>
-  <figcaption><b>Fig 19.4.</b> The rail tree: the ±18 V bus feeds a rugged first regulator (TPS7A39
+  <figcaption><b>Fig 20.4.</b> The rail tree: the ±18 V bus feeds a rugged first regulator (TPS7A39
   or a 78xx/79xx) that drops the bulk voltage, then an ultra-low-noise LDO polishes each rail. The
   LTC6655-5 sets the 5.000 V metrology reference.</figcaption>
   </figure>
 
   <!-- ===== BACKPLANE ===== -->
-  <h3>19.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§10</a>)</span></h3>
+  <h3>20.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§10</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 338" role="img" aria-label="Backplane bus schematic">
     <!-- bus rails -->
@@ -3215,14 +3333,14 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <text class="sub" x="430" y="150">GA pins NOT bused — per-slot code</text>
     <text class="sub" x="430" y="166">(laser slots open for jumpers)</text>
   </svg>
-  <figcaption><b>Fig 19.5.</b> Passive backplane: every rail (top: logic/analog; bottom: the isolated
+  <figcaption><b>Fig 20.5.</b> Passive backplane: every rail (top: logic/analog; bottom: the isolated
   high-current TEC rails) buses across all eight identical slots; the signal group carries I²C, the
   two bused analog pairs, and the wired-OR fault line. Each slot hard-wires its own geographic-address
   code — except the laser-card slots, which leave GA open for the CH card's jumpers.</figcaption>
   </figure>
 
   <!-- ===== DIG ===== -->
-  <h3>19.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§11</a>)</span></h3>
+  <h3>20.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§11</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 320" role="img" aria-label="DIG card schematic">
     <rect class="cmp" x="60" y="120" width="130" height="90" rx="6"/><text class="ref" x="125" y="160" text-anchor="middle">Teensy 4.1</text><text class="sub" x="125" y="178" text-anchor="middle">supervisor</text>
@@ -3252,7 +3370,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <!-- backplane conn -->
     <line class="w" x1="800" y1="30" x2="800" y2="300"/><text class="sub" x="806" y="300">J → backplane</text>
   </svg>
-  <figcaption><b>Fig 19.6.</b> The Teensy 4.1 supervises over SPI/I²C. The CDCE913 turns the selected
+  <figcaption><b>Fig 20.6.</b> The Teensy 4.1 supervises over SPI/I²C. The CDCE913 turns the selected
   10 MHz reference into two independent 25 MHz outputs — <code>MCLK1</code> for the channel-1 DDS pair
   and <code>MCLK2</code> for the channel-2 pair (a third output clocks the Teensy's frequency counter).
   Of the four AD9833, two generate the modulation drives and two the phase-set references.
@@ -3264,7 +3382,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== CH ===== -->
-  <h3>19.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§12</a>)</span></h3>
+  <h3>20.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§12</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 380" role="img" aria-label="CH card schematic">
     <text class="ttl" x="20" y="26">LASER CONSTANT-CURRENT LOOP</text>
@@ -3327,7 +3445,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <text class="sub" x="600" y="184">GA jumper → CH1 vs CH2</text>
     <text class="sub" x="600" y="204">readback: laser IMON, TEC IMON, NTC</text>
   </svg>
-  <figcaption><b>Fig 19.7.</b> Top — the laser current loop: the DAC set-point is divided ×201 into the
+  <figcaption><b>Fig 20.7.</b> Top — the laser current loop: the DAC set-point is divided ×201 into the
   OPA192 (U23) non-inverting input; the amp drives the DMN3404L (Q17) low-side sink pulling current
   from +5V_LASER through the DFB laser, and the 0.25 Ω Kelvin sense (R79) feeds back to the inverting
   input. RF modulation is injected onto the laser line through the bias-tee choke (never the gate);
@@ -3339,7 +3457,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== AFE ===== -->
-  <h3>19.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§13</a>)</span></h3>
+  <h3>20.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§14</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 272" role="img" aria-label="AFE card schematic">
     <!-- PD -->
@@ -3395,7 +3513,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
     <text class="sub" x="600" y="214">ERR offset is auto-nulled by the</text>
     <text class="sub" x="600" y="232">DAC (null1/null2) — no trimpot.</text>
   </svg>
-  <figcaption><b>Fig 19.8.</b> One detection channel: the fiber-coupled InGaAs photodiode drives an
+  <figcaption><b>Fig 20.8.</b> One detection channel: the fiber-coupled InGaAs photodiode drives an
   <b>OPA814</b> wideband transimpedance amp (R<sub>f</sub> 8.06 kΩ) running on ±5 V and referenced to
   <b>ground</b>, so its output rests at 0 V dark and swings negative with light; an AD835 analog
   multiplier demodulates it against the ×3-buffered phase-set reference from the DDS; the low-pass
@@ -3404,7 +3522,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   zero error to a positive datum — the level shift that lets the DIG card's unipolar ADC read a
   bipolar signal. An AD5696R at 0x0E injects
   into <code>VB</code> through 100 kΩ to null the demodulator pedestal automatically
-  (<a href="#software">§14.8</a>). A tap digitizes PD level on the ADS1115. Channel 2 is
+  (<a href="#software">§15.8</a>). A tap digitizes PD level on the ADS1115. Channel 2 is
   identical.</figcaption>
   </figure>
 
