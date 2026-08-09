@@ -6693,7 +6693,7 @@
 		)
 		(uuid "7121edf9-650a-4d77-8438-92b1f2471c04")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 137.83 77.4 180)
 		(fields_autoplaced yes)
@@ -6761,7 +6761,7 @@
 		)
 		(uuid "e03f04a9-80f3-4ab4-9077-ae9422adf8a6")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 137.83 82.48 180)
 		(fields_autoplaced yes)
@@ -8813,7 +8813,7 @@
 		)
 		(uuid "e6d08cc8-14e2-4382-b248-a02218876e22")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 197.83 62.16 180)
 		(fields_autoplaced yes)
@@ -8881,7 +8881,7 @@
 		)
 		(uuid "060b38b7-f241-4d3d-bffc-a1e33a4b3d40")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 197.83 67.24 180)
 		(fields_autoplaced yes)
@@ -8949,7 +8949,7 @@
 		)
 		(uuid "17aeb9f2-b860-4140-9766-c9c51b4220ea")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 197.83 72.32 180)
 		(fields_autoplaced yes)
@@ -9017,7 +9017,7 @@
 		)
 		(uuid "84301970-b509-45e1-b99a-462d8f2c01e7")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 197.83 77.4 180)
 		(fields_autoplaced yes)
@@ -9085,7 +9085,7 @@
 		)
 		(uuid "1aef90b6-2641-405b-8703-acba3e6cddb8")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 197.83 82.48 180)
 		(fields_autoplaced yes)
@@ -10179,7 +10179,7 @@
 		)
 		(uuid "076cb856-eeb8-470d-aa71-9e3238c63280")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 227.83 77.4 180)
 		(fields_autoplaced yes)
@@ -10247,7 +10247,7 @@
 		)
 		(uuid "5787b004-7671-4adf-9859-195a65e5e8b3")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 227.83 82.48 180)
 		(fields_autoplaced yes)
@@ -12299,7 +12299,7 @@
 		)
 		(uuid "54e46880-9742-4fd4-ab36-483d90be6ed0")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 287.83 62.16 180)
 		(fields_autoplaced yes)
@@ -12367,7 +12367,7 @@
 		)
 		(uuid "f98e44af-80c5-45a2-9663-b800f2af5a79")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 287.83 67.24 180)
 		(fields_autoplaced yes)
@@ -12435,7 +12435,7 @@
 		)
 		(uuid "bc4dc6c2-0294-4364-b2c2-36d5bbf22707")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 287.83 72.32 180)
 		(fields_autoplaced yes)
@@ -12503,7 +12503,7 @@
 		)
 		(uuid "a002444f-b36e-4c44-b985-a0962930783e")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 287.83 77.4 180)
 		(fields_autoplaced yes)
@@ -12571,7 +12571,7 @@
 		)
 		(uuid "7ee09b96-b74f-4b86-bdde-eb50802270cf")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 287.83 82.48 180)
 		(fields_autoplaced yes)
@@ -13665,7 +13665,7 @@
 		)
 		(uuid "a7c95021-15f3-4cac-b6bb-eea1d3d545eb")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 317.83 77.4 180)
 		(fields_autoplaced yes)
@@ -13733,7 +13733,7 @@
 		)
 		(uuid "3828b73f-ef83-4161-a870-fac3926d091d")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 317.83 82.48 180)
 		(fields_autoplaced yes)
@@ -15785,7 +15785,7 @@
 		)
 		(uuid "9e2fa5b0-3998-4121-b09e-394e41ffeadc")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 377.83 62.16 180)
 		(fields_autoplaced yes)
@@ -15853,7 +15853,7 @@
 		)
 		(uuid "bb2fa169-c2ff-46dc-80b8-a4a76e49793e")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 377.83 67.24 180)
 		(fields_autoplaced yes)
@@ -15921,7 +15921,7 @@
 		)
 		(uuid "7ed8eb9d-2e68-4a2d-857f-0b5cac01decf")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 377.83 72.32 180)
 		(fields_autoplaced yes)
@@ -15989,7 +15989,7 @@
 		)
 		(uuid "08abe7a3-a5dc-4eea-8997-5bd2f8fdb734")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 377.83 77.4 180)
 		(fields_autoplaced yes)
@@ -16057,7 +16057,7 @@
 		)
 		(uuid "d9cfbd12-ec7d-4258-b07e-31f03ea5dc3e")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 377.83 82.48 180)
 		(fields_autoplaced yes)
@@ -17151,7 +17151,7 @@
 		)
 		(uuid "e6cfe560-0626-4242-b11d-8181838b4bea")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 407.83 77.4 180)
 		(fields_autoplaced yes)
@@ -17219,7 +17219,7 @@
 		)
 		(uuid "335d6f1b-9334-44ce-ba8b-1efecfb74027")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 407.83 82.48 180)
 		(fields_autoplaced yes)
@@ -19271,7 +19271,7 @@
 		)
 		(uuid "d078c8cc-7ceb-4c9c-b6fd-2939308a346a")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 467.83 62.16 180)
 		(fields_autoplaced yes)
@@ -19339,7 +19339,7 @@
 		)
 		(uuid "92bf321d-2155-439c-9afa-17918a6088be")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 467.83 67.24 180)
 		(fields_autoplaced yes)
@@ -19407,7 +19407,7 @@
 		)
 		(uuid "b2b4303a-b45d-4f7f-9e59-c8104fe2a6b6")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 467.83 72.32 180)
 		(fields_autoplaced yes)
@@ -19475,7 +19475,7 @@
 		)
 		(uuid "93e7cc6c-5bdf-4567-9872-678a871bce79")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 467.83 77.4 180)
 		(fields_autoplaced yes)
@@ -19543,7 +19543,7 @@
 		)
 		(uuid "310b0f70-42fe-4d8a-8d72-a2954427732c")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 467.83 82.48 180)
 		(fields_autoplaced yes)
@@ -20637,7 +20637,7 @@
 		)
 		(uuid "e968eeea-a54e-489b-b502-890b9e40076f")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 497.83 77.4 180)
 		(fields_autoplaced yes)
@@ -20705,7 +20705,7 @@
 		)
 		(uuid "ace0d4c5-1dcc-447e-9652-92e235698875")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 497.83 82.48 180)
 		(fields_autoplaced yes)
@@ -22757,7 +22757,7 @@
 		)
 		(uuid "3aae2925-71de-44e2-89ba-e8745731341c")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 557.83 62.16 180)
 		(fields_autoplaced yes)
@@ -22825,7 +22825,7 @@
 		)
 		(uuid "14de683f-e4b0-427e-96c2-ca554981e0da")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 557.83 67.24 180)
 		(fields_autoplaced yes)
@@ -22893,7 +22893,7 @@
 		)
 		(uuid "e112d031-a538-4b0c-9e7a-e05daea9c8da")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 557.83 72.32 180)
 		(fields_autoplaced yes)
@@ -22961,7 +22961,7 @@
 		)
 		(uuid "4fd15130-e26e-499a-b8f7-d5c8edaa667b")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 557.83 77.4 180)
 		(fields_autoplaced yes)
@@ -23029,7 +23029,7 @@
 		)
 		(uuid "fe4c6531-97e2-4605-8a81-d7df117cba02")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 557.83 82.48 180)
 		(fields_autoplaced yes)
@@ -24123,7 +24123,7 @@
 		)
 		(uuid "de68f9ee-4ec1-4c3b-b1b1-b8660bae04d1")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 61.83 163.4 180)
 		(fields_autoplaced yes)
@@ -24191,7 +24191,7 @@
 		)
 		(uuid "92cbe8d8-a0f8-4624-aab2-b44b72970bc7")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 61.83 168.48 180)
 		(fields_autoplaced yes)
@@ -26243,7 +26243,7 @@
 		)
 		(uuid "aa3fa858-a174-4431-8718-d79c8ba9ec7f")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 121.83 148.16 180)
 		(fields_autoplaced yes)
@@ -26311,7 +26311,7 @@
 		)
 		(uuid "9003c790-68d4-44b5-8f42-7a702a0f3023")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 121.83 153.24 180)
 		(fields_autoplaced yes)
@@ -26379,7 +26379,7 @@
 		)
 		(uuid "9d27d2d1-8d0f-49c9-ab1a-b017fcd0eead")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 121.83 158.32 180)
 		(fields_autoplaced yes)
@@ -26447,7 +26447,7 @@
 		)
 		(uuid "f26c5592-340e-443f-b995-e693e50bfff7")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 121.83 163.4 180)
 		(fields_autoplaced yes)
@@ -26515,7 +26515,7 @@
 		)
 		(uuid "9cd7b554-8b87-4c4b-a082-06111d7314d6")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 121.83 168.48 180)
 		(fields_autoplaced yes)
@@ -27609,7 +27609,7 @@
 		)
 		(uuid "09aa620b-0be8-47ed-a999-3b2ab55670ac")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 271.83 163.4 180)
 		(fields_autoplaced yes)
@@ -27677,7 +27677,7 @@
 		)
 		(uuid "6eb4cb2e-0604-4e15-97e1-5f28583a5f92")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 271.83 168.48 180)
 		(fields_autoplaced yes)
@@ -29729,7 +29729,7 @@
 		)
 		(uuid "1bbd7bef-ea87-4929-85ad-62c70482b14a")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 331.83 148.16 180)
 		(fields_autoplaced yes)
@@ -29797,7 +29797,7 @@
 		)
 		(uuid "edf15a46-d1b5-48b7-a5e3-383350ec1a77")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 331.83 153.24 180)
 		(fields_autoplaced yes)
@@ -29865,7 +29865,7 @@
 		)
 		(uuid "8d2acc1a-da22-4f6d-a113-300b88b29f3f")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 331.83 158.32 180)
 		(fields_autoplaced yes)
@@ -29933,7 +29933,7 @@
 		)
 		(uuid "45c9f078-784e-40a9-8234-929ad18e24db")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 331.83 163.4 180)
 		(fields_autoplaced yes)
@@ -30001,7 +30001,7 @@
 		)
 		(uuid "3eec0767-3537-498a-b6ca-b75c6c7098b2")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 331.83 168.48 180)
 		(fields_autoplaced yes)
@@ -31095,7 +31095,7 @@
 		)
 		(uuid "e03af252-ef42-4235-9938-8116c91c61fd")
 	)
-	(global_label "SDA"
+	(global_label "SDA_BUS"
 		(shape passive)
 		(at 361.83 163.4 180)
 		(fields_autoplaced yes)
@@ -31163,7 +31163,7 @@
 		)
 		(uuid "6fe00d9f-a4e9-4dc6-8b1d-0e7b59aef20b")
 	)
-	(global_label "SCL"
+	(global_label "SCL_BUS"
 		(shape passive)
 		(at 361.83 168.48 180)
 		(fields_autoplaced yes)
@@ -33215,7 +33215,7 @@
 		)
 		(uuid "e940cf20-671a-4b91-9280-c2040761bba8")
 	)
-	(global_label "ERR1"
+	(global_label "ERR1_BUS"
 		(shape passive)
 		(at 421.83 148.16 180)
 		(fields_autoplaced yes)
@@ -33283,7 +33283,7 @@
 		)
 		(uuid "f24b1c99-bbe3-4242-8038-a2b391c13018")
 	)
-	(global_label "ERR2"
+	(global_label "ERR2_BUS"
 		(shape passive)
 		(at 421.83 153.24 180)
 		(fields_autoplaced yes)
@@ -33351,7 +33351,7 @@
 		)
 		(uuid "d327af1b-0a3b-4829-bf3b-4cf99d99e072")
 	)
-	(global_label "MOD1_DRV"
+	(global_label "MOD1_BUS"
 		(shape passive)
 		(at 421.83 158.32 180)
 		(fields_autoplaced yes)
@@ -33419,7 +33419,7 @@
 		)
 		(uuid "390e5ffb-b39b-4b31-95a1-05e70265d6d3")
 	)
-	(global_label "MOD2_DRV"
+	(global_label "MOD2_BUS"
 		(shape passive)
 		(at 421.83 163.4 180)
 		(fields_autoplaced yes)
@@ -33487,7 +33487,7 @@
 		)
 		(uuid "9f602429-3cfb-47c0-a7bf-6e52277235c8")
 	)
-	(global_label "SPARE_CLK10M"
+	(global_label "CLK10M_BUS"
 		(shape passive)
 		(at 421.83 168.48 180)
 		(fields_autoplaced yes)

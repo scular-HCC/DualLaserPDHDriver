@@ -125,7 +125,7 @@
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
       <div class="kpi"><b>96-way</b><span>DIN 41612 Type C slot</span></div>
     </div>
-    <div class="rev">Manual Rev 2.1 &nbsp;·&nbsp; 2026-08-05 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
+    <div class="rev">Manual Rev 2.2 &nbsp;·&nbsp; 2026-08-06 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
   </div>
 </header>
 
@@ -1541,10 +1541,12 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     stages. On v7 it rides on a <a href="#btf">BTF daughter card (§13)</a> stacked ≈40 mm above this
     one. <code>J_BTF1</code> is a <b>Samtec TSW-107-21-G-D</b> long-post 2×7 header whose pins reach
     33.53 mm above the board face; the BTF card's ESQ-107-12-G-D socket drops over them, and four
-    M3 × 40 mm standoffs set the gap and carry the load. The header is wired in <b>butterfly pin
-    order</b>, so the daughter card is a straight 1:1 pass-through with no pin map to get wrong.
-    This replaces the flying 24 AWG harness and off-board mount of the v5/v6 cards, removing the
-    hand-built cable and its reversed-connector failure mode entirely.</li>
+    M3 × 40 mm standoffs set the gap and carry the load. The fourteen positions are <b>not</b> a
+    straight copy of the butterfly numbering: the TEC pair is doubled onto two pins each way and the
+    spare positions are given over to <code>CASE</code> shielding, so consult the pinout in
+    <a href="#btf">§13</a> rather than assuming pin <i>N</i> is butterfly pin <i>N</i>. This replaces
+    the flying 24 AWG harness and off-board mount of the v5/v6 cards, removing the hand-built cable
+    and its reversed-connector failure mode entirely.</li>
   </ul>
   <div class="danger"><b>Fabbed v5 cards: U24 PDH integrator has positive feedback — rework before
   powering a laser.</b> On the v5 layout the OPA192 <code>U24</code> has its inputs reversed: the
@@ -1627,31 +1629,133 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <li><b>H1–H4</b> — four M3 mounting holes for the standoffs that actually carry the stack.</li>
   </ul>
 
-  <h4>It is a pure pass-through</h4>
-  <p>There is no active circuitry on this card and no components other than the connectors: every net
-  runs straight from a ZIF contact to the matching pin of J1, in <b>butterfly pin order</b>, so
-  <b>J1 pin <i>N</i> is butterfly pin <i>N</i></b>. That is deliberate — the CH card's
-  <code>J_BTF1</code> was already wired in butterfly order, so no translation is needed anywhere and
-  there is no pin map to get wrong.</p>
+  <h4>The DFB1550LP butterfly package</h4>
+  <p>The laser is a <b>14-pin butterfly</b> package: two rows of seven leads on a 2.54&nbsp;mm pitch,
+  with the laser diode, its thermo-electric cooler, a 10&nbsp;k&Omega; NTC thermistor and an internal
+  monitor photodiode all sealed in one hermetic body, and a single fiber pigtail out the end. Only
+  <b>nine of the fourteen leads are used</b> &mdash; pins 6&ndash;9 and 12 are manufacturer
+  no-connects and are left open on both cards.</p>
   <table>
-    <thead><tr><th>Net</th><th>Butterfly / J1 pin</th><th>ZIF contact</th><th>Function</th></tr></thead>
+    <thead><tr><th>Butterfly pin</th><th>Function</th><th>Net</th><th>ZIF contact</th><th>Stack pin(s)</th></tr></thead>
     <tbody>
-      <tr><td><code>TEC_P</code></td><td>1</td><td>JZ1-1</td><td>TEC +, up to 2.5 A</td></tr>
-      <tr><td><code>NTC_A</code></td><td>2</td><td>JZ1-2</td><td>Thermistor</td></tr>
-      <tr><td><code>MPD_A</code></td><td>3</td><td>JZ1-3</td><td>Monitor photodiode anode</td></tr>
-      <tr><td><code>MPD_K</code></td><td>4</td><td>JZ1-4</td><td>Monitor photodiode cathode</td></tr>
-      <tr><td><code>NTC_GND</code></td><td>5</td><td>JZ1-5</td><td>Thermistor return</td></tr>
-      <tr><td><code>LD_A</code></td><td>10</td><td>JZ2-5</td><td>Laser anode (also JP1-1)</td></tr>
-      <tr><td><code>LD_K</code></td><td>11</td><td>JZ2-4</td><td>Laser cathode (also JP1-2)</td></tr>
-      <tr><td><code>CASE</code></td><td>13</td><td>JZ2-2</td><td>Package case</td></tr>
-      <tr><td><code>TEC_N</code></td><td>14</td><td>JZ2-1</td><td>TEC −</td></tr>
-      <tr><td colspan="4" style="background:var(--panel2)">Pins 6, 7, 8, 9 and 12 are the butterfly's no-connects and are left unconnected on both sides.</td></tr>
+      <tr><td><b>1</b></td><td>TEC +</td><td><code>TEC_P</code></td><td>JZ1-1</td><td>1, 2</td></tr>
+      <tr><td><b>2</b></td><td>Thermistor</td><td><code>NTC_A</code></td><td>JZ1-2</td><td>7</td></tr>
+      <tr><td><b>3</b></td><td>Monitor PD anode</td><td><code>MPD_A</code></td><td>JZ1-3</td><td>6</td></tr>
+      <tr><td><b>4</b></td><td>Monitor PD cathode</td><td><code>MPD_K</code></td><td>JZ1-4</td><td>5</td></tr>
+      <tr><td><b>5</b></td><td>Thermistor return</td><td><code>NTC_GND</code></td><td>JZ1-5</td><td>8</td></tr>
+      <tr><td>6&ndash;9</td><td colspan="4"><em>No connect</em></td></tr>
+      <tr><td><b>10</b></td><td>Laser anode</td><td><code>LD_A</code></td><td>JZ2-5</td><td>10</td></tr>
+      <tr><td><b>11</b></td><td>Laser cathode</td><td><code>LD_K</code></td><td>JZ2-4</td><td>12</td></tr>
+      <tr><td>12</td><td colspan="4"><em>No connect</em></td></tr>
+      <tr><td><b>13</b></td><td>Package case</td><td><code>CASE</code></td><td>JZ2-2</td><td>3, 4, 9, 11</td></tr>
+      <tr><td><b>14</b></td><td>TEC &minus;</td><td><code>TEC_N</code></td><td>JZ2-1</td><td>13, 14</td></tr>
     </tbody>
   </table>
-  <div class="note"><b>Note the JZ2 numbering.</b> JZ1 runs with the butterfly (contact 1 = pin 1),
-  but JZ2 is the <em>reverse</em> half of the pair, so its contacts count the other way: JZ2-1 is
-  butterfly 14, JZ2-2 is 13, JZ2-4 is 11, JZ2-5 is 10. This is a property of the 7S/7R socket pair,
-  not an error — but it is the thing to check first if a continuity test comes out mirrored.</div>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 900 300" role="img" aria-label="DFB1550LP 14-pin butterfly package pinout">
+    <text class="ttl" x="16" y="18">DFB1550LP &mdash; 14-PIN BUTTERFLY, VIEWED FROM ABOVE</text>
+    <rect class="cmp" x="250" y="96" width="400" height="108" rx="4"/>
+    <text class="sub" x="450" y="138" text-anchor="middle">DFB1550LP</text>
+    <text class="sub" x="450" y="154" text-anchor="middle">laser &middot; TEC &middot; NTC &middot; monitor PD</text>
+    <text class="sub" x="450" y="170" text-anchor="middle">12.70 mm across the lead rows</text>
+    <line class="w" x1="650" y1="150" x2="736" y2="150"/>
+    <circle class="j" cx="740" cy="150" r="4"/>
+    <text class="sub" x="750" y="146">fiber pigtail</text>
+    <text class="sub" x="750" y="162">FC/APC</text>
+    <circle class="j" cx="266" cy="114" r="5"/>
+    <text class="sub" x="266" y="88" text-anchor="middle">pin 1</text>
+    <line class="w" x1="278" y1="96" x2="278" y2="62"/><text class="ref" x="278" y="52" text-anchor="middle">1</text><text class="sub" x="278" y="38" text-anchor="middle">TEC+</text>
+    <line class="w" x1="336" y1="96" x2="336" y2="62"/><text class="ref" x="336" y="52" text-anchor="middle">2</text><text class="sub" x="336" y="38" text-anchor="middle">NTC</text>
+    <line class="w" x1="394" y1="96" x2="394" y2="62"/><text class="ref" x="394" y="52" text-anchor="middle">3</text><text class="sub" x="394" y="38" text-anchor="middle">PD A</text>
+    <line class="w" x1="452" y1="96" x2="452" y2="62"/><text class="ref" x="452" y="52" text-anchor="middle">4</text><text class="sub" x="452" y="38" text-anchor="middle">PD K</text>
+    <line class="w" x1="510" y1="96" x2="510" y2="62"/><text class="ref" x="510" y="52" text-anchor="middle">5</text><text class="sub" x="510" y="38" text-anchor="middle">NTC rtn</text>
+    <line class="w" x1="568" y1="96" x2="568" y2="62"/><text class="sub" x="568" y="52" text-anchor="middle">6</text><text class="sub" x="568" y="38" text-anchor="middle">nc</text>
+    <line class="w" x1="626" y1="96" x2="626" y2="62"/><text class="sub" x="626" y="52" text-anchor="middle">7</text><text class="sub" x="626" y="38" text-anchor="middle">nc</text>
+    <line class="w" x1="278" y1="204" x2="278" y2="238"/><text class="ref" x="278" y="256" text-anchor="middle">14</text><text class="sub" x="278" y="272" text-anchor="middle">TEC&minus;</text>
+    <line class="w" x1="336" y1="204" x2="336" y2="238"/><text class="ref" x="336" y="256" text-anchor="middle">13</text><text class="sub" x="336" y="272" text-anchor="middle">case</text>
+    <line class="w" x1="394" y1="204" x2="394" y2="238"/><text class="sub" x="394" y="256" text-anchor="middle">12</text><text class="sub" x="394" y="272" text-anchor="middle">nc</text>
+    <line class="w" x1="452" y1="204" x2="452" y2="238"/><text class="ref" x="452" y="256" text-anchor="middle">11</text><text class="sub" x="452" y="272" text-anchor="middle">LD K</text>
+    <line class="w" x1="510" y1="204" x2="510" y2="238"/><text class="ref" x="510" y="256" text-anchor="middle">10</text><text class="sub" x="510" y="272" text-anchor="middle">LD A</text>
+    <line class="w" x1="568" y1="204" x2="568" y2="238"/><text class="sub" x="568" y="256" text-anchor="middle">9</text><text class="sub" x="568" y="272" text-anchor="middle">nc</text>
+    <line class="w" x1="626" y1="204" x2="626" y2="238"/><text class="sub" x="626" y="256" text-anchor="middle">8</text><text class="sub" x="626" y="272" text-anchor="middle">nc</text>
+    <text class="sub" x="16" y="196">lead pitch 2.54 mm</text>
+    <text class="sub" x="16" y="214">row span 17.78 mm</text>
+    <text class="sub" x="16" y="232">tip-to-tip 35.45 mm</text>
+    <text class="sub" x="16" y="250">body height 7.20 mm</text>
+  </svg>
+  <figcaption><b>Fig 13.1 &mdash; DFB1550LP butterfly pinout, top view.</b> Pin 1 is at the corner
+  marked on the package; numbering runs along the near row and returns along the far row, so pin 14
+  sits directly opposite pin 1. Only nine leads are connected. The dimensions were taken from
+  Thorlabs&rsquo; own STEP model rather than the datasheet drawing &mdash; note that <b>12.70 mm is
+  the body across the lead rows</b>, while the frequently quoted 20.8 mm figure is the lid plate
+  measured <em>along</em> the fiber axis.</figcaption>
+  </figure>
+
+  <h4>The stack connector &mdash; no longer 1:1</h4>
+  <p>There is still no active circuitry on this card: every net runs from a ZIF contact straight to
+  J1. But the stack connector is <b>no longer wired in butterfly pin order</b>. With fourteen pins
+  carrying only nine signals, the spare positions are spent on <b>current capacity and shielding</b>
+  rather than on a tidy 1:1 map. Three things follow:</p>
+  <ul>
+    <li><b>The TEC pair is doubled and split to the ends.</b> <code>TEC_P</code> takes pins 1 and 2,
+    <code>TEC_N</code> takes 13 and 14, so the 2.5&nbsp;A TEC current is carried on two pins in each
+    direction and the two polarities sit at opposite ends of the connector.</li>
+    <li><b>A full shield band separates the TEC from the instrumentation.</b> Pins 3 and 4 are both
+    <code>CASE</code>, so an entire grounded column stands between the TEC pins and the monitor
+    photodiode and thermistor lines that follow.</li>
+    <li><b>The laser pair is guarded.</b> <code>LD_A</code> (pin 10) and <code>LD_K</code> (pin 12)
+    each sit directly opposite a <code>CASE</code> pin (9 and 11). The laser line carries the RF
+    modulation, so keeping a return conductor immediately alongside it holds the loop area down.</li>
+  </ul>
+  <table>
+    <thead><tr><th colspan="2">Odd row</th><th colspan="2">Even row</th><th>What the column is for</th></tr></thead>
+    <tbody>
+      <tr><td><b>1</b></td><td><code>TEC_P</code></td><td><b>2</b></td><td><code>TEC_P</code></td><td>TEC +, paralleled</td></tr>
+      <tr><td><b>3</b></td><td><code>CASE</code></td><td><b>4</b></td><td><code>CASE</code></td><td><b>Shield band</b></td></tr>
+      <tr><td><b>5</b></td><td><code>MPD_K</code></td><td><b>6</b></td><td><code>MPD_A</code></td><td>Monitor photodiode</td></tr>
+      <tr><td><b>7</b></td><td><code>NTC_A</code></td><td><b>8</b></td><td><code>NTC_GND</code></td><td>Thermistor</td></tr>
+      <tr><td><b>9</b></td><td><code>CASE</code></td><td><b>10</b></td><td><code>LD_A</code></td><td>Laser anode + guard</td></tr>
+      <tr><td><b>11</b></td><td><code>CASE</code></td><td><b>12</b></td><td><code>LD_K</code></td><td>Laser cathode + guard</td></tr>
+      <tr><td><b>13</b></td><td><code>TEC_N</code></td><td><b>14</b></td><td><code>TEC_N</code></td><td>TEC &minus;, paralleled</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+  <svg class="sch" viewBox="0 0 900 296" role="img" aria-label="CH to BTF stack connector pinout, two by seven">
+    <text class="ttl" x="16" y="18">CH J_BTF1 &harr; BTF J1 &mdash; 2&times;7, 2.54 mm PITCH</text>
+    <text class="sub" x="16" y="36">Odd row above, even row below. Both cards carry the identical assignment on all fourteen pins.</text>
+    <text class="sub" x="66" y="96" text-anchor="end">odd</text>
+    <rect class="cmp" x="76" y="70" width="96" height="42" rx="4"/><text class="ref" x="124" y="88" text-anchor="middle">1</text><text class="sub" x="124" y="104" text-anchor="middle">TEC_P</text>
+    <rect class="cmp" x="180" y="70" width="96" height="42" rx="4"/><text class="ref" x="228" y="88" text-anchor="middle">3</text><text class="sub" x="228" y="104" text-anchor="middle">CASE</text>
+    <rect class="cmp" x="284" y="70" width="96" height="42" rx="4"/><text class="ref" x="332" y="88" text-anchor="middle">5</text><text class="sub" x="332" y="104" text-anchor="middle">MPD_K</text>
+    <rect class="cmp" x="388" y="70" width="96" height="42" rx="4"/><text class="ref" x="436" y="88" text-anchor="middle">7</text><text class="sub" x="436" y="104" text-anchor="middle">NTC_A</text>
+    <rect class="cmp" x="492" y="70" width="96" height="42" rx="4"/><text class="ref" x="540" y="88" text-anchor="middle">9</text><text class="sub" x="540" y="104" text-anchor="middle">CASE</text>
+    <rect class="cmp" x="596" y="70" width="96" height="42" rx="4"/><text class="ref" x="644" y="88" text-anchor="middle">11</text><text class="sub" x="644" y="104" text-anchor="middle">CASE</text>
+    <rect class="cmp" x="700" y="70" width="96" height="42" rx="4"/><text class="ref" x="748" y="88" text-anchor="middle">13</text><text class="sub" x="748" y="104" text-anchor="middle">TEC_N</text>
+    <text class="sub" x="66" y="164" text-anchor="end">even</text>
+    <rect class="cmp" x="76" y="138" width="96" height="42" rx="4"/><text class="ref" x="124" y="156" text-anchor="middle">2</text><text class="sub" x="124" y="172" text-anchor="middle">TEC_P</text>
+    <rect class="cmp" x="180" y="138" width="96" height="42" rx="4"/><text class="ref" x="228" y="156" text-anchor="middle">4</text><text class="sub" x="228" y="172" text-anchor="middle">CASE</text>
+    <rect class="cmp" x="284" y="138" width="96" height="42" rx="4"/><text class="ref" x="332" y="156" text-anchor="middle">6</text><text class="sub" x="332" y="172" text-anchor="middle">MPD_A</text>
+    <rect class="cmp" x="388" y="138" width="96" height="42" rx="4"/><text class="ref" x="436" y="156" text-anchor="middle">8</text><text class="sub" x="436" y="172" text-anchor="middle">NTC_GND</text>
+    <rect class="cmp" x="492" y="138" width="96" height="42" rx="4"/><text class="ref" x="540" y="156" text-anchor="middle">10</text><text class="sub" x="540" y="172" text-anchor="middle">LD_A</text>
+    <rect class="cmp" x="596" y="138" width="96" height="42" rx="4"/><text class="ref" x="644" y="156" text-anchor="middle">12</text><text class="sub" x="644" y="172" text-anchor="middle">LD_K</text>
+    <rect class="cmp" x="700" y="138" width="96" height="42" rx="4"/><text class="ref" x="748" y="156" text-anchor="middle">14</text><text class="sub" x="748" y="172" text-anchor="middle">TEC_N</text>
+    <line class="w" x1="228" y1="188" x2="228" y2="206"/>
+    <text class="net" x="228" y="222" text-anchor="middle">shield band</text>
+    <line class="w" x1="592" y1="188" x2="592" y2="206"/>
+    <text class="net" x="592" y="222" text-anchor="middle">laser pair, CASE-guarded</text>
+    <line class="w" x1="124" y1="188" x2="124" y2="248"/>
+    <text class="net" x="124" y="264" text-anchor="middle">TEC + &times;2</text>
+    <line class="w" x1="748" y1="188" x2="748" y2="248"/>
+    <text class="net" x="748" y="264" text-anchor="middle">TEC &minus; &times;2</text>
+  </svg>
+  <figcaption><b>Fig 13.2 &mdash; Stack connector pinout.</b> Verified identical on both sides: the
+  CH card&rsquo;s <code>J_BTF1</code> header and the BTF card&rsquo;s <code>J1</code> socket carry
+  the same net on every one of the fourteen positions. Note that <code>MPD_A</code> on pin 6 lands
+  on <code>GND</code> at the CH card &mdash; the monitor photodiode&rsquo;s anode is its return, so
+  the two names describe the same node seen from opposite ends of the stack.</figcaption>
+  </figure>
 
   <h4>The mechanical stack</h4>
   <p>The stack height is set by the <b>standoffs, not by the connector</b>. The CH card carries a

@@ -47,4 +47,14 @@
 	(pad "3" thru_hole oval (at 5.08 0) (size 1.905 2) (drill 1.1) (layers "*.Cu" "*.Mask"))
 	(pad "" thru_hole circle (at -10.16 0) (size 4.0 4.0) (drill 2.6) (layers "*.Cu" "*.Mask"))
 	(pad "" thru_hole circle (at 15.24 0) (size 4.0 4.0) (drill 2.6) (layers "*.Cu" "*.Mask"))
+	(model "C:/GIT/DualLaserPDHDriver/lib/Heatsinks.3dshapes/HS657-10ABPE.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Vertical.step"
+		(offset (xyz 0 0 0))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )

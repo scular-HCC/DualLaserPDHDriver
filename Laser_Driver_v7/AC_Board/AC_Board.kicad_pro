@@ -530,7 +530,7 @@
       },
       {
         "bus_width": 12,
-        "clearance": 3.0,
+        "clearance": 2.0,
         "diff_pair_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
@@ -567,11 +567,11 @@
       },
       {
         "netclass": "Mains",
-        "pattern": "Net-(J2-Pin_2)"
+        "pattern": "/Line_TH"
       },
       {
         "netclass": "Mains",
-        "pattern": "Net-(J2-Pin_3)"
+        "pattern": "unconnected-*"
       }
     ]
   },

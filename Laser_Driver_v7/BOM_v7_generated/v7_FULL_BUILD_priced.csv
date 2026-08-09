@@ -1,0 +1,164 @@
+Qty,MPN,Supplier,Stock,UnitPrice,ExtPrice,Note,Refs
+159,CL21B104KBCNNNC,DigiKey,6698901,0.0263,4.18,,"Backplane:C1,pm1p8V_pm5V_5Vref_5Vlaser:C9,pm1p8V_pm5V_5Vref_5Vlaser:C10,pm1p8V_pm5V_"
+56,RC0805FR-0710KL,DigiKey,2991013,0.0208,1.16,,"DIG_Card:R305,DIG_Card:VM_R54,DIG_Card:VM_R55,DIG_Card:VM_R58,DIG_Card:VM_R60,DIG_Ca"
+45,C0805C106K3PACTU,DigiKey,64841,0.168,7.56,,"pm1p8V_pm5V_5Vref_5Vlaser:C15,pm1p8V_pm5V_5Vref_5Vlaser:C22,pm1p8V_pm5V_5Vref_5Vlase"
+26,CL21B103KBANNNC,DigiKey,2250921,0.044,1.14,exact,"DIG_Card:C83,DIG_Card:C87,DIG_Card:C89,DIG_Card:C90,DIG_Card:C91,DIG_Card:C320,DIG_C"
+18,RC0805FR-07100RL,DigiKey,348596,0.034,0.61,,"DIG_Card:R114,DIG_Card:R301,DIG_Card:R302,DIG_Card:VM_R56,DIG_Card:VM_R66,DIG_Card:V"
+15,OPA192IDBVR,DigiKey,36660,2.888,43.32,,"pm1p8V_pm5V_5Vref_5Vlaser:U21,DIG_Card:U301,DIG_Card:U302,CH_Card:U17,CH_Card:U19,CH"
+14,CRCW08051K00FKEA,DigiKey,1347365,0.044,0.62,,"AC_Board:R1,pm6V:R38,pm6V:R39,pm1p8V_pm5V_5Vref_5Vlaser:R17,DIG_Card:R107,DIG_Card:R"
+13,RC0805FR-0710RL,DigiKey,417731,0.051,0.66,,"pm6V:R40,pm6V:R41,pm6V:R42,pm6V:R43,CH_Card:R48,CH_Card:R116,CH_Card:R126,CH_Card:R1"
+12,CL21B475KAFNNNE,DigiKey,309650,0.32,3.84,,"pm1p8V_pm5V_5Vref_5Vlaser:C11,pm1p8V_pm5V_5Vref_5Vlaser:C12,pm1p8V_pm5V_5Vref_5Vlase"
+10,531102B02500G,DigiKey,36475,1.64,16.4,,"pm22V:HS1,pm22V:HS2,pm6V:HS2,pm6V:HS3,pm1p8V_pm5V_5Vref_5Vlaser:HS1,pm1p8V_pm5V_5Vre"
+10,RC0805FR-0747RL,DigiKey,195644,0.034,0.34,,"DIG_Card:R306,DIG_Card:R307,CH_Card:R69,CH_Card:R70,CH_Card:R75,AFE_Card:R217,AFE_Ca"
+9,ERA-6AEB104V,DigiKey,211137,0.1,0.9,0.1% 25ppm; premium over 1% within the 25% rule,"pm22V:R6,pm22V:R7,pm6V:R22,pm6V:R23,DIG_Card:R109,CH_Card:R78,AFE_Card:R146,AFE_Card"
+9,BAT54WS-7-F,DigiKey,113722,0.22,1.98,,"DIG_Card:D303,DIG_Card:D304,DIG_Card:D305,DIG_Card:D306,DIG_Card:D307,DIG_Card:D308,"
+9,150080GS75000,DigiKey,111092,0.19,1.71,exact,"DIG_Card:VM_D16,DIG_Card:VM_D17,DIG_Card:VM_D18,DIG_Card:VM_D19,DIG_Card:VM_D20,DIG_"
+9,MMBT3904-7-F,Mouser,477030,0.16,1.44,DK 0 - order from Mouser,"DIG_Card:VM_Q11,DIG_Card:VM_Q12,DIG_Card:VM_Q13,DIG_Card:VM_Q14,DIG_Card:VM_Q15,DIG_"
+9,RC0805FR-071K3L,DigiKey,17814,0.1,0.9,,"DIG_Card:VM_R88,DIG_Card:VM_R89,DIG_Card:VM_R90,DIG_Card:VM_R91,DIG_Card:VM_R92,DIG_"
+9,ERA-6AEB472V,DigiKey,75473,0.11,0.99,0.1% 25ppm; premium over 1% within the 25% rule,"DIG_Card:VM_R97,DIG_Card:VM_R98,DIG_Card:VM_R99,DIG_Card:VM_R100,DIG_Card:VM_R101,DI"
+8,09032966855,DigiKey,3578,4.72,37.76,v5/v6 J8 had value '294711-E' / fp 'DIN41612_M_3x8+8_Fem,"Backplane:J1,Backplane:J2,Backplane:J3,Backplane:J4,Backplane:J5,Backplane:J6,Backpl"
+8,RC0805JR-070RL,DigiKey,858934,0.1,0.8,same value+footprint as pm1p8V_pm5V_5Vref_5Vlaser:R11,"Backplane:R1,pm1p8V_pm5V_5Vref_5Vlaser:R11,DIG_Card:R314,DIG_Card:R315,CH_Card:R73,C"
+8,WSL2512R1000FEA,DigiKey,118885,0.66,5.28,same value+footprint as pm6V:R34,"pm6V:R34,pm6V:R35,pm6V:R36,pm6V:R37,CH_Card:R63,CH_Card:R65"
+8,C0805C105K5RACTU,DigiKey,24912,1.08,8.64,,"pm1p8V_pm5V_5Vref_5Vlaser:C23,pm1p8V_pm5V_5Vref_5Vlaser:C24,pm1p8V_pm5V_5Vref_5Vlase"
+8,MMSZ4702T1G,DigiKey,102809,0.17,1.36,exact,"CH_Card:D16,CH_Card:D17,CH_Card:D20,CH_Card:D21"
+8,61300211121,DigiKey,218262,0.13,1.04,SUB: 1x02 2.54mm header; Sullins 0 DK / not at Mouser,"CH_Card:JP101,CH_Card:JP102,CH_Card:JP103,BTF_Card:JP1"
+8,ERA-6AEB471V,DigiKey,2579,0.1,0.8,0.1% 25ppm; premium over 1% within the 25% rule,"CH_Card:R56,CH_Card:R57,CH_Card:R58,CH_Card:R59"
+8,ADG419BRMZ,DigiKey,287,5.99,47.92,exact,"CH_Card:U26,CH_Card:U104,CH_Card:U105,CH_Card:U108"
+7,09031966921,DigiKey,6774,5.6,39.2,v5/v6 J1 had value 'DIN41612 M 3x8+8' / fp 'DIN41612_M_3,"pm22V:J6,pm6V:J6,pm1p8V_pm5V_5Vref_5Vlaser:J6,DIG_Card:J301,CH_Card:J1,AFE_Card:J1"
+7,1N4007RLG,DigiKey,720236,0.23,1.61,,"pm1p8V_pm5V_5Vref_5Vlaser:D4,pm1p8V_pm5V_5Vref_5Vlaser:D5,pm1p8V_pm5V_5Vref_5Vlaser:"
+6,UVZ1H222MHD,DigiKey,5250,2.62,15.72,,"pm22V:C3,pm22V:C4,pm22V:C9,pm22V:C10,pm6V:C46,pm6V:C47"
+6,CL21B225KBYNNWE,DigiKey,37183,0.29,1.74,,"pm22V:C7,pm22V:C8,pm6V:C44,pm6V:C45,pm6V:C52,pm6V:C53"
+6,IRF9540NPBF,DigiKey,11315,2.75,16.5,exact,"pm22V:Q2,pm6V:Q4,CH_Card:Q14,CH_Card:Q18"
+6,UHE1E332MHD,DigiKey,6542,2.69,16.14,,"pm6V:C34,pm6V:C35,pm6V:C36,pm6V:C37,pm6V:C38,pm6V:C39"
+6,UHE1E102MPD,DigiKey,1592,1.37,8.22,,"pm6V:C40,pm6V:C41,pm6V:C48,pm6V:C49,pm6V:C50,pm6V:C51"
+6,ERA-6AEB4992V,DigiKey,107691,0.1,0.6,0.1% 25ppm; premium over 1% within the 25% rule,"pm1p8V_pm5V_5Vref_5Vlaser:R45,pm1p8V_pm5V_5Vref_5Vlaser:R46,AFE_Card:R138,AFE_Card:R"
+6,CL21B102KBANNNC,DigiKey,1358078,0.1,0.6,,"DIG_Card:C303,DIG_Card:C304,CH_Card:C76,AFE_Card:C96,AFE_Card:C97"
+6,ERA-6AEB203V,DigiKey,77451,0.1,0.6,exact,"CH_Card:R43,CH_Card:R45,CH_Card:R_bias1"
+6,ERA-6AEB202V,DigiKey,24178,0.1,0.6,0.1% 25ppm; premium over 1% within the 25% rule,"CH_Card:R77,CH_Card:R117,AFE_Card:R124,AFE_Card:R127"
+5,1729131,DigiKey,12935,1.44,7.2,,"AC_Board:J1,AC_Board:J2,AC_Board:J3,pm22V:J5,pm6V:J4"
+5,RC0805FR-071ML,DigiKey,319405,0.1,0.5,,"pm22V:R4,pm22V:R5,pm6V:R26,pm6V:R27,DIG_Card:R105"
+5,1210YD107MAT2A,DigiKey,5385,2.37,11.85,same value+footprint as pm1p8V_pm5V_5Vref_5Vlaser:C59,"pm1p8V_pm5V_5Vref_5Vlaser:C59,CH_Card:C159,CH_Card:C162"
+15,ERA-6AEB103V,DigiKey,37104,0.07,1.05,same value+footprint as pm1p8V_pm5V_5Vref_5Vlaser:R16,"pm1p8V_pm5V_5Vref_5Vlaser:R16,pm1p8V_pm5V_5Vref_5Vlaser:R48,pm1p8V_pm5V_5Vref_5Vlase"
+5,LM339BIDR,DigiKey,4632,0.27,1.35,"LM339B = TI next-gen, drop-in for LM339; old LM339DR 0 s","DIG_Card:VM_U23,DIG_Card:VM_U25,DIG_Card:VM_U26,DIG_Card:VM_U27,DIG_Card:VM_U28"
+4,CL21B474KBFNNNE,DigiKey,24190,0.1,0.4,,"pm22V:C1,pm22V:C2,pm6V:C42,pm6V:C43"
+4,1N4742ATR,DigiKey,79371,0.28,1.12,,"pm22V:D2,pm22V:D3,pm6V:D8,pm6V:D9"
+4,TUW15J15RE,DigiKey,3530,2.85,11.4,,"pm22V:R2,pm22V:R3,pm6V:R20,pm6V:R21"
+4,1N4148W-7-F,DigiKey,1771128,0.19,0.76,,"pm6V:D10,pm6V:D11,pm6V:D_CP1,pm6V:D_CP2"
+4,LT3045EMSE#PBF,DigiKey,11284,9.17,36.68,,"pm1p8V_pm5V_5Vref_5Vlaser:U6,pm1p8V_pm5V_5Vref_5Vlaser:U15,pm1p8V_pm5V_5Vref_5Vlaser"
+4,RC0805FR-073K3L,DigiKey,257948,0.1,0.4,,"DIG_Card:R303,DIG_Card:R304,AFE_Card:R116,AFE_Card:R117"
+4,RC0805FR-0733RL,DigiKey,364193,0.1,0.4,,"DIG_Card:R311,DIG_Card:R316,DIG_Card:R317,DIG_Card:R318"
+4,AD9833BRMZ,DigiKey,3821,15.04,60.16,,"DIG_Card:U34,DIG_Card:U35,DIG_Card:U38,DIG_Card:U39"
+4,GRM1555C1H2R2CA01D,DigiKey,3704,0.1,0.4,exact,"CH_Card:C_f1,CH_Card:C_f2"
+4,BAT46W-7-F,Mouser,17862,0.39,1.56,"SUB: same BAT46W, Diodes vs Nexperia; both 0 at DK","CH_Card:D22,CH_Card:D23"
+4,IRL540NPBF,DigiKey,117812,2.33,9.32,exact,"CH_Card:Q13,CH_Card:Q17"
+4,WSL2512R0100FEA,DigiKey,122286,0.64,2.56,VERIFIED 0.01 ohm 1% 1W,"CH_Card:R68,CH_Card:R76"
+4,ERA-6AEB8061V,DigiKey,11520,0.1,0.4,0.1% 25ppm; premium over 1% within the 25% rule,"CH_Card:R102,AFE_Card:R100,AFE_Card:R101"
+4,RC0805FR-074K99L,DigiKey,30982,0.1,0.4,exact,"CH_Card:R118,CH_Card:R119"
+4,OPA551UA,DigiKey,4128,6.81,27.24,exact,"CH_Card:U21,CH_Card:U107"
+4,INA828ID,DigiKey,5544,8.06,32.24,exact,"CH_Card:U28,CH_Card:U32"
+4,OPA380AID,DigiKey,22785,6.97,27.88,exact,"CH_Card:U_TIA1,CH_Card:U_TIA2"
+3,CL21B334KBFNNNE,DigiKey,107489,0.1,0.3,,"pm1p8V_pm5V_5Vref_5Vlaser:C57,pm1p8V_pm5V_5Vref_5Vlaser:C63,pm1p8V_pm5V_5Vref_5Vlase"
+3,MC7808CTG,DigiKey,14684,1.02,3.06,,"pm1p8V_pm5V_5Vref_5Vlaser:U1,pm1p8V_pm5V_5Vref_5Vlaser:U14,pm1p8V_pm5V_5Vref_5Vlaser"
+3,LT3042EMSE#PBF,DigiKey,1736,7.55,22.65,,"pm1p8V_pm5V_5Vref_5Vlaser:U2,pm1p8V_pm5V_5Vref_5Vlaser:U10,AFE_Card:U1"
+3,RC0805FR-0749R9L,DigiKey,296065,0.1,0.3,exact,"DIG_Card:R104,DIG_Card:R312,DIG_Card:R313"
+3,AD5696RARUZ,DigiKey,124,23.52,70.56,,"CH_Card:U101,AFE_Card:U206"
+3,ADS1115IDGSR,DigiKey,44162,5.28,15.84,,"CH_Card:U102,AFE_Card:U201"
+2,UHE1H102MHD,DigiKey,1847,2.53,5.06,exact,"pm22V:C5,pm22V:C6"
+2,GBPC1510W,DigiKey,243,2.24,4.48,,"pm22V:D1,pm6V:D7"
+2,6223BG,DigiKey,2207,9.16,18.32,,"pm22V:HS3,pm6V:HS1"
+2,CRL1206-FW-R470ELF,DigiKey,35770,0.21,0.42,,"pm22V:R8,pm22V:R9"
+2,MJL21193G,DigiKey,686,7.45,14.9,,"pm6V:Q7,pm6V:Q8"
+2,MJL21194G,DigiKey,159,7.46,14.92,,"pm6V:Q9,pm6V:Q10"
+2,ERJ-6ENF6042V,DigiKey,57913,0.12,0.24,,"pm6V:R24,pm6V:R31"
+2,ERA-6AEB153V,DigiKey,62523,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,"pm6V:R25,pm6V:R30"
+2,ERA-6AEB152V,DigiKey,42823,0.11,0.22,0.1% 25ppm; premium over 1% within the 25% rule,"pm6V:R28,pm6V:R29"
+2,LM4051AIM3-ADJ/NOPB,DigiKey,1060,3.9,7.8,,"pm6V:U11,pm6V:U12"
+2,RT0805BRD07143KL,Mouser,3573,0.12,0.24,"SUB: 143k 0.1% 0805, Yageo RT0805B; ERA-6A 0 both","pm1p8V_pm5V_5Vref_5Vlaser:R18,pm1p8V_pm5V_5Vref_5Vlaser:R19"
+2,ERJ-6BWFR020V,DigiKey,47684,0.59,1.18,,"pm1p8V_pm5V_5Vref_5Vlaser:R42,pm1p8V_pm5V_5Vref_5Vlaser:R43"
+2,MC7812CTG,DigiKey,18331,0.99,1.98,,"pm1p8V_pm5V_5Vref_5Vlaser:U4,pm1p8V_pm5V_5Vref_5Vlaser:U13"
+2,LT3094EMSE#PBF,DigiKey,1914,9.17,18.34,,"pm1p8V_pm5V_5Vref_5Vlaser:U9,pm1p8V_pm5V_5Vref_5Vlaser:U20"
+2,CC0805KKX7R8BB105,DigiKey,23000,0.17,0.34,,"DIG_Card:C313,DIG_Card:C319"
+2,BAT54S-7-F,DigiKey,114652,0.22,0.44,,"DIG_Card:D301,DIG_Card:D302"
+2,MPZ2012S601AT000,DigiKey,1291069,0.11,0.22,,"DIG_Card:FB301,DIG_Card:FB302"
+2,ACX1234-ND,DigiKey,4806,14.54,29.08,,"DIG_Card:J2,DIG_Card:J302"
+2,ERA-6AEB222V,DigiKey,2540,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,"DIG_Card:R112,DIG_Card:R113"
+2,ERA-6AEB124V,DigiKey,17013,0.1,0.2,,"DIG_Card:VM_R59,AFE_Card:R2"
+2,ERA-6AEB3012V,DigiKey,56184,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,"DIG_Card:VM_R65,DIG_Card:VM_R77"
+2,CL21C101JBANNNC,DigiKey,148001,0.1,0.2,exact,CH_Card:C68
+2,TSW-107-21-G-D,DigiKey,257,2.75,5.5,no MPN anywhere - needs part selection,CH_Card:J_BTF1
+2,B82432T1103K000,DigiKey,49397,0.55,1.1,"VERIFIED 10uH 1812 650mA - keyword hit was wrong size, 0",CH_Card:L1
+2,DMN3404LQ-7,DigiKey,19933,0.84,1.68,"DMN3404LQ-7 = AEC-Q101 grade of the specified DMN3404L, ",CH_Card:Q19
+2,RC0805FR-073K16L,DigiKey,64001,0.1,0.2,exact,CH_Card:R41
+2,ERA-6AEB4991V,Mouser,43,0.12,0.24,DK 0 - order from Mouser (only 43),CH_Card:R44
+2,ERA-6AEB333V,DigiKey,33162,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,CH_Card:R49
+2,ERA-6AEB204V,DigiKey,383468,0.1,0.2,exact,CH_Card:R66
+2,ERA-6AEB9090V,DigiKey,6217,0.1,0.2,exact,CH_Card:R67
+2,WSL2512R2500FEA,DigiKey,32059,0.8,1.6,VERIFIED 0.25 ohm 1% 1W - keyword hit was 0.1 ohm,CH_Card:R81
+2,CRCW25124R70FKEG,DigiKey,10654,0.34,0.68,VERIFIED 4.7 ohm 1% 1W - keyword hit was 4.7k,CH_Card:R86
+2,ERA-6AEB102V,DigiKey,90834,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,CH_Card:R94
+2,RC0805FR-077M5L,DigiKey,13176,0.1,0.2,exact,CH_Card:R96
+2,ERA-6AEB4870V,DigiKey,9360,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,CH_Card:R98
+2,HVCB0805FDC15M0,Mouser,410,3.57,7.14,"15M 1% 1/5W 0805, Stackpole HVC high-ohmic series; Mouse",CH_Card:R134
+2,"PCA9538PW,118",DigiKey,12660,2.44,4.88,exact,CH_Card:U103
+2,C0805C475K3RACTU,DigiKey,91156,0.84,1.68,,"AFE_Card:C1,AFE_Card:C2"
+2,C0402C109C5GACTU,Mouser,122993,0.13,0.26,SUB: 1pF C0G 0402; Murata 0 both,"AFE_Card:C78,AFE_Card:C79"
+2,C0805C680J5GACTU,DigiKey,27618,0.17,0.34,,"AFE_Card:C98,AFE_Card:C99"
+2,132203-12,DigiKey,1219,25.26,50.52,thread 3 mm longer than 132203 - needed to pass through ,"AFE_Card:J204,AFE_Card:J205"
+2,FGA01FC,DigiKey,,0.0,0.0,no MPN anywhere - needs part selection,"AFE_Card:PD1,AFE_Card:PD2"
+2,ERA-6AEB6651V,DigiKey,50709,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,"AFE_Card:R118,AFE_Card:R119"
+2,ERA-6AEB8251V,DigiKey,3532,0.1,0.2,0.1% 25ppm; premium over 1% within the 25% rule,"AFE_Card:R141,AFE_Card:R143"
+2,OPA814DBVR,Mouser,384,9.52,19.04,DK 0 - order from Mouser,"AFE_Card:U30,AFE_Card:U31"
+2,AD835ARZ,DigiKey,1111,40.04,80.08,,"AFE_Card:U45,AFE_Card:U46"
+2,OPA820IDBVR,DigiKey,5681,4.82,9.64,,"AFE_Card:U204,AFE_Card:U205"
+2,ESQ-107-12-G-D,DigiKey,31,3.84,7.68,no MPN anywhere - needs part selection,BTF_Card:J1
+2,5253-100-7S,DigiKey,,0.0,0.0,no MPN anywhere - needs part selection,BTF_Card:JZ1
+2,5253-100-7R,DigiKey,,0.0,0.0,no MPN anywhere - needs part selection,BTF_Card:JZ2
+1,SL2210005,DigiKey,1149,5.5,5.5,,AC_Board:TH1
+1,SMAJ5.0CA-E3/61,DigiKey,142386,0.54,0.54,,Backplane:D3
+1,IRF540NPBF,DigiKey,2478,1.63,1.63,,pm22V:Q1
+1,IRF540ZPBF,DigiKey,45658,2.34,2.34,,pm6V:Q3
+1,MMBT2907A-TP,DigiKey,240487,0.12,0.12,,pm6V:Q5
+1,MMBT2222ALT1G,DigiKey,5413,0.15,0.15,,pm6V:Q6
+1,T520B106M016ATE100,DigiKey,34465,1.64,1.64,,pm1p8V_pm5V_5Vref_5Vlaser:C16
+1,TMK325ABJ476MM-P,DigiKey,34191,1.21,1.21,,pm1p8V_pm5V_5Vref_5Vlaser:C19
+1,ERA-6AEB6042V,DigiKey,7653,0.1,0.1,,pm1p8V_pm5V_5Vref_5Vlaser:R10
+1,RC1206FR-074R7L,DigiKey,135937,0.15,0.15,,pm1p8V_pm5V_5Vref_5Vlaser:R12
+1,ERA-6AEB3322V,DigiKey,7839,0.1,0.1,,pm1p8V_pm5V_5Vref_5Vlaser:R13
+1,ERA-6AEB1272V,DigiKey,4193,0.1,0.1,,pm1p8V_pm5V_5Vref_5Vlaser:R14
+1,ERA-6AEB1373V,DigiKey,2244,0.1,0.1,,pm1p8V_pm5V_5Vref_5Vlaser:R15
+1,RC1206FR-071RL,DigiKey,243598,0.15,0.15,,pm1p8V_pm5V_5Vref_5Vlaser:R40
+1,ERA-6AEB2492V,DigiKey,15,0.11,0.11,,pm1p8V_pm5V_5Vref_5Vlaser:R41
+1,ERA-6AEB6040V,DigiKey,6441,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,pm1p8V_pm5V_5Vref_5Vlaser:R44
+1,ERA-6AEB163V,DigiKey,33028,0.11,0.11,0.1% 25ppm; premium over 1% within the 25% rule,pm1p8V_pm5V_5Vref_5Vlaser:R47
+1,ERJ-6ENF49R9V,DigiKey,46760,0.12,0.12,,pm1p8V_pm5V_5Vref_5Vlaser:R50
+1,LTC6655BHMS8-5#PBF,DigiKey,886,17.45,17.45,,pm1p8V_pm5V_5Vref_5Vlaser:U3
+1,MC7805CTG,DigiKey,47005,0.99,0.99,,pm1p8V_pm5V_5Vref_5Vlaser:U5
+1,LP5907MFX-1.8/NOPB,DigiKey,16039,0.59,0.59,,pm1p8V_pm5V_5Vref_5Vlaser:U7
+1,TPS7A3901DSCR,DigiKey,12383,6.05,6.05,,pm1p8V_pm5V_5Vref_5Vlaser:U8
+1,MC7906CTG,DigiKey,430,1.21,1.21,,pm1p8V_pm5V_5Vref_5Vlaser:U18
+1,Teensy 4.1,DigiKey,575,9.95,9.95,,DIG_Card:A1
+1,CC0805KKX5R7BB106,DigiKey,38,0.4,0.4,,DIG_Card:C318
+1,BAV99-7-F,DigiKey,2014780,0.18,0.18,,DIG_Card:D24
+1,BWSMA-KWE-Z001,DigiKey,,0.0,0.0,no MPN anywhere - needs part selection,DIG_Card:J302B1
+1,ERA-6AEB273V,DigiKey,402,0.11,0.11,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:R106
+1,RC0805FR-0710ML,DigiKey,264641,0.11,0.11,,DIG_Card:R110
+1,LMV7219M5/NOPB,DigiKey,16936,3.44,3.44,,DIG_Card:U40
+1,SN74LVC1G3157DBVR,DigiKey,7905,0.16,0.16,,DIG_Card:U41
+1,CDCE913PWR,DigiKey,3148,5.4,5.4,,DIG_Card:U42
+1,1568-COM-28379-ND,DigiKey,230,16.0,16.0,,DIG_Card:U44
+1,SN74LVC1G125DBVR,DigiKey,341868,0.17,0.17,,DIG_Card:U303
+1,ERA-6AEB2942V,DigiKey,6303,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R50
+1,ERA-6AEB9531V,DigiKey,3318,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R52
+1,ERA-6AEB114V,DigiKey,16516,0.11,0.11,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R53
+1,RC0805FR-0740K2L,DigiKey,72268,0.1,0.1,,DIG_Card:VM_R61
+1,ERA-6AEB4752V,DigiKey,4748,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R64
+1,ERA-6AEB3832V,DigiKey,4220,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R71
+1,ERA-6AEB1652V,DigiKey,9473,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R78
+1,ERA-6AEB4421V,DigiKey,4379,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,DIG_Card:VM_R83
+1,MCP6002-E/SN,DigiKey,3412,0.44,0.44,,DIG_Card:VM_U22
+1,MCP6004-E/SL,DigiKey,5308,0.5,0.5,,DIG_Card:VM_U24
+1,ASE-10.000MHZ-LC-T,DigiKey,3040,1.38,1.38,,DIG_Card:Y1
+1,ERA-6AEB6041V,DigiKey,7296,0.1,0.1,0.1% 25ppm; premium over 1% within the 25% rule,AFE_Card:R1
+1,ERJ-6ENF3573V,DigiKey,89833,0.12,0.12,,AFE_Card:R144
+
+,TOTAL,,,,1033.74

@@ -1,0 +1,5 @@
+Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint
+1,CL21B104KBCNNNC,Samsung Electro-Mechanics,C1,100n,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+1,SMAJ5.0CA-E3/61,,D3,SMAJ5.0CA,D_SMA-SMB_Universal_Handsoldering
+8,09032966855,HARTING,"J1,J2,J3,J4,J5,J6,J7,J8",DIN41612_03x32_C_Split,DIN41612_C_3x32_Female_Vertical_THT
+1,RC0805JR-070RL,YAGEO,R1,0,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder

@@ -4193,7 +4193,7 @@
 				)
 			)
 		)
-		(property "Value" "GBPC1510-E4/51"
+		(property "Value" "GBPC1510W"
 			(at 9 -12.8 0)
 			(layer "F.Fab")
 			(uuid "7d634be2-f956-4740-8a43-5c7f6c12d94e")
@@ -4204,7 +4204,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.vishay.com/docs/88656/gbu4a.pdf"
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/3003/GBPC15.pdf"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -4217,12 +4217,48 @@
 				)
 			)
 		)
-		(property "Description" "Single-Phase Bridge Rectifier, 700V Vrms, 4.0A If, GBU package"
+		(property "Description" "Single-Phase Bridge Rectifier, 1000 V, 15 A, GBPC-W package (wire leads)"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "dd13f471-37f2-40f1-8886-cc9e5d684107")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "GBPC1510W"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Surge Components"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "DigiKey P/N" "2616-GBPC1510W-ND"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9723,6 +9759,11 @@
 			)
 		)
 		(embedded_fonts no)
+			(model "C:/GIT/DualLaserPDHDriver/lib/Heatsinks.3dshapes/Boyd_6223BG.step"
+			(offset (xyz 0 0 7.3))
+			(scale (xyz 1 1 1))
+			(rotate (xyz 0 0 0))
+		)
 	)
 	(footprint "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm"
 		(layer "F.Cu")

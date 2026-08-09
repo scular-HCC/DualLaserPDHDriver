@@ -65,7 +65,7 @@
           "min_thickness": 0.25,
           "pad_connection": 1,
           "remove_islands": 0,
-          "thermal_relief_gap": 0.5,
+          "thermal_relief_gap": 0.25,
           "thermal_relief_spoke_width": 0.5
         }
       },
@@ -210,7 +210,10 @@
         }
       ],
       "track_widths": [
-        0.0
+        0.0,
+        0.5,
+        1.0,
+        2.0
       ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
@@ -537,7 +540,7 @@
         "pcb_color": "rgb(230, 148, 0)",
         "priority": 1,
         "schematic_color": "rgb(230, 148, 0)",
-        "track_width": 0.2,
+        "track_width": 2.5,
         "tuning_profile": "",
         "via_diameter": 0.6,
         "via_drill": 0.3,
@@ -555,7 +558,7 @@
         "pcb_color": "rgb(52, 122, 200)",
         "priority": 2,
         "schematic_color": "rgb(52, 122, 200)",
-        "track_width": 0.2,
+        "track_width": 2.5,
         "tuning_profile": "",
         "via_diameter": 0.6,
         "via_drill": 0.3,
@@ -573,7 +576,7 @@
         "pcb_color": "rgb(200, 52, 52)",
         "priority": 0,
         "schematic_color": "rgb(200, 52, 52)",
-        "track_width": 0.2,
+        "track_width": 2.5,
         "tuning_profile": "",
         "via_diameter": 0.6,
         "via_drill": 0.3,

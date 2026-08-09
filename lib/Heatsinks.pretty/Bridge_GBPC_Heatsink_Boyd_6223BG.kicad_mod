@@ -138,4 +138,9 @@
 		(layer "F.CrtYd")
 	)
 	(embedded_fonts no)
+	(model "C:/GIT/DualLaserPDHDriver/lib/Heatsinks.3dshapes/Boyd_6223BG.step"
+		(offset (xyz 0 0 7.3))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )

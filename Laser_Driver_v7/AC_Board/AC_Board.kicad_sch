@@ -537,121 +537,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "GND_1"
-			(power global)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "#PWR02"
-				(at 0 -6.35 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "GND"
-				(at 3.302 -0.254 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "GND_1_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "GND_1_1_1"
-				(pin passive line
-					(at 0 0 270)
-					(length 0)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Mechanical:MountingHole"
 			(pin_names
 				(offset 1.016)
@@ -1057,146 +942,6 @@
 						)
 					)
 					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "R_1"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 2.032 0 90)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "R"
-				(at 0 0 90)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at -1.778 0 90)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Resistor"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "R res resistor"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "R_*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "R_1_0_1"
-				(rectangle
-					(start -1.016 -2.54)
-					(end 1.016 2.54)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "R_1_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 1.27)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 1.27)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2569,28 +2314,10 @@
 		(uuid "0eeb63b5-3b91-4573-8e93-82e1353088c8")
 	)
 	(junction
-		(at 106.68 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "1b28b112-2e6b-4ab7-bbc6-ed64d652a6a8")
-	)
-	(junction
-		(at 87.63 50.8)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "1b2fba86-7503-42c0-99ba-ecc1803fa6a2")
-	)
-	(junction
 		(at 125.73 48.26)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "30df3de8-3452-47e2-9339-7c3ad0ce1c34")
-	)
-	(junction
-		(at 102.87 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "34b9b8f2-5610-4ce0-a697-a16d52b7acc2")
 	)
 	(junction
 		(at 133.35 40.64)
@@ -2669,6 +2396,14 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f98c52e5-ead4-444f-98cd-74e72bdac4e5")
+	)
+	(no_connect
+		(at 116.84 43.18)
+		(uuid "1f4189a1-03b7-4693-a557-993c9dc47450")
+	)
+	(no_connect
+		(at 113.03 72.39)
+		(uuid "7c1a824f-b94e-400b-afa8-a9b8c66d74ab")
 	)
 	(wire
 		(pts
@@ -2872,16 +2607,6 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 50.8) (xy 90.17 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5529f0e9-84ef-49e0-89d8-2fae99772909")
-	)
-	(wire
-		(pts
 			(xy 116.84 40.64) (xy 133.35 40.64)
 		)
 		(stroke
@@ -2929,26 +2654,6 @@
 			(type default)
 		)
 		(uuid "6334cd81-0d53-4582-b701-2e3d943c7db3")
-	)
-	(wire
-		(pts
-			(xy 90.17 50.8) (xy 90.17 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "66bf36af-7a7d-473e-b232-50033ac59a7e")
-	)
-	(wire
-		(pts
-			(xy 106.68 43.18) (xy 106.68 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6cded32d-18b9-4b60-a021-a7ccd6008089")
 	)
 	(wire
 		(pts
@@ -3042,26 +2747,6 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 72.39) (xy 106.68 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "91a95cf5-0e68-4c72-8e85-cc0fa42ecd06")
-	)
-	(wire
-		(pts
-			(xy 106.68 72.39) (xy 113.03 72.39)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9760c68c-9d9b-464f-8997-e3ad9c3f8281")
-	)
-	(wire
-		(pts
 			(xy 156.21 81.28) (xy 168.91 81.28)
 		)
 		(stroke
@@ -3069,16 +2754,6 @@
 			(type default)
 		)
 		(uuid "a2d73710-1238-4e45-bba1-96b8a6aabc27")
-	)
-	(wire
-		(pts
-			(xy 106.68 43.18) (xy 116.84 43.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aff8f466-6e73-420b-aed6-99a05f13e8e5")
 	)
 	(wire
 		(pts
@@ -3152,16 +2827,6 @@
 	)
 	(wire
 		(pts
-			(xy 102.87 57.15) (xy 102.87 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e8832a40-8fb9-4034-b9a5-4da703fbf0fd")
-	)
-	(wire
-		(pts
 			(xy 69.85 45.72) (xy 69.85 48.26)
 		)
 		(stroke
@@ -3192,16 +2857,6 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 57.15) (xy 90.17 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fb742b51-8dba-4611-92dd-75c9cd8d4a3b")
-	)
-	(wire
-		(pts
 			(xy 92.71 50.8) (xy 92.71 43.18)
 		)
 		(stroke
@@ -3209,16 +2864,6 @@
 			(type default)
 		)
 		(uuid "fca7692d-a8f3-48fc-ae89-8c6d966431ec")
-	)
-	(wire
-		(pts
-			(xy 106.68 57.15) (xy 102.87 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fd465dbe-ba0d-4946-b04b-6b2d498237c3")
 	)
 	(wire
 		(pts
@@ -3492,7 +3137,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P7.62mm_Vertical"
+		(property "Footprint" "Thermistor:Thermistor_Disc_D22.0mm_W5.0mm_P7.80mm_Ametherm_SL22"
 			(at 95.25 40.64 0)
 			(hide yes)
 			(show_name no)
@@ -4178,84 +3823,6 @@
 		)
 	)
 	(symbol
-		(lib_name "GND_1")
-		(lib_id "power:GND")
-		(at 102.87 59.69 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "77432d36-20e6-4d8d-bf0c-7b89cf3500c3")
-		(property "Reference" "#PWR02"
-			(at 102.87 66.04 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 106.172 59.944 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 102.87 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 102.87 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 102.87 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b888988e-dab9-4fe9-b0d4-045a35ffa5c1")
-		)
-		(instances
-			(project "AC_Board"
-				(path "/a07ada96-a3aa-44ec-82fb-f3394b73bc6a"
-					(reference "#PWR02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Mechanical:MountingHole_Pad")
 		(at 66.04 68.58 0)
 		(unit 1)
@@ -4691,86 +4258,6 @@
 			(project "AC_Board"
 				(path "/a07ada96-a3aa-44ec-82fb-f3394b73bc6a"
 					(reference "#PWR01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "R_1")
-		(lib_id "Device:R")
-		(at 99.06 57.15 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "f92fb0d7-4e1d-4c22-8fa2-92de34934bc6")
-		(property "Reference" "R1"
-			(at 99.314 55.118 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1k"
-			(at 99.06 57.15 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 99.06 58.928 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 99.06 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 99.06 57.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3da6c886-b3e2-45f2-8ba0-0022a4b449a7")
-		)
-		(pin "2"
-			(uuid "3a43a9ab-ce57-42de-ad2c-7f8d9c849102")
-		)
-		(instances
-			(project "AC_Board"
-				(path "/a07ada96-a3aa-44ec-82fb-f3394b73bc6a"
-					(reference "R1")
 					(unit 1)
 				)
 			)

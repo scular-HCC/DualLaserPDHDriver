@@ -1885,7 +1885,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Diode_Bridge:GBU4M"
+		(symbol "Diode_Bridge_GBPC:GBPC1510W"
 			(pin_names
 				(offset 0)
 			)
@@ -1904,7 +1904,7 @@
 					)
 				)
 			)
-			(property "Value" "GBU4M"
+			(property "Value" "GBPC1510W"
 				(at -5.08 5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1914,7 +1914,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Diode_THT:Diode_Bridge_Vishay_GBU"
+			(property "Footprint" "Diode_THT:Diode_Bridge_28.6x28.6x7.3mm_P18.0mm_P11.6mm"
 				(at 3.81 3.175 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1926,7 +1926,7 @@
 					(justify left)
 				)
 			)
-			(property "Datasheet" "http://www.vishay.com/docs/88656/gbu4a.pdf"
+			(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/3003/GBPC15.pdf"
 				(at 1.016 -20.066 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1937,7 +1937,7 @@
 					)
 				)
 			)
-			(property "Description" "Single-Phase Bridge Rectifier, 700V Vrms, 4.0A If, GBU package"
+			(property "Description" "Single-Phase Bridge Rectifier, 1000 V, 15 A, GBPC-W package (wire leads)"
 				(at 1.27 -17.526 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1948,7 +1948,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "rectifier acdc"
+			(property "ki_keywords" "rectifier acdc bridge GBPC GBPC-W"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1959,7 +1959,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "Diode*Bridge*Vishay*GBU*"
+			(property "ki_fp_filters" "Diode*Bridge*28.6x28.6*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1970,7 +1970,7 @@
 					)
 				)
 			)
-			(symbol "GBU4M_0_1"
+			(symbol "GBPC1510W_0_1"
 				(polyline
 					(pts
 						(xy -5.08 0) (xy 0 -5.08) (xy 5.08 0) (xy 0 5.08) (xy -5.08 0)
@@ -2080,7 +2080,7 @@
 					)
 				)
 			)
-			(symbol "GBU4M_1_1"
+			(symbol "GBPC1510W_1_1"
 				(pin passive line
 					(at 7.62 0 180)
 					(length 2.54)
@@ -7813,7 +7813,7 @@
 		)
 		(uuid "24f7c90c-3530-4c4e-8a3c-88d00b7678c7")
 	)
-	(text "LM4040: cathode to GND, anode toward base node"
+	(text "LM4051-ADJ (U11/U12) shunt ref: cathode to GND, anode toward base node"
 		(exclude_from_sim no)
 		(at 106.426 136.144 0)
 		(effects
@@ -7853,7 +7853,7 @@
 		)
 		(uuid "780b09cc-bfb9-4a79-925e-a60ad91a4584")
 	)
-	(text "DIN 41612 BACKPLANE CONNECTOR  (Type H, 24 signal + 8 power):\nBoard:  TE/Erni 374144-E  (right-angle male, 24+8, gold THT).\nMate:   TE/Erni 294711-E  (vertical female, backplane side).\n8 power blades ~10 A (+/-6V_TEC, +/-22V, returns); 24 signal ~2 A.\nAC / transformer leads stay on screw terminals J1-J5."
+	(text "DIN 41612 BACKPLANE CONNECTOR  (Type C, 96-way, 3x32 @ 2.54 mm):\nBoard:  Harting 09031966921  (right-angle male, 96-way, THT).\nMate:   Harting 09032966855  (vertical female, backplane side).\nContacts rated 2 A; the pinout is designed at 1.5 A derated, with every\nrail owning whole a/b/c columns.  See SLOT_PINOUT_v7.md.\nThis card drives +6V_TEC (cols 1-2), PGND_TEC (cols 3-4) and\n-6V_TEC (cols 5-6): 6 contacts each = 9 A derated, against the\n3 A/rail design point.\nAC / transformer leads stay on screw terminal J4."
 		(exclude_from_sim no)
 		(at 22.352 -13.716 0)
 		(effects
@@ -7864,7 +7864,7 @@
 		)
 		(uuid "9e3012d8-3961-4e9c-935b-a8955b010be6")
 	)
-	(text "Q17 MJL21193 PNP: emitter at raw -16.6 V; collector = -6 V output"
+	(text "Pass devices (parallel pairs, emitter-ballasted):\n  negative rail  Q7/Q8   MJL21193 PNP   via R34/R35 (0.1 R)\n  positive rail  Q9/Q10  MJL21194 NPN   via R36/R37 (0.1 R)\nRaw from D7 off the +/-9 Vac secondary is about +/-11 V.\n(There is no Q17 on this board.)"
 		(exclude_from_sim no)
 		(at 104.648 133.858 0)
 		(effects
@@ -7895,7 +7895,7 @@
 		)
 		(uuid "eee33dd3-bea7-4d3d-b1cd-0eaa9569eb6b")
 	)
-	(text "LM4040-6.2: sets base to +6.2 V; Vout = 6.2 - Vbe ≈ +6.0 V"
+	(text "LM4051-ADJ set to 6.23 V by R24/R25 (60.4k/15k, Vref 1.24 V):\nsets base to +6.2 V; Vout = 6.2 - Vbe ~ +6.0 V"
 		(exclude_from_sim no)
 		(at 87.122 89.916 0)
 		(effects
@@ -15996,7 +15996,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Diode_Bridge:GBU4M")
+		(lib_id "Diode_Bridge_GBPC:GBPC1510W")
 		(at 40.64 48.26 0)
 		(unit 1)
 		(body_style 1)
@@ -16016,7 +16016,7 @@
 				)
 			)
 		)
-		(property "Value" "GBPC1510W-E4/51"
+		(property "Value" "GBPC1510W"
 			(at 28.956 44.704 0)
 			(show_name no)
 			(do_not_autoplace no)

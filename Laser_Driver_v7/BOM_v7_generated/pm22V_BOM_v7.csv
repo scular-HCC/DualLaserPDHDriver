@@ -1,0 +1,17 @@
+Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint
+2,CL21B474KBFNNNE,Samsung,"C1,C2",470nF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+4,UVZ1H222MHD,Nichicon,"C3,C4,C9,C10",2200uF 50V,CP_Radial_D18.0mm_P7.50mm
+2,UHE1H102MHD,Nichicon,"C5,C6",1000uF 50V,CP_Radial_D16.0mm_P7.50mm
+2,CL21B225KBYNNWE,Samsung,"C7,C8",2.2 uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+1,GBPC1510W,Surge Components,D1,GBPC1510W,Diode_Bridge_28.6x28.6x7.3mm_P18.0mm_P11.6mm
+2,1N4742ATR,onsemi,"D2,D3",1N4742A,D_DO-41_SOD81_P10.16mm_Horizontal
+2,531102B02500G,Boyd,"HS1,HS2",Heatsink Boyd 531102B02500G,Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm
+1,6223BG,Boyd,HS3,Heatsink Boyd 6223BG (GBPC),Bridge_GBPC_Heatsink_Boyd_6223BG
+1,1729131,Phoenix Contact,J5,Screw_Terminal_01x03,"TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
+1,09031966921,HARTING,J6,DIN41612_03x32_C_Split,DIN41612_C_3x32_Male_Horizontal_THT
+1,IRF540NPBF,Infineon,Q1,IRF540NPBF,TO-220-3_Vertical
+1,IRF9540NPBF,Infineon,Q2,IRF9540NPBF,TO-220-3_Vertical
+2,TUW15J15RE,Ohmite,"R2,R3",15,R_Axial_Power_L38.0mm_W9.0mm_P45.72mm
+2,RC0805FR-071ML,Yageo,"R4,R5",1M,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB104V,Panasonic,"R6,R7",100k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,CRL1206-FW-R470ELF,Bourns,"R8,R9",0.47,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder

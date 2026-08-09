@@ -1,0 +1,162 @@
+Quantity,Manufacturer Part Number,Manufacturer,Customer Reference,Value,Footprint
+5,1729131,Phoenix Contact,"AC_Board:J1,AC_Board:J2,AC_Board:J3,pm22V:J5,pm6V:J4",Screw_Terminal_01x03,"TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
+12,CRCW08051K00FKEA,Vishay Dale,"AC_Board:R1,pm6V:R38,pm6V:R39,pm1p8V_pm5V_5Vref_5Vlaser:R17,DIG_Card:R107,DIG_Card:R108,DIG_Card:R111,DIG_Card:VM_R51,CH_Card:R42,CH_Card:R55,AFE_Card:R125,AFE_Card:R128",1k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,SL2210005,Ametherm,AC_Board:TH1,Ametherm SL22 10005,R_Axial_DIN0411_L9.9mm_D3.6mm_P7.62mm_Vertical
+114,CL21B104KBCNNNC,Samsung Electro-Mechanics,"Backplane:C1,pm1p8V_pm5V_5Vref_5Vlaser:C9,pm1p8V_pm5V_5Vref_5Vlaser:C10,pm1p8V_pm5V_5Vref_5Vlaser:C14,pm1p8V_pm5V_5Vref_5Vlaser:C17,pm1p8V_pm5V_5Vref_5Vlaser:C18,pm1p8V_pm5V_5Vref_5Vlaser:C27,pm1p8V_pm5V_5Vref_5Vlaser:C55,pm1p8V_pm5V_5Vref_5Vlaser:C58,pm1p8V_pm5V_5Vref_5Vlaser:C72,pm1p8V_pm5V_5Vref_5Vlaser:C73,pm1p8V_pm5V_5Vref_5Vlaser:C74,DIG_Card:C80,DIG_Card:C81,DIG_Card:C82,DIG_Card:C84,DIG_Card:C85,DIG_Card:C86,DIG_Card:C88,DIG_Card:C92,DIG_Card:C301,DIG_Card:C302,DIG_Card:C305,DIG_Card:C306,DIG_Card:C307,DIG_Card:C312,DIG_Card:C314,DIG_Card:C315,DIG_Card:C316,DIG_Card:C317,DIG_Card:C324,DIG_Card:VM_C75,DIG_Card:VM_C76,DIG_Card:VM_C77,DIG_Card:VM_C78,DIG_Card:VM_C79,DIG_Card:VM_C80,DIG_Card:VM_C90,CH_Card:C65,CH_Card:C66,CH_Card:C116,CH_Card:C117,CH_Card:C118,CH_Card:C122,CH_Card:C123,CH_Card:C130,CH_Card:C131,CH_Card:C132,CH_Card:C133,CH_Card:C134,CH_Card:C135,CH_Card:C136,CH_Card:C137,CH_Card:C138,CH_Card:C139,CH_Card:C140,CH_Card:C141,CH_Card:C142,CH_Card:C143,CH_Card:C144,CH_Card:C145,CH_Card:C146,CH_Card:C147,CH_Card:C148,CH_Card:C149,CH_Card:C152,CH_Card:C153,CH_Card:C155,CH_Card:C156,CH_Card:C158,CH_Card:C161,CH_Card:C164,CH_Card:C165,CH_Card:C166,CH_Card:C167,CH_Card:C168,CH_Card:C169,CH_Card:C170,CH_Card:C171,CH_Card:C172,CH_Card:C173,CH_Card:C174,CH_Card:C_NTC1,AFE_Card:C213,AFE_Card:C214,AFE_Card:C216,AFE_Card:C217,AFE_Card:C218,AFE_Card:C219,AFE_Card:C220,AFE_Card:C221,AFE_Card:C222,AFE_Card:C224,AFE_Card:C225,AFE_Card:C227,AFE_Card:C230,AFE_Card:C233,AFE_Card:C234,AFE_Card:C235,AFE_Card:C236,AFE_Card:C237,AFE_Card:C238,AFE_Card:C247,AFE_Card:C248,AFE_Card:C249,AFE_Card:C250,AFE_Card:C251,AFE_Card:C253,AFE_Card:C254,AFE_Card:C255,AFE_Card:C256,AFE_Card:C258,AFE_Card:C_K1,AFE_Card:C_K2",100n,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+1,SMAJ5.0CA-E3/61,,Backplane:D3,SMAJ5.0CA,D_SMA-SMB_Universal_Handsoldering
+8,09032966855,HARTING,"Backplane:J1,Backplane:J2,Backplane:J3,Backplane:J4,Backplane:J5,Backplane:J6,Backplane:J7,Backplane:J8",DIN41612_03x32_C_Split,DIN41612_C_3x32_Female_Vertical_THT
+6,RC0805JR-070RL,YAGEO,"Backplane:R1,pm1p8V_pm5V_5Vref_5Vlaser:R11,DIG_Card:R314,DIG_Card:R315,CH_Card:R73,CH_Card:R74",0,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+4,CL21B474KBFNNNE,Samsung,"pm22V:C1,pm22V:C2,pm6V:C42,pm6V:C43",470nF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+6,UVZ1H222MHD,Nichicon,"pm22V:C3,pm22V:C4,pm22V:C9,pm22V:C10,pm6V:C46,pm6V:C47",2200uF 50V,CP_Radial_D18.0mm_P7.50mm
+2,UHE1H102MHD,Nichicon,"pm22V:C5,pm22V:C6",1000uF 50V,CP_Radial_D16.0mm_P7.50mm
+6,CL21B225KBYNNWE,Samsung,"pm22V:C7,pm22V:C8,pm6V:C44,pm6V:C45,pm6V:C52,pm6V:C53",2.2 uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+2,GBPC1510W,Surge Components,"pm22V:D1,pm6V:D7",GBPC1510W,Diode_Bridge_28.6x28.6x7.3mm_P18.0mm_P11.6mm
+4,1N4742ATR,onsemi,"pm22V:D2,pm22V:D3,pm6V:D8,pm6V:D9",1N4742A,D_DO-41_SOD81_P10.16mm_Horizontal
+10,531102B02500G,Boyd,"pm22V:HS1,pm22V:HS2,pm6V:HS2,pm6V:HS3,pm1p8V_pm5V_5Vref_5Vlaser:HS1,pm1p8V_pm5V_5Vref_5Vlaser:HS2,pm1p8V_pm5V_5Vref_5Vlaser:HS3,pm1p8V_pm5V_5Vref_5Vlaser:HS4,pm1p8V_pm5V_5Vref_5Vlaser:HS5,pm1p8V_pm5V_5Vref_5Vlaser:HS6",Heatsink Boyd 531102B02500G,Heatsink_AAVID_Extruded_531102B02500G_34.9x12.7mm_H38.1mm
+2,6223BG,Boyd,"pm22V:HS3,pm6V:HS1",Heatsink Boyd 6223BG (GBPC),Bridge_GBPC_Heatsink_Boyd_6223BG
+6,09031966921,HARTING,"pm22V:J6,pm6V:J6,pm1p8V_pm5V_5Vref_5Vlaser:J6,DIG_Card:J301,CH_Card:J1,AFE_Card:J1",DIN41612_03x32_C_Split,DIN41612_C_3x32_Male_Horizontal_THT
+1,IRF540NPBF,Infineon,pm22V:Q1,IRF540NPBF,TO-220-3_Vertical
+4,IRF9540NPBF,Infineon,"pm22V:Q2,pm6V:Q4,CH_Card:Q14,CH_Card:Q18",IRF9540NPBF,TO-220-3_Vertical
+4,TUW15J15RE,Ohmite,"pm22V:R2,pm22V:R3,pm6V:R20,pm6V:R21",15,R_Axial_Power_L38.0mm_W9.0mm_P45.72mm
+5,RC0805FR-071ML,Yageo,"pm22V:R4,pm22V:R5,pm6V:R26,pm6V:R27,DIG_Card:R105",1M,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+8,ERA-6AEB104V,Panasonic,"pm22V:R6,pm22V:R7,pm6V:R22,pm6V:R23,DIG_Card:R109,CH_Card:R78,AFE_Card:R146,AFE_Card:R147",100k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,CRL1206-FW-R470ELF,Bourns,"pm22V:R8,pm22V:R9",0.47,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder
+6,UHE1E332MHD,Nichicon,"pm6V:C34,pm6V:C35,pm6V:C36,pm6V:C37,pm6V:C38,pm6V:C39",3300uF (UPW1E332MHD),CP_Radial_D16.0mm_P7.50mm
+6,UHE1E102MPD,Nichicon,"pm6V:C40,pm6V:C41,pm6V:C48,pm6V:C49,pm6V:C50,pm6V:C51",1000uF 25V,CP_Radial_D12.5mm_P5.00mm
+4,1N4148W-7-F,Diodes Incorporated,"pm6V:D10,pm6V:D11,pm6V:D_CP1,pm6V:D_CP2",1N4148W,D_SOD-123
+1,IRF540ZPBF,Infineon,pm6V:Q3,IRF540ZPBF,TO-220-3_Vertical
+1,MMBT2907A-TP,MCC,pm6V:Q5,MMBT2907,SOT-23_Handsoldering
+1,MMBT2222ALT1G,onsemi,pm6V:Q6,MMBT2222,SOT-23_Handsoldering
+2,MJL21193G,onsemi,"pm6V:Q7,pm6V:Q8",Q_PNP_MJL21193,TO-264-3_Vertical_HS657-10ABPE
+2,MJL21194G,onsemi,"pm6V:Q9,pm6V:Q10",Q_NPN MJL21194,TO-264-3_Vertical_HS657-10ABPE
+2,ERJ-6ENF6042V,Panasonic,"pm6V:R24,pm6V:R31",60.4k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB153V,Panasonic,"pm6V:R25,pm6V:R30",15k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB152V,Panasonic,"pm6V:R28,pm6V:R29",1.5k Bias,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+6,WSL2512R1000FEA,Vishay Dale,"pm6V:R34,pm6V:R35,pm6V:R36,pm6V:R37,CH_Card:R63,CH_Card:R65",0.1R,R_2512_6332Metric_Pad1.40x3.35mm_HandSolder
+9,RC0805FR-0710RL,YAGEO,"pm6V:R40,pm6V:R41,pm6V:R42,pm6V:R43,CH_Card:R48,CH_Card:R116,CH_Card:R126,CH_Card:R132,AFE_Card:R216",10R base-stopper,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,LM4051AIM3-ADJ/NOPB,Texas Instruments,"pm6V:U11,pm6V:U12",LM4051AIM3-ADJ/NOPB,SOT-23_Handsoldering
+12,CL21B475KAFNNNE,Samsung Electro-Mechanics,"pm1p8V_pm5V_5Vref_5Vlaser:C11,pm1p8V_pm5V_5Vref_5Vlaser:C12,pm1p8V_pm5V_5Vref_5Vlaser:C13,pm1p8V_pm5V_5Vref_5Vlaser:C20,pm1p8V_pm5V_5Vref_5Vlaser:C21,pm1p8V_pm5V_5Vref_5Vlaser:C30,pm1p8V_pm5V_5Vref_5Vlaser:C31,pm1p8V_pm5V_5Vref_5Vlaser:C54,pm1p8V_pm5V_5Vref_5Vlaser:C56,pm1p8V_pm5V_5Vref_5Vlaser:C60,pm1p8V_pm5V_5Vref_5Vlaser:C67,pm1p8V_pm5V_5Vref_5Vlaser:C70",4.7uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+37,C0805C106K3PACTU,KEMET,"pm1p8V_pm5V_5Vref_5Vlaser:C15,pm1p8V_pm5V_5Vref_5Vlaser:C22,pm1p8V_pm5V_5Vref_5Vlaser:C25,pm1p8V_pm5V_5Vref_5Vlaser:C26,pm1p8V_pm5V_5Vref_5Vlaser:C28,pm1p8V_pm5V_5Vref_5Vlaser:C29,pm1p8V_pm5V_5Vref_5Vlaser:C32,pm1p8V_pm5V_5Vref_5Vlaser:C33,pm1p8V_pm5V_5Vref_5Vlaser:C61,pm1p8V_pm5V_5Vref_5Vlaser:C62,pm1p8V_pm5V_5Vref_5Vlaser:C65,pm1p8V_pm5V_5Vref_5Vlaser:C66,pm1p8V_pm5V_5Vref_5Vlaser:C68,pm1p8V_pm5V_5Vref_5Vlaser:C69,pm1p8V_pm5V_5Vref_5Vlaser:C71,DIG_Card:C322,DIG_Card:C323,DIG_Card:C325,CH_Card:C115,CH_Card:C121,CH_Card:C150,CH_Card:C151,CH_Card:C154,CH_Card:C157,CH_Card:C160,CH_Card:C163,AFE_Card:C215,AFE_Card:C223,AFE_Card:C226,AFE_Card:C228,AFE_Card:C229,AFE_Card:C231,AFE_Card:C232,AFE_Card:C242,AFE_Card:C243,AFE_Card:C252,AFE_Card:C257",10uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+1,T520B106M016ATE100,KEMET,pm1p8V_pm5V_5Vref_5Vlaser:C16,10uF 16V Polymer,CP_EIA-3528-21_Kemet-B_HandSolder
+1,TMK325ABJ476MM-P,Taiyo Yuden,pm1p8V_pm5V_5Vref_5Vlaser:C19,47uF RC,C_1210_3225Metric_Pad1.33x2.70mm_HandSolder
+6,C0805C105K5RACTU,KEMET,"pm1p8V_pm5V_5Vref_5Vlaser:C23,pm1p8V_pm5V_5Vref_5Vlaser:C24,pm1p8V_pm5V_5Vref_5Vlaser:C75,CH_Card:C113,CH_Card:C114,AFE_Card:C241",1uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+3,CL21B334KBFNNNE,Samsung Electro-Mechanics,"pm1p8V_pm5V_5Vref_5Vlaser:C57,pm1p8V_pm5V_5Vref_5Vlaser:C63,pm1p8V_pm5V_5Vref_5Vlaser:C64",0.33uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+3,1210YD107MAT2A,KYOCERA AVX,"pm1p8V_pm5V_5Vref_5Vlaser:C59,CH_Card:C159,CH_Card:C162",100uF,C_1210_3225Metric_Pad1.33x2.70mm_HandSolder
+7,1N4007RLG,onsemi,"pm1p8V_pm5V_5Vref_5Vlaser:D4,pm1p8V_pm5V_5Vref_5Vlaser:D5,pm1p8V_pm5V_5Vref_5Vlaser:D6,pm1p8V_pm5V_5Vref_5Vlaser:D12,pm1p8V_pm5V_5Vref_5Vlaser:D13,pm1p8V_pm5V_5Vref_5Vlaser:D14,pm1p8V_pm5V_5Vref_5Vlaser:D15",1N4007,D_DO-41_SOD81_P12.70mm_Horizontal
+1,ERA-6AEB6042V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R10,60.4k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,RC1206FR-074R7L,YAGEO,pm1p8V_pm5V_5Vref_5Vlaser:R12,4.7R,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder
+1,ERA-6AEB3322V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R13,33.2k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB1272V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R14,12.7k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB1373V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R15,137k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+9,ERA-6AEB103V,Panasonic Industry,"pm1p8V_pm5V_5Vref_5Vlaser:R16,pm1p8V_pm5V_5Vref_5Vlaser:R48,pm1p8V_pm5V_5Vref_5Vlaser:R49,CH_Card:R_NTC1,CH_Card:R130,CH_Card:R131,CH_Card:R133,CH_Card:R_f1,CH_Card:R_f2",10k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,RT0805BRD07143KL,YAGEO,"pm1p8V_pm5V_5Vref_5Vlaser:R18,pm1p8V_pm5V_5Vref_5Vlaser:R19",143k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,RC1206FR-071RL,YAGEO,pm1p8V_pm5V_5Vref_5Vlaser:R40,1R RC,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder
+1,ERA-6AEB2492V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R41,24.9k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERJ-6BWFR020V,Panasonic Industry,"pm1p8V_pm5V_5Vref_5Vlaser:R42,pm1p8V_pm5V_5Vref_5Vlaser:R43",20m 1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB6040V,Panasonic,pm1p8V_pm5V_5Vref_5Vlaser:R44,604,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+6,ERA-6AEB4992V,Panasonic Industry,"pm1p8V_pm5V_5Vref_5Vlaser:R45,pm1p8V_pm5V_5Vref_5Vlaser:R46,AFE_Card:R138,AFE_Card:R139,AFE_Card:R140,AFE_Card:R142",49.9k 0.1%,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB163V,Panasonic,pm1p8V_pm5V_5Vref_5Vlaser:R47,16k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERJ-6ENF49R9V,Panasonic Industry,pm1p8V_pm5V_5Vref_5Vlaser:R50,49.9R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+3,MC7808CTG,onsemi,"pm1p8V_pm5V_5Vref_5Vlaser:U1,pm1p8V_pm5V_5Vref_5Vlaser:U14,pm1p8V_pm5V_5Vref_5Vlaser:U17",MC7808CTG,TO-220-3_Vertical
+3,LT3042EMSE#PBF,Analog Devices Inc.,"pm1p8V_pm5V_5Vref_5Vlaser:U2,pm1p8V_pm5V_5Vref_5Vlaser:U10,AFE_Card:U1",LT3042EMSE +5.5V,MSOP-10-1EP_3x3mm_P0.5mm_EP1.68x1.88mm
+1,LTC6655BHMS8-5#PBF,Analog Devices Inc.,pm1p8V_pm5V_5Vref_5Vlaser:U3,LTC6655BHMS8-5#PBF,MSOP-8_3x3mm_P0.65mm
+2,MC7812CTG,onsemi,"pm1p8V_pm5V_5Vref_5Vlaser:U4,pm1p8V_pm5V_5Vref_5Vlaser:U13",MC7812CTG,TO-220-3_Vertical
+1,MC7805CTG,onsemi,pm1p8V_pm5V_5Vref_5Vlaser:U5,MC7805CTG,TO-220-3_Vertical
+4,LT3045EMSE#PBF,Analog Devices Inc.,"pm1p8V_pm5V_5Vref_5Vlaser:U6,pm1p8V_pm5V_5Vref_5Vlaser:U15,pm1p8V_pm5V_5Vref_5Vlaser:U16,pm1p8V_pm5V_5Vref_5Vlaser:U19",LT3045EMSE 3.3V,MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm
+1,LP5907MFX-1.8/NOPB,Texas Instruments,pm1p8V_pm5V_5Vref_5Vlaser:U7,LP5907MFX-1.8,SOT-23-5
+1,TPS7A3901DSCR,Texas Instruments,pm1p8V_pm5V_5Vref_5Vlaser:U8,TPS7A3901DSCR,Texas_DSC0010J_ThermalVias
+2,LT3094EMSE#PBF,Analog Devices Inc.,"pm1p8V_pm5V_5Vref_5Vlaser:U9,pm1p8V_pm5V_5Vref_5Vlaser:U20",LT3094EMSE -14.3V,MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm
+1,MC7906CTG,onsemi,pm1p8V_pm5V_5Vref_5Vlaser:U18,MC7906CTG,TO-220-3_Vertical
+10,OPA192IDBVR,Texas Instruments,"pm1p8V_pm5V_5Vref_5Vlaser:U21,DIG_Card:U301,DIG_Card:U302,CH_Card:U17,CH_Card:U19,CH_Card:U22,CH_Card:U24,CH_Card:U106,AFE_Card:U202,AFE_Card:U203",OPA192IDBVR,SOT-23-5_HandSoldering
+1,Teensy 4.1,PJRC,DIG_Card:A1,TEENSY_4.1,TEENSY_LONG_EXT
+22,CL21B103KBANNNC,Samsung Electro-Mechanics,"DIG_Card:C83,DIG_Card:C87,DIG_Card:C89,DIG_Card:C90,DIG_Card:C91,DIG_Card:C320,DIG_Card:C321,DIG_Card:VM_C81,DIG_Card:VM_C82,DIG_Card:VM_C83,DIG_Card:VM_C84,DIG_Card:VM_C85,DIG_Card:VM_C86,DIG_Card:VM_C87,DIG_Card:VM_C88,DIG_Card:VM_C89,CH_Card:C70,CH_Card:C119,CH_Card:C120,CH_Card:C175,AFE_Card:C94,AFE_Card:C95",10n,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+5,CL21B102KBANNNC,Samsung Electro-Mechanics,"DIG_Card:C303,DIG_Card:C304,CH_Card:C76,AFE_Card:C96,AFE_Card:C97",1n ERR1 ADC filter,C_0805_2012Metric
+2,CC0805KKX7R8BB105,YAGEO,"DIG_Card:C313,DIG_Card:C319",1uF Y1 3V3_OSC,C_0805_2012Metric
+1,CC0805KKX5R7BB106,YAGEO,DIG_Card:C318,10uF U42 3V3,C_0805_2012Metric
+1,BAV99-7-F,Diodes Incorporated,DIG_Card:D24,BAV99,SOT-23
+2,BAT54S-7-F,Diodes Incorporated,"DIG_Card:D301,DIG_Card:D302",BAT54S ERR1 ADC clamp,SOT-23
+9,BAT54WS-7-F,Diodes Incorporated,"DIG_Card:D303,DIG_Card:D304,DIG_Card:D305,DIG_Card:D306,DIG_Card:D307,DIG_Card:D308,DIG_Card:D309,DIG_Card:D310,DIG_Card:D311",BAT54WS VM fault OR,D_SOD-323
+2,MPZ2012S601AT000,TDK,"DIG_Card:FB301,DIG_Card:FB302",600R@100MHz FB Y1,L_0805_2012Metric
+2,ACX1234-ND,(DigiKey PN),"DIG_Card:J2,DIG_Card:J302",10MHz Ref SMA,SMA_BAT_Wireless_BWSMA-KWE-Z001
+1,BWSMA-KWE-Z001,BAT Wireless,DIG_Card:J302B1,LO2 out SMA,SMA_BAT_Wireless_BWSMA-KWE-Z001
+3,RC0805FR-0749R9L,YAGEO,"DIG_Card:R104,DIG_Card:R312,DIG_Card:R313",49R9 10MHz ref term,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB273V,Panasonic,DIG_Card:R106,27k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,RC0805FR-0710ML,YAGEO,DIG_Card:R110,10M,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB222V,Panasonic,"DIG_Card:R112,DIG_Card:R113",2.2k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+14,RC0805FR-07100RL,YAGEO,"DIG_Card:R114,DIG_Card:R301,DIG_Card:R302,DIG_Card:VM_R56,DIG_Card:VM_R66,DIG_Card:VM_R72,CH_Card:R111,CH_Card:R112,CH_Card:R113,CH_Card:R114,AFE_Card:R211,AFE_Card:R212,AFE_Card:R_S1,AFE_Card:R_S2",100,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+4,RC0805FR-073K3L,YAGEO,"DIG_Card:R303,DIG_Card:R304,AFE_Card:R116,AFE_Card:R117",3k3 ERR1 ADC series,R_0805_2012Metric
+44,RC0805FR-0710KL,YAGEO,"DIG_Card:R305,DIG_Card:VM_R54,DIG_Card:VM_R55,DIG_Card:VM_R58,DIG_Card:VM_R60,DIG_Card:VM_R62,DIG_Card:VM_R63,DIG_Card:VM_R67,DIG_Card:VM_R69,DIG_Card:VM_R70,DIG_Card:VM_R73,DIG_Card:VM_R75,DIG_Card:VM_R76,DIG_Card:VM_R79,DIG_Card:VM_R80,DIG_Card:VM_R81,DIG_Card:VM_R82,DIG_Card:VM_R84,DIG_Card:VM_R85,DIG_Card:VM_R86,DIG_Card:VM_R87,CH_Card:R79,CH_Card:R92,CH_Card:R115,CH_Card:R120,CH_Card:R121,CH_Card:R122,CH_Card:R123,CH_Card:R124,CH_Card:R125,CH_Card:R127,CH_Card:R128,CH_Card:R129,AFE_Card:R120,AFE_Card:R121,AFE_Card:R122,AFE_Card:R123,AFE_Card:R126,AFE_Card:R129,AFE_Card:R134,AFE_Card:R135,AFE_Card:R145,AFE_Card:R213,AFE_Card:R214",10k FAULT_n pullup,R_0805_2012Metric
+7,RC0805FR-0747RL,YAGEO,"DIG_Card:R306,DIG_Card:R307,CH_Card:R69,CH_Card:R70,CH_Card:R75,AFE_Card:R217,AFE_Card:R218",47R MOD1 bus series,R_0805_2012Metric
+4,RC0805FR-0733RL,YAGEO,"DIG_Card:R311,DIG_Card:R316,DIG_Card:R317,DIG_Card:R318",33R CLK10M series,R_0805_2012Metric
+4,AD9833BRMZ,Analog Devices,"DIG_Card:U34,DIG_Card:U35,DIG_Card:U38,DIG_Card:U39",AD9833xRM,MSOP-10_3x3mm_P0.5mm
+1,LMV7219M5/NOPB,Texas Instruments,DIG_Card:U40,LMV7219M5,SOT-23-5
+1,SN74LVC1G3157DBVR,Texas Instruments,DIG_Card:U41,SN74LVC1G3157DBVR,SOT-23-6_Handsoldering
+1,CDCE913PWR,Texas Instruments,DIG_Card:U42,CDCE913PWG4,SOP65P640X120-14N
+1,1568-COM-28379-ND,SparkFun,DIG_Card:U44,CR2013-MI2120,CR2013-MI2120
+1,SN74LVC1G125DBVR,Texas Instruments,DIG_Card:U303,74LVC1G125 CLK10M bus buffer,SOT-23-5
+9,150080GS75000,Würth Elektronik,"DIG_Card:VM_D16,DIG_Card:VM_D17,DIG_Card:VM_D18,DIG_Card:VM_D19,DIG_Card:VM_D20,DIG_Card:VM_D21,DIG_Card:VM_D22,DIG_Card:VM_D23,DIG_Card:VM_D24",+15V_OK,LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder
+9,MMBT3904-7-F,Diodes Inc,"DIG_Card:VM_Q11,DIG_Card:VM_Q12,DIG_Card:VM_Q13,DIG_Card:VM_Q14,DIG_Card:VM_Q15,DIG_Card:VM_Q16,DIG_Card:VM_Q17,DIG_Card:VM_Q18,DIG_Card:VM_Q19",MMBT3904,SOT-23
+1,ERA-6AEB2942V,Panasonic,DIG_Card:VM_R50,29.4k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB9531V,Panasonic,DIG_Card:VM_R52,9.53k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB114V,Panasonic,DIG_Card:VM_R53,110k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB124V,Panasonic,"DIG_Card:VM_R59,AFE_Card:R2",120k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,RC0805FR-0740K2L,YAGEO,DIG_Card:VM_R61,40.2k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB4752V,Panasonic,DIG_Card:VM_R64,47.5k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB3012V,Panasonic,"DIG_Card:VM_R65,DIG_Card:VM_R77",30.1k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB3832V,Panasonic,DIG_Card:VM_R71,38.3k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB1652V,Panasonic,DIG_Card:VM_R78,16.5k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB4421V,Panasonic,DIG_Card:VM_R83,4.42k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+9,RC0805FR-071K3L,YAGEO,"DIG_Card:VM_R88,DIG_Card:VM_R89,DIG_Card:VM_R90,DIG_Card:VM_R91,DIG_Card:VM_R92,DIG_Card:VM_R93,DIG_Card:VM_R94,DIG_Card:VM_R95,DIG_Card:VM_R96",1.3k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+9,ERA-6AEB472V,Panasonic,"DIG_Card:VM_R97,DIG_Card:VM_R98,DIG_Card:VM_R99,DIG_Card:VM_R100,DIG_Card:VM_R101,DIG_Card:VM_R102,DIG_Card:VM_R103,DIG_Card:VM_R104,DIG_Card:VM_R105",4.7k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,MCP6002-E/SN,Microchip,DIG_Card:VM_U22,MCP6002-xSN,SOIC-8_3.9x4.9mm_P1.27mm
+5,LM339BIDR,Texas Instruments,"DIG_Card:VM_U23,DIG_Card:VM_U25,DIG_Card:VM_U26,DIG_Card:VM_U27,DIG_Card:VM_U28",LM339B,SOIC-14_3.9x8.7mm_P1.27mm
+1,MCP6004-E/SL,Microchip,DIG_Card:VM_U24,MCP6004,SOIC-14_3.9x8.7mm_P1.27mm
+1,ASE-10.000MHZ-LC-T,Abracon,DIG_Card:Y1,ASE-10.000MHZ-LC-T,XTAL_ASE-10.000MHZ-LC-T
+1,CL21C101JBANNNC,Samsung Electro-Mechanics,CH_Card:C68,100pF NP0,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+2,GRM1555C1H2R2CA01D,Murata Electronics,"CH_Card:C_f1,CH_Card:C_f2",2.2pF Cf,C_0402_1005Metric
+4,MMSZ4702T1G,onsemi,"CH_Card:D16,CH_Card:D17,CH_Card:D20,CH_Card:D21",MMSZ4702 15V,D_SOD-123
+2,BAT46W-7-F,Diodes Inc,"CH_Card:D22,CH_Card:D23",BAT46W rev prot,D_SOD-123
+4,61300211121,Wurth Elektronik,"CH_Card:JP101,CH_Card:JP102,CH_Card:JP103,BTF_Card:JP1",GA0 addr jumper,PinHeader_1x02_P2.54mm_Vertical
+1,TSW-107-21-G-D,Samtec,CH_Card:J_BTF1,Butterfly daughter-card stacking header - Samtec TSW-107-21-G-D (30.99mm post),BTF_Card_Mezzanine_2x07_M3
+1,B82432T1103K000,TDK,CH_Card:L1,10u (SRF>>20MHz),L_1812_4532Metric_Pad1.30x3.40mm_HandSolder
+2,IRL540NPBF,Infineon Technologies,"CH_Card:Q13,CH_Card:Q17",IRL540N,TO-220-3_Vertical_HS657-10ABPE
+1,DMN3404LQ-7,Diodes Incorporated,CH_Card:Q19,DMN3404L,SOT-23
+1,RC0805FR-073K16L,YAGEO,CH_Card:R41,3.16k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+3,ERA-6AEB203V,Panasonic Industry,"CH_Card:R43,CH_Card:R45,CH_Card:R_bias1",20k 0.1% TEC_scaler_bot,R_0805_2012Metric
+1,ERA-6AEB4991V,Panasonic,CH_Card:R44,4.99k 0.1% TEC_scaler_top,R_0805_2012Metric
+1,ERA-6AEB333V,Panasonic,CH_Card:R49,33k flag pulldown,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+4,ERA-6AEB471V,Panasonic,"CH_Card:R56,CH_Card:R57,CH_Card:R58,CH_Card:R59",470R gate,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB204V,Panasonic Industry,CH_Card:R66,200k 0.1% scaler_top,R_0805_2012Metric
+1,ERA-6AEB9090V,Panasonic Industry,CH_Card:R67,909R 0.1% scaler_bot,R_0805_2012Metric
+2,WSL2512R0100FEA,Vishay Dale,"CH_Card:R68,CH_Card:R76",10mR link (was 47R - TEC path),R_2512_6332Metric
+4,ERA-6AEB202V,Panasonic,"CH_Card:R77,CH_Card:R117,AFE_Card:R124,AFE_Card:R127",2k (trim),R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,WSL2512R2500FEA,Vishay Dale,CH_Card:R81,0.25R 1W,R_2512_6332Metric
+1,CRCW25124R70FKEG,Vishay Dale,CH_Card:R86,4R7 inrush limit,R_2512_6332Metric
+1,ERA-6AEB102V,Panasonic,CH_Card:R94,Rp 1k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,RC0805FR-077M5L,YAGEO,CH_Card:R96,Rsum 7.5M,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERA-6AEB4870V,Panasonic,CH_Card:R98,487R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+3,ERA-6AEB8061V,Panasonic,"CH_Card:R102,AFE_Card:R100,AFE_Card:R101",8.06k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,RC0805FR-074K99L,YAGEO,"CH_Card:R118,CH_Card:R119",4.99k ADC prot,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,HVCB0805FDC15M0,Stackpole Electronics,CH_Card:R134,15M pedestal cancel,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,OPA551UA,Texas Instruments,"CH_Card:U21,CH_Card:U107",OPA551U,SOIC-8_3.9x4.9mm_P1.27mm
+4,ADG419BRMZ,Analog Devices Inc.,"CH_Card:U26,CH_Card:U104,CH_Card:U105,CH_Card:U108",ADG419BRM,MSOP-8_3x3mm_P0.65mm
+2,INA828ID,Texas Instruments,"CH_Card:U28,CH_Card:U32",INA828,SOIC-8_3.9x4.9mm_P1.27mm
+2,AD5696RARUZ,Analog Devices,"CH_Card:U101,AFE_Card:U206",AD5696R,TSSOP-16_4.4x5mm_P0.65mm
+2,ADS1115IDGSR,Texas Instruments,"CH_Card:U102,AFE_Card:U201",ADS1115,MSOP-10_3x3mm_P0.5mm
+1,"PCA9538PW,118",NXP USA Inc.,CH_Card:U103,PCA9538,TSSOP-16_4.4x5mm_P0.65mm
+2,OPA380AID,Texas Instruments,"CH_Card:U_TIA1,CH_Card:U_TIA2",OPA380AIDR MPD,SOIC-8_3.9x4.9mm_P1.27mm
+2,C0805C475K3RACTU,Kemet,"AFE_Card:C1,AFE_Card:C2",4.7uF X7R,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+2,C0402C109C5GACTU,KEMET,"AFE_Card:C78,AFE_Card:C79",Cf 1p C0G 0402,C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+2,C0805C680J5GACTU,Kemet,"AFE_Card:C98,AFE_Card:C99",68pF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder
+2,132203-12,Amphenol RF,"AFE_Card:J204,AFE_Card:J205",LO1 ref SMA,SMA_Amphenol_132203-12_Horizontal
+2,FGA01FC,Thorlabs,"AFE_Card:PD1,AFE_Card:PD2",FGA01FC,PD_FGA01FC_EdgeBracket
+1,ERA-6AEB6041V,Panasonic,AFE_Card:R1,6.04k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB6651V,Panasonic,"AFE_Card:R118,AFE_Card:R119",6.65k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,ERA-6AEB8251V,Panasonic,"AFE_Card:R141,AFE_Card:R143",8.25k VB1 bot,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+1,ERJ-6ENF3573V,Panasonic,AFE_Card:R144,357k PG top,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder
+2,OPA814DBVR,Texas Instruments,"AFE_Card:U30,AFE_Card:U31",OPA814DBVR,OPA814DBVR
+2,AD835ARZ,Analog Devices,"AFE_Card:U45,AFE_Card:U46",AD835 demod,SOIC-8_3.9x4.9mm_P1.27mm
+2,OPA820IDBVR,Texas Instruments,"AFE_Card:U204,AFE_Card:U205",OPA820 LOx3,SOT-23-5
+1,ESQ-107-12-G-D,Samtec,BTF_Card:J1,ESQ-107-12-G-D,PinSocket_2x07_P2.54mm_Vertical
+1,5253-100-7S,Azimuth Electronics,BTF_Card:JZ1,Azimuth 5253-100-7S,Azimuth_5253-100-7S_ButterflyZIF
+1,5253-100-7R,Azimuth Electronics,BTF_Card:JZ2,Azimuth 5253-100-7R,Azimuth_5253-100-7R_ButterflyZIF
