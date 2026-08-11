@@ -125,7 +125,7 @@
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
       <div class="kpi"><b>96-way</b><span>DIN 41612 Type C slot</span></div>
     </div>
-    <div class="rev">Manual Rev 2.2 &nbsp;·&nbsp; 2026-08-06 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
+    <div class="rev">Manual Rev 2.4 &nbsp;·&nbsp; 2026-08-09 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
   </div>
 </header>
 
@@ -292,13 +292,14 @@ Resolution = V<sub>ref</sub> / 2<sup>16</sup> / 221 / R<sub>sense</sub>
   inside the DFB1550LP absolute maximum of 100&nbsp;mA. Because U24 sits at <code>VREF_MID</code>
   = 2.500&nbsp;V when the error is zero, <b>R134 15&nbsp;M&Omega; to &minus;5&nbsp;V</b> cancels
   that pedestal (an exact 2:1 with R96, so even R134's 5&nbsp;% tolerance costs only ~63&nbsp;nA).</p>
-  <div class="warn"><p style="margin:0"><b>Rev D &mdash; this is the fix, not the original
-  circuit.</b> Before rev D the bottom of the scaler went to the servo node instead of ground, so
-  the DAC and the servo formed a plain two-resistor divider whose weights were forced to sum to 1
-  (DAC 0.052, servo 0.948). Combined with <code>VREF_MID</code> being redefined from v3's 0&nbsp;V
-  to 2.500&nbsp;V, U24 idled at 2.500&nbsp;V and commanded roughly <b>770&nbsp;mA</b> into a
-  100&nbsp;mA laser the moment power was applied, limited only by R86. R67 is now a real scaler
-  bottom to ground, and R96/R134 inject the correction separately.</p></div>
+  <div class="note"><p style="margin:0"><b>How the set-point summing node is scaled.</b>
+  <code>R67</code> is the scaler bottom and returns to <b>ground</b>, so the DAC weight and
+  the servo weight are set independently rather than being forced to sum to 1. The PDH
+  integrator injects through <code>R96</code> 7.5&nbsp;M&Omega;, and <code>R134</code>
+  15&nbsp;M&Omega; to &minus;5&nbsp;V cancels the integrator&rsquo;s 2.500&nbsp;V idle
+  pedestal. The result is a DAC full scale of <b>90.5&nbsp;mA</b> and a servo authority of
+  <b>0.483&nbsp;mA/V</b>, so even a railed integrator on top of DAC full scale reaches only
+  <b>96.4&nbsp;mA</b> &mdash; inside the laser&rsquo;s 100&nbsp;mA absolute maximum.</p></div>
 
   <h3>3.3 TEC channel — bipolar linear H-bridge</h3>
   <p>Laser frequency is set by die temperature, so the TEC loop is what the lock ultimately steers
@@ -335,39 +336,29 @@ R<sub>sense</sub> = 0.1 Ω,&nbsp; scaler ≈ 20 kΩ / 4.99 kΩ&nbsp; ⇒ &nbsp;2
   pole and the INA828 bandwidth. Cooling current reads <b>above</b> 1.20&nbsp;V, matching
   <code>TEC_IMON_OFFSET_V</code> in firmware; at zero current U19's output sits at 0&nbsp;V, where
   both legs are equal.</p>
-  <div class="warn"><p style="margin:0"><b>Rev D &mdash; three defects fixed here.</b> All four gate
-  resistors previously landed on one buffer output, so both legs moved together and the TEC saw
-  ~0&nbsp;V. Q14/Q18 had drain and source swapped, which forward-biased their body diodes and
-  stopped the P-channels ever enhancing. And U19's feedback came from the bridge terminal
-  <code>TEC_BTF_N</code> rather than the current sense, making it a voltage loop while every scaler
-  value, the 1.202&nbsp;V zero and the firmware calibration all assumed current. All three are
-  inherited from v3, so <b>the fabbed v5 CH cards have them too</b>.</p></div>
-
-  <div class="note"><p style="margin:0"><b>VZERO trim range — R117 is 2.00 kΩ on v6, 4.99 kΩ on
-  v5.</b> The setpoint DAC trims <code>TEC_VZERO</code> into the <code>VZERO_SET</code> node through
+  <div class="note"><p style="margin:0"><b>VZERO trim range.</b> The setpoint DAC trims <code>TEC_VZERO</code> into the <code>VZERO_SET</code> node through
   <b>R117 in series with R43 20 kΩ</b>. <code>DAC_VZERO_TRIM</code> carries no shunt capacitor, so
   R117 performs no filtering — it only adds to the injection resistance and shrinks the trim span:</p>
   <table class="pinref" style="margin-top:10px">
     <thead><tr><th>R117</th><th>Injection</th><th>VZERO range</th><th>Span</th><th>Of full</th></tr></thead>
     <tbody>
-      <tr><td>4.99 kΩ <span class="sub">(v5, as fabbed)</span></td><td>24.99 kΩ</td><td>1.1665 – 1.3140 V</td><td>147.5 mV</td><td>81%</td></tr>
-      <tr><td><b>2.00 kΩ</b> <span class="sub">(v6)</span></td><td>22.00 kΩ</td><td>1.1618 – 1.3287 V</td><td>166.9 mV</td><td>91%</td></tr>
+      <tr><td><b>2.00 kΩ</b> <span class="sub">(fitted)</span></td><td>22.00 kΩ</td><td>1.1618 – 1.3287 V</td><td>166.9 mV</td><td>91%</td></tr>
       <tr><td>0 Ω <span class="sub">(theoretical max)</span></td><td>20.00 kΩ</td><td>1.1579 – 1.3409 V</td><td>183.0 mV</td><td>100%</td></tr>
     </tbody>
   </table>
-  <p style="margin:10px 0 0">Both values straddle the 1.2019 V target with margin, so this is a
-  headroom improvement rather than a defect — <b>v5 cards need no rework <i>for this particular item</i></b> (they need a great deal for others — see the rev&nbsp;D boxes above). 2.00 kΩ was chosen over
-  a nominal 2.5 kΩ because it is an existing BOM line (R77, same 0805 footprint) and yields slightly
-  more span. R117 is a v3 carry-over (annotated “v3 R40”), which is also why R43 still carries the
-  stale <code>TEC_scaler_bot</code> label while in fact feeding a summing node.</p></div>
+  <p style="margin:10px 0 0">The fitted value straddles the 1.2019 V target with comfortable
+  margin. 2.00 kΩ was chosen over a nominal 2.5 kΩ because it is an existing BOM line (R77, same
+  0805 footprint) and yields slightly more span. Note that R43 carries a <code>TEC_scaler_bot</code> label while in fact feeding a summing node.</p></div>
 
   <div class="warn"><b>Linear-bridge dissipation.</b> The two conducting FETs drop the entire
   <code>(V<sub>rail</sub> − V<sub>TEC</sub>)·I</code>. Worst case is a few watts per channel, which is
   why the dedicated <a href="#pm6">±6 V TEC supply</a> is a heavy multi-amp linear rail and the FETs
-  need ≤10 °C/W to chassis. The endpoint calibration (code→current) is finished in firmware against
+  need ≤10 °C/W to chassis. Separately, the heat the TEC <i>pumps</i> leaves through the
+  laser&rsquo;s own spreader and heat-sink stack on the BTF card (<a href="#btf">&sect;13</a>). The
+  endpoint calibration (code→current) is finished in firmware against
   the measured IMON.</div>
 
-  <div class="note"><p style="margin:0"><b>Power-up safe state (rev D).</b> A unipolar DAC needs a
+  <div class="note"><p style="margin:0"><b>Power-up safe state.</b> A unipolar DAC needs a
   <i>non-zero</i> code for zero current, so no reset state of U101 can mean &ldquo;TEC off&rdquo;
   &mdash; RSTSEL only picks which wrong state you boot into. RSTSEL is tied to GND, which parks the
   laser DAC safely at 0&nbsp;mA but would otherwise leave the TEC commanding &minus;1.34&nbsp;A of
@@ -605,7 +596,7 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   </div>
   <p>The individual rails and their derivations are detailed per-card in
   <a href="#pm1p8">§09</a>. The full rail-by-rail current budget lives in the companion
-  <a href="laser_driver_v5_power_review.html">power review document</a>.</p>
+  separate power-review document.</p>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -840,15 +831,6 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
   cards populate only the rail columns, signal cards populate the rail columns plus the signal
   section.</p>
 
-  <div class="note"><p style="margin:0"><b>What v7 changed.</b> v5 and v6 used a DIN 41612
-  <b>Type M 24+8</b> slot: 24 signal pins plus 8 high-current blades. That connector is a housing
-  with <em>empty cavities</em> — its power contacts are a separate order line, and the entire ERNI
-  female high-current range went unavailable. v7 moves to <b>Type C 96-way</b>, which ships as one
-  fully-populated part number from four independent manufacturers, uses stock KiCad symbols and
-  footprints, and needs no special contacts at all. Current capacity is made up by ganging ordinary
-  2&nbsp;A contacts. <b>v7 cards and v5/v6 cards are not interchangeable</b> — the backplane changes
-  with them.</p></div>
-
   <table>
     <thead><tr><th>Card</th><th>Qty</th><th>Role</th></tr></thead>
     <tbody>
@@ -858,9 +840,42 @@ Equal ramp at startup ⇒ rails always equal-and-opposite (no differential therm
       <tr><td><a href="#pm1p8">pm1p8V</a></td><td>1</td><td>Regulated ±15 V, ±5 V, 5 Vref, 3V3, 1V8, +5 V_LASER</td></tr>
       <tr><td><a href="#dig">DIG</a></td><td>1</td><td>Teensy 4.1 controller, 4× AD9833 DDS, clock, voltage monitor</td></tr>
       <tr><td><a href="#ch">CH</a></td><td>2</td><td>Per-channel laser driver + TEC bridge + readback + front-panel laser head</td></tr>
+      <tr><td><a href="#btf">BTF</a></td><td>2</td><td>Butterfly laser daughter card; stacks on its CH card, does not plug the backplane</td></tr>
       <tr><td><a href="#afe">AFE</a></td><td>1</td><td>Photodiode bias, wideband TIAs, AD835 demodulators — the detection front end</td></tr>
     </tbody>
   </table>
+
+  <h4>Build state of the card set</h4>
+  <p>All nine boards are laid out and design-rule clean. The table below is the state as
+  verified from the KiCad files, not a plan — every board reports <b>zero unconnected pads</b>
+  and, apart from the one documented artifact on the BTF card, <b>zero schematic-parity
+  differences</b> between its schematic and its layout.</p>
+  <table>
+    <thead><tr><th>Board</th><th>Size</th><th>Layers</th><th>Unconnected</th><th>Parity</th><th>Remaining DRC</th></tr></thead>
+    <tbody>
+      <tr><td>AC Board</td><td>62 × 43 mm</td><td>2</td><td>0</td><td>0</td><td><b>none</b></td></tr>
+      <tr><td>pm22V</td><td>160 × 100 mm</td><td>2</td><td>0</td><td>0</td><td>18 silkscreen / courtyard</td></tr>
+      <tr><td>pm6V</td><td>160 × 100 mm</td><td>2</td><td>0</td><td>0</td><td>54 silkscreen / courtyard</td></tr>
+      <tr><td>pm1p8V</td><td>160 × 100 mm</td><td>2</td><td>0</td><td>0</td><td>17, of which one starved thermal is worth a look</td></tr>
+      <tr><td>Backplane</td><td>390 × 129 mm</td><td>2</td><td>0</td><td>0</td><td><b>none</b></td></tr>
+      <tr><td>DIG</td><td>160 × 100 mm</td><td>6</td><td>0</td><td>0</td><td>57 courtyard / silkscreen</td></tr>
+      <tr><td>CH ×2</td><td>160 × 100 mm</td><td>6</td><td>0</td><td>0</td><td>3 (isolated copper, J1 edge keepout)</td></tr>
+      <tr><td>AFE</td><td>160 × 100 mm</td><td>2</td><td>0</td><td>0</td><td>9 (text height, J1 edge keepout)</td></tr>
+      <tr><td>BTF ×2</td><td>43 × 75 mm</td><td>2</td><td>0</td><td>14 <span class="sub">(see below)</span></td><td>1 silkscreen</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>Outstanding at the crate level: cooling.</b> All nine boards are done,
+  but <b>no fan is installed yet</b>. Two are planned &mdash; one over the power cards, one over the
+  laser cards &mdash; and the laser heat-sink assembly is specified entirely in forced air, so this
+  is the last thing standing between the card set and a system that can hold a lock for a long run
+  (<a href="#btf">&sect;13</a>).</div>
+  <div class="note"><b>Reading the two exceptions.</b> The BTF card&rsquo;s fourteen parity
+  items all come from one part: the laser <code>LD1</code> is never soldered — it drops into
+  ZIF sockets — so its footprint is a pad-less mechanical outline and KiCad finds no pad for
+  any of the symbol&rsquo;s fourteen pins (<a href="#btf">§13</a>). The recurring
+  <code>items_not_allowed</code> error on several cards is the DIN connector sitting in the
+  board-edge keepout, which is deliberate mechanical intent. Everything else outstanding is
+  silkscreen, courtyard overlap or text height — cosmetic, and none of it is fab-blocking.</div>
 
   <h3>5.1 Universal slot pinout</h3>
   <p>All eight slots are wired identically. The connector is a DIN 41612 <b>Type C, 96-way</b>
@@ -1094,30 +1109,29 @@ rect{stroke-width:1}
   <code>+6V_TEC</code> &rarr; bridge &rarr; TEC &rarr; bridge &rarr; <code>-6V_TEC</code> and never
   enters <code>PGND_TEC</code>, which reaches only the bypass capacitors and the connector. On the
   DIG card it reaches nothing but the connector. It is sized to <em>match</em> the rails rather than
-  exceed them — the v5/v6 slot gave it twice their copper — but is not made thinner, because it is
+  exceed them, but is not made thinner, because it is
   the reference both rails are defined against and the path a bridge-device fault would
   take.</p></div>
 
-  <h3>5.2 Card addressing — on-card jumpers</h3>
-  <p>Every card sets its own identity with <b>on-card jumpers</b>. The v5/v6 slot reserved three
+  <h3>5.2 Card addressing — one jumper, on the CH cards only</h3>
+  <p>Every card sets its own identity on-card, never from the slot. An earlier plan reserved three
   connector pins (a20/c18/c19) for geographic addressing; on every board they were wired to nothing
-  but the connector itself, so <b>v7 removes them from the connector entirely</b> and the
-  addressing lives wholly on the card. Each address line <code>GA0..GA2</code> has a
-  10 kΩ pull-up to 3V3 and a two-pin jumper to ground: <b>jumper fitted = 0, jumper open = 1</b>.
-  The GA code sets the card's I²C addresses, and on the CH cards <code>GA0</code> additionally
-  steers the on-card ADG419 muxes that select which bused analog pair
-  (<code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>) the card uses. A card can therefore sit in
-  any slot — identity travels with the card, not the slot.</p>
+  but the connector itself, so <b>v7 removes them from the connector entirely</b>.</p>
+  <p><b>The CH cards are the only boards with an address jumper</b>, and in v7 they carry exactly
+  one. <code>GA0</code> has a 10 kΩ pull-up to 3V3 and a two-pin jumper (JP101) to ground:
+  <b>fitted = 0, open = 1</b>. That single bit sets the card's I²C addresses <em>and</em> steers the
+  on-card ADG419 muxes that pick which bused analog pair (<code>ERR1/MOD1</code> vs
+  <code>ERR2/MOD2</code>) the card uses — so a CH card is wholly "channel 1" or wholly "channel 2"
+  with nothing to set inconsistently. Every other card is hard-strapped with no jumper at all.
+  A card can therefore sit in any slot — identity travels with the card, not the slot.</p>
 
   <h4>Setting the address on a CH (laser channel) card</h4>
-  <p>The two CH cards are physically identical; the jumpers are the <em>only</em> thing that makes
-  one card "laser 1" and the other "laser 2". Set them <b>before installing the card</b>:</p>
+  <p>The two CH cards are physically identical; a <em>single</em> jumper is the only thing that makes
+  one card "laser 1" and the other "laser 2". Set it <b>before installing the card</b>:</p>
   <table class="pinref">
     <thead><tr><th>Jumper</th><th>Bit</th><th>Channel 1 card</th><th>Channel 2 card</th></tr></thead>
     <tbody>
       <tr><td>JP101</td><td>GA0</td><td><b>Fitted</b> (GA0 = 0)</td><td><b>Open</b> (GA0 = 1)</td></tr>
-      <tr><td>JP102</td><td>GA1</td><td>Fitted (GA1 = 0)</td><td>Fitted (GA1 = 0)</td></tr>
-      <tr><td>JP103</td><td>GA2</td><td>Fitted (GA2 = 0)</td><td>Fitted (GA2 = 0)</td></tr>
     </tbody>
   </table>
   <p>What each setting produces:</p>
@@ -1127,18 +1141,28 @@ rect{stroke-width:1}
       <tr><td>Analog buses (ADG419, IN = 0 → S1)</td><td>ERR1 / MOD1</td><td>ERR2 / MOD2</td></tr>
       <tr><td>ADS1115 monitor ADC</td><td>0x48</td><td>0x49</td></tr>
       <tr><td>AD5696R set-point DAC (base 00011 A1 A0)</td><td>0x0C</td><td>0x0D</td></tr>
-      <tr><td>PCA9538 GPIO expander (base 1110 0 A1 A0)</td><td>0x70</td><td>0x71</td></tr>
+      <tr><td>PCA9538 GPIO expander (base 1110 0 A1 A0, A1 tied to GND)</td><td>0x70</td><td>0x71</td></tr>
     </tbody>
   </table>
   <div class="note"><b>Rules of thumb.</b> Exactly one CH card in the cage has JP101 fitted (that's
-  laser 1) and one has it open (laser 2). Leave JP102/JP103 fitted on both — they are spare address
-  bits for future expansion. Never install two CH cards with the same JP101 setting: both would
-  answer at the same I²C addresses <em>and</em> fight over the same ERR/MOD bus pair.</div>
+  laser 1) and one has it open (laser 2). There is nothing else to set. Never install two CH cards
+  with the same JP101 setting: both would answer at the same I²C addresses <em>and</em> fight over
+  the same ERR/MOD bus pair. The symptom is one channel simply missing at start-up, not an obvious
+  error — the firmware finds a single expander instead of two.</div>
+  <div class="note"><b>Changed in v7 — JP102 and JP103 are gone.</b> Earlier revisions carried three
+  address jumpers on GA0/GA1/GA2 and this manual described JP102/JP103 as spare bits for future
+  expansion. They were not, and they have been deleted from the board. GA1 reached only the PCA9538
+  A1 pin, and the firmware fixes that expander at <code>0x70 | GA0</code>, so GA1 had exactly one
+  legal setting — a jumper that could only ever be wrong. GA2 reached only expander IO2, which no
+  firmware ever read. Both pins are now tied to GND on-card. The rack cannot hold more than two CH
+  cards in any case: the backplane carries only ERR1/MOD1 and ERR2/MOD2, and GA0 is what selects
+  between them. <b>If you are handling a pre-v7 CH card, JP102 and JP103 must both be fitted.</b></div>
   <p><b>Other cards.</b> The DIG card is the bus master and needs no address. The AFE card carries
   two devices, both hard-strapped on-card with no jumper to mis-set: its <b>ADS1115 monitor ADC</b>
   ties ADDR→SDA for <b>0x4A</b>, and its <b>AD5696R offset-null DAC</b> ties A1→VLOGIC and A0→GND for
   <b>0x0E</b> — the next code after the two CH-card DACs. Both sit deliberately outside the CH cards'
-  ranges. Where AFE/DIG carry GA jumpers they follow the same fitted-=-0 convention.</p>
+  ranges. Neither the AFE nor the DIG card has any address jumper — there is nothing on them to
+  mis-set.</p>
   <div class="note"><b>The AFE DAC is not interchangeable with the CH DACs.</b> All three are
   AD5696Rs, but the CH cards tie the <code>GAIN</code> pin to VLOGIC (gain 2, 0–5 V span) while the
   AFE ties it to GND (gain 1, <b>0–2.5 V span</b>). The same code word therefore means a different
@@ -1278,8 +1302,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="pm1p8">
   <div class="card-hd"><span class="tag">POWER</span><h2 class="sec" style="margin:0"><span class="num">09</span> pm1p8V — low-voltage rail card</h2></div>
-  <p><code>Laser_Driver_v7/pm1p8V_pm5V_5Vref_5Vlaser</code> (v5 is the superseded, fabbed
-  revision — the only difference is the U21 fix below). This card turns the raw ±18 V bus into
+  <p><code>Laser_Driver_v7/pm1p8V_pm5V_5Vref_5Vlaser</code>. This card turns the raw ±18 V bus into
   <b>every precise low-voltage rail</b> the analog and digital sections need — roughly 9 W total, with
   clip heatsinks on the hot TO-220 pre-regulators. All rails are two- or three-stage linear
   cascades: a rugged first regulator drops the bulk voltage, then an ultra-low-noise LDO polishes it.</p>
@@ -1289,7 +1312,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <tbody>
       <tr><td>±15 V analog</td><td>±18 V → TPS7A39 (±16.3 V tracked) → LT3042 (+15) / LT3094 (−15)</td><td>~30 / 23 mA</td></tr>
       <tr><td>5 Vref</td><td>+18 V → 7808 → LT3042 (5.5 V) → LTC6655-5 (5.000 V)</td><td>~6 mA</td></tr>
-      <tr><td>±5 V</td><td>7808 → LT3045 (+5) / 7905 → LT3094 (−5)</td><td>~150 / 100 mA</td></tr>
+      <tr><td>±5 V</td><td>7808 → LT3045 (+5) / 7906 → LT3094 (−5)</td><td>~150 / 100 mA</td></tr>
       <tr><td>3V3 + 1V8</td><td>7812 → 7805 → LT3045 (3V3) → LP5907 (1V8)</td><td>~168 mA (chain)</td></tr>
       <tr><td>+5V_LASER</td><td>7812 → 7808 → 2× LT3045 paralleled</td><td>205 mA</td></tr>
     </tbody>
@@ -1308,22 +1331,6 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <li><b>VREF_MID</b> (2.500 V, from a 0.1% ratiometric divider off 5Vref buffered by an OPA192) is
     the analog mid-supply the TIAs and TEC virtual-grounds reference.</li>
   </ul>
-  <div class="danger"><b>Fabbed v5 cards: U21 (the VREF_MID buffer) is built to a wrong symbol
-  pinout — rework before trusting any lock.</b> The <code>LT1028_2</code> symbol embedded in the v5
-  schematic numbers the OPA192 SOT-23-5 as 1=OUT, <b>2=IN−</b>, 3=IN+, <b>4=V−</b>, 5=V+, but the real
-  part is 1=OUT, <b>2=V−</b>, 3=IN+, <b>4=IN−</b>, 5=V+. The drawing is logically a correct unity-gain
-  buffer, but as fabbed the feedback from pin 1 lands on the <b>V− pin</b> and −15 V lands on the
-  <b>IN− pin</b> — U21 has no negative supply and its inverting input is clamped at −15 V, so its
-  output slams to the positive rail. <code>VREF_MID</code> is generated <em>only</em> here and bused to
-  every slot on b16, so every VREF_MID-referenced stage in the crate — both TEC virtual grounds, the
-  AFE error-stage level shift and its ADC datum, the CH-card integrator datum — rests on it. <b>Rework:</b> lift U21 pins 2
-  and 4 clear of their lands and cross them with two short wires — pin 2 to the pad-4 land (−15 V),
-  pin 4 to the pad-2 land (the R50 feedback node). <b>Verify after rework:</b> <code>TP411</code> /
-  backplane b16 must read <b>2.500 V ±3 mV</b> (<a href="#testing">§17</a>) with the card loaded; check
-  this before commissioning anything downstream. <b>Fully corrected in
-  <code>Laser_Driver_v7/pm1p8V_pm5V_5Vref_5Vlaser</code></b> — schematic <em>and</em> layout: U21
-  now has pin 2 on −15 V and pin 4 on the R50 feedback node, and the board reports 0 schematic-parity
-  issues and 0 unconnected pads. The rework above applies only to already-fabbed v5 cards.</div>
   <div class="warn"><b>Grounding decision.</b> <code>DGND</code> (the ±9 Vac-CT, TEC-only return) is
   deliberately kept <em>off</em> this card; <code>GND</code> is the single logic+analog ground here.
   The single-point <code>DGND↔GND</code> tie is made at the backplane star, at power entry, so the
@@ -1353,9 +1360,11 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 
   <h4>Function &amp; interaction</h4>
   <ul>
-    <li><b>Rail distribution.</b> Every rail buses across all eight slots as one island; the heavy
-    TEC and ±18 V rails are doubled onto both copper layers and heavily via-stitched (287 vias) to
-    reach ~10 A ampacity and hold the loop drop under ~0.35 V at 6 A.</li>
+    <li><b>Rail distribution.</b> Every rail buses across all eight slots as one island. Ampacity
+    comes from <b>ganging contacts</b> rather than from heroic copper: each rail owns whole
+    a/b/c columns of the Type C connector, so the heavy TEC rails present six contacts per slot
+    (+6V_TEC on columns 1&ndash;2, PGND_TEC on 3&ndash;4, &minus;6V_TEC on 5&ndash;6) and the pinout
+    is designed at a derated 1.5&nbsp;A per contact.</li>
     <li><b>Ground architecture — two grounds, one bond.</b> The system runs two separate ground
     nets: <code>GND</code> (analog / signal / logic return, shared by every card and the ±18 V, ±5 V
     and logic rails) as one plane, and <code>PGND_TEC</code> (the ±6 V TEC-supply return) as a second,
@@ -1365,11 +1374,12 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     pm6V slot, by the single-point bond below. That tie is mandatory: without it the isolated TEC domain
     floats, and the ±15 V-referenced TEC current-sense (INA828) and H-bridge control op-amps on the CH
     card would see an undefined input common-mode and mis-read or clip.</li>
-    <li><b>Signals.</b> I²C (SDA/SCL), the two bused analog pairs (ERR1/2, MOD1/2), VREF_MID, and
-    the wired-OR FAULT_n run to every slot. Geographic-address pins are <em>not</em> bused: each slot
-    hard-wires its own GA code to <code>3V3</code>/<code>GND</code> to give the card its identity — the
-    two laser-card slots being the exception, where GA is left open for the CH card's on-card jumpers
-    (see <a href="#arch">§5.2</a>).</li>
+    <li><b>Signals.</b> I²C (<code>SDA_BUS</code>/<code>SCL_BUS</code>), the two bused analog pairs
+    (<code>ERR1/2_BUS</code>, <code>MOD1/2_BUS</code>), <code>5Vref</code>, <code>VREF_MID</code>, the
+    wired-OR <code>FAULT_n</code> and the spare <code>CLK10M_BUS</code> run to every slot. There are
+    <b>no geographic-address pins</b> on the v7 slot: every card carries its own identity on
+    jumpers, so nothing about a slot determines what the card in it becomes
+    (see <a href="#arch">§5.2</a>). Three further columns per side are left as labelled spares.</li>
   </ul>
   <div class="tip"><b>Single-point ground bond — fit at one place only.</b> <code>GND</code> and
   <code>PGND_TEC</code> are tied together by three parts in parallel, placed on the backplane next to
@@ -1396,21 +1406,8 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="dig">
   <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">11</span> DIG card — controller</h2></div>
-  <p><code>Laser_Driver_v7/DIG_Card</code> (v5 is the superseded revision). The digital/supervisory
+  <p><code>Laser_Driver_v7/DIG_Card</code>. The digital/supervisory
   card and the bus master.</p>
-  <div class="note"><p style="margin:0"><b>What v6 changed on this card.</b> Three fixes, all in the
-  clock section:</p>
-  <ol style="margin:8px 0 0 18px">
-    <li><b>D24 was reversed</b>, which left the external-reference detector unable to trip and
-    latched the mux permanently to the local oscillator. The diode is now the right way round, so
-    the <code>J2</code> input works — see the note below for what this means on a v5 board.</li>
-    <li><b>R110 (comparator hysteresis) 2 MΩ → 10 MΩ.</b> At 2 MΩ the hysteresis step was about
-    157 mV against an 87 mV threshold — larger than the threshold itself, so once the detector
-    tripped high it could never release. 10 MΩ gives roughly 33 mV, so the detector latches on with
-    a reference present and cleanly lets go when it is removed.</li>
-    <li><b>R318 33 Ω added in series with <code>MCLK1</code>.</b> That output was the one PLL clock
-    leaving the CDCE913 unterminated; all three now match.</li>
-  </ol></div>
   <h4>Function</h4>
   <ul>
     <li><b>Teensy 4.1</b> (600 MHz Cortex-M7) supervisor + front-panel TFT (CR2013-MI2120). It runs
@@ -1466,15 +1463,6 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="warn"><b>Assembly:</b> the Teensy 4.1 is powered from <code>+5V</code> at VIN (not the
   3V3 rail). <b>Cut the VUSB↔VIN pad</b> on the underside of the Teensy before installing — otherwise
   plugging in a USB cable for programming back-drives the crate-wide <code>+5V</code> rail.</div>
-  <div class="warn"><b>v5 boards only — D24 orientation.</b> The presence detector only works if
-  D24 (BAV99) has its <b>cathode</b> on the detector node, making it a positive-peak detector. On v5
-  it is fitted the other way round, so it detects negative peaks, the node can never rise to the
-  +87 mV threshold, and U40 stays LOW — which selects <code>B1</code>, latching the card to Y1
-  forever. The card still runs correctly on its internal oscillator, so the only symptom is that
-  <code>J2</code> does nothing; it fails safe. <b>v6 has the diode the right way round</b> (together
-  with the R110 hysteresis change, which was the second half of the same problem). On a v5 board,
-  either reverse D24 or treat <code>J2</code> as unpopulated and expect TP302 to follow TP301 under
-  all conditions (<a href="#testing">§17.6</a> step 6).</div>
   <div class="note"><b>Board construction.</b> 160 × 100 mm 3U Eurocard, <b>6 copper layers</b>
   (F.Cu · In1 GND · In2 PWR · In3 signal · In4 GND2 · B.Cu), ≈1.54 mm finished, FR4 ε<sub>r</sub> 4.5,
   <b>ENIG</b> finish. The F.Cu↔In1 core is deliberately thin (0.0994 mm) so the two front-panel LO
@@ -1487,38 +1475,10 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
 <!-- ============================================================= -->
 <section id="ch">
   <div class="card-hd"><span class="tag">SIGNAL</span><h2 class="sec" style="margin:0"><span class="num">12</span> CH card ×2 — laser channel</h2></div>
-  <p><code>Laser_Driver_v7/CH_Card</code> (v5 is the superseded, fabbed revision). Two identical
+  <p><code>Laser_Driver_v7/CH_Card</code>. Two identical
   cards, one per laser. Each is a complete channel: laser current driver, TEC bridge, readback, and
-  the front-panel laser-head connector. Which channel a card <em>is</em> comes from its on-card
-  address jumpers (<a href="#arch">§5.2</a>).</p>
-  <div class="warn"><p style="margin:0"><b>Rev&nbsp;D (2026-07-28) &mdash; what changed, and why v5
-  boards are not simply reworkable.</b> A full review found five defects inherited from v3, all
-  present on the fabbed v5 cards:</p>
-  <ol style="margin:8px 0 0 18px">
-    <li>All four H-bridge gate resistors fed from one buffer, so both legs moved together and the
-    TEC saw ~0&nbsp;V. Fixed by adding <b>U106</b> (inverter) and <b>U107</b> (second buffer).</li>
-    <li>Q14/Q18 had drain and source swapped, forward-biasing their body diodes.</li>
-    <li>U19's feedback came from the bridge terminal, not the current sense, making a voltage loop
-    out of what everything else assumed was a current loop. Now closed on <code>TEC_IMON</code>
-    with an R133/C171 integrator.</li>
-    <li>The laser setpoint summing node had no ground leg, so the DAC and PDH servo weights were
-    forced to sum to 1; with <code>VREF_MID</code> now 2.500&nbsp;V this commanded ~770&nbsp;mA into
-    a 100&nbsp;mA laser at power-up. R67 is now a real scaler bottom, with R96/R134 injecting the
-    correction.</li>
-    <li>The OPA551 <code>Flag</code> is a current source, but was wired to a pull-up and so read
-    HIGH in both states. Now R49 33&nbsp;k&Omega; to ground plus the D23 clamp, active-HIGH.</li>
-  </ol>
-  <p style="margin:8px 0 0">Also added: <b>U108</b> TEC power-up disable, 470&nbsp;&Omega; gate
-  resistors, the ADS1115 <code>ALERT</code> tied into <code>FAULT_n</code>, and 30 test points.
-  Items 1 and 2 need parts and connections that do not exist on a v5 board, so <b>plan on fabbing
-  v6 rather than reworking v5</b>.</p>
-  <p style="margin:8px 0 0"><b>Status:</b> v6 is fab-ready. The board reports <b>0 schematic-parity
-  issues, 0 unconnected pads</b> and a single DRC error — the J1 edge keepout, which is deliberate
-  mechanical intent. One late catch worth knowing about if you are reading an older netlist: the
-  item-3 fix was initially wired to U19's <em>non-inverting</em> input, which would have made it
-  positive feedback and latched the bridge to a rail. It now correctly lands on
-  <code>N_U19_INM</code>; if you ever re-derive this loop, confirm that net has four nodes
-  (R133, C171, TP503, U19 pin 4) and not one.</p></div>
+  the front-panel laser-head connector. Which channel a card <em>is</em> comes from its one on-card
+  address jumper (<a href="#arch">§5.2</a>).</p>
   <h4>On-card blocks</h4>
   <ul>
     <li><b>Laser ACC driver</b> — OPA192 (SOT-23-5) driving a DMN3404L logic-level FET current sink
@@ -1533,8 +1493,8 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     <a href="#software">§15</a>), and the 10 kΩ NTC, all digitized on-card by an ADS1115.</li>
     <li><b>Digitization &amp; interface</b> — J1 universal DIN, AD5696R DAC on +5 V with gain ×2 for a
     0–5 V set-point span (matching the ÷201 laser and TEC scalers), ADS1115 (monitors), PCA9538 GPIO
-    (LOCK_EN / HB fault), and ADG419 muxes that select <code>ERR1/MOD1</code> vs <code>ERR2/MOD2</code>
-    from the JP101 address jumper.</li>
+    (LOCK_EN / HB fault / TEC_EN), and ADG419 muxes that select <code>ERR1/MOD1</code> vs
+    <code>ERR2/MOD2</code> from the JP101 address jumper.</li>
     <li><b>Laser interface — the BTF stack</b> — the DFB1550LP 14-pin butterfly (laser diode, TEC,
     NTC and internal monitor photodiode all in one package) does <em>not</em> mount on this card; its
     TEC dumps up to ≈2 A of heat and needs a spreader that will not fit among the precision analog
@@ -1545,26 +1505,9 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
     straight copy of the butterfly numbering: the TEC pair is doubled onto two pins each way and the
     spare positions are given over to <code>CASE</code> shielding, so consult the pinout in
     <a href="#btf">§13</a> rather than assuming pin <i>N</i> is butterfly pin <i>N</i>. This replaces
-    the flying 24 AWG harness and off-board mount of the v5/v6 cards, removing the hand-built cable
-    and its reversed-connector failure mode entirely.</li>
+    a flying harness and an off-board mount, removing the hand-built cable and its
+    reversed-connector failure mode entirely.</li>
   </ul>
-  <div class="danger"><b>Fabbed v5 cards: U24 PDH integrator has positive feedback — rework before
-  powering a laser.</b> On the v5 layout the OPA192 <code>U24</code> has its inputs reversed: the
-  summing node (R92 <i>Ri</i> 10 k from <code>ERRn</code>, R94 <i>Rp</i> 1 k from the C76 integrator
-  cap) lands on <b>pin 3 (IN+)</b> and <code>VREF_MID</code> on <b>pin 4 (IN−)</b>. That is positive
-  feedback — and because C76 is an open circuit at DC there is no DC feedback path at all, so U24
-  latches hard against a rail. This is a laser-safety item, not a cosmetic one: U24 reaches the laser
-  set-point node through R96 10 k + R67 1 k ≈ <b>11 kΩ</b> while the commanded set-point
-  <code>VOUT_LAS</code> arrives through R66 <b>200 kΩ</b>, giving U24 roughly <b>18× the authority
-  over laser current that the DAC has</b>. A latched U24 does not merely fail to lock; it drives the
-  laser current hard toward a rail. <b>Rework:</b> lift U24 pins 3 and 4 clear of their lands and
-  cross them with two short wires — pin 3 to the pad-4 land (<code>VREF_MID</code>), pin 4 to the
-  pad-3 land (the R92/R94 summing node). Nothing else on the card changes.
-  <b>Verify after rework:</b> with the card powered and no laser fitted, U24 pin 1 must sit near
-  <code>VREF_MID</code> = <b>2.500 V</b> — not parked at +15 V or −15 V. Then inject a small DC offset
-  onto <code>ERRn</code>: pin 1 should <em>ramp</em> (integrate) and reverse its ramp direction when
-  the offset reverses. A pin 1 that sits against a supply rail and ignores <code>ERRn</code> means the
-  rework did not take. Corrected in <code>Laser_Driver_v7/CH_Card</code> (schematic and layout).</div>
   <div class="warn"><b>Mating the BTF stack.</b> The TEC pair (butterfly pins 1 and 14) carries up to
   <b>2.5 A</b> across the board-to-board connector; the laser (pins 10/11) is ≤100 mA and the rest is
   µA–mA. The Samtec pins are rated well above this, so current is not the concern — <b>seating
@@ -1591,10 +1534,10 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   modulation drive to its laser while returning its readbacks over I²C. Its demodulated error comes
   from the AFE over the bused <code>ERRn</code> line and is summed into the laser set-point by the
   analog PI. Raw fiber from the laser head routes to the <a href="#afe">AFE card</a>.</p>
-  <div class="warn"><b>Set the address jumpers before installing.</b> The two identical CH cards are
-  told apart only by JP101: <b>fitted = laser channel 1, open = laser channel 2</b> (JP102/JP103 stay
-  fitted on both). Two cards with the same JP101 setting will collide on I²C and on the ERR/MOD
-  buses. Full jumper and I²C address tables are in <a href="#arch">§5.2</a>.</div>
+  <div class="warn"><b>Set the address jumper before installing.</b> The two identical CH cards are
+  told apart by one jumper, JP101: <b>fitted = laser channel 1, open = laser channel 2</b>. It is the
+  only strap on the card. Two cards with the same JP101 setting will collide on I²C and on the
+  ERR/MOD buses. Full jumper and I²C address tables are in <a href="#arch">§5.2</a>.</div>
   <a class="backtop" href="#intro">▲ top</a>
 </section>
 
@@ -1773,13 +1716,135 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <div class="warn"><b>The standoffs carry the load, and they are also a heat path.</b> Do not rely
   on the header to hold the card: four M3 × 40 mm standoffs set the gap and take the mechanical
   stress, and the connector only makes contact. Use <b>brass or steel, not aluminium</b> — they are a
-  secondary conduction path from the laser block down into the CH card. Fit all four before mating,
+  secondary conduction path from the laser block down into the CH card, and because they
+  carry the spreader assembly&rsquo;s mass as well as the card&rsquo;s. Fit all four before mating,
   and mate the stack square: the 2.67 mm insertion window leaves no room to cock the card over.</div>
   <div class="note"><b>Slot budget.</b> A 40 mm stack occupies roughly two 4 HP slots in the 3U
   subrack, so a populated CH + BTF pair is wider than a bare CH card. Plan the slot allocation
   accordingly (<a href="#arch">§5.1</a>) — this is the main mechanical consequence of moving the
   laser inboard.</div>
 
+  <h4>Thermal path &mdash; the aluminium spreader and its heat sinks</h4>
+  <p>A TEC does not remove heat, it <em>moves</em> it. Everything the cooler pulls out of the laser
+  die, plus every watt the cooler itself burns doing so, arrives at the butterfly&rsquo;s baseplate
+  and has to leave the instrument from there. That baseplate is also <code>CASE</code>, pin&nbsp;13
+  &mdash; the same node the connector&rsquo;s shield band and laser guards return to &mdash; so the
+  thermal path and the shield path are physically the same piece of metal.</p>
+  <p>The laser is therefore clamped to an <b>aluminium heat spreader</b>, and the spreader carries
+  <b>three heat sinks</b>. The spreader&rsquo;s job is to take the heat out of the butterfly&rsquo;s
+  small baseplate and spread it across a face wide enough to feed all three; the sinks&rsquo; job is
+  to hand it to the air. Splitting the duty three ways is what makes the numbers work &mdash; a
+  single sink of this family cannot reject the worst-case load at any airflow the crate can
+  reasonably produce.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Spreader</td><td>Aluminium block, <b>134 &times; 43.4 &times; 10.2 mm</b> (from
+        <code>3d_model/BTF_heatsink.step</code>)</td></tr>
+      <tr><td>Heat sinks</td><td><b>3 &times; ATS-1139-C1-R0</b>, Advanced Thermal Solutions
+        maxiFLOW&trade;</td></tr>
+      <tr><td>Sink envelope</td><td>37.0 &times; 59.0 mm base, 11.4 mm to the fin tips; gold
+        anodized</td></tr>
+      <tr><td>Sink mounting</td><td>M3 on a 47.2 &times; 26.2 mm pattern (the standard quarter-brick
+        hole pattern)</td></tr>
+      <tr><td>Interface</td><td>Chomerics <b>T766 phase-change</b> pad, pre-applied to each sink</td></tr>
+      <tr><td>Fin orientation</td><td>Three sinks in a row along the spreader&rsquo;s 134 mm
+        length</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>The spreader is a live electrical node.</b> Bolting the butterfly down ties
+  the spreader to <code>CASE</code>. Treat the block as part of that net &mdash; not as chassis
+  &mdash; and bond it deliberately at one point rather than letting a mounting screw decide where
+  <code>CASE</code> meets ground. An accidental second bond puts the shield band in parallel with a
+  chassis path and turns the laser guard into a ground loop wrapped around the RF modulation line.</div>
+  <div class="note"><b>Phase-change material is a one-way operation.</b> The T766 pad ships dry and
+  is meant to be brought up past its transition temperature once, under clamping pressure, after
+  which it wets the joint. Torque the M3 screws evenly, run the assembly warm once before trusting
+  the thermal numbers, and do not lift and re-seat a sink casually &mdash; a disturbed pad does not
+  recover its interface resistance.</div>
+
+  <h4>How the assembly is carried</h4>
+  <p><b>The BTF card holds the spreader</b> &mdash; the block is not anchored to the subrack, so the
+  entire laser-plus-spreader-plus-sinks assembly is supported by the daughter card, which is in turn
+  supported by its four M3 standoffs down to the CH card, which finally lands in the crate&rsquo;s
+  card guides and DIN connector. That is a long load path for a solid lump of aluminium, and it is
+  worth being deliberate about.</p>
+  <p>The spreader alone is about <b>59&nbsp;cm&sup3; of aluminium, roughly 160&nbsp;g</b>, and three
+  ATS-1139s add perhaps another 90&nbsp;g, so call the hanging mass <b>&asymp;250&nbsp;g</b>. It is
+  also physically larger than the board carrying it: at 134&nbsp;mm the spreader is longer than the
+  card&rsquo;s 75&nbsp;mm, so part of it is cantilevered past the PCB edge and the mass does not sit
+  over the standoffs. Static loading is not the issue &mdash; a quarter of a kilogram is nothing for
+  four M3 posts. The issue is <b>moment</b>: during insertion, extraction and transport the overhang
+  turns into a lever on the four mounting holes and on the stack connector&rsquo;s 2.67&nbsp;mm
+  insertion window.</p>
+  <div class="warn"><b>Handle the card by the CH board, never by the spreader.</b> With the assembly
+  cantilevered off a 54&nbsp;&times;&nbsp;75&nbsp;mm daughter board, using the aluminium as a grip
+  applies the full moment straight to H1&ndash;H4 and to the ZIF sockets holding an
+  irreplaceable laser. Support the spreader with the other hand whenever the pair is out of the
+  crate, insert and extract slowly and squarely, and re-check the four M3 screws and the standoffs
+  after any transport. If the crate is ever going to be shipped or moved as a unit, this overhang is
+  the first thing to brace.</div>
+
+  <h4>What the three sinks are worth</h4>
+  <p>ATS characterise the ATS-1139 in moving air only; there is no natural-convection figure on the
+  datasheet, and the slowest point they publish is 1.0&nbsp;m/s. Three sinks sharing one spreader act
+  as three parallel paths to the same ambient, so the assembly resistance is roughly a third of one
+  sink&rsquo;s &mdash; provided all three genuinely see air.</p>
+  <table>
+    <thead><tr><th>Air velocity</th><th>One ATS-1139</th><th>Three in parallel</th><th>Rise at 10 W</th></tr></thead>
+    <tbody>
+      <tr><td>1.0 m/s (200 ft/min)</td><td>3.7 &deg;C/W</td><td>&asymp;1.23 &deg;C/W</td><td>12.3 K</td></tr>
+      <tr><td>2.0 m/s (400 ft/min)</td><td>2.5 &deg;C/W</td><td>&asymp;0.83 &deg;C/W</td><td><b>8.3 K</b></td></tr>
+      <tr><td>3.0 m/s (600 ft/min)</td><td>2.1 &deg;C/W</td><td>&asymp;0.70 &deg;C/W</td><td>7.0 K</td></tr>
+      <tr><td>4.0 m/s (800 ft/min)</td><td>1.8 &deg;C/W</td><td>&asymp;0.60 &deg;C/W</td><td>6.0 K</td></tr>
+    </tbody>
+  </table>
+  <p>The 10&nbsp;W column is the worst case, not the normal one. At full cooling the TEC draws
+  2.5&nbsp;A at up to 3.8&nbsp;V &mdash; 9.5&nbsp;W of electrical input &mdash; and the diode itself
+  contributes only a fraction of a watt on top. In a locked instrument sitting near ambient the TEC
+  runs at a small fraction of that, so a few watts per channel is the realistic steady load and the
+  baseplate rise is a couple of kelvin.</p>
+  <div class="danger"><b>No fan is fitted yet &mdash; this is an open build item.</b> Every number
+  in the table above is a moving-air number. The maxiFLOW fin field is designed for forced
+  convection and ATS do not characterise the part in still air at all, so the instrument as it
+  currently stands is operating outside the region where any of this has been specified. It will
+  run, and it will get hot. The failure mode is quiet rather than dramatic: the TEC simply works
+  harder against a rising hot side, spending rail current and settling time instead of throwing a
+  fault, and on a long lock the drift shows up in the measurement rather than on the dashboard.
+  Until a fan is installed, treat the thermal figures below as estimates and watch the NTC
+  readback.</div>
+  <div class="note"><b>Still-air estimate, for planning only.</b> ATS publish nothing below
+  1.0&nbsp;m/s, so there is no sourced natural-convection number for this part. Scaling from
+  comparable extruded sinks of this footprint puts a single ATS-1139 somewhere around
+  8&ndash;12&nbsp;&deg;C/W in still air, so three in parallel land near
+  <b>3&ndash;4&nbsp;&deg;C/W</b>. That is a baseplate rise of roughly <b>10&nbsp;K at a typical
+  3&nbsp;W</b> and <b>30&nbsp;K or more at the 10&nbsp;W worst case</b> &mdash; tolerable while
+  bringing the card up at low TEC current, clearly not acceptable for a locked instrument. Treat
+  these as order-of-magnitude figures, not specifications.</div>
+
+  <h4>Fan plan</h4>
+  <p>The intent is <b>two fans, one per thermal domain</b>: one over the power cards, whose linear
+  pass elements are the largest single heat source in the crate, and one over the laser cards. The
+  split is the right one &mdash; it matches the left/right layout of the crate
+  (<a href="#arch">&sect;5</a>), and it keeps the air that has already passed over several tens of
+  watts of pass transistors away from the two packages whose temperature <em>is</em> the
+  measurement.</p>
+  <p>The laser-bay fan is not a demanding part. Pushing 2.0&nbsp;m/s through the fin fields of three
+  ATS-1139s needs only about <b>8&ndash;9&nbsp;CFM of actual through-flow</b> (roughly
+  2000&nbsp;mm&sup2; of frontal area at 11.4&nbsp;mm fin height). Unducted, most of a fan&rsquo;s
+  output bypasses the sinks, so specify perhaps three times that in free-air rating &mdash; a
+  <b>25&ndash;30&nbsp;CFM</b> 80&nbsp;mm fan is comfortable, and even a 60&nbsp;mm part will do it.
+  The power bay is the harder problem and should be sized against its own dissipation, not
+  this one.</p>
+  <div class="warn"><b>Two things to get right when the fans go in.</b> First, the three sinks are
+  only worth a third of one if they sit in <em>parallel</em> airflow; in line, one behind another,
+  the rear sinks breathe pre-heated air and the assembly is meaningfully worse than
+  0.83&nbsp;&deg;C/W. Second, aim the air at the <b>fin fields, not the package</b>. At
+  S&nbsp;&asymp;&nbsp;2&nbsp;GHz/K, turbulent air playing directly over the butterfly body is a
+  frequency disturbance the TEC loop has to reject, and fan vibration reaching the laser or its
+  pigtail is a noise source the lock cannot reject at all. Duct or baffle the flow across the
+  spreader, and mount the fan on grommets rather than hard to the subrack.</div>
   <h4>Board &amp; status</h4>
   <p><b>54.15 × 75 mm, 2 layers.</b> The two ZIF sockets sit on a 28.81 mm centre-to-centre pitch,
   which gives 1.70 mm of clearance between the package body and the socket faces and 9.67 mm of lead
@@ -1794,8 +1859,7 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   <h4>Interaction</h4>
   <p>The BTF card connects only to its CH card, and it is the reason
   <code>Laser_Driver_v7/CH_Card</code> exists as a separate revision: <code>J_BTF1</code> changed from
-  the ribbon-harness header to the Samtec long-post part, so <b>a BTF card will not mate with a v6 or
-  earlier CH card</b>. Two BTF cards are required, one per channel. Everything the card carries —
+  a ribbon-harness header to the Samtec long-post part, so the two cards are a matched pair. Two BTF cards are required, one per channel. Everything the card carries —
   laser current, TEC drive, thermistor and monitor photodiode — is generated and read on the CH card
   (<a href="#ch">§12</a>); this board adds no signal conditioning of its own.</p>
   <div class="danger"><b>Before first light.</b> Remove JP1. With the shunt fitted the laser is
@@ -2186,11 +2250,11 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
     +5V_LASER. Confirm the ±15 V rails come up equal-and-opposite.</li>
     <li><b>Add the DIG card.</b> Confirm the Teensy boots, the TFT lights, I²C pull-ups are present,
     and the 10 MHz/DDS clock is alive.</li>
-    <li><b>Set the CH address jumpers.</b> On one CH card fit JP101 (laser channel 1); on the other
-    leave JP101 open (channel 2). JP102/JP103 fitted on both. See the tables in
+    <li><b>Set the CH address jumper.</b> On one CH card fit JP101 (laser channel 1); on the other
+    leave JP101 open (channel 2). That is the only strap on the card. See the tables in
     <a href="#arch">§5.2</a>.</li>
     <li><b>Add AFE, then one CH card at a time.</b> Verify each CH card enumerates at the I²C
-    addresses its jumpers select (ch1: 0x48/0x0C/0x70; ch2: 0x49/0x0D/0x71). With lasers still
+    addresses its jumper selects (ch1: 0x48/0x0C/0x70; ch2: 0x49/0x0D/0x71). With lasers still
     parked, confirm TEC servo reaches setpoint and NTC reads plausibly.</li>
     <li><b>Laser enable.</b> Only after PGOOD/power-good and with fiber safely terminated, allow
     firmware to ramp the laser DAC from 0. Confirm IMON tracks command.</li>
@@ -2248,7 +2312,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td><b>TP301</b></td><td><code>N_U41_B1</code></td><td>Y1 local 10 MHz oscillator output → mux input B1</td><td>10.000 MHz, 3.3 V CMOS</td></tr>
       <tr><td><b>TP302</b></td><td><code>N_U41_A</code></td><td>U41 mux common — the <em>selected</em> reference, into CDCE913 and the bus buffer</td><td>10.000 MHz</td></tr>
       <tr><td><b>TP303</b></td><td><code>CLK10M_BUF</code></td><td>U303 (74LVC1G125) buffer output, ahead of R311 33 Ω → backplane <code>c20</code></td><td>10.000 MHz, 3.3 V</td></tr>
-      <tr><td><b>TP304</b></td><td><code>MCLK1</code></td><td>CDCE913 output via R318 33 Ω → DDS pair U34 / U35 (R318 is new in v6; on v5 this output was unterminated)</td><td>25.000 MHz</td></tr>
+      <tr><td><b>TP304</b></td><td><code>MCLK1</code></td><td>CDCE913 output via R318 33 Ω → DDS pair U34 / U35</td><td>25.000 MHz</td></tr>
       <tr><td><b>TP305</b></td><td><code>MCLK2</code></td><td>CDCE913 output via R316 33 Ω → DDS pair U38 / U39</td><td>25.000 MHz</td></tr>
       <tr><td colspan="4" style="background:var(--panel2)"><b>Clock-local supplies</b> (ferrite-isolated, so they can be checked separately from the bulk rails)</td></tr>
       <tr><td><b>TP306</b></td><td><code>3V3_OSC</code></td><td>Y1 supply, after ferrite FB301 (600 Ω @100 MHz)</td><td>3.30 V ±5 %</td></tr>
@@ -2630,8 +2694,7 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
   <figcaption><b>Fig 17.2 — Where the CH test points attach.</b> Top: the TEC current loop. The DAC
   setpoint is scaled by R44/R45 onto U19's non-inverting input, and U19's output (TP502) fans out two
   ways — directly through U21 to one bridge leg (TP505) and through the U106 inverter and U107 buffer
-  to the other (TP504, TP506). That <b>antiphase</b> drive is what rev D added; on a v5 board both
-  legs moved together. The bridge nodes are TP507/TP508, the Peltier terminals TP509/TP510, and the
+  to the other (TP504, TP506). That <b>antiphase</b> drive is what lets the bridge swing either way. The bridge nodes are TP507/TP508, the Peltier terminals TP509/TP510, and the
   0.1 Ω shunts feed U32 to produce <code>TEC_IMON</code> (TP511), which returns through R133 to
   U19's inverting input — the pad at TP503. Bottom: the laser loop, where the DAC (TP512) is divided
   onto the summing node (TP513) that now has a real ground leg, U22 drives Q19, and the 0.25 Ω sense
@@ -2868,8 +2931,8 @@ CH1 null code -&gt; 34160  residual -0.31 counts (-0.25 mV at ERR)
       <tr><td>Clock good on DIG, absent on other cards</td><td>TP303</td><td>Good here → R311 or the backplane <code>c20</code> trace, not this card</td></tr>
       <tr><td>Voltage monitor reports false faults</td><td>TP313 / TP314, then TP311</td><td>Thresholds shifted because 5Vref is off, or a divider resistor is wrong</td></tr>
       <tr><td>All set-points off by a common factor</td><td>TP311</td><td>5Vref out of tolerance — everything ratios against it</td></tr>
-      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td>U40 never asserts select — on a <b>v5</b> board this is expected (D24 backwards, <a href="#dig">§11</a>); on v6 suspect a source below ~0.4 V<sub>pp</sub> or an open C90/R108 detector leg</td></tr>
-      <tr><td>Mux stays on the external leg after the source is unplugged</td><td>TP302 vs TP301</td><td>Hysteresis too large — check R110 is <b>10 MΩ</b> and not the v5 value of 2 MΩ</td></tr>
+      <tr><td>External 10 MHz on J2 has no effect</td><td>TP302 with and without the source</td><td>U40 never asserts select — source below ~0.4 V<sub>pp</sub>, or an open C90/R108 detector leg</td></tr>
+      <tr><td>Mux stays on the external leg after the source is unplugged</td><td>TP302 vs TP301</td><td>Hysteresis too large relative to the 87 mV threshold — check R110 is <b>10 MΩ</b></td></tr>
       <tr><td><code>freq</code> readings wrong or zero</td><td>Teensy D9 (no test pad)</td><td>CDCE913 <code>MCLK3</code> output or its 33 Ω series R317 — this is the FreqCount reference, independent of TP304/TP305</td></tr>
       <tr><td>PLL unlocks when probed</td><td>—</td><td>Probe loading; switch to 10:1 and re-check</td></tr>
     </tbody>
@@ -3076,7 +3139,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   coupling) is biased to add as little RAM as possible.</div>
 
   <div class="note">The full model — acronyms, the snapshot budget, power-law Allan slopes, and
-  interactive what-if sliders — is the <a href="../UncertaintyBudget/laser_driver_v3_uncertainty_budget.ipynb">uncertainty-budget notebook</a>.
+  interactive what-if sliders — is the <a href="../UncertaintyBudget/laser_driver_uncertainty_budget.ipynb">uncertainty-budget notebook</a>.
   The figures above were computed from it (S = 2 GHz/K, ε = 10<sup>−4</sup> same-die match); the µV/V
   twin of §18.4 is its §8, including the full-scale penalty table.</div>
   <a class="backtop" href="#intro">▲ top</a>
@@ -3110,9 +3173,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   <h4>Reference documents (in <code>docs/</code>)</h4>
   <div>
     <span class="chip"><a href="laser_driver_design_doc.html">Channel &amp; power design reference</a></span>
-    <span class="chip"><a href="laser_driver_v3_rf_modulation_design.html">RF derivative-lock design spec</a></span>
-    <span class="chip"><a href="laser_driver_v5_power_review.html">Rail-by-rail power budget</a></span>
-    <span class="chip"><a href="firmware_reference.html">Firmware reference</a></span>
+        <span class="chip"><a href="firmware_reference.html">Firmware reference</a></span>
     <span class="chip">Transformer selection</span>
     <span class="chip">Uncertainty / Allan-in-kelvin budget notebook</span>
   </div>

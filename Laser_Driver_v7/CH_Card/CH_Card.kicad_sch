@@ -9084,7 +9084,7 @@
 		)
 		(uuid "800c6c4c-a851-4015-b919-cc17efd05f01")
 	)
-	(text "CARD ADDRESS via on-card jumpers JP101-JP103 (10k pullups R127-R129 to 3V3_DIG): fit jumper = 0, open = 1."
+	(text "CARD ADDRESS via the SINGLE on-card jumper JP101 (10k pullup R127 to 3V3_DIG):\n  FITTED = GA0 0 = ch1 card;   OPEN = GA0 1 = ch2 card.\nOne strap sets the I2C address AND the ERR/MOD bus pair, so there is nothing\nelse to configure and no way to half-configure a card.\nv7: JP102/JP103 and pullups R128/R129 DELETED. GA1 was PCA9538 A1, and firmware\nfixes the expander at 0x70|GA0, so GA1 had exactly one legal setting; GA2 went\nonly to PCA9538 IO2 and nothing ever read it. Both pins are now tied to GND."
 		(exclude_from_sim no)
 		(at 606.552 307.594 0)
 		(effects
@@ -9586,13 +9586,7 @@
 		(color 0 0 0 0)
 		(uuid "88d51921-21de-4ad4-a8c2-d2564b96a783")
 	)
-	(junction
-		(at 96.52 41.91)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "898b0f08-a1ad-4cea-9b68-41f3f58f5d16")
-	)
-	(junction
+		(junction
 		(at 82.55 210.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -9724,13 +9718,7 @@
 		(color 0 0 0 0)
 		(uuid "f57cbf9d-ffe4-40f7-86f4-2435b678ae50")
 	)
-	(junction
-		(at 96.52 31.75)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f768ad04-1ceb-49bc-b92f-18df92d3d600")
-	)
-	(junction
+		(junction
 		(at 95.25 20.32)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10764,17 +10752,7 @@
 		)
 		(uuid "39e017c0-91f0-49c8-84d4-75323cef18f5")
 	)
-	(wire
-		(pts
-			(xy 96.52 38.1) (xy 96.52 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a17dec4-26e0-429b-9450-6c591a13c0e2")
-	)
-	(wire
+		(wire
 		(pts
 			(xy 300.99 312.42) (xy 300.99 313.69)
 		)
@@ -13324,17 +13302,7 @@
 		)
 		(uuid "b99855b2-50ab-47dc-a7d6-07c893270e6b")
 	)
-	(wire
-		(pts
-			(xy 93.98 41.91) (xy 96.52 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bab35659-7c18-4272-bcff-0cb778ccdc5e")
-	)
-	(wire
+		(wire
 		(pts
 			(xy 284.48 48.26) (xy 284.48 54.61)
 		)
@@ -13644,17 +13612,7 @@
 		)
 		(uuid "cb9ea531-c4f5-47d1-914c-8e5adbe6aefc")
 	)
-	(wire
-		(pts
-			(xy 93.98 31.75) (xy 96.52 31.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cc6435a2-a015-43ab-804f-0ad50669a5df")
-	)
-	(wire
+		(wire
 		(pts
 			(xy 414.34 260.98) (xy 409.26 260.98)
 		)
@@ -13834,17 +13792,7 @@
 		)
 		(uuid "d3f165d1-d3e5-4a33-993e-1ba595c52352")
 	)
-	(wire
-		(pts
-			(xy 96.52 27.94) (xy 96.52 31.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d42fc81c-0092-47f3-a49f-6181934bc7b7")
-	)
-	(wire
+		(wire
 		(pts
 			(xy 284.48 54.61) (xy 284.48 63.5)
 		)
@@ -17030,30 +16978,7 @@
 			)
 		)
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 127 41.91 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "28eaff90-0d27-4393-bcc1-ad0a1fe675a7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "3V3"
+		(global_label "3V3"
 		(shape passive)
 		(at 409.26 294 180)
 		(fields_autoplaced yes)
@@ -17575,31 +17500,7 @@
 			)
 		)
 	)
-	(global_label "3V3_DIG"
-		(shape passive)
-		(at 86.36 41.91 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "36723307-f0de-4702-8328-e70432fab69a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 76.8661 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "-15V"
+		(global_label "-15V"
 		(shape passive)
 		(at 215.9 87.63 270)
 		(fields_autoplaced yes)
@@ -18213,7 +18114,7 @@
 			)
 		)
 	)
-	(global_label "GA2"
+	(global_label "GND"
 		(shape passive)
 		(at 95.25 121.92 0)
 		(fields_autoplaced yes)
@@ -19416,7 +19317,7 @@
 			)
 		)
 	)
-	(global_label "GA1"
+	(global_label "GND"
 		(shape passive)
 		(at 64.77 129.54 180)
 		(fields_autoplaced yes)
@@ -21139,30 +21040,7 @@
 			)
 		)
 	)
-	(global_label "GA2"
-		(shape passive)
-		(at 96.52 38.1 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b9a78405-a3e7-45c1-b9b0-a567f60fda08")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.52 38.1 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "-6V_TEC"
+		(global_label "-6V_TEC"
 		(shape passive)
 		(at 349.26 266.06 180)
 		(fields_autoplaced yes)
@@ -22169,30 +22047,7 @@
 			)
 		)
 	)
-	(global_label "GA1"
-		(shape passive)
-		(at 96.52 27.94 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "dd4e98d3-f8ff-4078-9482-fa0723585d25")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.52 27.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
+		(global_label "GND"
 		(shape passive)
 		(at 128.27 205.74 270)
 		(fields_autoplaced yes)
@@ -22240,31 +22095,7 @@
 			)
 		)
 	)
-	(global_label "3V3_DIG"
-		(shape passive)
-		(at 86.36 31.75 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ded6c113-10d5-4fe7-a1fb-b20c9ce73280")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 76.8661 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "VOUT_TEC"
+		(global_label "VOUT_TEC"
 		(shape passive)
 		(at 229.87 189.23 180)
 		(fields_autoplaced yes)
@@ -22830,30 +22661,7 @@
 			)
 		)
 	)
-	(global_label "GND"
-		(shape passive)
-		(at 127 31.75 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "f2f85499-ba82-4e89-98dc-3dcea3fd4d5a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ERR1_BUS"
+		(global_label "ERR1_BUS"
 		(shape passive)
 		(at 409.26 304.16 180)
 		(fields_autoplaced yes)
@@ -25472,85 +25280,7 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 90.17 31.75 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "1715a98c-b5bb-4856-81ba-d0b88952dac4")
-		(property "Reference" "R128"
-			(at 89.916 32.004 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k GA1 pullup"
-			(at 90.678 34.036 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 90.17 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 90.17 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 90.17 31.75 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a9803959-d1dc-49c6-bb0b-30a662f8ff30")
-		)
-		(pin "2"
-			(uuid "ff7ff4b7-51ea-49e9-b8c4-fcd1745cf1b2")
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "R128")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
+		(symbol
 		(lib_id "CHCard_New:PCA9538")
 		(at 80.01 125.73 0)
 		(unit 1)
@@ -25670,85 +25400,7 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "CHCard_New:JP_ADDR")
-		(at 111.76 41.91 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "1cfdca38-2945-40cf-9b94-91b66a3d8f97")
-		(property "Reference" "JP103"
-			(at 111.252 41.148 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GA2 addr jumper"
-			(at 112.014 43.18 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
-			(at 111.76 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 111.76 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 111.76 41.91 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "26256bc9-74bd-471a-90a0-e8f3c93d33d7")
-		)
-		(pin "2"
-			(uuid "eee0bbca-a883-4c97-94c7-242a0331cda1")
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "JP103")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
+		(symbol
 		(lib_id "Mechanical:Heatsink")
 		(at 574.04 40.64 0)
 		(unit 1)
@@ -28516,7 +28168,7 @@
 				)
 			)
 		)
-		(property "Value" "Ci 1n"
+		(property "Value" "Ci 1n C0G"
 			(at 224.79 88.9 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29649,85 +29301,7 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "Device:R")
-		(at 90.17 41.91 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "5a704052-8bbb-4445-896d-2bfdb75ee0e2")
-		(property "Reference" "R129"
-			(at 89.916 41.91 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k GA2 pullup"
-			(at 90.424 44.196 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 90.17 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 90.17 41.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 90.17 41.91 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "dcacc8e4-135e-4057-8605-399d9ccbf0bf")
-		)
-		(pin "1"
-			(uuid "0331ce68-5b7f-4332-aeb6-2a2c87a3e660")
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "R129")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
+		(symbol
 		(lib_id "Device:C")
 		(at 91.44 318.77 0)
 		(unit 1)
@@ -32685,85 +32259,7 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "CHCard_New:JP_ADDR")
-		(at 111.76 31.75 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7d3b93f6-6ebd-49d8-96f2-44ade0b0eb35")
-		(property "Reference" "JP102"
-			(at 111.252 31.242 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GA1 addr jumper"
-			(at 111.76 33.02 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
-			(at 111.76 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 111.76 31.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 111.76 31.75 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "6fa69588-0e9b-4138-9797-6b3a4fe0e574")
-		)
-		(pin "1"
-			(uuid "226e1907-7dff-430e-9aab-65cd127199d7")
-		)
-		(instances
-			(project "CH_Card"
-				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
-					(reference "JP102")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
+		(symbol
 		(lib_id "Device:C")
 		(at 516.89 63.5 0)
 		(unit 1)
@@ -33640,6 +33136,256 @@
 			)
 		)
 	)
+	(symbol
+		(lib_id "Device:C")
+		(at 90.17 302.26 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e17602da-ebb0-4147-bac0-d5f67cf9444d")
+		(property "Reference" "C176"
+			(at 95.758 301.498 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF U105 +5V dec"
+			(at 100.330 303.530 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 90.170 302.260 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 90.170 302.260 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 90.170 302.260 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "23afc84c-4439-4374-9d9c-45cf7f7a8073")
+		)
+		(pin "2"
+			(uuid "dbcafe43-32d0-4106-837d-a403fc51b43a")
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "C176")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V"
+		(shape passive)
+		(at 90.17 299.71999999999997 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4805bf02-f571-44ba-b235-9482c06cfeb5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 90.17 299.71999999999997 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 90.17 304.8 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "40640323-580a-4722-8938-772fb42f181b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 90.17 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_id "Device:C")
+		(at 229.87 160.02 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1bc52dd4-5a60-405a-86c2-af80b186e0f9")
+		(property "Reference" "C177"
+			(at 235.458 159.258 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF U108 +5V dec"
+			(at 240.030 161.290 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 229.870 160.020 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 229.870 160.020 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 229.870 160.020 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6ac0171f-67ad-4cd8-9147-8973344aee51")
+		)
+		(pin "2"
+			(uuid "5897a76d-326f-4f25-82c4-2781eec87d1e")
+		)
+		(instances
+			(project "CH_Card"
+				(path "/2abe37a0-24c0-47ee-a2b1-3dcf608486c0"
+					(reference "C177")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V"
+		(shape passive)
+		(at 229.87 157.48000000000002 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b133468a-ad3f-4b05-b972-87f56db13555")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 229.87 157.48000000000002 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 229.87 162.56 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9eb41bb2-f493-4fb1-baf6-68c53800beb4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 229.87 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
 	(symbol
 		(lib_id "Device:C")
 		(at 295.91 340.36 0)

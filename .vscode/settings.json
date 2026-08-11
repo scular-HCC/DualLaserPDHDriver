@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^powershell\\.exe -NoProfile -Command \"Get-ChildItem 'C:\\\\Users\\\\scula\\\\AppData\\\\Local\\\\Packages\\\\ArduinoLLC\\.ArduinoIDE_mdqgnx93n4wtt\\\\\\*' -Recurse -File -Filter 'arduino\\.exe' -ErrorAction SilentlyContinue \\| Select-Object -ExpandProperty FullName \\| Select-Object -First 20; Get-ChildItem 'C:\\\\Users\\\\scula\\\\AppData\\\\Local\\\\Packages\\\\ArduinoLLC\\.ArduinoIDE_mdqgnx93n4wtt\\\\\\*' -Recurse -File -Filter 'arduino-cli\\.exe' -ErrorAction SilentlyContinue \\| Select-Object -ExpandProperty FullName \\| Select-Object -First 20\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

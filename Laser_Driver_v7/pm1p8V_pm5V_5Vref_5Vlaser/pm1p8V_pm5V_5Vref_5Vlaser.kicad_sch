@@ -11073,7 +11073,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 90.17) (xy 190.5 90.17)
+			(xy 177.8 90.17) (xy 185.42 90.17)
 		)
 		(stroke
 			(width 0)
@@ -13113,7 +13113,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 59.69) (xy 189.23 59.69)
+			(xy 177.8 59.69) (xy 184.15 59.69)
 		)
 		(stroke
 			(width 0)
@@ -17248,6 +17248,638 @@
 		)
 	)
 	(symbol
+		(lib_name "C_9")
+		(lib_id "Device:C")
+		(at 184.15 62.23 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "12599379-216c-4791-a6be-faa79ff7bb51")
+		(property "Reference" "C35"
+			(at 186.150 60.730 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 187.324 64.168 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 72.150 30.230 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 72.150 30.230 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 184.150 62.230 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "CL21B104KBCNNNC"
+			(at 184.150 62.230 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 184.150 62.230 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1003-2-ND"
+			(at 184.150 62.230 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "eb565454-6b26-4427-8652-6d426de8bbc8")
+		)
+		(pin "2"
+			(uuid "7879f99e-4af1-4c69-ba35-ca9b84e84435")
+		)
+		(instances
+			(project "pm1p8V_pm5V_5Vref_5Vlaser"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "C35")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 184.15 64.77 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6691e6f0-4e4c-42a4-9da1-3b09022bd648")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 184.15 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_name "C_9")
+		(lib_id "Device:C")
+		(at 185.42 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e6afe2f4-d909-4f2d-9f1c-5e26d9fe4b6f")
+		(property "Reference" "C36"
+			(at 187.420 92.480 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 188.594 95.918 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 73.420 61.980 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.420 61.980 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 185.420 93.980 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "CL21B104KBCNNNC"
+			(at 185.420 93.980 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 185.420 93.980 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1003-2-ND"
+			(at 185.420 93.980 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "514288c8-6a58-4107-a95b-62522ce31265")
+		)
+		(pin "2"
+			(uuid "8bb31894-babb-489d-ac91-e6cf5bf59ae7")
+		)
+		(instances
+			(project "pm1p8V_pm5V_5Vref_5Vlaser"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "C36")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 185.42 96.52000000000001 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "68956726-f24d-49b3-a8d3-36e168354623")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 185.42 96.52000000000001 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_name "C_9")
+		(lib_id "Device:C")
+		(at 134.62 193.04 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6692d88f-0328-4c8d-a080-31ecc735e35f")
+		(property "Reference" "C37"
+			(at 136.620 191.540 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 137.794 194.978 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 22.620 161.040 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 22.620 161.040 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 134.620 193.040 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "CL21B104KBCNNNC"
+			(at 134.620 193.040 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 134.620 193.040 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1003-2-ND"
+			(at 134.620 193.040 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f53c3180-e2be-4c57-a6eb-047d2dad011e")
+		)
+		(pin "2"
+			(uuid "d8935a31-1c0d-447e-a3d4-50aae8d8f26e")
+		)
+		(instances
+			(project "pm1p8V_pm5V_5Vref_5Vlaser"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "C37")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "+5V"
+		(shape passive)
+		(at 134.62 190.5 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8fe02c6b-9f5e-454f-b126-2d9383df9f57")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.62 190.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 134.62 195.57999999999998 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dcb1c624-f5e7-4ffc-957a-fb30f7e8d6e3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.62 195.57999999999998 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_name "C_9")
+		(lib_id "Device:C")
+		(at 140.97 201.92999999999998 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b7cba676-4533-4fb3-a051-d14044cf7e6f")
+		(property "Reference" "C38"
+			(at 142.970 200.430 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 144.144 203.868 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 28.970 169.930 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 28.970 169.930 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 140.970 201.930 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "CL21B104KBCNNNC"
+			(at 140.970 201.930 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 140.970 201.930 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-1003-2-ND"
+			(at 140.970 201.930 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "22279fe2-e511-43ec-910c-8a638b579934")
+		)
+		(pin "2"
+			(uuid "dab24249-3d7d-4075-99d7-9e8f2259a7c8")
+		)
+		(instances
+			(project "pm1p8V_pm5V_5Vref_5Vlaser"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "C38")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "-5V"
+		(shape passive)
+		(at 140.97 199.39 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "db0cfa9f-7a20-465a-9aa0-f0f11b21dcc4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 140.97 199.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 140.97 204.46999999999997 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9edc4c2e-7b68-4222-b1d5-da85e56cb641")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 140.97 204.46999999999997 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 184.15 59.69) (xy 189.23 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab933e6d-a704-40fd-9316-91959c575dcd")
+	)
+	(junction
+		(at 184.15 59.69)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "bdbc18fe-4e0f-4852-b9ee-955cb5b8fcc2")
+	)
+	(wire
+		(pts
+			(xy 185.42 90.17) (xy 190.5 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e71f003-70b1-49e5-8eae-49a7bf89ff04")
+	)
+	(junction
+		(at 185.42 90.17)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "40a53389-4e8d-4323-af8a-c4f8addf1183")
+	)
+	(wire
+		(pts
+			(xy 185.42 91.44) (xy 185.42 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "983dbb4e-abff-4ec1-aad3-d3d01a7dbcae")
+	)
+
+	(symbol
 		(lib_name "C_2")
 		(lib_id "Device:C")
 		(at 33.02 184.15 0)
@@ -17516,7 +18148,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "4.7uF 50V X7R"
 			(at 256.164 117.828 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17558,7 +18190,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "CGA4J1X7R1H475K125AC"
 			(at 261.62 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -17569,7 +18201,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "KEMET"
+		(property "Manufacturer" "TDK"
 			(at 261.62 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -17580,7 +18212,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "445-181404-1-ND"
 			(at 261.62 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -18802,7 +19434,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7uF"
+		(property "Value" "4.7uF 50V X7R"
 			(at 32.786 78.106 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18844,7 +19476,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "CL21B475KAFNNNE"
+		(property "Manufacturer Part Number" "CGA4J1X7R1H475K125AC"
 			(at 29.21 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -18855,7 +19487,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "TDK"
 			(at 29.21 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -18866,7 +19498,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "1276-2969-2-ND"
+		(property "DigiKey P/N" "445-181404-1-ND"
 			(at 29.21 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -18914,7 +19546,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF X5R or X7R"
+		(property "Value" "22uF 25V X7R"
 			(at 127.254 189.23 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18924,7 +19556,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at -90.54 147.42 0)
 			(hide yes)
 			(show_name no)
@@ -18956,7 +19588,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "C1210C226M3RACTU"
 			(at 124.46 185.42 0)
 			(hide yes)
 			(show_name no)
@@ -18978,7 +19610,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "399-C1210C226M3RACTUCT-ND"
 			(at 124.46 185.42 0)
 			(hide yes)
 			(show_name no)
@@ -23043,7 +23675,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF 25V X7R"
 			(at 191.766 64.264 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23053,7 +23685,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at -25.77 24.23 0)
 			(hide yes)
 			(show_name no)
@@ -23085,7 +23717,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "C1210C226M3RACTU"
 			(at 189.23 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -23107,7 +23739,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "399-C1210C226M3RACTUCT-ND"
 			(at 189.23 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -23266,7 +23898,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "4.7uF 50V X7R"
 			(at 256.164 97.508 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23308,7 +23940,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "CGA4J1X7R1H475K125AC"
 			(at 261.62 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -23319,7 +23951,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "KEMET"
+		(property "Manufacturer" "TDK"
 			(at 261.62 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -23330,7 +23962,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "445-181404-1-ND"
 			(at 261.62 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -24690,7 +25322,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7uF"
+		(property "Value" "10uF 25V X7R"
 			(at 120.386 35.942 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24700,7 +25332,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder"
 			(at 28.57 -3.71 0)
 			(hide yes)
 			(show_name no)
@@ -24732,7 +25364,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "CL21B475KAFNNNE"
+		(property "Manufacturer Part Number" "C1206C106K3RACTU"
 			(at 115.57 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -24743,7 +25375,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
+		(property "Manufacturer" "KEMET"
 			(at 115.57 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -24754,7 +25386,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "1276-2969-2-ND"
+		(property "DigiKey P/N" "399-C1206C106K3RACTUCT-ND"
 			(at 115.57 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -27480,7 +28112,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF 50V X7R"
 			(at 400.046 96.014 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27490,7 +28122,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at 182.51 55.98 0)
 			(hide yes)
 			(show_name no)
@@ -27522,7 +28154,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "CL32B106KBJNNWE"
 			(at 397.51 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -27533,7 +28165,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "KEMET"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 397.51 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -27544,7 +28176,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "1276-3388-1-ND"
 			(at 397.51 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -30198,7 +30830,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF 50V X7R"
 			(at 400.558 113.538 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30208,7 +30840,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at 612.51 153.57 0)
 			(hide yes)
 			(show_name no)
@@ -30240,7 +30872,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "CL32B106KBJNNWE"
 			(at 397.51 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -30251,7 +30883,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "KEMET"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 397.51 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -30262,7 +30894,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "1276-3388-1-ND"
 			(at 397.51 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -30288,6 +30920,165 @@
 			)
 		)
 	)
+	(symbol
+		(lib_name "C_8")
+		(lib_id "Device:C")
+		(at 384.81 128.26999999999998 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e134dba6-acf6-408f-afc8-ab70bc26885f")
+		(property "Reference" "C34"
+			(at 387.604 130.302 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Value" "10uF 50V X7R"
+			(at 387.858 126.238 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
+			(at 599.810 166.270 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 599.810 166.270 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 384.810 128.270 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part Number" "CL32B106KBJNNWE"
+			(at 384.810 128.270 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 384.810 128.270 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey P/N" "1276-3388-1-ND"
+			(at 384.810 128.270 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a07c6d77-ae0c-4db9-8651-0770d09f6863")
+		)
+		(pin "2"
+			(uuid "0ffb73c0-6117-4267-ba8f-ff004c2da418")
+		)
+		(instances
+			(project "pm1p8V_pm5V_5Vref_5Vlaser"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "C34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 384.81 130.81 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5707e379-bd70-440a-a508-e5830159397c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 384.81 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "-15V"
+		(shape passive)
+		(at 384.81 125.73 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e199c999-480a-4ac1-831a-688413ab64ce")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 384.81 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+
 	(symbol
 		(lib_id "power:GND")
 		(at 77.47 49.53 0)
@@ -30991,7 +31782,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF 25V X7R"
 			(at 138.938 215.138 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31001,7 +31792,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at 350.89 255.17 0)
 			(hide yes)
 			(show_name no)
@@ -31033,7 +31824,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "C1210C226M3RACTU"
 			(at 135.89 217.17 0)
 			(hide yes)
 			(show_name no)
@@ -31055,7 +31846,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "399-C1210C226M3RACTUCT-ND"
 			(at 135.89 217.17 0)
 			(hide yes)
 			(show_name no)
@@ -31103,7 +31894,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF 25V X7R"
 			(at 193.036 96.014 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31113,7 +31904,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
 			(at -24.5 55.98 0)
 			(hide yes)
 			(show_name no)
@@ -31145,7 +31936,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part Number" "C0805C106K3PACTU"
+		(property "Manufacturer Part Number" "C1210C226M3RACTU"
 			(at 190.5 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -31167,7 +31958,7 @@
 				)
 			)
 		)
-		(property "DigiKey P/N" "399-11939-2-ND"
+		(property "DigiKey P/N" "399-C1210C226M3RACTUCT-ND"
 			(at 190.5 93.98 0)
 			(hide yes)
 			(show_name no)

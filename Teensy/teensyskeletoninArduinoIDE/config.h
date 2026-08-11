@@ -30,7 +30,7 @@
 //   analog monitor inputs -> REMOVED (per-card ADS1115 over I2C)
 //   LOCKn_EN GPIOs        -> REMOVED (PCA9538 IO0 on each CH card)
 //   HBRIDGE_FAULT1/2      -> replaced by ONE shared open-drain FAULT_n
-//   card addressing       -> ON-CARD jumpers (JP101-103, fit=0); no
+//   card addressing       -> ONE on-card jumper (JP101, fit=0); no
 //                            slot straps, DIG enumerates by I2C probe
 //   ERRn_BUS stays ANALOG on A10/A11 (1 kHz supervisor sampling)
 //
@@ -43,9 +43,11 @@
 #define PIN_SDA           18
 #define PIN_SCL           19
 
-// --- Card addressing (2026-07-16): on-card jumpers ----------
-// Cards self-address with on-card jumpers (JP101-103, fitted = 0);
-// the backplane GA pins are unused and there is nothing to read.
+// --- Card addressing (v7, 2026-08-09): ONE on-card jumper ---
+// Each CH card self-addresses with JP101 alone (fitted = 0). It sets
+// the I2C address LSB on all three chips AND picks the ERR/MOD bus
+// pair, so a card is either ch1 or ch2 with nothing else to set.
+// The backplane GA pins are unused and there is nothing to read.
 // D14/D15/D16 (was A0/A1/A2) are therefore SPARE.
 
 // --- Shared fault line (open-drain wired-OR, active-low) ----
@@ -54,12 +56,14 @@
 #define PIN_FAULT_N       31   // was HBRIDGE_FAULT1
 
 // ============================================================
-// I2C address map (7-bit) — from the CH-card address jumpers:
-//   ch1 card: JP101 FITTED  -> GA1:0 = 00 (ADG419 IN=0 -> S1 =
+// I2C address map (7-bit) — from the ONE CH-card address jumper:
+//   ch1 card: JP101 FITTED  -> GA0 = 0 (ADG419 IN=0 -> S1 =
 //   ERR1/MOD1, verified vs ADG419 datasheet truth table);
-//   ch2 card: JP101 OPEN    -> GA1:0 = 01.
+//   ch2 card: JP101 OPEN    -> GA0 = 1.
+//   v7 deleted JP102/JP103: GA1 is tied to GND on-card (A1 = 0 was its
+//   only legal setting) and GA2 is gone. GA0 is the whole card identity.
 //   ADS1115 ADDR <- GA0; AD5696R base 00011|A1|A0 (verified vs
-//   ADI Rev E ds); PCA9538 base 0x70|A1<<1|A0.  The AFE ADS1115
+//   ADI Rev E ds); PCA9538 base 0x70|A1<<1|A0 with A1 = 0.  The AFE ADS1115
 //   straps ADDR->SDA on-card (0x4A), outside the CH 0x48/0x49 range.
 //   The AFE also carries its own AD5696R (ERR offset null) strapped
 //   A1=VLOGIC, A0=GND -> 0x0E, i.e. the next code after CH1/CH2.
@@ -71,13 +75,19 @@
 #define I2C_AD5696_CH1       0x0C          // base 0x0C | GA0
 #define I2C_AD5696_CH2       0x0D
 #define I2C_AD5696_AFE       0x0E          // AFE ERR offset-null DAC (A1=1, A0=0)
-#define I2C_PCA9538_CH1      0x70          // base 0x70 | GA1<<1 | GA0
+#define I2C_PCA9538_CH1      0x70          // base 0x70 | GA0  (A1 tied to GND)
 #define I2C_PCA9538_CH2      0x71
 
-// PCA9538 IO assignment on each CH card (see CH_Card schematic):
-//   IO0 = LOCK_EN (output: HIGH = integrator RUN)
-//   IO1 = HB_FAULT (input, active-low from OPA551 Flag)
-//   IO2 = GA2 jumper readback (JP103), IO3..IO7 spare (10k pulldowns)
+// PCA9538 IO assignment on each CH card (see CH_Card schematic).
+// CONFIG = 0xF6 (IO0 + IO3 outputs, rest inputs) — see chcard_init_all().
+//   IO0 = LOCK_EN  (output: HIGH = integrator RUN)
+//   IO1 = HB_FAULT (input, active-HIGH from the OPA551 Flag pin: 33k pulldown
+//         + BAT46W clamp, so the node sits near 0 V and rises only on a fault)
+//   IO2 = tied to GND (v7: was the GA2 jumper readback, never read by anything)
+//   IO3 = TEC_EN   (output: LOW = TEC bridge forced to 0 A. NOT spare —
+//         it powers up as a high-Z input held low by R121, which is what keeps
+//         the bridge at 0 A if the Teensy never boots.)
+//   IO4..IO7 = spare (10k pulldowns)
 
 // --- SPI0 (signal-path) — MOSI=11, MISO=12, SCK=13 ---------
 #define PIN_SCK           13
