@@ -90877,4 +90877,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "CH_Card v7"
+		(at 86.850 48.050 0)
+		(layer "B.SilkS")
+		(uuid "73a906d2-9aa2-4788-96cd-2e53a89268d3")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )

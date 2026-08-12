@@ -50355,4 +50355,16 @@
 		(members "7e9771ed-b49d-4c86-8202-5f7e79d56308" "d8eed856-390c-4395-96a6-0fb581551a57")
 	)
 	(embedded_fonts no)
+	(gr_text "pm1p8V v7"
+		(at 74.925 50.250 0)
+		(layer "B.SilkS")
+		(uuid "17f33da0-91fd-49a2-8a14-23e2132e6d92")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )

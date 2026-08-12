@@ -34448,4 +34448,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "pm22V v7"
+		(at 116.100 50.250 0)
+		(layer "B.SilkS")
+		(uuid "c82eeffd-3a21-4158-b6b1-2a89d7b0ed6a")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )

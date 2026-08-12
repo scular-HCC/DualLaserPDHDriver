@@ -125,7 +125,7 @@
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
       <div class="kpi"><b>96-way</b><span>DIN 41612 Type C slot</span></div>
     </div>
-    <div class="rev">Manual Rev 2.4 &nbsp;·&nbsp; 2026-08-09 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
+    <div class="rev">Manual Rev 2.5 &nbsp;·&nbsp; 2026-08-12 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
   </div>
 </header>
 
@@ -1529,6 +1529,45 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   optical power ∝ (<code>NTC_A</code> − <code>MPD_MON</code>) — and reports it as <code>POPTn</code>
   in the <code>d</code> dump (scale set for the ≈2.2 µA/mW monitor responsivity; trim against a power
   meter at bring-up).</div>
+  <div class="note"><b>Optional configuration change — TEC integrator C171/R133.</b> U19 is a
+  <em>pure</em> integrator (no feedback resistor): <code>R133</code> 10 kΩ 0.1 % from
+  <code>TEC_IMON</code> into the inverting input, <code>C171</code> 100 nF from that node to the
+  output. Together they set the TEC servo integrator time constant,
+  <b>τ = R133 · C171 = 1 ms</b> (unity gain at ≈159 Hz).
+  <br><br>
+  C171 is an <b>X7R</b> part as built. X7R is specified to ±15 % over −55…+125 °C, so the
+  integrator time constant — and with it the TEC loop gain — can move by up to that much with
+  ambient temperature. This is accepted in the current design: the TEC loop is thermally dominated
+  with a time constant of seconds against a 159 Hz integrator corner, and ±15 % loop gain is
+  ordinary design margin. The dielectric's voltage coefficient is a much smaller effect here,
+  because 100 nF in an 0805 body at 50 V is a low-density part.
+  <br><br>
+  <b>If the TEC loop is found to change behaviour with ambient temperature</b> — hunting, overshoot
+  or sluggish settling that tracks the room rather than the set-point — the integrator can be moved
+  to a <b>C0G</b> dielectric with no board change, by trading capacitance for resistance so that τ
+  is preserved:
+  <table class="pinref">
+    <thead><tr><th>Ref</th><th>As built</th><th>Alternative</th></tr></thead>
+    <tbody>
+      <tr><td>C171</td><td>100 nF 50 V X7R 0805</td><td><b>10 nF 50 V C0G 0805</b> — Murata
+        <code>GRM2195C1H103JA01D</code></td></tr>
+      <tr><td>R133</td><td>10 kΩ 0.1 % 0805 — <code>ERA-6AEB103V</code></td>
+        <td><b>100 kΩ 0.1 % 0805</b> — Panasonic <code>ERA-6AEB104V</code></td></tr>
+    </tbody>
+  </table>
+  τ = 100 kΩ × 10 nF = 1 ms, <b>identical to the original</b>, so the loop response is unchanged.
+  Both parts stay 0805, so the footprints, the layout and the rest of the BOM are untouched — it is
+  a two-part substitution, not a board revision. Side effects are negligible: R133's Johnson noise
+  rises from 12.8 to 40.5 nV/√Hz, which is immaterial at the input of a thermal loop, and the
+  OPA192's ≈20 pA bias current across 100 kΩ adds about 2 µV of offset. <code>TEC_IMON</code> is
+  driven by the INA828's low-impedance output, so raising R133 neither loads that node nor rescales
+  the parallel ADC path through R119.
+  <br><br>
+  <b>Do not simply fit a larger-value capacitor at C171.</b> Raising the capacitance changes τ and
+  slows the loop, and a higher-value part in the same body is a denser dielectric — worse on both
+  voltage coefficient and tempco, not better. Keeping 100 nF and moving to C0G is also not an option
+  on this land: 100 nF C0G does not exist in 0805, only in 1206 and larger.</div>
+
   <h4>Interaction</h4>
   <p>A CH card receives its set-points over I²C, drives its laser and TEC locally, and supplies the
   modulation drive to its laser while returning its readbacks over I²C. Its demodulated error comes

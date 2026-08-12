@@ -88063,4 +88063,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "DIG_Card v7"
+		(at 161.175 45.500 0)
+		(layer "B.SilkS")
+		(uuid "3ed89b03-25f8-445f-a308-8ed64f551570")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )
