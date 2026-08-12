@@ -2588,4 +2588,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "AC_Board v7"
+		(at 72.025 40.470 0)
+		(layer "B.SilkS")
+		(uuid "52458c11-6bdb-4239-ba6d-10876b88571d")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )

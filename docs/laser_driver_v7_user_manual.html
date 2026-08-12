@@ -125,7 +125,7 @@
       <div class="kpi"><b>8-slot</b><span>3U passive backplane</span></div>
       <div class="kpi"><b>96-way</b><span>DIN 41612 Type C slot</span></div>
     </div>
-    <div class="rev">Manual Rev 2.4 &nbsp;·&nbsp; 2026-08-09 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
+    <div class="rev">Manual Rev 2.5 &nbsp;·&nbsp; 2026-08-12 &nbsp;·&nbsp; DualLaserPDHDriver — board revision <b>v7</b></div>
   </div>
 </header>
 
@@ -152,6 +152,7 @@
     <li><a href="#bringup">Installation &amp; bring-up</a></li>
     <li><a href="#testing">Testing &amp; test points</a></li>
     <li><a href="#uncertainty">Measurement uncertainty budget</a></li>
+    <li><a href="#fbg">Fiber Bragg grating option</a></li>
     <li><a href="#specs">Specifications</a></li>
     <li><a href="#schematics">Simplified schematics</a></li>
   </ol>
@@ -1529,6 +1530,45 @@ Rail output = base ∓ 2·V<sub>be</sub> ≈ ±6.0 V
   optical power ∝ (<code>NTC_A</code> − <code>MPD_MON</code>) — and reports it as <code>POPTn</code>
   in the <code>d</code> dump (scale set for the ≈2.2 µA/mW monitor responsivity; trim against a power
   meter at bring-up).</div>
+  <div class="note"><b>Optional configuration change — TEC integrator C171/R133.</b> U19 is a
+  <em>pure</em> integrator (no feedback resistor): <code>R133</code> 10 kΩ 0.1 % from
+  <code>TEC_IMON</code> into the inverting input, <code>C171</code> 100 nF from that node to the
+  output. Together they set the TEC servo integrator time constant,
+  <b>τ = R133 · C171 = 1 ms</b> (unity gain at ≈159 Hz).
+  <br><br>
+  C171 is an <b>X7R</b> part as built. X7R is specified to ±15 % over −55…+125 °C, so the
+  integrator time constant — and with it the TEC loop gain — can move by up to that much with
+  ambient temperature. This is accepted in the current design: the TEC loop is thermally dominated
+  with a time constant of seconds against a 159 Hz integrator corner, and ±15 % loop gain is
+  ordinary design margin. The dielectric's voltage coefficient is a much smaller effect here,
+  because 100 nF in an 0805 body at 50 V is a low-density part.
+  <br><br>
+  <b>If the TEC loop is found to change behaviour with ambient temperature</b> — hunting, overshoot
+  or sluggish settling that tracks the room rather than the set-point — the integrator can be moved
+  to a <b>C0G</b> dielectric with no board change, by trading capacitance for resistance so that τ
+  is preserved:
+  <table class="pinref">
+    <thead><tr><th>Ref</th><th>As built</th><th>Alternative</th></tr></thead>
+    <tbody>
+      <tr><td>C171</td><td>100 nF 50 V X7R 0805</td><td><b>10 nF 50 V C0G 0805</b> — Murata
+        <code>GRM2195C1H103JA01D</code></td></tr>
+      <tr><td>R133</td><td>10 kΩ 0.1 % 0805 — <code>ERA-6AEB103V</code></td>
+        <td><b>100 kΩ 0.1 % 0805</b> — Panasonic <code>ERA-6AEB104V</code></td></tr>
+    </tbody>
+  </table>
+  τ = 100 kΩ × 10 nF = 1 ms, <b>identical to the original</b>, so the loop response is unchanged.
+  Both parts stay 0805, so the footprints, the layout and the rest of the BOM are untouched — it is
+  a two-part substitution, not a board revision. Side effects are negligible: R133's Johnson noise
+  rises from 12.8 to 40.5 nV/√Hz, which is immaterial at the input of a thermal loop, and the
+  OPA192's ≈20 pA bias current across 100 kΩ adds about 2 µV of offset. <code>TEC_IMON</code> is
+  driven by the INA828's low-impedance output, so raising R133 neither loads that node nor rescales
+  the parallel ADC path through R119.
+  <br><br>
+  <b>Do not simply fit a larger-value capacitor at C171.</b> Raising the capacitance changes τ and
+  slows the loop, and a higher-value part in the same body is a denser dielectric — worse on both
+  voltage coefficient and tempco, not better. Keeping 100 nF and moving to C0G is also not an option
+  on this land: 100 nF C0G does not exist in 0805, only in 1206 and larger.</div>
+
   <h4>Interaction</h4>
   <p>A CH card receives its set-points over I²C, drives its laser and TEC locally, and supplies the
   modulation drive to its laser while returning its readbacks over I²C. Its demodulated error comes
@@ -3146,8 +3186,356 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
 </section>
 
 <!-- ============================================================= -->
+<section id="fbg">
+  <h2 class="sec"><span class="num">19</span> Fiber Bragg grating option</h2>
+  <p>Everything up to this point describes the instrument as built: two lasers locked to two
+  microring resonators on one silicon die. This section documents an <b>alternative frequency
+  reference</b> — a pair of <b>commercially available fiber Bragg gratings (FBGs)</b> in place of the
+  ring die — and carries its own complete uncertainty budget so the two options can be compared on
+  equal terms. Nothing here changes the as-built instrument; it is a design option, and the crate
+  supports it with one resistor change per channel.</p>
+
+  <div class="kpis">
+    <div class="kpi"><b>1.25 GHz/K</b><span>FBG sensitivity S</span></div>
+    <div class="kpi"><b>15–50 MHz</b><span>π-FBG linewidth</span></div>
+    <div class="kpi"><b>38×</b><span>discriminant gain vs ring</span></div>
+    <div class="kpi"><b>21 nK</b><span>U (k=2) at 60 s</span></div>
+    <div class="kpi"><b>150 MHz/µε</b><span>strain sensitivity</span></div>
+    <div class="kpi"><b>1 resistor</b><span>hardware change per channel</span></div>
+  </div>
+
+  <div class="note"><b>Why consider it.</b> The ring die is a custom part. An FBG pair is a catalogue
+  purchase, and a π-phase-shifted grating is <em>38× narrower</em> than the ring resonance, which
+  multiplies every lineshape-referred error by the same factor. The budget below shows the two
+  references land within a few percent of each other in equivalent kelvin — the FBG reaches the same
+  place with an off-the-shelf part, but relocates the engineering risk from RAM to fiber packaging
+  and the optical path.</div>
+
+  <h3>19.1 Which FBG — the part choice is the design</h3>
+  <p>Two device classes are catalogue items and they are not interchangeable. The narrow one is the
+  design; the broad one is in this manual only to close the question.</p>
+
+  <table>
+    <thead><tr><th>Class</th><th>Linewidth (FWHM)</th><th>Lock scheme</th><th>Sources</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td><b>π-FBG</b> — π-phase-shifted, narrow transmission notch</td><td>15–50 MHz</td><td>slope / lock-in discriminator (§19.4)</td><td>TeraXion, AOS GmbH, O/E Land, Technica</td><td><b>Use this</b></td></tr>
+      <tr><td>Standard telecom FBG — uniform apodised reflector</td><td>0.1–0.3 nm ≈ 12–37 GHz</td><td>side-of-fringe</td><td>any FBG house</td><td>≈50× worse — not viable</td></tr>
+    </tbody>
+  </table>
+
+  <div class="formula">
+Carrier ν<sub>0</sub> = 193.4 THz&nbsp;·&nbsp; dν/dλ = 124.8 GHz/nm at 1550 nm<br>
+S = dν/dT = 124.8 GHz/nm × 10 pm/K = <b>1.25 GHz/K</b>&nbsp; ⇒ &nbsp;1 nK ↔ 1.25 Hz of beat &nbsp;(ring: 2 GHz/K, 2 Hz)<br>
+S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbsp; ⇒ &nbsp;1 nε ↔ 0.12 mK-equivalent; 1 nK ↔ 8.3 fε<br>
+π-FBG at 50 MHz FWHM ⇒ Q = 3.9×10<sup>6</sup>&nbsp; (ring: 1.93 GHz, Q = 10<sup>5</sup>)
+  </div>
+
+  <h3>19.2 What changes physically</h3>
+  <h4>19.2.1 The win — linewidth</h4>
+  <p>The discriminant slope of any slope-detection lock goes as <b>1/FWHM</b>. A 50 MHz π-FBG against
+  the ring's 1.93 GHz line is a factor of <b>38</b> on every "fraction of a linewidth" error:
+  detection noise, RIN pulling, and RAM lock offset all scale down together, provided the modulation
+  depth is scaled down with the linewidth (§19.4.2). The carrier-smear residual goes to zero for the
+  same reason — the depth needed on a 50 MHz line no longer drags the carrier across an appreciable
+  part of the resonance.</p>
+
+  <h4>19.2.2 The loss — sensitivity</h4>
+  <p>S falls from 2 GHz/K to 1.25 GHz/K, so the same frequency uncertainty is <b>1.6× more kelvin</b>.
+  This is why the FBG budget is kept in hertz and converted second, and why the two references must be
+  compared in kelvin rather than in hertz.</p>
+
+  <h4>19.2.3 Three new terms with no ring analogue</h4>
+  <table>
+    <thead><tr><th>Term</th><th>Why it is new</th><th>Cancels in the ratio?</th></tr></thead>
+    <tbody>
+      <tr><td><b>Fiber thermodynamic noise</b></td><td>The reference is now ~10 mm of silica fiber, not a lithographic ring. Spontaneous temperature fluctuations of the grating volume are the fundamental floor of every FBG frequency reference. The thermal barrier the differential measurement requires also puts the two gratings further apart than the 60 s thermal diffusion length in silica (√(Dτ) ≈ 7.1 mm), so their fluctuations are <b>uncorrelated</b> and add in quadrature (×√2).</td><td><b>No</b> — this is the FBG's hard floor</td></tr>
+      <tr><td><b>Parasitic etalon / fringe</b></td><td>The optical path is now metres of fiber with connectors and splices. Any residual reflection pair forms a weak etalon; a 1 m parasitic cavity has an FSR of ~100 MHz — <em>comparable to the π-FBG linewidth itself</em> — so the fringe appears as a first-order tilt on the error baseline rather than an averaging ripple, and its phase drifts with fiber temperature. See the connector warning in §19.4.3.</td><td><b>No</b> (flicker part)</td></tr>
+      <tr><td><b>Polarisation / birefringence</b></td><td>Fiber birefringence splits the Bragg resonance into two peaks; in non-PM fiber the launch polarisation wanders and drags the lock point between them. PM fiber with an aligned launch reduces this ~15×; finite PER means it does not remove it.</td><td><b>No</b></td></tr>
+    </tbody>
+  </table>
+
+  <h4>19.2.4 Strain — the term that would kill it, and the topology that does not save it</h4>
+  <p>At 150 MHz/µε the grating is a strain gauge that happens to respond to temperature: nanokelvin
+  equivalence demands ~8 fε of strain stability, which no packaged fiber achieves open-loop. What
+  makes the instrument work is that common strain is slow and largely common-mode, so the ratio
+  removes it — leaving only the <b>differential</b> creep between the two grating mounts, which it
+  does not.</p>
+
+  <div class="warn"><b>The two gratings cannot share one fiber.</b> It is tempting to write both
+  gratings into one fiber between common anchors, so that axial strain is shared identically. That
+  does not work here: §19.3.2 requires the pair to be matched to <b>±10 pm</b> so the beat lands near
+  100 MHz, and two gratings that close in wavelength have almost completely overlapping stop bands —
+  each laser would be reflected by the <em>other</em> grating and could never reach its own. The head
+  must therefore use <b>two separate fibers, one grating each</b>, bonded to a common substrate across
+  a thermal barrier. That is the direct analogue of two rings on one die, and it matches the AFE's two
+  independent detection channels exactly.
+  <br><br>
+  <b>Consequence for the budget:</b> common-strain rejection is then a property of the
+  <em>mount</em>, not of the glass. The coefficient-match figure η<sub>ε</sub> ≈ 10<sup>−3</sup> used
+  below is an assumption about bonding symmetry and must be <b>measured on the assembled head</b>, not
+  taken from a datasheet. It is the least-defended number in this section.</div>
+
+  <h3>19.3 The optical head</h3>
+  <h4>19.3.1 Layout</h4>
+  <p>Two π-FBGs, one per fiber, bonded to a common substrate with a thermal barrier between them.
+  Separation <b>≥ 15 mm</b> (≈2× the 60 s thermal diffusion length): that spacing is what makes the
+  differential measurement meaningful <em>and</em> what decorrelates the two gratings' thermodynamic
+  noise, which is why that term carries the √2. Mount symmetrically — matched adhesive, matched bond
+  length, common anchors — because differential creep is the strain term the ratio cannot remove.</p>
+
+  <h4>19.3.2 Pair matching and the trim</h4>
+  <p>Catalogue centre-wavelength tolerance is ±0.1 to ±0.2 nm, i.e. ±12 to ±25 GHz of Bragg offset,
+  against a nominal beat of 100 MHz. Even a matched pair leaves a worst-case 2.5 GHz. The pair must be
+  trimmed into beat range, and there are only two levers:</p>
+
+  <table>
+    <thead><tr><th>Pair spec</th><th>Worst-case Δλ</th><th>Beat offset</th><th>TEC trim needed</th><th>Strain trim needed</th><th>Stretch over 10 mm</th></tr></thead>
+    <tbody>
+      <tr><td>catalogue ±0.1 nm</td><td>200 pm</td><td>24.96 GHz</td><td>20.00 K</td><td>166.7 µε</td><td>1.67 µm</td></tr>
+      <tr><td>matched pair ±10 pm</td><td>20 pm</td><td>2.50 GHz</td><td>2.00 K</td><td>16.7 µε</td><td>0.17 µm</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>Never trim with the TECs.</b> A standing inter-grating temperature offset
+  <em>is</em> the measurand. Trimming thermally would write the TEC servo's own noise directly onto the
+  result, and both TEC channels are in any case committed to the laser butterflies.</div>
+
+  <div class="tip"><b>Make the strain trim passive.</b> Order matched pairs from one draw and one
+  phase mask, then close the residual ~17 µε with a <b>one-time mechanical stretch, locked down at
+  assembly</b>. Do not build an active PZT driver channel: an active trim injects its driver noise
+  straight onto the measurand through S<sub>ε</sub> = 150 MHz/µε, and there is no HV rail in the crate
+  (±22 V maximum) to drive one with. The absence of a PZT channel is therefore not a gap in the
+  design.</div>
+
+  <h3>19.4 Using the v7 electronics with an FBG head</h3>
+  <p>The crate needs no new card. The signal chain was designed around a slope discriminator on a
+  fiber-coupled photodiode, which is exactly what an FBG head presents.</p>
+
+  <h4>19.4.1 What works unchanged</h4>
+  <table>
+    <thead><tr><th>Block</th><th>As built</th><th>With an FBG head</th></tr></thead>
+    <tbody>
+      <tr><td>Lock scheme</td><td>2–2.5 MHz laser-current derivative / lock-in discriminator (§3.1)</td><td>Correct regime — Ω/FWHM = 0.05 on a 50 MHz line</td></tr>
+      <tr><td>Modulation injection</td><td>Bias-tee into the laser anode (10 µH / 10 nF / R<sub>inj</sub>), deliberately not the FET gate</td><td>Ideal — keeping the FET's nonlinear g<sub>m</sub> out of the amplitude path matters more here, since RAM is the FBG's neighbour term</td></tr>
+      <tr><td>Photodiode</td><td>FGA01FC, FC-pigtailed InGaAs, 12 V bias</td><td><b>Already fiber-coupled</b> — the interface an FBG head wants</td></tr>
+      <tr><td>TIA</td><td>OPA814, R<sub>f</sub> 8.06 kΩ, C<sub>f</sub> 1 pF, f<sub>−3dB</sub> ≈ 19.7 MHz</td><td>Spec is ≥5–10× Ω and Ω is unchanged — 19.7 MHz ≫ 2.5 MHz still holds</td></tr>
+      <tr><td>Demodulator</td><td>AD835 multiplier (250 MHz) × phase-set DDS reference</td><td>Unchanged</td></tr>
+      <tr><td>Post-mix / ERR</td><td>64–72 kHz pole, ×5.02 onto the 2.500 V datum</td><td>Unchanged</td></tr>
+      <tr><td>Servo</td><td>CH-card PI integrator, 0.483 mA/V authority</td><td>Unchanged</td></tr>
+      <tr><td>Beat readout</td><td>External photodetector and counter (§4.1)</td><td>Outside the crate either way</td></tr>
+      <tr><td>Channel count</td><td>Two independent PD/TIA/demod slices</td><td>Matches the two-fiber head of §19.2.4 exactly</td></tr>
+    </tbody>
+  </table>
+
+  <h4>19.4.2 The one hardware change — R<sub>inj</sub></h4>
+  <p>Modulation depth is set by <code>I<sub>pk</sub> ≈ V<sub>src,pk</sub>/R<sub>inj</sub></code> and is
+  specified as <b>0.1–0.3 × the fringe half-width</b> (§3.4). That is a fraction of the <em>linewidth</em>,
+  so a 38× narrower line needs a 38× smaller depth. Inverting the as-built figure brackets the DFB's FM
+  coefficient at Ω, from which the new resistor follows. R<sub>inj</sub> is already a documented trim.</p>
+
+  <table>
+    <thead><tr><th>Reference</th><th>FWHM</th><th>Target FM depth δν</th><th>I<sub>pk</sub> needed</th><th>R<sub>inj</sub></th></tr></thead>
+    <tbody>
+      <tr><td>microring (as built)</td><td>1900 MHz</td><td>95–285 MHz</td><td>300 µA</td><td>2 kΩ</td></tr>
+      <tr><td>π-FBG, 50 MHz</td><td>50 MHz</td><td>2.5–7.5 MHz</td><td>2.6–23.7 µA</td><td><b>25–228 kΩ</b> (≈75 kΩ)</td></tr>
+      <tr><td>π-FBG, 15 MHz</td><td>15 MHz</td><td>0.75–2.25 MHz</td><td>0.8–7.1 µA</td><td>84–760 kΩ</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>Both bias-tee inequalities get stronger, not weaker.</b> At Ω = 2 MHz,
+  X<sub>L</sub> = 126 Ω ≫ (R<sub>sense</sub> + r<sub>laser</sub>) is unchanged, and
+  X<sub>C</sub> = 8 Ω ≪ R<sub>inj</sub> is satisfied by a wider margin as R<sub>inj</sub> rises. The
+  Johnson current noise injected into the laser also falls, from 2.88 pA/√Hz at 2 kΩ to 0.47 pA/√Hz at
+  75 kΩ.</div>
+
+  <h4>19.4.3 Connectors — the one as-built choice that fights the FBG budget</h4>
+  <div class="warn">§4.3 specifies FC/APC on the laser side and <b>FC/PC at the detector</b>. The
+  laser-side APC choice is correct and matters more than ever. The <b>detector-side PC endface does
+  not survive the move to an FBG</b>, and the reason is specific to gratings: <b>a π-FBG is itself a
+  mirror</b>. Outside its narrow notch the grating reflects almost everything, so the grating and the
+  detector endface form a real, strong etalon — a high-reflectivity mirror against a 3.5 % one — whose
+  FSR is set by the FBG-to-detector fiber length. At ~1 m that is ~100 MHz, sitting directly on top of
+  a 50 MHz grating linewidth, and its phase drifts with fiber temperature. This is the
+  parasitic-etalon term of §19.2.3, and it is the second-largest surviving line in the budget.</div>
+
+  <div class="note"><b>There is no FC/APC version of the FGA01FC — do not go looking for one.</b>
+  Thorlabs supplies that photodiode with an <b>FC/PC bulkhead only</b>, and an APC ferrule must never
+  be mated into a PC receptacle: the 8° endface tilts the beam off the Ø120 µm active area and the
+  flat-to-angled contact leaves an air gap. Nothing has to be custom-built, but the detector is not a
+  connector swap either. There are two supported routes.</div>
+
+  <table>
+    <thead><tr><th></th><th>A — Isolator retrofit</th><th>B — Pigtailed detector</th></tr></thead>
+    <tbody>
+      <tr><td><b>What you do</b></td><td>Keep the FGA01FC and its bracket. Insert a 1550 nm fiber optical isolator between the FBG head and each detector.</td><td>Replace the FGA01FC with a fiber-pigtailed InGaAs PIN, pigtail terminated FC/APC or left bare and fusion-spliced to the head.</td></tr>
+      <tr><td><b>AFE change</b></td><td><b>None</b> — no respin</td><td>New footprint (the current one is the custom <code>Optical:PD_FGA01FC_EdgeBracket</code>) and a bias check — an AFE respin</td></tr>
+      <tr><td><b>Why it works</b></td><td>The isolator absorbs the endface reflection so it never returns to the grating, breaking the cavity even though the PC face still reflects.</td><td>Removes the second mirror altogether. A fusion splice removes the endface entirely — the best case in §19.5.3.</td></tr>
+      <tr><td><b>Cost / effort</b></td><td>Two isolators, no board work</td><td>Detector is cheaper than an isolator, but costs a board spin</td></tr>
+      <tr><td><b>Use when</b></td><td>Evaluating the FBG option on existing hardware</td><td>Committing to the FBG head</td></tr>
+    </tbody>
+  </table>
+
+  <p>Route B's part is an ordinary catalogue item, not a special order: coaxial-package InGaAs PIN
+  photodiodes with FC/APC or bare-fiber pigtails are stocked by LD-PD, Laser Components, OSI
+  Optoelectronics, Ushio/PD-LD and similar telecom-detector houses. Typical 1550 nm specs are
+  ℛ = 0.90–0.95 A/W and C<sub>j</sub> = 0.6–0.75 pF, i.e. the same responsivity the design already
+  assumes and <em>less</em> capacitance than the FGA01FC.</p>
+
+  <div class="tip"><b>The TIA does not care, and the pigtail need not be PM.</b> The closed-loop
+  bandwidth is f<sub>−3dB</sub> = 1/(2π·R<sub>f</sub>·C<sub>f</sub>) = 19.7 MHz — set by the feedback
+  pair, not by the diode. A lower-capacitance detector drops C<sub>TOT</sub> from 5.50 pF to ≈4.07 pF
+  and the flat-compensation value from 0.66 pF to 0.57 pF, so the fitted 1 pF stays comfortably above
+  what stability requires; the margin improves. Polarisation matters only on the launch <em>into</em>
+  the grating — a photodiode is a square-law detector — so the detector pigtail can be ordinary SM
+  fiber even though §19.6 calls for PM in the head.</div>
+
+  <div class="warn"><b>Check the reverse-voltage rating before ordering.</b> The AFE biases its
+  detectors from <code>PD_BIAS_12V</code>, and many telecom pigtailed PINs are specified at
+  V<sub>r</sub> = 5 V with a maximum well below 12 V. Either select a part rated ≥12 V or re-divide
+  the bias to 5 V — at 5 V the junction capacitance is still far below the FGA01FC's 2.13 pF, so the
+  TIA compensation above remains valid either way. This is the one substitution that can quietly
+  destroy the detector.</div>
+
+  <h4>19.4.4 Firmware, not hardware</h4>
+  <p>Acquisition is the real work. The lock feature is 38× narrower: with the 16-bit laser DAC over
+  90.5 mA (1.38 µA/LSB) and DFB current tuning of ~2 GHz/mA, the ring's 1.93 GHz line spans ~690 DAC
+  codes but a 50 MHz grating spans only ~18. Still catchable, but the sweep step, dwell, and
+  lock-detect thresholds must all be retuned, and a full sweep takes proportionally longer. The
+  <code>omega1</code>/<code>omega2</code> commands stay inside the existing 100 kHz–3.5 MHz range, so
+  no CLI change is needed.</p>
+
+  <div class="note"><b>What "PDH" means here.</b> As with the ring (§3.1), this is <em>not</em>
+  textbook Pound–Drever–Hall. True dispersive PDH on a 50 MHz line needs Ω ≳ 50 MHz of phase
+  modulation, which neither laser-current FM nor the AD9833 on its 25 MHz clock can reach. The FBG is
+  locked with the same 2–2.5 MHz derivative discriminator the ring uses. <b>The linewidth gain is
+  fully retained</b> — it belongs to the discriminator slope, not to the modulation scheme. Reaching
+  true PDH would require an EOM and driver, a &gt;50 MHz LO, and a faster TIA (19.7 MHz is the binding
+  limit); the AD835 would survive. That is an AFE respin, not a retrofit, and the budget below does
+  not assume it.</div>
+
+  <h3>19.5 Uncertainty budget — FBG head</h3>
+  <p>Same method as §18: GUM Type A/B contributors combined in quadrature, each modelled as a single
+  Allan power law σ(τ) = a·τ<sup>μ</sup>, evaluated at the τ = 60 s window, with slow common terms
+  removed by the ratio. Kelvin twins use S = 1.25 GHz/K.</p>
+
+  <h4>19.5.1 Within-window budget at τ = 60 s</h4>
+  <table>
+    <thead><tr><th>Contributor</th><th>Type</th><th>In ratio</th><th>π-FBG (50 MHz)</th><th>Standard FBG (25 GHz)</th></tr></thead>
+    <tbody>
+      <tr><td>Detection / discrimination noise</td><td>A</td><td>kept</td><td>0.07 Hz &nbsp;(0.05 nK)</td><td>34.0 Hz &nbsp;(27 nK)</td></tr>
+      <tr><td>Residual laser FM above loop BW</td><td>A</td><td>kept</td><td>6.0 Hz &nbsp;(4.8 nK)</td><td>6.0 Hz &nbsp;(4.8 nK)</td></tr>
+      <tr><td>RIN → lock-point pulling (in-band)</td><td>B</td><td>kept</td><td>0.13 Hz &nbsp;(0.11 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
+      <tr><td>RAM in-band (flicker)</td><td>B</td><td>kept</td><td>0.53 Hz &nbsp;(0.42 nK)</td><td>—</td></tr>
+      <tr><td><b>Fiber thermodynamic noise</b> (×√2) — the decider</td><td>A</td><td>kept</td><td><b>9.9 Hz &nbsp;(7.9 nK)</b></td><td>9.9 Hz &nbsp;(7.9 nK)</td></tr>
+      <tr><td><b>Parasitic etalon (flicker)</b> — the other decider</td><td>B</td><td>kept</td><td><b>5.0 Hz &nbsp;(4.0 nK)</b></td><td>5.0 Hz &nbsp;(4.0 nK)</td></tr>
+      <tr><td>Polarisation / birefringence (PM fiber)</td><td>B</td><td>kept</td><td>2.0 Hz &nbsp;(1.6 nK)</td><td>2.0 Hz &nbsp;(1.6 nK)</td></tr>
+      <tr><td>Strain — differential creep (flicker)</td><td>B</td><td>kept</td><td>3.0 Hz &nbsp;(2.4 nK)</td><td>3.0 Hz &nbsp;(2.4 nK)</td></tr>
+      <tr><td>Timebase / counter short-term</td><td>B</td><td>kept</td><td>0.13 Hz &nbsp;(0.10 nK)</td><td>0.13 Hz &nbsp;(0.10 nK)</td></tr>
+      <tr style="color:#8a93a3"><td>RAM slow drift</td><td>B</td><td>cancels</td><td>10.2 Hz</td><td>—</td></tr>
+      <tr style="color:#8a93a3"><td>Parasitic etalon slow drift</td><td>B</td><td>cancels</td><td>465 Hz</td><td>465 Hz</td></tr>
+      <tr style="color:#8a93a3"><td>Thermal common-mode leakage (ε·ΔT<sub>common</sub>)</td><td>B</td><td>cancels</td><td>232 Hz</td><td>232 Hz</td></tr>
+      <tr style="color:#8a93a3"><td>Strain — common axial × η<sub>ε</sub></td><td>B</td><td>cancels</td><td>155 Hz</td><td>155 Hz</td></tr>
+      <tr style="color:#8a93a3"><td>Strain — differential creep (random walk)</td><td>B</td><td>cancels</td><td>310 Hz</td><td>310 Hz</td></tr>
+      <tr style="font-weight:700"><td>Combined u<sub>c</sub> (k = 1) @ 60 s</td><td></td><td></td><td>13.1 Hz &nbsp;(10.5 nK)</td><td>659 Hz &nbsp;(528 nK)</td></tr>
+      <tr><td>Expanded U (k = 2, ≈95 %)</td><td></td><td></td><td>26.3 Hz &nbsp;(21.0 nK)</td><td>1318 Hz &nbsp;(1056 nK)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>Note the three biggest surviving terms.</b> Fiber thermodynamic noise, the
+  parasitic etalon, and residual laser FM account for almost the entire π-FBG result — 7.9, 4.0 and
+  4.8 nK against a 10.5 nK total. The first two are the FBG's own; the third is the laser's and is
+  unchanged from the ring, because residual FM lives above the loop unity-gain bandwidth and that
+  bandwidth is pinned by the 72 kHz post-mix pole, not by the reference linewidth. A narrower line does
+  not buy it back.</div>
+
+  <h4>19.5.2 σ versus averaging time</h4>
+  <table>
+    <thead><tr><th>τ [s]</th><th>π-FBG (50 MHz)</th><th>Standard FBG (25 GHz)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>13.17 Hz &nbsp;(10.6 nK)</td><td>709 Hz &nbsp;(568 nK)</td></tr>
+      <tr><td>10</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>663 Hz &nbsp;(532 nK)</td></tr>
+      <tr><td><b>60</b></td><td><b>13.13 Hz &nbsp;(10.5 nK)</b></td><td>659 Hz &nbsp;(528 nK)</td></tr>
+      <tr><td>100</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>659 Hz &nbsp;(528 nK)</td></tr>
+      <tr><td>600</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><b>The curve is flat — and that is a design fact, not a rounding artefact.</b>
+  Once the ratio has removed the slow terms, everything left in the FBG budget is flicker (fiber
+  thermal, etalon, polarisation, differential creep, residual FM). There is <b>no averaging benefit
+  beyond a few seconds</b>. Lengthening the measurement window buys nothing, so if the 60 s window is
+  ever revisited, revisit it for reasons other than noise.</div>
+
+  <h4>19.5.3 Expanded uncertainty — microring versus FBG</h4>
+  <p>The single comparison table. U = k·u<sub>c</sub> with k = 2 (≈95 %), ratiometric, at τ = 60 s,
+  voltages quoted at V<sub>FS</sub> = 2 V.</p>
+
+  <table>
+    <thead><tr><th>Reference</th><th>Scheme / case</th><th>FWHM</th><th>S [GHz/K]</th><th>u<sub>c</sub> [Hz]</th><th>U [Hz]</th><th>U [nK]</th><th>U [nV]</th><th>U [µV/V]</th></tr></thead>
+    <tbody>
+      <tr><td>Microring</td><td>RF — RAM slower than window</td><td>1.9 GHz</td><td>2.00</td><td>8.23</td><td>16.45</td><td><b>8.2</b></td><td>1.18</td><td>5.9×10<sup>−4</sup></td></tr>
+      <tr><td>Microring</td><td>RF — in-band RAM survives</td><td>1.9 GHz</td><td>2.00</td><td>21.63</td><td>43.25</td><td><b>21.6</b></td><td>3.09</td><td>1.5×10<sup>−3</sup></td></tr>
+      <tr><td>Microring</td><td>Dither — RAM survives</td><td>1.9 GHz</td><td>2.00</td><td>83.17</td><td>166.33</td><td><b>83.2</b></td><td>11.88</td><td>5.9×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — best case (15 MHz, spliced, quiet fiber)</td><td>15 MHz</td><td>1.25</td><td>8.25</td><td>16.50</td><td><b>13.2</b></td><td>1.89</td><td>9.4×10<sup>−4</sup></td></tr>
+      <tr style="font-weight:700"><td>FBG</td><td>π-FBG — nominal</td><td>50 MHz</td><td>1.25</td><td>13.13</td><td>26.25</td><td>21.0</td><td>3.01</td><td>1.5×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — worst case (all three unknowns bad)</td><td>50 MHz</td><td>1.25</td><td>28.55</td><td>57.11</td><td><b>45.8</b></td><td>6.54</td><td>3.3×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — non-PM fiber</td><td>50 MHz</td><td>1.25</td><td>32.69</td><td>65.37</td><td><b>52.4</b></td><td>7.48</td><td>3.7×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>Standard telecom FBG — side-of-fringe</td><td>25 GHz</td><td>1.25</td><td>658.90</td><td>1317.80</td><td><b>1056</b></td><td>150.9</td><td>7.5×10<sup>−2</sup></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>Read the kelvin column, not the hertz column.</b> The two references have
+  different sensitivities (2.00 vs 1.25 GHz/K) and different full-scale spans (14.0 vs 8.7 GHz), so
+  hertz is not a common currency between them. Kelvin and µV/V are.</div>
+
+  <h4>19.5.4 Voltage twin</h4>
+  <p>Used as a voltmeter the response is square-law, ν = k<sub>1</sub>V<sup>2</sup> (§18.4). For a
+  thermally-coupled transducer the full-scale beat swing scales with S, so the ring's 14 GHz over 2 V
+  becomes <b>8.7 GHz over 2 V</b> for the FBG, i.e. k<sub>1</sub> = 2.18 GHz/V² and a slope at full
+  scale of 8.7 GHz/V.</p>
+
+  <div class="formula">
+1 Hz → 114.5 pV = 5.72×10<sup>−5</sup> µV/V &nbsp;&nbsp;(ring: 71.4 pV — the FBG is <b>1.6× worse per hertz</b>)<br>
+1 nK → 1.25 Hz → 143 pV = 7.14×10<sup>−5</sup> µV/V &nbsp;&nbsp;(ring: 143 pV — <b>invariant</b>)
+  </div>
+
+  <p>The kelvin→volt conversion is the same for both references, because ν<sub>FS</sub> and S scale
+  together. Only the hertz→volt conversion differs. As in §18.4 there is no operating-point-independent
+  figure of merit: absolute uncertainty grows as 1/V and relative as 1/V², so every voltage number
+  above is quoted at V<sub>FS</sub> = 2 V and must be rescaled before being carried anywhere else.</p>
+
+  <h3>19.6 Bill of design consequences</h3>
+  <p>What adopting the FBG option commits you to, beyond the parts themselves:</p>
+  <ol>
+    <li><b>Buy matched π-phase-shifted pairs</b> — one draw, one phase mask, ±10 pm pair match, ≤50 MHz FWHM (15 MHz if the budget allows).</li>
+    <li><b>PM fiber throughout</b>, aligned launch, specified PER. The non-PM row of §19.5.3 prices the alternative at 52 nK — worse than the FBG's own worst case.</li>
+    <li><b>Two fibers, one grating each</b>, on a common substrate, ≥15 mm apart across a thermal barrier (§19.2.4, §19.3.1).</li>
+    <li><b>Passive strain trim</b>, ~20 µε range, set once and locked (§19.3.2). No active PZT channel, no TEC trim.</li>
+    <li><b>All-spliced optical path</b>; FC/APC wherever a connector is unavoidable. Isolator after each DFB as before, plus a decision on the detector interface — <b>isolator retrofit or pigtailed detector</b>, since the FGA01FC has no APC variant (§19.4.3).</li>
+    <li><b>Change R<sub>inj</sub></b> from 2 kΩ to ≈75 kΩ per channel (§19.4.2).</li>
+    <li><b>Retune acquisition firmware</b> for an ~18-code lock feature (§19.4.4).</li>
+    <li><b>Mount symmetrically and verify η<sub>ε</sub></b> — with two separate fibers this is a measured mounting property, not a datasheet number (§19.2.4).</li>
+  </ol>
+
+  <div class="tip"><b>Measure these three first, in this order:</b> (1) the fiber thermal-noise floor
+  of the actual grating pair, (2) the parasitic-fringe amplitude of the assembled optical path,
+  (3) polarisation stability. Between them they move the result from ~5 nK to ~46 nK; nothing else in
+  the budget has comparable leverage. This is the FBG's equivalent of "measure the RAM spectrum early"
+  in §18.</div>
+
+  <div class="note"><b>Source of the numbers.</b> The full model, including the parameter sweeps
+  behind the best/worst cases and the Allan-deviation plot, is in
+  <code>UncertaintyBudget/laser_driver_uncertainty_budget_FBG.ipynb</code>, alongside the microring
+  original in <code>laser_driver_uncertainty_budget.ipynb</code>. Device constants: silica FBG
+  10–12 pm/K and ≈1.2 pm/µε at 1550 nm; commercial π-FBGs specified to 15 MHz FWHM; fiber
+  thermodynamic noise as the fundamental floor of fiber-optic frequency references.</div>
+
+  <a class="backtop" href="#intro">▲ top</a>
+</section>
+
+<!-- ============================================================= -->
 <section id="specs">
-  <h2 class="sec"><span class="num">19</span> Specifications</h2>
+  <h2 class="sec"><span class="num">20</span> Specifications</h2>
   <table>
     <thead><tr><th>Item</th><th>Specification</th></tr></thead>
     <tbody>
@@ -3182,14 +3570,14 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
 
 <!-- ============================================================= -->
 <section id="schematics">
-  <h2 class="sec"><span class="num">20</span> Simplified schematics</h2>
+  <h2 class="sec"><span class="num">21</span> Simplified schematics</h2>
   <p>One functional schematic per board. These show the <b>main elements and signal/power flow only</b>
   — supply pins to op-amps, decoupling and bypass capacitors, pull-ups, and bias trivia are omitted
   for clarity. Reference designators follow the as-drawn schematics; consult the KiCad source for the
   complete, exact circuit.</p>
 
   <!-- ===== AC BOARD ===== -->
-  <h3>20.1 AC Board <span class="sub">— mains entry (<a href="#ac">§06</a>)</span></h3>
+  <h3>21.1 AC Board <span class="sub">— mains entry (<a href="#ac">§06</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 270" role="img" aria-label="AC board simplified schematic">
     <rect class="cmp" x="24" y="96" width="104" height="74" rx="4"/>
@@ -3246,7 +3634,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== pm22V ===== -->
-  <h3>20.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§07</a>)</span></h3>
+  <h3>21.2 pm22V <span class="sub">— ±18 V capacitance-multiplier supply (<a href="#pm22">§07</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm22V simplified schematic">
     <!-- inputs -->
@@ -3323,7 +3711,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== pm6V ===== -->
-  <h3>20.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§08</a>)</span></h3>
+  <h3>21.3 pm6V <span class="sub">— ±6 V regulated TEC supply, +rail shown (<a href="#pm6">§08</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm6V simplified schematic">
     <!-- input + bridge -->
@@ -3394,7 +3782,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== pm1p8V ===== -->
-  <h3>20.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§09</a>)</span></h3>
+  <h3>21.4 pm1p8V <span class="sub">— regulated low-voltage rail tree (<a href="#pm1p8">§09</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 360" role="img" aria-label="pm1p8V rail tree schematic">
     <text class="net" x="24" y="40">+18V</text><line class="w" x1="24" y1="52" x2="24" y2="330"/>
@@ -3466,7 +3854,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== BACKPLANE ===== -->
-  <h3>20.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§10</a>)</span></h3>
+  <h3>21.5 Backplane <span class="sub">— passive bus &amp; universal slot (<a href="#backplane">§10</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 338" role="img" aria-label="Backplane bus schematic">
     <!-- bus rails -->
@@ -3505,7 +3893,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== DIG ===== -->
-  <h3>20.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§11</a>)</span></h3>
+  <h3>21.6 DIG card <span class="sub">— controller &amp; DDS (<a href="#dig">§11</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 320" role="img" aria-label="DIG card schematic">
     <rect class="cmp" x="60" y="120" width="130" height="90" rx="6"/><text class="ref" x="125" y="160" text-anchor="middle">Teensy 4.1</text><text class="sub" x="125" y="178" text-anchor="middle">supervisor</text>
@@ -3547,7 +3935,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== CH ===== -->
-  <h3>20.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§12</a>)</span></h3>
+  <h3>21.7 CH card <span class="sub">— laser ACC loop + TEC bridge (<a href="#ch">§12</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 380" role="img" aria-label="CH card schematic">
     <text class="ttl" x="20" y="26">LASER CONSTANT-CURRENT LOOP</text>
@@ -3622,7 +4010,7 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   </figure>
 
   <!-- ===== AFE ===== -->
-  <h3>20.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§14</a>)</span></h3>
+  <h3>21.8 AFE card <span class="sub">— detection front end, one channel shown (<a href="#afe">§14</a>)</span></h3>
   <figure>
   <svg class="sch" viewBox="0 0 900 272" role="img" aria-label="AFE card schematic">
     <!-- PD -->

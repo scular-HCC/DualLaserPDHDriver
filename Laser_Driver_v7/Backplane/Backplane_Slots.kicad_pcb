@@ -19255,4 +19255,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "Backplane v7"
+		(at 50.810 56.185 0)
+		(layer "B.SilkS")
+		(uuid "86195a0c-443f-4d22-b247-8fafe0b8f189")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )
