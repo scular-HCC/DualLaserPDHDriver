@@ -3072,4 +3072,16 @@
 		)
 	)
 	(embedded_fonts no)
+	(gr_text "BTF_Card v7"
+		(at 92.425 37.100 0)
+		(layer "B.SilkS")
+		(uuid "1a570280-96f9-4c2c-999b-f2421aa836c8")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.25)
+			)
+			(justify mirror)
+		)
+	)
 )
