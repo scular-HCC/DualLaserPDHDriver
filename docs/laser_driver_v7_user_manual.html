@@ -3218,10 +3218,73 @@ dν/dV = 2k<sub>1</sub>V = 2ν/V&nbsp; ⇒ &nbsp;σ<sub>V</sub>/V = ½ · σ<sub
   <table>
     <thead><tr><th>Class</th><th>Linewidth (FWHM)</th><th>Lock scheme</th><th>Sources</th><th>Verdict</th></tr></thead>
     <tbody>
-      <tr><td><b>π-FBG</b> — π-phase-shifted, narrow transmission notch</td><td>15–50 MHz</td><td>slope / lock-in discriminator (§19.4)</td><td>TeraXion, AOS GmbH, O/E Land, Technica</td><td><b>Use this</b></td></tr>
-      <tr><td>Standard telecom FBG — uniform apodised reflector</td><td>0.1–0.3 nm ≈ 12–37 GHz</td><td>side-of-fringe</td><td>any FBG house</td><td>≈50× worse — not viable</td></tr>
+      <tr><td><b>π-FBG</b> — π-phase-shifted, narrow transmission notch</td><td>15–75 MHz (0.12–0.6 pm)</td><td>slope / lock-in discriminator (§19.4)</td><td><b>O/E Land</b> (publishes 0.6 pm), TeraXion (15 MHz class), AOS GmbH. <em>Technica declined 2026-08-12 — cannot meet spec; DK Photonics lists 0.05 nm typ.</em> See §19.1.1</td><td><b>Use this</b></td></tr>
+      <tr><td>Standard telecom FBG — uniform apodised reflector</td><td>0.1–0.3 nm ≈ 12–37 GHz</td><td>side-of-fringe</td><td>O/E Land, AtGrating, DK Photonics, AMS Technologies, Seagnol, oeMarket, AOE, FBGS</td><td>≈50× worse — not viable (§19.4.5)</td></tr>
     </tbody>
   </table>
+
+  <h4>19.1.1 "π-phase-shifted" does not mean "narrow" — specify the notch in picometres</h4>
+  <div class="warn"><b>This is the single easiest way to buy the wrong part.</b> π-phase-shifting
+  describes the grating <em>structure</em> — a defect that opens a transmission notch inside the stop
+  band. It says nothing about how <em>narrow</em> that notch is. Notch width is set by grating length
+  × index-modulation strength, and the sensing market sells π-FBGs whose notches are two to three
+  orders of magnitude broader than this instrument needs. Their datasheets legitimately advertise an
+  "ultra-sharp notch" and "DC-to-MHz response", but that language is about <b>sensor response
+  bandwidth and edge-trigger detection speed</b>, not spectral narrowness.</div>
+
+  <p>Vendors quote the notch in <b>picometres</b>; this budget is written in <b>megahertz</b>. At
+  1550 nm the conversion is <b>1 pm = 124.8 MHz</b>, and applying it is usually enough to settle
+  whether a given datasheet is describing the right class of device:</p>
+
+  <table>
+    <thead><tr><th>Part / spec</th><th>Notch, as quoted</th><th>= frequency</th><th>Q</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr style="font-weight:700"><td>This instrument's requirement (§19.4.5)</td><td>≤0.60 pm</td><td>≤75 MHz</td><td>≥2.6×10<sup>6</sup></td><td>the spec to quote</td></tr>
+      <tr><td>O/E Land published phase-shifted FBG</td><td>0.6 pm</td><td>75 MHz</td><td>2.6×10<sup>6</sup></td><td>meets spec — see §19.1</td></tr>
+      <tr><td>TeraXion-class frequency-reference π-FBG</td><td>0.12 pm</td><td>15 MHz</td><td>1.3×10<sup>7</sup></td><td>exceeds need (§19.4.5)</td></tr>
+      <tr><td>Microring, for comparison (as built)</td><td>15.5 pm</td><td>1.93 GHz</td><td>1.0×10<sup>5</sup></td><td>the incumbent</td></tr>
+      <tr><td><em>Sensing</em> π-FBG, e.g. Technica T45 (~30 pm)</td><td>30 pm</td><td><b>3.74 GHz</b></td><td>5.2×10<sup>4</sup></td><td><b>2× broader than the ring — rejected</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>Worked example — why a sensing π-FBG fails here.</b> The Technica T45 is a
+  5 mm grating at ~97 % reflectivity with a 0.36 nm stop band, so stopband/notch ≈ 12: an effective
+  finesse of about 12. Reaching 0.6 pm needs a finesse near 600, and 0.12 pm near 3000 — a much longer
+  and much more strongly modulated grating. Substituted into §19.5, the T45 gives
+  <b>U ≈ 72 nK</b> (SM fiber) or 59 nK with PM, against 21.1 nK for a 0.6 pm part and 21.6 nK for the
+  as-built microring. It is a <em>downgrade</em>, not an upgrade. Its Q is below the ring's.</div>
+
+  <div class="tip"><b>What to put in the enquiry.</b> "π-FBG, notch FWHM <b>≤0.6 pm</b> at 1550 nm,
+  <b>PM (PANDA)</b> fiber, <b>FC/APC or bare pigtail</b> for splicing, <b>polyimide or metal
+  coating</b>." Quoting the notch in pm is what stops you and the vendor talking past each other.
+  Two specs worth asking every supplier for, because the sensing datasheets show they are achievable
+  and both help this design: a temperature coefficient at the <b>11.7 pm/°C</b> end of the range
+  (S = 1.46 GHz/K, 17 % better than the 10 pm/K assumed in §19.1), and <b>polyimide, copper or gold
+  coating</b> instead of acrylate — acrylate is the coating that creeps, and differential creep is
+  the least-defended term in the whole budget (§19.2.4). Metal-coated fiber can be soldered to the
+  substrate.</div>
+
+  <div class="note"><b>Sourcing — where these actually come from.</b> Neither class is a
+  photonics-catalogue item in the Thorlabs/Newport sense. <b>Thorlabs does not sell bare FBGs at
+  all</b> — only FBG-<em>stabilised laser diodes</em> and photosensitive fiber to write your own — so
+  do not search there for the component. Standard uniform/apodised gratings come from dedicated
+  grating houses, several of which hold stock: O/E Land lists inventory 1550 nm uniform FBGs at about
+  <b>$45/pc, MOQ 10</b>, and AtGrating, DK Photonics, AMS Technologies, Seagnol and oeMarket all
+  quote configurable uniform and apodised parts. Typical catalogue ranges are 0.15–0.6 nm bandwidth,
+  5–99 % reflectivity, 1–3.5 mm grating length. The π-phase-shifted parts are a much narrower
+  field, and narrower still once the notch spec of §19.1.1 is applied. <b>O/E Land publishes a
+  <b>0.6 pm</b> phase-shifted grating</b> — the only advertised part found that meets this
+  instrument's requirement — and also holds PM fiber in stock and publishes per-unit measured
+  wavelength/FWHM/reflectivity, which is exactly the matched-pair selection service §19.3.3 needs.
+  TeraXion (15 MHz class) and AOS GmbH are the other credible sources. <b>Technica confirmed in
+  writing (2026-08-12) that they cannot meet this specification</b>, and DK Photonics list 0.05 nm
+  typical — both are ruled out for the reference grating, though either may still be worth consulting
+  on coating and packaging. All are quoted rather than stocked.</div>
+
+  <div class="warn"><b>Stock-grade centre-wavelength tolerance is ±1 nm, not ±0.1 nm.</b> Inventory
+  gratings are binned loosely because most buyers only care which ITU channel they land in. ±1 nm is
+  <b>125 GHz</b> of Bragg offset — see §19.3.2 for why that is a purchasing problem rather than a
+  fatal one.</div>
 
   <div class="formula">
 Carrier ν<sub>0</sub> = 193.4 THz&nbsp;·&nbsp; dν/dλ = 124.8 GHz/nm at 1550 nm<br>
@@ -3236,7 +3299,7 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
   the ring's 1.93 GHz line is a factor of <b>38</b> on every "fraction of a linewidth" error:
   detection noise, RIN pulling, and RAM lock offset all scale down together, provided the modulation
   depth is scaled down with the linewidth (§19.4.2). The carrier-smear residual goes to zero for the
-  same reason — the depth needed on a 50 MHz line no longer drags the carrier across an appreciable
+  same reason — the depth needed on a 0.6 pm line no longer drags the carrier across an appreciable
   part of the resonance.</p>
 
   <h4>19.2.2 The loss — sensitivity</h4>
@@ -3300,12 +3363,39 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
   <em>is</em> the measurand. Trimming thermally would write the TEC servo's own noise directly onto the
   result, and both TEC channels are in any case committed to the laser butterflies.</div>
 
-  <div class="tip"><b>Make the strain trim passive.</b> Order matched pairs from one draw and one
-  phase mask, then close the residual ~17 µε with a <b>one-time mechanical stretch, locked down at
-  assembly</b>. Do not build an active PZT driver channel: an active trim injects its driver noise
-  straight onto the measurand through S<sub>ε</sub> = 150 MHz/µε, and there is no HV rail in the crate
-  (±22 V maximum) to drive one with. The absence of a PZT channel is therefore not a gap in the
-  design.</div>
+  <div class="tip"><b>Make the strain trim passive.</b> Having matched the pair, close the residual
+  ~17 µε with a <b>one-time mechanical stretch, locked down at assembly</b>. Do not build an active
+  PZT driver channel: an active trim injects its driver noise straight onto the measurand through
+  S<sub>ε</sub> = 150 MHz/µε, and there is no HV rail in the crate (±22 V maximum) to drive one with.
+  The absence of a PZT channel is therefore not a gap in the design.</div>
+
+  <h4>19.3.3 How to buy a matched pair — do not pay for absolute tolerance</h4>
+  <p>The instrument needs the two gratings close <b>to each other</b>. It does not care where they sit
+  in absolute terms, because the DFBs tune to find them. That distinction is worth real money: a tight
+  <em>absolute</em> centre-wavelength spec is a premium custom order, while a tight <em>relative</em>
+  match can be had from loosely-binned stock simply by buying a batch and picking the closest two.</p>
+
+  <p>For N gratings scattered across a tolerance window W, the expected gap between the closest pair
+  is ≈ W/N². Against O/E Land's ±1 nm stock grade at ~$45/pc, that gives:</p>
+
+  <table>
+    <thead><tr><th>Batch size N</th><th>Closest pair, ±1 nm stock</th><th>Closest pair, ±0.1 nm custom</th><th>Batch cost @ $45/pc</th></tr></thead>
+    <tbody>
+      <tr><td>10 (the MOQ)</td><td>≈20 pm</td><td>≈2.0 pm</td><td>$450</td></tr>
+      <tr><td>20</td><td>≈5.0 pm</td><td>≈0.5 pm</td><td>$900</td></tr>
+      <tr><td>30</td><td>≈2.2 pm</td><td>≈0.2 pm</td><td>$1350</td></tr>
+      <tr><td>50</td><td>≈0.8 pm</td><td>≈0.08 pm</td><td>$2250</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><b>The minimum order quantity is the solution, not an obstacle.</b> Ten stock
+  gratings — the MOQ anyway — already yield an expected closest pair of ~20 pm, which is the
+  "matched pair" grade assumed in §19.3.2. Twenty gratings beat it by 4×. <b>Ask the vendor to do the
+  selection:</b> they measure and record every grating's centre wavelength as a matter of course, so
+  requesting the two closest from a batch costs nothing and spares you needing a wavemeter. Order the
+  batch in <em>one writing session on one phase mask</em> so the pair also shares its thermal and
+  strain coefficients, and keep the remainder as spares — the tail of the batch is the cheapest
+  insurance in the build.</div>
 
   <h3>19.4 Using the v7 electronics with an FBG head</h3>
   <p>The crate needs no new card. The signal chain was designed around a slope discriminator on a
@@ -3315,7 +3405,7 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
   <table>
     <thead><tr><th>Block</th><th>As built</th><th>With an FBG head</th></tr></thead>
     <tbody>
-      <tr><td>Lock scheme</td><td>2–2.5 MHz laser-current derivative / lock-in discriminator (§3.1)</td><td>Correct regime — Ω/FWHM = 0.05 on a 50 MHz line</td></tr>
+      <tr><td>Lock scheme</td><td>2–2.5 MHz laser-current derivative / lock-in discriminator (§3.1)</td><td>Correct regime — Ω/FWHM = 0.033 on a 0.6 pm (75 MHz) line</td></tr>
       <tr><td>Modulation injection</td><td>Bias-tee into the laser anode (10 µH / 10 nF / R<sub>inj</sub>), deliberately not the FET gate</td><td>Ideal — keeping the FET's nonlinear g<sub>m</sub> out of the amplitude path matters more here, since RAM is the FBG's neighbour term</td></tr>
       <tr><td>Photodiode</td><td>FGA01FC, FC-pigtailed InGaAs, 12 V bias</td><td><b>Already fiber-coupled</b> — the interface an FBG head wants</td></tr>
       <tr><td>TIA</td><td>OPA814, R<sub>f</sub> 8.06 kΩ, C<sub>f</sub> 1 pF, f<sub>−3dB</sub> ≈ 19.7 MHz</td><td>Spec is ≥5–10× Ω and Ω is unchanged — 19.7 MHz ≫ 2.5 MHz still holds</td></tr>
@@ -3337,8 +3427,8 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
     <thead><tr><th>Reference</th><th>FWHM</th><th>Target FM depth δν</th><th>I<sub>pk</sub> needed</th><th>R<sub>inj</sub></th></tr></thead>
     <tbody>
       <tr><td>microring (as built)</td><td>1900 MHz</td><td>95–285 MHz</td><td>300 µA</td><td>2 kΩ</td></tr>
-      <tr><td>π-FBG, 50 MHz</td><td>50 MHz</td><td>2.5–7.5 MHz</td><td>2.6–23.7 µA</td><td><b>25–228 kΩ</b> (≈75 kΩ)</td></tr>
-      <tr><td>π-FBG, 15 MHz</td><td>15 MHz</td><td>0.75–2.25 MHz</td><td>0.8–7.1 µA</td><td>84–760 kΩ</td></tr>
+      <tr style="font-weight:700"><td>π-FBG, 0.6 pm</td><td>75 MHz</td><td>3.7–11.2 MHz</td><td>11.8 µA</td><td><b>≈51 kΩ</b></td></tr>
+      <tr><td>π-FBG, 0.12 pm (15 MHz)</td><td>15 MHz</td><td>0.75–2.25 MHz</td><td>0.8–7.1 µA</td><td>84–760 kΩ</td></tr>
     </tbody>
   </table>
 
@@ -3405,13 +3495,95 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
   no CLI change is needed.</p>
 
   <div class="note"><b>What "PDH" means here.</b> As with the ring (§3.1), this is <em>not</em>
-  textbook Pound–Drever–Hall. True dispersive PDH on a 50 MHz line needs Ω ≳ 50 MHz of phase
+  textbook Pound–Drever–Hall. True dispersive PDH on a 0.6 pm (75 MHz) line needs Ω ≳ 75 MHz of phase
   modulation, which neither laser-current FM nor the AD9833 on its 25 MHz clock can reach. The FBG is
   locked with the same 2–2.5 MHz derivative discriminator the ring uses. <b>The linewidth gain is
   fully retained</b> — it belongs to the discriminator slope, not to the modulation scheme. Reaching
-  true PDH would require an EOM and driver, a &gt;50 MHz LO, and a faster TIA (19.7 MHz is the binding
+  true PDH would require an EOM and driver, a &gt;75 MHz LO, and a faster TIA (19.7 MHz is the binding
   limit); the AD835 would survive. That is an AFE respin, not a retrofit, and the budget below does
   not assume it.</div>
+
+  <h4>19.4.5 π-shifted or standard — which fits <em>this</em> crate</h4>
+  <p>§19.1 rejects the standard telecom FBG on the uncertainty number alone. The hardware argument is
+  independent of that and reaches the same verdict more strongly, because the two classes stress
+  <em>different</em> parts of the crate — and the standard grating stresses the part that cannot be
+  fixed without a respin.</p>
+
+  <p><b>Modulation demand.</b> Depth is specified as a fraction of the fringe half-width (§19.4.2), so
+  the required injection current scales linearly with linewidth off the as-built 0.30 mA point. That
+  scaling holds whatever the DFB's exact FM coefficient turns out to be:</p>
+
+  <table>
+    <thead><tr><th>Reference</th><th>I<sub>pk</sub> needed</th><th>R<sub>inj</sub></th><th>% of 60 mA I<sub>DC</sub></th><th>Bias-tee X<sub>C</sub> margin</th></tr></thead>
+    <tbody>
+      <tr><td>Microring (as built)</td><td>300 µA</td><td>2 kΩ</td><td>0.50 %</td><td>250×</td></tr>
+      <tr style="font-weight:700"><td>π-FBG 0.6 pm (75 MHz) — the spec</td><td>11.8 µA</td><td>51 kΩ</td><td>0.020 %</td><td>6340×</td></tr>
+      <tr><td>π-FBG 0.12 pm (15 MHz)</td><td>2.4 µA</td><td>253 kΩ</td><td>0.004 %</td><td>31700×</td></tr>
+      <tr><td>Standard FBG 25 GHz</td><td><b>3.95 mA</b></td><td><b>152 Ω</b></td><td><b>6.6 %</b></td><td><b>19×</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>The standard grating asks the drive chain to undo its own design intent.</b>
+  It needs <b>13× more modulation current than the crate was built for</b> — ~8 mA peak-to-peak on a
+  60 mA laser. §3.4 puts the injection on a bias-tee rather than the FET gate precisely to keep
+  amplitude modulation out of the optical path; a broad grating then demands you put RAM back in by
+  brute force. It also collapses the X<sub>C</sub> ≪ R<sub>inj</sub> margin from 250× to 19×, so the
+  coupling network itself stops being negligible. The π-FBG moves every one of these the right way.</div>
+
+  <p><b>Acquisition</b> is the one place the standard grating genuinely wins. Note that this uses the
+  <b>DC/thermal</b> tuning coefficient (~2 GHz/mA ⇒ 2.76 MHz per DAC code), <em>not</em> the
+  carrier-mediated coefficient that sets modulation depth at Ω = 2 MHz — the two differ by ~3× and
+  conflating them is an easy mistake.</p>
+
+  <table>
+    <thead><tr><th>Reference</th><th>DAC codes across the line</th><th>Acquisition</th></tr></thead>
+    <tbody>
+      <tr><td>Microring (as built)</td><td>688</td><td>comfortable</td></tr>
+      <tr style="font-weight:700"><td>π-FBG 0.6 pm (75 MHz) — the spec</td><td>27</td><td>workable — retune the sweep (§19.4.4)</td></tr>
+      <tr><td>π-FBG 0.12 pm (15 MHz)</td><td>5</td><td><b>marginal</b> — few codes across the whole line</td></tr>
+      <tr><td>Standard FBG 25 GHz</td><td>9052</td><td>trivial</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>The structural objection — no in-band power normalisation exists.</b> A 25 GHz
+  line has a discriminant slope ~500× shallower than the π-FBG, so any intensity fluctuation reads
+  directly as a frequency error. The standard remedy is to divide the error by a reference
+  photodiode, and <b>the AFE has no such path</b>: <code>PD1_LVL</code>/<code>PD2_LVL</code> reach the
+  ADS1115 at 860 SPS, which is a DC health monitor, not an in-band normaliser, and cannot touch RIN
+  in the 1 Hz–10 kHz band where the budget lives. That is the origin of the 658 Hz RIN line and the
+  1.06 µK total in §19.5.1. It is a silicon problem, not a firmware one.</div>
+
+  <div class="tip"><b>Verdict, and a spec refinement.</b> The standard grating makes easy the one
+  thing that is cheap to fix (sweep code — 9052 codes instead of 18) and makes hard the two things
+  that need a respin (modulation depth without RAM, and in-band power normalisation). <b>Specify the
+  π-FBG</b> — and specify it at <b>≤0.6 pm (≈75 MHz), not the narrowest part available.</b></div>
+
+  <p>That second point is stronger than a preference. At the nominal assumptions of §19.5.1, notch
+  widths spanning a factor of five give the <b>same answer to three significant figures</b> — while
+  the acquisition difficulty changes by more than five times:</p>
+
+  <table>
+    <thead><tr><th>π-FBG notch</th><th>u<sub>c</sub> @ 60 s</th><th>U (k = 2)</th><th>DAC codes across the line</th><th>R<sub>inj</sub></th></tr></thead>
+    <tbody>
+      <tr style="font-weight:700"><td><b>0.6 pm (75 MHz)</b> — the spec</td><td>13.14 Hz</td><td>21.1 nK</td><td><b>27 — most margin</b></td><td>51 kΩ</td></tr>
+      <tr><td>0.40 pm (50 MHz)</td><td>13.13 Hz</td><td>21.0 nK</td><td>18 — workable</td><td>76 kΩ</td></tr>
+      <tr><td>0.12 pm (15 MHz)</td><td>13.12 Hz</td><td>21.0 nK</td><td>5 — marginal</td><td>253 kΩ</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>Below ≈0.6 pm the linewidth stops buying anything.</b> Once fiber
+  thermodynamic noise (9.9 Hz), the parasitic etalon (5.0 Hz) and residual laser FM (6.0 Hz) dominate
+  — and none of those three scale with linewidth — a narrower grating improves only terms that are
+  already negligible. Going from 0.6 pm to 0.12 pm, a factor of five in linewidth and in price,
+  returns <b>0.02 Hz</b> while cutting the acquisition window from 27 DAC codes to 5. The gain quoted
+  for the "best case" row of §19.5.3 comes from the quieter fiber and the killed etalon in that row,
+  <em>not</em> from its narrower grating. <b>Do not pay for anything below 0.6 pm</b>; spend the money
+  on the optical path instead.</div>
+
+  <div class="tip"><b>0.6 pm is the optimum, not a relaxation.</b> It is the widest notch that still
+  reaches the flicker floor, so it gives the full measurement performance <em>and</em> the largest
+  acquisition margin of any viable option — and it is an advertised catalogue figure (§19.1), which
+  the narrower specs are not. Quote 0.6 pm.</div>
 
   <h3>19.5 Uncertainty budget — FBG head</h3>
   <p>Same method as §18: GUM Type A/B contributors combined in quadrature, each modelled as a single
@@ -3420,24 +3592,24 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
 
   <h4>19.5.1 Within-window budget at τ = 60 s</h4>
   <table>
-    <thead><tr><th>Contributor</th><th>Type</th><th>In ratio</th><th>π-FBG (50 MHz)</th><th>Standard FBG (25 GHz)</th></tr></thead>
+    <thead><tr><th>Contributor</th><th>Type</th><th>In ratio</th><th>π-FBG (0.6 pm)</th><th>Standard FBG (25 GHz)</th></tr></thead>
     <tbody>
-      <tr><td>Detection / discrimination noise</td><td>A</td><td>kept</td><td>0.07 Hz &nbsp;(0.05 nK)</td><td>34.0 Hz &nbsp;(27 nK)</td></tr>
+      <tr><td>Detection / discrimination noise</td><td>A</td><td>kept</td><td>0.10 Hz &nbsp;(0.08 nK)</td><td>34.0 Hz &nbsp;(27 nK)</td></tr>
       <tr><td>Residual laser FM above loop BW</td><td>A</td><td>kept</td><td>6.0 Hz &nbsp;(4.8 nK)</td><td>6.0 Hz &nbsp;(4.8 nK)</td></tr>
-      <tr><td>RIN → lock-point pulling (in-band)</td><td>B</td><td>kept</td><td>0.13 Hz &nbsp;(0.11 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
-      <tr><td>RAM in-band (flicker)</td><td>B</td><td>kept</td><td>0.53 Hz &nbsp;(0.42 nK)</td><td>—</td></tr>
+      <tr><td>RIN → lock-point pulling (in-band)</td><td>B</td><td>kept</td><td>0.20 Hz &nbsp;(0.16 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
+      <tr><td>RAM in-band (flicker)</td><td>B</td><td>kept</td><td>0.79 Hz &nbsp;(0.63 nK)</td><td>—</td></tr>
       <tr><td><b>Fiber thermodynamic noise</b> (×√2) — the decider</td><td>A</td><td>kept</td><td><b>9.9 Hz &nbsp;(7.9 nK)</b></td><td>9.9 Hz &nbsp;(7.9 nK)</td></tr>
       <tr><td><b>Parasitic etalon (flicker)</b> — the other decider</td><td>B</td><td>kept</td><td><b>5.0 Hz &nbsp;(4.0 nK)</b></td><td>5.0 Hz &nbsp;(4.0 nK)</td></tr>
       <tr><td>Polarisation / birefringence (PM fiber)</td><td>B</td><td>kept</td><td>2.0 Hz &nbsp;(1.6 nK)</td><td>2.0 Hz &nbsp;(1.6 nK)</td></tr>
       <tr><td>Strain — differential creep (flicker)</td><td>B</td><td>kept</td><td>3.0 Hz &nbsp;(2.4 nK)</td><td>3.0 Hz &nbsp;(2.4 nK)</td></tr>
       <tr><td>Timebase / counter short-term</td><td>B</td><td>kept</td><td>0.13 Hz &nbsp;(0.10 nK)</td><td>0.13 Hz &nbsp;(0.10 nK)</td></tr>
-      <tr style="color:#8a93a3"><td>RAM slow drift</td><td>B</td><td>cancels</td><td>10.2 Hz</td><td>—</td></tr>
+      <tr style="color:#8a93a3"><td>RAM slow drift</td><td>B</td><td>cancels</td><td>15.3 Hz</td><td>—</td></tr>
       <tr style="color:#8a93a3"><td>Parasitic etalon slow drift</td><td>B</td><td>cancels</td><td>465 Hz</td><td>465 Hz</td></tr>
       <tr style="color:#8a93a3"><td>Thermal common-mode leakage (ε·ΔT<sub>common</sub>)</td><td>B</td><td>cancels</td><td>232 Hz</td><td>232 Hz</td></tr>
       <tr style="color:#8a93a3"><td>Strain — common axial × η<sub>ε</sub></td><td>B</td><td>cancels</td><td>155 Hz</td><td>155 Hz</td></tr>
       <tr style="color:#8a93a3"><td>Strain — differential creep (random walk)</td><td>B</td><td>cancels</td><td>310 Hz</td><td>310 Hz</td></tr>
       <tr style="font-weight:700"><td>Combined u<sub>c</sub> (k = 1) @ 60 s</td><td></td><td></td><td>13.1 Hz &nbsp;(10.5 nK)</td><td>659 Hz &nbsp;(528 nK)</td></tr>
-      <tr><td>Expanded U (k = 2, ≈95 %)</td><td></td><td></td><td>26.3 Hz &nbsp;(21.0 nK)</td><td>1318 Hz &nbsp;(1056 nK)</td></tr>
+      <tr><td>Expanded U (k = 2, ≈95 %)</td><td></td><td></td><td>26.3 Hz &nbsp;(21.1 nK)</td><td>1318 Hz &nbsp;(1056 nK)</td></tr>
     </tbody>
   </table>
 
@@ -3450,13 +3622,13 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
 
   <h4>19.5.2 σ versus averaging time</h4>
   <table>
-    <thead><tr><th>τ [s]</th><th>π-FBG (50 MHz)</th><th>Standard FBG (25 GHz)</th></tr></thead>
+    <thead><tr><th>τ [s]</th><th>π-FBG (0.6 pm)</th><th>Standard FBG (25 GHz)</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>13.17 Hz &nbsp;(10.6 nK)</td><td>709 Hz &nbsp;(568 nK)</td></tr>
-      <tr><td>10</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>663 Hz &nbsp;(532 nK)</td></tr>
-      <tr><td><b>60</b></td><td><b>13.13 Hz &nbsp;(10.5 nK)</b></td><td>659 Hz &nbsp;(528 nK)</td></tr>
-      <tr><td>100</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>659 Hz &nbsp;(528 nK)</td></tr>
-      <tr><td>600</td><td>13.13 Hz &nbsp;(10.5 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
+      <tr><td>1</td><td>13.20 Hz &nbsp;(10.6 nK)</td><td>709 Hz &nbsp;(568 nK)</td></tr>
+      <tr><td>10</td><td>13.15 Hz &nbsp;(10.5 nK)</td><td>663 Hz &nbsp;(532 nK)</td></tr>
+      <tr><td><b>60</b></td><td><b>13.14 Hz &nbsp;(10.5 nK)</b></td><td>659 Hz &nbsp;(528 nK)</td></tr>
+      <tr><td>100</td><td>13.14 Hz &nbsp;(10.5 nK)</td><td>659 Hz &nbsp;(528 nK)</td></tr>
+      <tr><td>600</td><td>13.14 Hz &nbsp;(10.5 nK)</td><td>658 Hz &nbsp;(527 nK)</td></tr>
     </tbody>
   </table>
 
@@ -3476,10 +3648,10 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
       <tr><td>Microring</td><td>RF — RAM slower than window</td><td>1.9 GHz</td><td>2.00</td><td>8.23</td><td>16.45</td><td><b>8.2</b></td><td>1.18</td><td>5.9×10<sup>−4</sup></td></tr>
       <tr><td>Microring</td><td>RF — in-band RAM survives</td><td>1.9 GHz</td><td>2.00</td><td>21.63</td><td>43.25</td><td><b>21.6</b></td><td>3.09</td><td>1.5×10<sup>−3</sup></td></tr>
       <tr><td>Microring</td><td>Dither — RAM survives</td><td>1.9 GHz</td><td>2.00</td><td>83.17</td><td>166.33</td><td><b>83.2</b></td><td>11.88</td><td>5.9×10<sup>−3</sup></td></tr>
-      <tr><td>FBG</td><td>π-FBG — best case (15 MHz, spliced, quiet fiber)</td><td>15 MHz</td><td>1.25</td><td>8.25</td><td>16.50</td><td><b>13.2</b></td><td>1.89</td><td>9.4×10<sup>−4</sup></td></tr>
-      <tr style="font-weight:700"><td>FBG</td><td>π-FBG — nominal</td><td>50 MHz</td><td>1.25</td><td>13.13</td><td>26.25</td><td>21.0</td><td>3.01</td><td>1.5×10<sup>−3</sup></td></tr>
-      <tr><td>FBG</td><td>π-FBG — worst case (all three unknowns bad)</td><td>50 MHz</td><td>1.25</td><td>28.55</td><td>57.11</td><td><b>45.8</b></td><td>6.54</td><td>3.3×10<sup>−3</sup></td></tr>
-      <tr><td>FBG</td><td>π-FBG — non-PM fiber</td><td>50 MHz</td><td>1.25</td><td>32.69</td><td>65.37</td><td><b>52.4</b></td><td>7.48</td><td>3.7×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — best case (quiet fiber + etalon killed)</td><td>0.6 pm</td><td>1.25</td><td>8.29</td><td>16.58</td><td><b>13.3</b></td><td>1.90</td><td>9.5×10<sup>−4</sup></td></tr>
+      <tr style="font-weight:700"><td>FBG</td><td>π-FBG — nominal</td><td>0.6 pm</td><td>1.25</td><td>13.14</td><td>26.28</td><td>21.1</td><td>3.01</td><td>1.5×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — worst case (all three unknowns bad)</td><td>0.6 pm</td><td>1.25</td><td>28.56</td><td>57.12</td><td><b>45.8</b></td><td>6.54</td><td>3.3×10<sup>−3</sup></td></tr>
+      <tr><td>FBG</td><td>π-FBG — non-PM fiber</td><td>0.6 pm</td><td>1.25</td><td>32.69</td><td>65.38</td><td><b>52.4</b></td><td>7.49</td><td>3.7×10<sup>−3</sup></td></tr>
       <tr><td>FBG</td><td>Standard telecom FBG — side-of-fringe</td><td>25 GHz</td><td>1.25</td><td>658.90</td><td>1317.80</td><td><b>1056</b></td><td>150.9</td><td>7.5×10<sup>−2</sup></td></tr>
     </tbody>
   </table>
@@ -3507,12 +3679,12 @@ S<sub>ε</sub> = dν/dε = 124.8 GHz/nm × 1.2 pm/µε = <b>150 MHz/µε</b>&nbs
   <h3>19.6 Bill of design consequences</h3>
   <p>What adopting the FBG option commits you to, beyond the parts themselves:</p>
   <ol>
-    <li><b>Buy matched π-phase-shifted pairs</b> — one draw, one phase mask, ±10 pm pair match, ≤50 MHz FWHM (15 MHz if the budget allows).</li>
+    <li><b>Buy π-phase-shifted gratings as a batch, not a pair</b> — one draw, one phase mask, <b>notch FWHM ≤0.6 pm (≈75 MHz)</b>, and have the vendor select the closest two for ≤10 pm relative match (§19.3.3). Absolute centre wavelength is uncritical and narrower notches buy nothing (§19.4.5); pay for the relative match instead.</li>
     <li><b>PM fiber throughout</b>, aligned launch, specified PER. The non-PM row of §19.5.3 prices the alternative at 52 nK — worse than the FBG's own worst case.</li>
     <li><b>Two fibers, one grating each</b>, on a common substrate, ≥15 mm apart across a thermal barrier (§19.2.4, §19.3.1).</li>
     <li><b>Passive strain trim</b>, ~20 µε range, set once and locked (§19.3.2). No active PZT channel, no TEC trim.</li>
     <li><b>All-spliced optical path</b>; FC/APC wherever a connector is unavoidable. Isolator after each DFB as before, plus a decision on the detector interface — <b>isolator retrofit or pigtailed detector</b>, since the FGA01FC has no APC variant (§19.4.3).</li>
-    <li><b>Change R<sub>inj</sub></b> from 2 kΩ to ≈75 kΩ per channel (§19.4.2).</li>
+    <li><b>Change R<sub>inj</sub></b> from 2 kΩ to ≈51 kΩ per channel (§19.4.2).</li>
     <li><b>Retune acquisition firmware</b> for an ~18-code lock feature (§19.4.4).</li>
     <li><b>Mount symmetrically and verify η<sub>ε</sub></b> — with two separate fibers this is a measured mounting property, not a datasheet number (§19.2.4).</li>
   </ol>
